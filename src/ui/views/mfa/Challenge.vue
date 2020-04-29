@@ -26,8 +26,15 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { Router } from 'vue-router';
 export default defineComponent( {
   name: 'Challenge',
+  beforeCreate() {
+    const challenges = this['context'].details.challenges
+    if(challenges?.length === 1){
+      (this['$router'] as Router).replace({ name: challenges[0] })
+    }
+  }
 })
 </script >
 
