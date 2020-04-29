@@ -2,8 +2,6 @@
   <p-form
     ref="form"
     class="text-center"
-    method="post"
-    :action="formAction()"
     autocomplete="off"
     @submit="submit"
   >
@@ -41,10 +39,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted } from 'vue';
+import PlusAuth from 'plusauth-js';
+import { defineComponent, inject, getCurrentInstance, reactive } from 'vue';
 
 import { AdditionalFields } from '../interfaces';
 import { resolveClientLogo } from '../utils';
+
 
 export default defineComponent({
   name: 'FillMissing',
@@ -88,8 +88,24 @@ export default defineComponent({
     }
   },
   setup(props){
+    const api = inject('api') as PlusAuth
 
     return {
+      ...reactive(props),
+      resolveClientLogo,
+      async submit($event: Event){
+        $event.preventDefault()
+        // @ts-ignore
+        const valid = this.$refs.form?.validate()
+        if(valid){
+          const fieldsWithValues = Object.keys(props.fields)
+            .reduce((prev, curr) => {
+              prev[curr] = props.fields[curr].value
+              return prev
+            }, {})
+          await api.auth.updateMissingInformation(fieldsWithValues)
+        }
+      },
       validate: function (options: any, value: any): any {
         if(options.validator){
           return options.validator.call(this,props.fields, value)
@@ -99,20 +115,6 @@ export default defineComponent({
       },
     }
   },
-  methods: {
-    resolveClientLogo,
-    formAction(){
-      return '/forgotPassword'
-    },
-    submit($event: Event){
-      $event.preventDefault()
-      // @ts-ignore
-      const valid = this.$refs.form?.validate()
-      if(valid){
-        //  TODO: submit
-      }
-    }
-  }
 })
 </script >
 
