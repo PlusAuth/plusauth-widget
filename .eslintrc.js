@@ -44,6 +44,7 @@ module.exports = {
     }],
     "@typescript-eslint/interface-name-prefix": "off",
     "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-extra-parens": ["error"],
     "@typescript-eslint/prefer-string-starts-ends-with": "error",
     "@typescript-eslint/type-annotation-spacing": "error",
     "array-bracket-spacing": "error",
@@ -83,7 +84,7 @@ module.exports = {
       }
     ],
     "no-debugger": "error",
-    "no-extra-parens": "error",
+    "no-extra-parens": "off",
     "no-mixed-spaces-and-tabs": "error",
     "no-var": "error",
     "no-whitespace-before-property": "error",
