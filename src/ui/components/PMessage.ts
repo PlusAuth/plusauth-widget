@@ -1,5 +1,7 @@
 import { h,  defineComponent } from 'vue';
 
+import { Colorable } from '../mixins';
+
 function generateMessageDiv(messages: any){
   if(!messages){
     return undefined
@@ -29,15 +31,19 @@ function generateMessageDiv(messages: any){
 }
 export default defineComponent({
   name: 'PMessage',
+  mixins: [Colorable],
   props: {
-    value: { type: Array as any },
+    ...Colorable.props,
+    value: { type: String || Array  as any },
   },
   render(){
     return h(
       'div',
-      {
-        class: 'pa__messages'
-      },
+      this.setTextColor(this.color, {
+        class: {
+          'pa__messages': true
+        }
+      }),
       generateMessageDiv(this.value)
     )
   }
