@@ -1,5 +1,5 @@
 <template>
-  <p-form>
+  <p-form class="text-center">
     <img
       style="max-height: 150px"
       alt="Logo"
@@ -9,7 +9,7 @@
       Try another way to sign in
     </p>
     <div
-      v-for="challenge in context.details.challenge"
+      v-for="challenge in context.details.challenges"
       :key="challenge"
       class="row"
     >
