@@ -50,12 +50,12 @@ export const router = createRouter({
               component: SMS,
             },
             {
-              path: '/email',
+              path: 'email',
               name: 'email',
               component: Email
             },
             {
-              path: '/ga',
+              path: 'ga',
               name: 'ga',
               component: GA
             }
