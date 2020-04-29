@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf8">
+  <meta name="viewport" content="width=device-width">
+  <title>PlusAuth Mfa</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <% for(let cssFile of htmlWebpackPlugin.files.css) {%>
+  <style>
+    <%=compilation.assets[cssFile.substr(htmlWebpackPlugin.files.publicPath.length)].source() %>
+  </style>
+  <% } %>
+  <% for(let jsFile of htmlWebpackPlugin.files.js) {%>
+  <script>
+    <%= compilation.assets[jsFile.substr(htmlWebpackPlugin.files.publicPath.length)].source() %>
+  </script>
+  <% } %>
+</head>
+
+<body>
+<div id="app"></div>
+<script>
+  window.PlusAuth = { client : {
+      logoUri: 'http://admin.plusauth.com:3000/images/logo.png'
+    }}
+  const auth = new PlusAuthKit('#app', {
+  }, window.PlusAuth)
+</script>
+</body>
+
+</html>

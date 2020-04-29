@@ -1,0 +1,70 @@
+{
+  "name": "pa-widget",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "author": {
+    "email": "ayazismailhakki@gmail.com",
+    "name": "Ismail H. Ayaz"
+  },
+  "scripts": {
+    "dev": "webpack-dev-server --config ./config/webpack-base.config.js",
+    "build": "webpack --env.prod",
+    "lint": "eslint . --ext .js,.ts,.vue --fix"
+  },
+  "dependencies": {
+    "deepmerge": "^4.2.2",
+    "vue": "^3.0.0-beta.4",
+    "vue-router": "^4.0.0-alpha.7"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^8.3.5",
+    "@commitlint/config-conventional": "^8.3.4",
+    "@typescript-eslint/eslint-plugin": "^2.29.0",
+    "@typescript-eslint/parser": "^2.29.0",
+    "@vue/compiler-sfc": "^3.0.0-beta.4",
+    "autoprefixer": "^9.7.6",
+    "clean-webpack-plugin": "^3.0.0",
+    "css-loader": "^3.5.3",
+    "eslint": "^6.8.0",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-vue": "^7.0.0-alpha.1",
+    "html-webpack-plugin": "^4.2.0",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.2.0",
+    "mini-css-extract-plugin": "^0.9.0",
+    "postcss-loader": "^3.0.0",
+    "postcss-prefix-selector": "^1.7.2",
+    "sass": "^1.26.5",
+    "sass-loader": "^8.0.2",
+    "standard-version": "^7.1.0",
+    "style-loader": "^1.2.0",
+    "ts-loader": "^7.0.1",
+    "typescript": "^3.8.3",
+    "vue-loader": "^16.0.0-alpha.3",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11",
+    "webpack-dev-server": "^3.10.3"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ],
+    "rules": {
+      "header-max-length": [
+        0,
+        "always",
+        100
+      ],
+      "scope-case": [
+        0
+      ]
+    }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  }
+}

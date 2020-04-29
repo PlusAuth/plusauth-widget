@@ -1,0 +1,8 @@
+@mixin heading($material)
+  color: map-deep-get($material, 'text', 'primary')
+
+.pa__widget .theme--light.heading
+  +heading($material-light)
+
+.pa__widget .theme--dark.heading
+  +heading($material-dark)

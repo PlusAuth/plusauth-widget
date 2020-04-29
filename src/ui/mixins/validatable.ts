@@ -1,0 +1,222 @@
+import { ComponentOptions } from 'vue';
+
+export const Validatable: ComponentOptions = {
+  inject: ['form'],
+  props: {
+    disabled: Boolean,
+    error: Boolean,
+    errorCount: {
+      type: [Number, String],
+      default: 1,
+    },
+    errorMessages: {
+      type: [String, Array],
+      default: () => [],
+    },
+    messages: {
+      type: [String, Array] ,
+      default: () => [],
+    },
+    readonly: Boolean,
+    rules: {
+      type: Array ,
+      default: () => [],
+    },
+    success: Boolean,
+    successMessages: {
+      type: [String, Array],
+      default: () => [],
+    },
+    value: { required: false },
+  },
+  data() {
+    return {
+      errorBucket: [] as string[],
+      hasColor: false,
+      hasFocused: false,
+      hasInput: false,
+      isFocused: false,
+      isResetting: false,
+      lazyValue: this.modelValue,
+      valid: false,
+    }
+  },
+
+  computed: {
+    computedColor(): string | undefined {
+      if (this.disabled) return undefined
+      if (this.color) return this.color
+      if (this.isDark) return 'white'
+      else return 'primary'
+    },
+    hasError(): boolean {
+      return (
+        this.internalErrorMessages.length > 0 ||
+        this.errorBucket.length > 0 ||
+        this.error
+      )
+    },
+    hasSuccess(): boolean {
+      return (
+        this.internalSuccessMessages.length > 0 ||
+        this.success
+      )
+    },
+    externalError(): boolean {
+      return this.internalErrorMessages.length > 0 || this.error
+    },
+    hasMessages(): boolean {
+      return this.validationTarget.length > 0
+    },
+    hasState(): boolean {
+      if (this.disabled) return false
+
+      return (
+        this.hasSuccess ||
+        this.shouldValidate && this.hasError
+      )
+    },
+    internalErrorMessages() {
+      return this.genInternalMessages(this.errorMessages)
+    },
+    internalMessages() {
+      return this.genInternalMessages(this.messages)
+    },
+    internalSuccessMessages() {
+      return this.genInternalMessages(this.successMessages)
+    },
+    internalValue: {
+      get(): any {
+        // @ts-ignore
+        return this.lazyValue
+      },
+      set(val: any) {
+        // @ts-ignore
+        this.lazyValue = val
+
+        // @ts-ignore
+        this.$emit('input', val)
+      },
+    },
+    shouldValidate(): boolean {
+      if (this.externalError) return true
+      if (this.isResetting) return false
+
+      return this.hasInput || this.hasFocused
+    },
+    validations() {
+      return this.validationTarget.slice(0, Number(this.errorCount))
+    },
+    validationState(): string | undefined {
+      if (this.disabled) return undefined
+      if (this.hasError && this.shouldValidate) return 'error'
+      if (this.hasSuccess) return 'success'
+      if (this.hasColor) return this.computedColor
+      return undefined
+    },
+    validationTarget() {
+      if (this.internalErrorMessages.length > 0) {
+        return this.internalErrorMessages
+      } else if (this.successMessages.length > 0) {
+        return this.internalSuccessMessages
+      } else if (this.messages.length > 0) {
+        return this.internalMessages
+      } else if (this.shouldValidate) {
+        return this.errorBucket
+      } else return []
+    },
+  },
+
+  watch: {
+    rules: {
+      handler(newVal, oldVal) {
+        this.validate()
+      },
+      deep: true,
+    },
+    internalValue() {
+      // If it's the first time we're setting input,
+      // mark it with hasInput
+      this.hasInput = true
+      this.$nextTick(this.validate)
+    },
+    isFocused(val) {
+      // Should not check validation
+      // if disabled
+      if (
+        !val &&
+        !this.disabled
+      ) {
+        this.hasFocused = true
+        this.$nextTick(this.validate)
+      }
+    },
+    isResetting() {
+      setTimeout(() => {
+        this.hasInput = false
+        this.hasFocused = false
+        this.isResetting = false
+        this.validate()
+      }, 0)
+    },
+    hasError(val) {
+      if (this.shouldValidate) {
+        this.$emit('update:error', val)
+      }
+    },
+    value(val) {
+      this.lazyValue = val
+    },
+  },
+
+  beforeMount() {
+    this.validate()
+  },
+
+  created() {
+    this.form?.register(this)
+  },
+
+  beforeDestroy() {
+    this.form?.unregister(this)
+  },
+
+  methods: {
+    genInternalMessages(messages: any) {
+      if (!messages) return []
+      else if (Array.isArray(messages)) return messages
+      else return [messages]
+    },
+    reset() {
+      this.isResetting = true
+      this.internalValue = Array.isArray(this.internalValue)
+        ? []
+        : undefined
+    },
+    resetValidation() {
+      this.isResetting = true
+    },
+    validate(force = false, value?: any): boolean {
+      const errorBucket = []
+      value = value || this.internalValue
+
+      if (force) this.hasInput = this.hasFocused = true
+
+      for (let index = 0; index < this.rules.length; index++) {
+        const rule = this.rules[index]
+        const valid = typeof rule === 'function' ? rule(value) : rule
+        if (valid === false || typeof valid === 'string') {
+          errorBucket.push(valid || '')
+        } else if (typeof valid !== 'boolean') {
+          // eslint-disable-next-line max-len
+          console.error(`Rules should return a string or boolean, received '${typeof valid}' instead`, this)
+        }
+      }
+
+      this.errorBucket = errorBucket
+      this.valid = errorBucket.length === 0
+
+      return this.valid
+    },
+  },
+}

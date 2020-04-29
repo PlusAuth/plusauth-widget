@@ -1,0 +1,166 @@
+.digit-box-container
+    text-align: center
+    .digit-box
+        text-align: center
+        border: 1px solid
+        border-radius: 3px
+        width: 40px
+        height: 50px
+        display: inline-block
+        &:focus
+            outline: none
+            border: 1px solid #0f7dff
+            border-radius: 3px
+        &:not(:last-of-type)
+            margin-right: 10px
+    &.has-error
+        .digit-box
+            border: 1px solid red
+.digit-input
+    font-family: monospace
+    letter-spacing: 34px
+    padding-left: 15px
+    width: 100%
+    font-size: 20px
+    height: 30px
+
+
++theme(pa__input) using ($material)
+  color: map-deep-get($material, 'text', 'primary')
+  &--wrap
+    border-color: map-deep-get($material, 'text', 'primary')
+
+  input,
+  textarea
+    color: map-deep-get($material, 'text', 'primary')
+
+  input::placeholder,
+  textarea::placeholder
+    color: map-deep-get($material, 'text', 'disabled')
+
+  &-disabled
+    color: map-deep-get($material, 'text', 'disabled')
+
+    input,
+    textarea
+      color: map-deep-get($material, 'text', 'disabled')
+
+  .pa__input--label
+    color: map-deep-get($material, 'text', 'secondary')
+
+
+.pa__input
+    align-items: flex-start
+    display: flex
+    flex: 1 1 auto
+    font-size: 16px
+    letter-spacing: normal
+    max-width: 100%
+    text-align: left
+    flex-direction: column
+    margin-top: 4px
+
+    &--wrap
+        margin-top: 12px
+        display: flex
+        flex-wrap: wrap
+        align-items: flex-end
+        width: 100%
+        position: relative
+        border: 1px solid #e6e6e6
+        border-radius: 10px
+
+        input.pa__text-field
+          display: block
+          width: 100%
+          background: transparent
+          font: 15px Montserrat, sans-serif !important
+          color: #555555
+          line-height: 1.2
+          padding: 0 12px
+          min-height: 45px
+          transition: all 0.3s
+          border-radius: 10px
+
+          &:focus::-webkit-input-placeholder
+              color: transparent
+          &:focus
+              outline: none
+              border-color: transparent !important
+
+          &:-internal-autofill-selected,
+          &:-webkit-autofill::first-line,
+          &:-webkit-autofill,
+          &:-webkit-autofill:hover,
+          &:-webkit-autofill:focus,
+          &:-webkit-autofill:active
+            font: 15px Montserrat, sans-serif !important
+            -webkit-box-shadow: 0 0 0 30px white inset !important
+
+    &--label
+        user-select: none
+        font-family: Montserrat, sans-serif
+        font-size: 15px
+        color: inherit
+        line-height: 1
+        left: 10px
+        background-color: #fff
+        display: block
+        position: absolute
+        pointer-events: none
+        top: 15px
+        transform-origin: top left
+        transition: all .15s cubic-bezier(.4,0,.2,1),opacity .15s cubic-bezier(.4,0,.2,1),background-color .15s cubic-bezier(.4,0,.2,1)
+
+    &-details
+      padding-left: 12px
+
+    input:-webkit-autofill + .pa__input--label
+      transform: translateY(-20px) scale(.75)
+
+    &-focused, &-has-error, &-has-state
+      .pa__input--wrap
+        border-color: currentColor
+
+    &-focused, &-has-error
+      .pa__input--label
+        color: currentColor !important
+        transform: translateY(-20px) scale(.75)
+
+    &-has-value
+      .pa__input--label
+        transform: translateY(-20px) scale(.75)
+    //&:focus
+    //    position: absolute
+    //    display: block
+    //    width: 100%
+    //    height: 100%
+    //    pointer-events: none
+    //    border: 1px solid #6675df
+    //    border-radius: 10px
+    //    visibility: hidden
+    //    opacity: 0
+    //    transition: top 0.3s
+    //    transform: scaleX(1.1) scaleY(1.3)
+
+    .pa__input-prepend-icon
+        right: 15px
+        position: absolute
+        font-size: 1.5rem
+        z-index: 2
+        display: flex
+        align-self: center
+
+    //&-has-value, &-focused
+    //  .pa__input--label
+    //    transform: scale(.75) translateY(-30px)
+    //    left: 0
+
+.pa__form-error
+  color: red
+  text-align: left
+  font-size: 14px
+  height: 20px
+  margin-bottom: 8px
+  padding-left: 16px
+
