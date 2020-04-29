@@ -1,5 +1,6 @@
 import { defineComponent, h, resolveDirective,
-  vModelDynamic, withDirectives, reactive, toRefs } from 'vue';
+  vModelDynamic, withDirectives, reactive, toRefs,
+  getCurrentInstance, ref } from 'vue';
 
 import { Colorable , Themeable , Translatable , Validatable } from '../mixins';
 
@@ -43,13 +44,20 @@ export default defineComponent({
     }
   },
   setup(props ){
-
+    const inputRef = ref<string>(null as any)
+    const vm = getCurrentInstance()
     const state = reactive({
       isFocused: false,
       isActivated: false,
       lazyValue: props.modelValue
     })
-    return { ...toRefs(state) }
+    return { ...toRefs(state),
+      inputRef,
+      focus(){
+        // @ts-ignore
+        vm?.refs.inputRef.focus()
+      }
+    }
   },
   render(){
     const vT = resolveDirective('t')
@@ -70,6 +78,7 @@ export default defineComponent({
         withDirectives(
           h('input', {
             autocomplete: this.$attrs.autocomplete,
+            ref: 'inputRef',
             name: this.$attrs.name,
             type: this.type,
             style: this.$attrs.style,
@@ -88,17 +97,19 @@ export default defineComponent({
             'onUpdate:modelValue': (value: any) => {
               this.isActivated = true
               this.$emit('update:modelValue', value)
-            }
+            },
+            onKeyPress: this.$attrs.onKeyPress
           }
           ),
           [[vModelDynamic, this.modelValue]]
         ),
-        withDirectives(h('label', this.setTextColor(this.validationState,{
-          class: { 'pa__input--label': true }
-        })),[
+        this.label ?
+          withDirectives(h('label', this.setTextColor(this.validationState,{
+            class: { 'pa__input--label': true }
+          })),[
           // @ts-ignore
-          [vT, this.label]
-        ]),
+            [vT, this.label]
+          ]) : '',
         this.$slots.append ? this.$slots.append(): '',]),
       h(Message, {
         class: 'pa__input-details',
