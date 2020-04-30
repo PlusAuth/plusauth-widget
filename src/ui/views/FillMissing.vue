@@ -31,6 +31,7 @@
       <p-btn
         color="primary"
         type="submit"
+        :loading="loading"
       >
         <span v-t="'fillMissing.submit'" />
       </p-btn>
@@ -40,8 +41,9 @@
 
 <script lang="ts">
 import PlusAuth from 'plusauth-js';
-import { defineComponent, inject, getCurrentInstance, reactive } from 'vue';
+import { defineComponent, inject, reactive, ref } from 'vue';
 
+import { PForm } from '../components';
 import { AdditionalFields } from '../interfaces';
 import { resolveClientLogo } from '../utils';
 
@@ -89,21 +91,43 @@ export default defineComponent({
   },
   setup(props){
     const api = inject('api') as PlusAuth
+    const loading = ref(false)
+    const form = ref<InstanceType<typeof PForm>>(null as any)
 
     return {
       ...reactive(props),
       resolveClientLogo,
-      async submit($event: Event){
+      form,
+      loading,
+      async submit($event: Event): Promise<boolean> {
         $event.preventDefault()
-        // @ts-ignore
-        const valid = this.$refs.form?.validate()
+
+        loading.value = true
+
+        const valid = form.value?.validate()
         if(valid){
+          form.value?.resetValidation()
           const fieldsWithValues = Object.keys(props.fields)
             .reduce((prev, curr) => {
               prev[curr] = props.fields[curr].value
               return prev
             }, {})
-          await api.auth.updateMissingInformation(fieldsWithValues)
+          try{
+            await api.auth.updateMissingInformation(fieldsWithValues)
+          }catch (e) {
+            if(e.field){
+              props.fields[e.field].errors = e.error
+            }else{
+              // TODO: display error somewhere
+              console.error(e)
+            }
+          }finally {
+            loading.value = false
+          }
+          return false
+        }else{
+          loading.value = false
+          return false
         }
       },
       validate: function (options: any, value: any): any {
