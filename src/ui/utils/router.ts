@@ -1,5 +1,5 @@
 import { defineComponent, h } from 'vue';
-import { createRouter, createWebHistory, View } from 'vue-router';
+import { createRouter, createWebHistory, RouterView } from 'vue-router';
 
 import Consent from '../views/Consent.vue';
 import FillMissing from '../views/FillMissing.vue';
@@ -14,7 +14,7 @@ import ResetPassword from '../views/ResetPassword.vue';
 
 const PlainRouterView = defineComponent( {
   render(){
-    return h(View)
+    return h(RouterView)
   }
 })
 export const router = createRouter({
