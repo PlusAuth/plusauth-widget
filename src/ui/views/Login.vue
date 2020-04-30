@@ -38,25 +38,17 @@
       </p-btn>
     </div>
 
-    <template v-if="features.socialConnections">
+    <template v-if="features.socialConnections && context.client.social.length">
       <div class="text-center">
         <span v-t="'login.signInWith'" />
       </div>
       <div class="row justify-center">
-        <template v-for="connection in socialConnections">
-          <a
-            :key="connection"
-            class="pa__btn pa__btn--fab"
-            :href="'/social?provider=' + connection"
-          >
-            <div class="pa__btn__content">
-              <i
-                class="fa fa-2x"
-                :class="'fa-'+ connection"
-              />
-            </div>
-          </a>
-        </template>
+        <SocialConnectionButton
+          v-for="connection in context.client.social"
+          :key="connection"
+          :type="connection"
+          :href="'/social?provider=' + connection"
+        />
       </div>
     </template>
 
@@ -85,11 +77,13 @@ import PlusAuth from 'plusauth-js';
 import { defineComponent, reactive, ref, inject } from 'vue';
 
 import { PForm } from '../components';
+import SocialConnectionButton from '../components/SocialConnectionButton';
 import { AdditionalFields } from '../interfaces';
 import { resolveClientLogo } from '../utils';
 
 export default defineComponent({
   name: 'Login',
+  components: { SocialConnectionButton },
   props: {
     features: {
       type: Object,
@@ -101,7 +95,7 @@ export default defineComponent({
     },
     socialConnections: {
       type: Array as () => any[],
-      default: () => ['google', 'facebook']
+      default: () => []
     },
     fields: {
       type: Object as () => AdditionalFields,
