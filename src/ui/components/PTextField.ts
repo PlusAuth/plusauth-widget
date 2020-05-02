@@ -1,7 +1,7 @@
-import { defineComponent, h, resolveDirective,
-  vModelDynamic, withDirectives, reactive, toRefs,
+import { defineComponent, h, withDirectives, reactive, toRefs,
   getCurrentInstance, ref } from 'vue';
 
+import { i18n } from '../directives/i18n';
 import { Colorable , Themeable , Translatable , Validatable } from '../mixins';
 
 import Message from './PMessage';
@@ -60,7 +60,6 @@ export default defineComponent({
     }
   },
   render(){
-    const vT = resolveDirective('t')
     return h ('div', this.setTextColor(this.validationState, {
       class: {
         'theme--dark': this.theme?.dark,
@@ -101,7 +100,7 @@ export default defineComponent({
             onKeyPress: this.$attrs.onKeyPress
           }
           ),
-          [[vModelDynamic, this.modelValue]]
+          [[i18n, this.modelValue]]
         ),
         this.label ?
           withDirectives(h('label', this.setTextColor(this.validationState,{

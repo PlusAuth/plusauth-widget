@@ -1,33 +1,30 @@
 import {
   defineComponent, h, VNode,
-  reactive, computed, getCurrentInstance, ref, withDirectives, vModelText,
-  nextTick,
-  watch
+  computed, getCurrentInstance, ref,
 } from 'vue';
 
 
 function generateDigitInput(index: any, model: any, onUpdate: any,
                             onInput: any){
-  return withDirectives(
-    h('input', {
-      key: index,
-      type: 'tel',
-      class: {
-        'pa__code-input--digit-box': true
-      },
-      onFocus($event: FocusEvent){
-        const el = $event.target as HTMLInputElement
-        if(el.setSelectionRange)
-          el.setSelectionRange(0,-1)
-      },
-      'onUpdate:modelValue': (val: any) => {
-        onInput(index, val)
-      },
-      onKeyPress($event: KeyboardEvent){
-        onUpdate(index, $event)
-      },
-    }) ,[[vModelText, model]]
-  )
+  return  h('input', {
+    modelValue: model,
+    key: index,
+    type: 'tel',
+    class: {
+      'pa__code-input--digit-box': true
+    },
+    onFocus($event: FocusEvent){
+      const el = $event.target as HTMLInputElement
+      if(el.setSelectionRange)
+        el.setSelectionRange(0,-1)
+    },
+    'onUpdate:modelValue': (val: any) => {
+      onInput(index, val)
+    },
+    onKeyPress($event: KeyboardEvent){
+      onUpdate(index, $event)
+    },
+  })
 }
 
 function initializeDigitsModel(size: number) {
