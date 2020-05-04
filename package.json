@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "deepmerge": "^4.2.2",
-    "vue": "^3.0.0-beta.7",
+    "vue": "^3.0.0-beta.8",
     "vue-router": "^4.0.0-alpha.9"
   },
   "devDependencies": {
@@ -22,7 +22,7 @@
     "@commitlint/config-conventional": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^2.30.0",
     "@typescript-eslint/parser": "^2.30.0",
-    "@vue/compiler-sfc": "^3.0.0-beta.7",
+    "@vue/compiler-sfc": "^3.0.0-beta.8",
     "autoprefixer": "^9.7.6",
     "clean-webpack-plugin": "^3.0.0",
     "cross-env": "^7.0.2",
