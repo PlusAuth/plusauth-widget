@@ -7,16 +7,17 @@
       v-if="context.settings.passwordResetFlow === 'newPassword'
         && context.newPassword"
     >
-      This is your temporary password.
+      <span v-t="'resetPassword.informNewPassword'" />
 
       <div>
         {{ context.newPassword }}
       </div>
     </div>
     <div v-else>
-      <div v-if="actionCompleted">
-        Your password has been successfully reset.
-      </div>
+      <div
+        v-if="actionCompleted"
+        v-t="'resetPassword.successfullyReset'"
+      />
       <p-form
         v-else
         ref="form"

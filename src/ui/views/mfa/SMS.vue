@@ -16,10 +16,12 @@
       v-if="timerEnabled"
       :duration="120"
     />
-    <div class="subtitle-2 font-weight-light text-left">
-      Enter verification code sent to:
-      <strong>{{ context.details.phone_number }}</strong>
-    </div>
+    <div
+      v-t="{ path: 'mfa.sms.title', args: { phone_number:
+        context.details.phone_number
+      } }"
+      class="subtitle-2 text-left"
+    />
     <p-text-field
       v-model="code"
       label="mfa.sms.code"
@@ -39,9 +41,12 @@
     </p-btn>
     <div
       v-if="context.details.challenges.length > 1"
-      class="row justify-center "
+      class="row justify-center pt-4"
     >
-      <a href="/signin/challenge">Try another way</a>
+      <a
+        v-t="'mfa.tryAnotherWay'"
+        href="/signin/challenge"
+      />
     </div>
   </p-form>
 </template>

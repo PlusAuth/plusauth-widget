@@ -69,6 +69,15 @@ details?id=com.google.android.apps.authenticator2"
     >
       <span v-t="'mfa.sms.submit'" />
     </p-btn>
+    <div
+      v-if="context.details.challenges.length > 1"
+      class="row justify-center "
+    >
+      <a
+        v-t="'mfa.tryAnotherWay'"
+        href="/signin/challenge"
+      />
+    </div>
   </p-form>
 </template>
 

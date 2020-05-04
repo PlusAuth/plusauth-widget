@@ -37,9 +37,13 @@
       </p-btn>
     </div>
 
-    <template v-if="features.socialConnections && context.client.social.length">
-      <div class="text-center">
-        <span v-t="'register.signUpWith'" />
+    <template
+      v-if="features.socialConnections && context.client
+        && context.client.social
+        && context.client.social.length"
+    >
+      <div class="text-center pt-4">
+        <span v-t="'login.signInWith'" />
       </div>
       <div class="row justify-center">
         <SocialConnectionButton
@@ -54,7 +58,10 @@
     <div
       class="text-center txt1 pt-4 pb-2"
     >
-      <span v-t="'register.haveAccount'" />
+      <span
+        v-t="'register.haveAccount'"
+        class="pr-2"
+      />
       <a
         v-t="'login.signIn'"
         href="/signin"
@@ -77,12 +84,14 @@ import PlusAuth from 'plusauth-js';
 import { defineComponent, inject, reactive, ref } from 'vue';
 
 import { PForm } from '../components';
+import SocialConnectionButton from '../components/SocialConnectionButton';
 import { AdditionalFields, SocialConnections } from '../interfaces';
 import { resolveClientLogo } from '../utils';
 
 
 export default defineComponent({
   name: 'Register',
+  components: { SocialConnectionButton },
   props: {
     features: {
       type: Object,
@@ -95,6 +104,9 @@ export default defineComponent({
       type: Object as () => AdditionalFields,
       default: (): AdditionalFields => ({
         username: {
+          attrs: {
+            autocomplete: 'username'
+          },
           type: 'text',
           label: 'register.username',
           validator(fields, value){
@@ -107,6 +119,9 @@ export default defineComponent({
         password: {
           type: 'password',
           label: 'register.password',
+          attrs: {
+            autocomplete: 'new-password'
+          },
           validator(fields, value){
             if(!value){
               return this.t('register.errors.passwordRequired')
@@ -116,7 +131,10 @@ export default defineComponent({
         },
         rePassword: {
           type: 'password',
-          label: 'register.repassword',
+          label: 'register.rePassword',
+          attrs: {
+            autocomplete: 'new-password'
+          },
           validator(fields, value){
             if(!value){
               return this.t('register.errors.rePasswordRequired')

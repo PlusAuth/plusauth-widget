@@ -1,4 +1,9 @@
 export default {
+  consent: {
+    allow: 'Allow',
+    reject: 'Reject',
+    title: '{clientName} asks for your consent for the followings'
+  },
   login: {
     errors: {
       passwordRequired: 'Password is required',
@@ -11,6 +16,18 @@ export default {
     signInWith: 'or Sign in with',
     signUp: 'Sign Up',
     username: 'Username'
+  },
+  fillMissing: {
+    errors: {
+      // eslint-disable-next-line @typescript-eslint/camelcase
+      phone_numberRequired: 'Phone Number is required',
+      password: 'Password is required'
+    },
+    title: 'Fill missing information',
+    // eslint-disable-next-line @typescript-eslint/camelcase
+    phone_number: 'Phone number',
+    password: 'Password',
+    submit: 'Submit',
   },
   forgotPassword: {
     errors: {
@@ -66,6 +83,7 @@ export default {
       passwordsNotMatch: 'Passwords doesn\'t match',
       rePasswordRequired: 'Password confirmation is required'
     },
+    informNewPassword: 'This is your temporary password.',
     newPassword: 'New Password',
     rePassword: 'Confirm Password',
     successfullyReset: 'Your password has been successfully reset.'

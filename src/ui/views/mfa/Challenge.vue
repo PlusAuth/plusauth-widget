@@ -5,9 +5,10 @@
       alt="Logo"
       src="/images/icons/select.svg"
     >
-    <p class="text-center title font-weight-thin">
-      Try another way to sign in
-    </p>
+    <p
+      v-t="'mfa.challenge.title'"
+      class="text-center title font-weight-thin"
+    />
     <div
       v-for="challenge in context.details.challenges"
       :key="challenge"

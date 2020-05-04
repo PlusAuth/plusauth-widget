@@ -38,8 +38,12 @@
       </p-btn>
     </div>
 
-    <template v-if="features.socialConnections && context.client.social.length">
-      <div class="text-center">
+    <template
+      v-if="features.socialConnections && context.client
+        && context.client.social
+        && context.client.social.length"
+    >
+      <div class="text-center pt-4">
         <span v-t="'login.signInWith'" />
       </div>
       <div class="row justify-center">
@@ -56,7 +60,10 @@
       v-if="features.signUp"
       class="text-center txt1 pt-4 pb-2"
     >
-      <span v-t="'login.noAccount'" />
+      <span
+        v-t="'login.noAccount'"
+        class="pr-2"
+      />
       <a
         v-t="'login.signUp'"
         href="/signup"
@@ -102,22 +109,22 @@ export default defineComponent({
       default: (): AdditionalFields => ({
         username: {
           type: 'text',
-          label: 'register.username',
+          label: 'login.username',
           errors: [],
           validator(fields, value){
             if(!value){
-              return this.t('register.errors.usernameRequired')
+              return this.t('login.errors.usernameRequired')
             }
             return true
           }
         },
         password: {
           type: 'password',
-          label: 'register.password',
+          label: 'login.password',
           errors: [],
           validator(fields, value){
             if(!value){
-              return this.t('register.errors.passwordRequired')
+              return this.t('login.errors.passwordRequired')
             }
             return true
           }

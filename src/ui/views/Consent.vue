@@ -15,7 +15,11 @@
         :src="resolveClientLogo(context.client)"
       >
       <div class="pa__form-title">
-        <span v-t="'consent.title'" />
+        <span
+          v-t="{ path: 'consent.title',
+                 args: { clientName: context.client.clientName}
+          }"
+        />
       </div>
 
       <div class="text-left">
