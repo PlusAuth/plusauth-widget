@@ -12,7 +12,7 @@ function generateMessageVNode(message: string): VNode{
   )
 }
 
-function generateMessageDiv(messages: any): VNode | VNode[] | undefined {
+function generateMessages(messages: any): VNode | VNode[] | undefined {
   if(!messages){
     return undefined
   }
@@ -35,7 +35,7 @@ export default defineComponent({
   mixins: [Colorable],
   props: {
     ...Colorable.props,
-    value: { type: String || Array  as any },
+    value: { type: [String, Array], default: null },
   },
   render(){
     return h(
@@ -45,7 +45,7 @@ export default defineComponent({
           'pa__messages': true
         }
       }),
-      generateMessageDiv(this.value)
+      generateMessages(this.value)
     )
   }
 })
