@@ -1,5 +1,6 @@
-import { h,  defineComponent } from 'vue';
+import { h,  defineComponent, withDirectives } from 'vue';
 
+import { i18n } from '../directives/i18n';
 import { Colorable } from '../mixins';
 
 function generateMessageDiv(messages: any){
@@ -9,23 +10,33 @@ function generateMessageDiv(messages: any){
   if(Array.isArray(messages)){
 
     const messageNodes = messages.map( (message, key) => {
-      return h('div', {
-        class: 'pa__messages__message',
-      }, message)
+      return withDirectives(
+        h('div', {
+          class: 'pa__messages__message',
+        }),
+        [[i18n, message]]
+      )
     })
     return messageNodes
   }else if( messages instanceof Set) {
     const nodes = []
     for (const value of messages.values()) {
-      nodes.push(h('div', {
-        class: 'pa__messages__message',
-      }, value))
+      nodes.push(
+        withDirectives(
+          h('div', {
+            class: 'pa__messages__message',
+          }),
+          [[i18n, value]]
+        )
+      )
     }
     return nodes
   }else{
-    return h('div', {
+    return withDirectives(h('div', {
       class: 'pa__messages__message',
-    }, messages)
+    }),
+    [[i18n, messages]]
+    )
   }
 
 }
