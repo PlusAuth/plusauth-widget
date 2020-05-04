@@ -13,7 +13,7 @@ export default defineComponent({
     ...Validatable.props,
     ...Colorable.props,
     type: { type: String, default: 'text' },
-    label: String,
+    label: { type: String, default: null },
     modelValue: { type: null, default: null },
   },
   computed: {
@@ -74,40 +74,38 @@ export default defineComponent({
       h('div', {
         class: { 'pa__input--wrap': true }
       }, [
-        withDirectives(
-          h('input', {
-            autocomplete: this.$attrs.autocomplete,
-            ref: 'inputRef',
-            name: this.$attrs.name,
-            type: this.type,
-            style: this.$attrs.style,
-            class: ['pa__text-field'],
-            'onFocus': () => {
-              // @ts-ignore
-              this.hasColor = true
-              this.isFocused = true
-              this.isActivated = true
-            },
-            'onBlur': () => {
-              // @ts-ignore
-              this.hasColor = false
-              this.isFocused = false
-            },
-            'onUpdate:modelValue': (value: any) => {
-              this.isActivated = true
-              this.$emit('update:modelValue', value)
-            },
-            onKeyPress: this.$attrs.onKeyPress
-          }
-          ),
-          [[i18n, this.modelValue]]
+        h('input', {
+          autocomplete: this.$attrs.autocomplete,
+          value: this.modelValue,
+          ref: 'inputRef',
+          name: this.$attrs.name,
+          type: this.type || 'text',
+          style: this.$attrs.style,
+          class: ['pa__text-field'],
+          'onFocus': () => {
+            // @ts-ignore
+            this.hasColor = true
+            this.isFocused = true
+            this.isActivated = true
+          },
+          'onBlur': () => {
+            // @ts-ignore
+            this.hasColor = false
+            this.isFocused = false
+          },
+          'onInput': (event: InputEvent) => {
+            this.isActivated = true
+            // @ts-ignore
+            this.$emit('update:modelValue', event.currentTarget?.value)
+          },
+          onKeyPress: this.$attrs.onKeyPress,
+        }
         ),
         this.label ?
           withDirectives(h('label', this.setTextColor(this.validationState,{
             class: { 'pa__input--label': true }
           })),[
-          // @ts-ignore
-            [vT, this.label]
+            [i18n, this.label]
           ]) : '',
         this.$slots.append ? this.$slots.append(): '',]),
       h(Message, {
