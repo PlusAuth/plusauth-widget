@@ -21,9 +21,19 @@
 <body>
 <div id="app"></div>
 <script>
-  window.PlusAuth = { client : {
-      logoUri: 'http://admin.plusauth.com:3000/images/logo.png'
-    }}
+  window.PlusAuth = {
+    client : {
+      logoUri: 'http://api.plusauth.com/images/logo.png'
+    },
+    details: {
+      email: 'test@plusauth.com',
+      challenges: [
+        'sms',
+        'email',
+        'ga'
+      ]
+    }
+  }
   const auth = new PlusAuthKit('#app', {
   }, window.PlusAuth)
 </script>
