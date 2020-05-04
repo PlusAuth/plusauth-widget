@@ -1,4 +1,4 @@
-import {  DirectiveBinding, VNode, inject, ObjectDirective } from 'vue';
+import {  DirectiveBinding, VNode, ObjectDirective } from 'vue';
 
 import { isPlainObject } from '../utils';
 
@@ -19,7 +19,7 @@ function parseValue(value: any): any {
   let args: any = undefined
   let choice: number | undefined  = undefined
 
-  if (typeof value === 'string') {
+  if (typeof value === 'string' || !value) {
     path = value
   } else if (isPlainObject(value)) {
     path = value.path
@@ -68,11 +68,6 @@ export const i18n: ObjectDirective = {
     translate(el, binding, vnode)
   },
   unmounted: (el, binding, vnode, prevVNode) => {
-    const vm: any = vnode.appContext
-    if (!vm) {
-      console.warn('Vue instance does not exists in VNode context')
-      return
-    }
 
     el._vt = undefined
     delete el['_vt']
