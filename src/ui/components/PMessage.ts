@@ -1,44 +1,34 @@
-import { h,  defineComponent, withDirectives } from 'vue';
+import { defineComponent, h, withDirectives, VNode } from 'vue';
 
 import { i18n } from '../directives/i18n';
 import { Colorable } from '../mixins';
 
-function generateMessageDiv(messages: any){
+function generateMessageVNode(message: string): VNode{
+  return withDirectives(
+    h('div', {
+      class: 'pa__messages__message',
+    }),
+    [[i18n, message]]
+  )
+}
+
+function generateMessageDiv(messages: any): VNode | VNode[] | undefined {
   if(!messages){
     return undefined
   }
   if(Array.isArray(messages)){
-
-    const messageNodes = messages.map( (message, key) => {
-      return withDirectives(
-        h('div', {
-          class: 'pa__messages__message',
-        }),
-        [[i18n, message]]
-      )
-    })
-    return messageNodes
+    return messages.map(message => generateMessageVNode(message))
   }else if( messages instanceof Set) {
     const nodes = []
     for (const value of messages.values()) {
       nodes.push(
-        withDirectives(
-          h('div', {
-            class: 'pa__messages__message',
-          }),
-          [[i18n, value]]
-        )
+        generateMessageVNode(value)
       )
     }
     return nodes
   }else{
-    return withDirectives(h('div', {
-      class: 'pa__messages__message',
-    }),
-    [[i18n, messages]]
-    )
+    return generateMessageVNode(messages)
   }
-
 }
 export default defineComponent({
   name: 'PMessage',
