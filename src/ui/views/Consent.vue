@@ -1,12 +1,9 @@
 <template>
   <div class="col elevation-1 pa__8">
     <p-form
-      ref="form"
       class="text-center"
-      method="post"
       autocomplete="off"
-      :action="formAction()"
-      @submit="submit"
+      @submit.prevent
     >
       <img
         style="max-height: 150px"
@@ -33,13 +30,13 @@
       <div class="pt-4">
         <p-btn
           color="success"
-          type="submit"
+          @click="allow"
         >
           <span v-t="'consent.allow'" />
         </p-btn>
         <p-btn
           color="error"
-          type="submit"
+          @click="reject"
         >
           <span v-t="'consent.reject'" />
         </p-btn>
@@ -49,9 +46,11 @@
 </template>
 
 <script lang="ts" >
-import { defineComponent, reactive } from 'vue';
+import PlusAuth from 'plusauth-js';
+import { defineComponent, inject } from 'vue';
 
 import { resolveClientLogo } from '../utils';
+
 
 export default defineComponent({
   name: 'Consent',
@@ -61,22 +60,13 @@ export default defineComponent({
       default: () => ['test', 'test2']
     }
   },
-  setup(props){
+  setup(){
+    const api = inject('api') as PlusAuth
 
     return {
+      submit: api.auth.acceptConsent,
+      reject: api.auth.rejectConsent,
       resolveClientLogo,
-
-      formAction(){
-        return '/signup'
-      },
-      async submit($event: Event){
-        $event.preventDefault()
-        // @ts-ignore
-        const valid = this.$refs.form?.validate()
-        if(valid){
-          //  TODO: submit
-        }
-      }
     }
   }
 })
