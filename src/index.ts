@@ -2,6 +2,7 @@ import deepmerge from 'deepmerge';
 import PlusAuth from 'plusauth-js';
 import { App } from 'vue';
 
+import defaultDictionary from './i18n'
 import { createWidget } from './ui';
 import { IPlusAuthContext, IWidgetSettings } from './ui/interfaces';
 // @ts-ignore
@@ -18,24 +19,7 @@ export default class PlusAuthWidget {
     this._view = createWidget(container, deepmerge(settings, {
       locale: {
         defaultLocale: 'en',
-        dictionary: {
-          en: {
-            login: {
-              username: 'Username',
-              password: 'Password',
-              forgotPassword: 'Forgot Password',
-              signIn: 'Sign In',
-              signUp: 'Sign Up'
-            },
-            register: {
-              username: 'Username',
-              password: 'Password',
-              repassword: 'Confirm Password',
-              signIn: 'Sign In',
-              signUp: 'signUp'
-            }
-          }
-        }
+        dictionary: defaultDictionary
       }
     }), context)
     this._view.provide('api', this.api)
