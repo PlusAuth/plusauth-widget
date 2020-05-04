@@ -29,11 +29,11 @@ export const router = createRouter({
           component: Login
         },
         {
-          path: '/consent',
+          path: 'consent',
           component: Consent
         },
         {
-          path: '/recovery',
+          path: 'recovery',
           component: ForgotPassword
         },
         {
