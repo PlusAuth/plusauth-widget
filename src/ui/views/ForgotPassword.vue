@@ -29,7 +29,7 @@
             :error-messages="options.errors"
             :label="options.label"
             :rules="options.validator ?
-              [ validate.bind( $i18n, options) ] : undefined"
+              [ validate.bind( null, options) ] : undefined"
           />
         </template>
 
@@ -65,7 +65,8 @@
 
 <script lang="ts">
 import PlusAuth from 'plusauth-js';
-import { defineComponent, inject, reactive, ref } from 'vue';
+import { defineComponent, getCurrentInstance,
+  inject, reactive, ref } from 'vue';
 
 import { PForm } from '../components';
 import { AdditionalFields } from '../interfaces';
@@ -99,6 +100,7 @@ export default defineComponent({
     },
   },
   setup(props){
+    const vm = getCurrentInstance()
     const api = inject('api') as PlusAuth
     const form = ref<InstanceType<typeof PForm>>(null as any)
     const loading = ref(false)
@@ -112,7 +114,11 @@ export default defineComponent({
       resolveClientLogo,
       validate: function (options: any, value: any): any {
         if(options.validator){
-          return options.validator.call(this,props.fields, value)
+          return options.validator.call(
+            vm?.appContext.config.globalProperties.$i18n,
+            props.fields,
+            value
+          )
         }else {
           return undefined
         }

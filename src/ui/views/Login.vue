@@ -23,7 +23,7 @@
         :label="options.label"
         :error-messages="options.errors"
         :rules="options.validator ?
-          [ validate.bind( $i18n, options) ] : undefined"
+          [ validate.bind(null, options ) ] : undefined"
       />
     </template>
 
@@ -81,7 +81,8 @@
 
 <script lang="ts">
 import PlusAuth from 'plusauth-js';
-import { defineComponent, reactive, ref, inject } from 'vue';
+import { defineComponent, reactive,
+  ref, inject, getCurrentInstance } from 'vue';
 
 import { PForm } from '../components';
 import SocialConnectionButton from '../components/SocialConnectionButton';
@@ -111,7 +112,7 @@ export default defineComponent({
           type: 'text',
           label: 'login.username',
           errors: [],
-          validator(fields, value){
+          validator: function (fields, value){
             if(!value){
               return this.t('login.errors.usernameRequired')
             }
@@ -122,7 +123,7 @@ export default defineComponent({
           type: 'password',
           label: 'login.password',
           errors: [],
-          validator(fields, value){
+          validator: function (fields, value){
             if(!value){
               return this.t('login.errors.passwordRequired')
             }
@@ -133,6 +134,7 @@ export default defineComponent({
     },
   },
   setup(props){
+    const vm = getCurrentInstance()
     const api = inject('api') as PlusAuth
     const form = ref<InstanceType<typeof PForm>>(null as any)
     const passwordVisible = ref(false)
@@ -145,7 +147,11 @@ export default defineComponent({
       passwordVisible,
       validate: function (options: any, value: any) {
         if(options.validator){
-          return options.validator.call(this, props.fields, value)
+          return options.validator.call(
+            vm?.appContext.config.globalProperties.$i18n,
+            props.fields,
+            value
+          )
         }else {
           return undefined
         }
