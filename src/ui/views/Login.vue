@@ -164,8 +164,10 @@ export default defineComponent({
           form.value?.resetValidation()
           try{
             await api.auth.signIn(
-              props.fields.username.value as string,
-              props.fields.password.value as string
+              Object.keys(props.fields).reduce( (prev: any, curr: string ) => {
+                prev[curr] = props.fields[curr].value
+                return prev;
+              }, {})
             )
           }catch (e) {
             switch (e.error) {
