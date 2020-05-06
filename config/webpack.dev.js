@@ -21,7 +21,6 @@ module.exports = merge(common, {
     disableHostCheck: true,
     hot: true,
     stats: 'minimal',
-    writeToDisk: true,
     contentBase: path.resolve(__dirname, '../public'),
     overlay: true,
     https: true,
