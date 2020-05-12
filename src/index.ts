@@ -1,5 +1,5 @@
 import deepmerge from 'deepmerge';
-import PlusAuth from 'plusauth-js';
+import PlusAuth from 'plusauth-web';
 import { App } from 'vue';
 
 import defaultDictionary from './i18n'

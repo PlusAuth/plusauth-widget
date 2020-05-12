@@ -40,7 +40,7 @@
 </template>
 
 <script lang="ts">
-import PlusAuth from 'plusauth-js';
+import PlusAuth from 'plusauth-web';
 import { defineComponent, getCurrentInstance,
   inject, reactive, ref } from 'vue';
 

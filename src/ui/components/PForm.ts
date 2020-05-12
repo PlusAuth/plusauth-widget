@@ -125,6 +125,6 @@ export default defineComponent({
       class: ['pa__form', this.$attrs.class],
       novalidate: true,
       onSubmit: (e: Event) => this.$emit('submit', e),
-    }, this.$slots.default ? this.$slots.default() : null )
+    }, this.$slots.default ? this.$slots.default() : [] )
   },
 })

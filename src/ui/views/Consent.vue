@@ -46,7 +46,7 @@
 </template>
 
 <script lang="ts" >
-import PlusAuth from 'plusauth-js';
+import PlusAuth from 'plusauth-web';
 import { defineComponent, inject } from 'vue';
 
 import { resolveClientLogo } from '../utils';

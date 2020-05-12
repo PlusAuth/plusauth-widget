@@ -52,10 +52,9 @@
 </template>
 
 <script lang="ts">
-import PlusAuth from 'plusauth-js';
+import PlusAuth from 'plusauth-web';
 import { defineComponent, inject, ref } from 'vue';
 
-import { PForm } from '../../components';
 import PTimer from '../../components/PTimer';
 
 export default defineComponent({
@@ -71,7 +70,7 @@ export default defineComponent({
     const api = inject('api') as PlusAuth
     const code = ref<string | null>(null)
     const error = ref<string>(null as any)
-    const form = ref<InstanceType<typeof PForm>>(null as any)
+    const form = ref(null as any)
     const loading = ref(false)
     return {
       code,

@@ -82,7 +82,7 @@ details?id=com.google.android.apps.authenticator2"
 </template>
 
 <script lang="ts">
-import PlusAuth from 'plusauth-js';
+import PlusAuth from 'plusauth-web';
 import { inject, ref } from 'vue';
 
 import { PForm } from '../../components';

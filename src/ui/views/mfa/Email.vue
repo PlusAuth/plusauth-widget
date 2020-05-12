@@ -43,7 +43,7 @@
 </template>
 
 <script lang="ts">
-import PlusAuth from 'plusauth-js';
+import PlusAuth from 'plusauth-web';
 import { defineComponent, inject, ref } from 'vue';
 
 import { PForm } from '../../components';

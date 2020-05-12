@@ -80,7 +80,7 @@
 </template>
 
 <script lang="ts">
-import PlusAuth from 'plusauth-js';
+import PlusAuth from 'plusauth-web';
 import { defineComponent, reactive,
   ref, inject, getCurrentInstance } from 'vue';
 

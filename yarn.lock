@@ -5422,7 +5422,7 @@ please-upgrade-node@^3.2.0:
   dependencies:
     semver-compare "^1.0.0"
 
-plusauth-js@../plusauth-js:
+plusauth-web@../plusauth-web:
   version "1.0.0"
   dependencies:
     qs "^6.9.1"
