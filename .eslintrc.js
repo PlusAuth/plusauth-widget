@@ -5,13 +5,6 @@ module.exports = {
     browser: true,
     node: true
   },
-  ignorePatterns: [
-    "*.html",
-    "config/**",
-    "dist/**",
-    "*.lock",
-    "*.log",
-  ],
   parser: "vue-eslint-parser",
   parserOptions: {
     parser: "@typescript-eslint/parser",
@@ -49,6 +42,7 @@ module.exports = {
     "@typescript-eslint/type-annotation-spacing": "error",
     "array-bracket-spacing": "error",
     "import/first": "error",
+    "import/no-unresolved": "warn",
     "import/no-useless-path-segments": [
       "error",
       {

@@ -1,0 +1,8 @@
+*.html,
+config/**
+dist/**
+*.lock
+*.log
+.eslintrc.js
+scripts
+rollup.config.js
