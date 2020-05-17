@@ -94,7 +94,7 @@ export default defineComponent({
     const vm = getCurrentInstance()
     const api = inject('api') as PlusAuth
     const loading = ref(false)
-    const form = ref<InstanceType<typeof PForm>>(null as any)
+    const form = ref<any>(null)
 
     return {
       ...reactive(props),

@@ -55,7 +55,7 @@ export default defineComponent({
     const api = inject('api') as PlusAuth
     const code = ref<string | null>(null)
     const error = ref<string>(null as any)
-    const form = ref<InstanceType<typeof PForm>>(null as any)
+    const form = ref<any>(null)
     const loading = ref(false)
     return {
       code,

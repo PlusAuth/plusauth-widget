@@ -136,7 +136,7 @@ export default defineComponent({
   setup(props){
     const vm = getCurrentInstance()
     const api = inject('api') as PlusAuth
-    const form = ref<InstanceType<typeof PForm>>(null as any)
+    const form = ref<any>(null)
     const passwordVisible = ref(false)
     const loading = ref(false)
 

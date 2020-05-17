@@ -94,7 +94,7 @@ export default {
     const api = inject('api') as PlusAuth
     const code = ref<string>(null as any)
     const error = ref<string>(null as any)
-    const form = ref<InstanceType<typeof PForm>>(null as any)
+    const form = ref<any>(null as any)
     const loading = ref<boolean>(false)
 
     return {

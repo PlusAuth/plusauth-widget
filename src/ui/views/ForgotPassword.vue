@@ -102,7 +102,7 @@ export default defineComponent({
   setup(props){
     const vm = getCurrentInstance()
     const api = inject('api') as PlusAuth
-    const form = ref<InstanceType<typeof PForm>>(null as any)
+    const form = ref<any>(null)
     const loading = ref(false)
     const actionCompleted = ref(false)
 
