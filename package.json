@@ -1,5 +1,5 @@
 {
-  "name": "pa-widget",
+  "name": "plusauth-widget",
   "version": "0.0.0",
   "main": "dist/plusauth-widget.min.js",
   "license": "MIT",
