@@ -16,7 +16,7 @@ export default class PlusAuthWidget {
     settings: Partial<IWidgetSettings> = {},
     context: Partial<IPlusAuthContext>) {
     this.api = new PlusAuth(settings.apiUrl || window.location.origin)
-    this._view = createWidget(container, deepmerge(settings, {
+    this._view = createWidget(container || document.body, deepmerge(settings, {
       locale: {
         defaultLocale: 'en',
         dictionary: defaultDictionary
