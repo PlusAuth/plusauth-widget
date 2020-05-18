@@ -18,7 +18,7 @@ export type WidgetModes = 'login' | 'register'
 
 export type SocialConnections = 'google' | 'facebook' | 'linkedin'
 
-export type   FieldValidator<T extends any> = (
+export type FieldValidator<T extends (string | number)> = (
   this: Translator,
   fields: {
     [key in T]: FieldDefinition;
