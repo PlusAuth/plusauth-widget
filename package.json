@@ -1,7 +1,7 @@
 {
   "name": "pa-widget",
   "version": "0.0.0",
-  "main": "dist/plusauthkit.min.js",
+  "main": "dist/plusauth-widget.min.js",
   "license": "MIT",
   "description": "Web widget for rendering PlusAuth views",
   "homepage": "https://github.com/PlusAuth/plusauth-widget#readme",

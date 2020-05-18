@@ -11,7 +11,7 @@ module.exports = merge(common, {
   output: {
     path: path.resolve(__dirname, '../dist'),
     publicPath: '/',
-    filename: "plusauthkit.min.js",
+    filename: "plusauth-widget.min.js",
   },
   plugins: [
   ],

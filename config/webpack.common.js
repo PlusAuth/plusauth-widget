@@ -17,7 +17,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, '../dist'),
     filename: '[name].bundle.js',
-    library: "PlusAuthKit",
+    library: "PlusAuthWidget",
     libraryTarget: "umd",
     libraryExport: "default",
     umdNamedDefine: true,
