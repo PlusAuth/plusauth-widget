@@ -1,6 +1,6 @@
 {
   "name": "plusauth-widget",
-  "version": "0.0.0",
+  "version": "0.0.1-alpha.0",
   "main": "dist/plusauth-widget.min.js",
   "license": "MIT",
   "description": "Web widget for rendering PlusAuth views",
