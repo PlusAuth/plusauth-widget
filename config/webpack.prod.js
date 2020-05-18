@@ -7,7 +7,7 @@ const common = require('./webpack.common.js')
 
 module.exports = merge(common, {
   mode: 'production',
-  devtool: false,
+  devtool: 'source-map',
   output: {
     path: path.resolve(__dirname, '../dist'),
     publicPath: '/',
@@ -17,6 +17,16 @@ module.exports = merge(common, {
   ],
   module: {
     rules: [
+      {
+        test: /\.m?js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env']
+          }
+        }
+      }
     ],
   },
 
@@ -27,13 +37,16 @@ module.exports = merge(common, {
    */
   optimization: {
     minimize: true,
-    minimizer: [new TerserJSPlugin({
-      terserOptions:{
-        ecma: 5,
-        safari10: true,
-        ie8: true
-      }
-    })]
+    minimizer: [
+      new TerserJSPlugin({
+        extractComments: false,
+        terserOptions:{
+          ecma: 5,
+          safari10: true,
+          ie8: true
+        }
+      })
+    ]
   },
   performance: {
     hints: false,
