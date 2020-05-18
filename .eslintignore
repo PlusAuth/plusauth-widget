@@ -6,3 +6,4 @@ dist/**
 .eslintrc.js
 scripts
 rollup.config.js
+public
