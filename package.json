@@ -1,8 +1,11 @@
 {
   "name": "pa-widget",
   "version": "0.0.0",
-  "main": "index.js",
+  "main": "dist/plusauthkit.min.js",
   "license": "MIT",
+  "description": "Web widget for rendering PlusAuth views",
+  "homepage": "https://github.com/PlusAuth/plusauth-widget#readme",
+  "repository": "https://github.com/PlusAuth/plusauth-widget",
   "author": {
     "email": "ayazismailhakki@gmail.com",
     "name": "Ismail H. Ayaz"
