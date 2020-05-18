@@ -1,3 +1,23 @@
 # plusauth-widget
-This widget is used by PlusAuth for rendering default views.
+This widget is a helper for rendering PlusAuth views.
 
+# Table of Contents
+1. [Getting Started](#getting-started)
+2. [Configuration](#configuration)
+
+# Getting Started
+First we need to add the script to our page
+```html
+<head>
+  <script src="https://unpkg.com/plusauth-widget@0.0.1-alpha.0/dist/plusauth-widget.js" type="application/javascript"></script>
+</head>
+```
+After that all we need to initialize the widget like following:
+```html
+<script >
+  new PlusAuthWidget() // will be rendered at document.body
+</script>
+```
+
+# Configuration
+TODO
