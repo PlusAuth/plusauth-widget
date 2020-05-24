@@ -5,8 +5,6 @@ import { App } from 'vue';
 import defaultDictionary from './i18n'
 import { createWidget } from './ui';
 import { IPlusAuthContext, IWidgetSettings } from './ui/interfaces';
-// @ts-ignore
-import css from './ui/styles/main.sass'
 
 export default class PlusAuthWidget {
   private _view: App<Element>;
