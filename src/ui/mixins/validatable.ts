@@ -196,7 +196,7 @@ export const Validatable: ComponentOptions = {
     resetValidation() {
       this.isResetting = true
     },
-    validate(force = false, value?: any): boolean {
+    async validate(force = false, value?: any): Promise<boolean> {
       const errorBucket = []
       value = value || this.internalValue
 
@@ -204,12 +204,15 @@ export const Validatable: ComponentOptions = {
 
       for (let index = 0; index < this.rules.length; index++) {
         const rule = this.rules[index]
-        const valid = typeof rule === 'function' ? rule(value) : rule
+        let valid = typeof rule === 'function' ? rule(value) : rule
+        if(Boolean(valid && typeof valid.then === 'function') ) {
+          valid = await valid
+        }
         if (valid === false || typeof valid === 'string') {
           errorBucket.push(valid || '')
         } else if (typeof valid !== 'boolean') {
           // eslint-disable-next-line max-len
-          console.error(`Rules should return a string or boolean, received '${typeof valid}' instead`, this)
+          console.error(`Rules should return a string or boolean, received '${typeof valid}' instead`, valid)
         }
       }
 

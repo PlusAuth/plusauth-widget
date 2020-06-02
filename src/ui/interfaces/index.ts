@@ -19,13 +19,13 @@ export type WidgetModes = 'login' | 'register'
 export type SocialConnections = 'google' | 'facebook' | 'linkedin'
 
 export type FieldValidator<T extends (string | number)> = (
-  this: Translator,
+  this: Translator & { checkPasswordStrength: (...args: any) => any },
   fields: {
     [key in T]: FieldDefinition;
   },
   value: any
 )
-=> string | boolean;
+=> string | boolean | Promise<string | boolean>;
 
 
 export interface AdditionalFields {

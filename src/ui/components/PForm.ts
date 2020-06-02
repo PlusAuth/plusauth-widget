@@ -70,13 +70,13 @@ export default defineComponent({
 
       return watchers
     },
-    /** @public */
+    /** @dev */
     validate(): boolean {
       return this.inputs.filter(function (input: any) {
         return !input.validate(true);
       }).length === 0
     },
-    /** @public */
+    /** @dev */
     reset(): void {
       this.inputs.forEach(function (input: any) {
         return input.reset();
@@ -91,7 +91,7 @@ export default defineComponent({
         }, 0)
       }
     },
-    /** @public */
+    /** @dev */
     resetValidation() {
       this.inputs.forEach(function (input: any) {
         return input.resetValidation();

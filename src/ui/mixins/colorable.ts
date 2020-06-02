@@ -27,7 +27,7 @@ export const Colorable: ComponentOptions = {
       }
       if (isCssColor(color)) {
         data.style = {
-          ...data.style as object,
+          ...data.style as Record<string, unknown>,
           'background-color': `${color}`,
           'border-color': `${color}`,
         }
@@ -56,7 +56,7 @@ export const Colorable: ComponentOptions = {
       }
       if (isCssColor(color)) {
         data.style = {
-          ...data.style as object,
+          ...data.style as Record<string, unknown>,
           color: `${color}`,
           'caret-color': `${color}`,
         }

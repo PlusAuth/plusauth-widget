@@ -34,7 +34,7 @@ export function setBackgroundColor(this: ComponentPublicInstance,
   }
   if (isCssColor(color)) {
     data.style = {
-      ...data.style as object,
+      ...data.style as Record<string, unknown>,
       'background-color': `${color}`,
       'border-color': `${color}`,
     }
@@ -48,7 +48,7 @@ export function setBackgroundColor(this: ComponentPublicInstance,
   return data
 }
 
-export function propertyAccessor(object: object,
+export function propertyAccessor(object: Record<string, any>,
                                  keys: string | null,
                                  array?: any[] | any): string | undefined {
   if(!object){
@@ -63,7 +63,8 @@ export function propertyAccessor(object: object,
   }
 }
 
-const toString: Function = Object.prototype.toString
+// eslint-disable-next-line @typescript-eslint/ban-types
+const toString: (...args: any) => string = Object.prototype.toString
 const OBJECT_STRING = '[object Object]'
 
 export function isPlainObject(obj: any): boolean {

@@ -25,6 +25,7 @@ module.exports = {
   ],
   rules: {
     "@typescript-eslint/ban-ts-ignore": "off",
+    "@typescript-eslint/ban-ts-comment": "off",
     "@typescript-eslint/indent": [ "error", 2, {
       "ArrayExpression": "first",
       "FunctionDeclaration": {
@@ -77,6 +78,7 @@ module.exports = {
         "code": 80
       }
     ],
+
     "no-debugger": "error",
     "no-extra-parens": "off",
     "no-mixed-spaces-and-tabs": "error",
@@ -105,6 +107,7 @@ module.exports = {
         "asyncArrow": "always",
         "named": "never"
       }
-    ]
+    ],
+    "vue/no-mutating-props": "warn"
   }
 };

@@ -19,12 +19,10 @@ export default {
   },
   fillMissing: {
     errors: {
-      // eslint-disable-next-line @typescript-eslint/camelcase
       phone_numberRequired: 'Phone Number is required',
       password: 'Password is required'
     },
     title: 'Fill missing information',
-    // eslint-disable-next-line @typescript-eslint/camelcase
     phone_number: 'Phone number',
     password: 'Password',
     submit: 'Submit',

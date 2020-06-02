@@ -101,7 +101,7 @@ export class Theme {
   }
 
   // Allows for you to set target theme
-  public setTheme(theme: 'light' | 'dark', value: object) {
+  public setTheme(theme: 'light' | 'dark', value: any) {
     this.themes[theme] = Object.assign(this.themes[theme], value)
     this.applyTheme()
   }

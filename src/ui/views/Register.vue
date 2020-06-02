@@ -14,18 +14,27 @@
     <div class="pa__form-title">
       <span v-t="'register.signUp'" />
     </div>
-    <template v-for="(options, field) in fields">
-      <p-text-field
-        :key="field"
-        v-model="options.value"
-        v-bind="options.attrs"
-        :error-messages="options.errors"
-        :type="options.type"
-        :label="options.label"
-        :rules="options.validator ?
-          [ validate.bind( null, options) ] : undefined"
-      />
-    </template>
+    <p-text-field
+      v-model="username"
+      label="register.username"
+      :rules="[ value => !!value ||
+        $i18n.t('register.errors.usernameRequired')]"
+    />
+    <p-text-field
+      v-model="password"
+      type="password"
+      label="register.password"
+      :rules="[ value => !!value ||
+        $i18n.t('register.errors.passwordRequired')]"
+    />
+    <p-text-field
+      v-model="repassword"
+      type="password"
+      label="register.repassword"
+      :rules="[ value => !!value ||
+        $i18n.t('register.errors.repasswordRequired')]"
+    />
+
     <div class="pt-4">
       <p-btn
         color="primary"
@@ -88,7 +97,7 @@ import { PForm } from '../components';
 import SocialConnectionButton from '../components/SocialConnectionButton';
 import { AdditionalFields, SocialConnections } from '../interfaces';
 import { resolveClientLogo } from '../utils';
-
+import { Translator, translatorKey } from '../utils/translator';
 
 export default defineComponent({
   name: 'Register',
@@ -123,9 +132,14 @@ export default defineComponent({
           attrs: {
             autocomplete: 'new-password'
           },
-          validator(fields, value){
+          async validator(fields, value){
             if(!value){
               return this.t('register.errors.passwordRequired')
+            } else {
+              const checkResult = await this.checkPasswordStrength(
+                value,
+                window['PlusAuth'].passwordPolicy)
+              console.log(checkResult)
             }
             return true
           }
@@ -154,26 +168,20 @@ export default defineComponent({
     }
   },
   setup(props){
-    const vm = getCurrentInstance()
-    const api = inject('api') as PlusAuth
     const form = ref<any>(null)
     const loading = ref(false)
+    const api = inject('api') as PlusAuth
 
+    const username = ref(null)
+    const password = ref(null)
+    const repassword = ref(null)
     return {
       ...reactive(props),
+      username,
+      password,
+      repassword,
       loading,
       resolveClientLogo,
-      validate: function (options: any, value: any) {
-        if(options.validator){
-          return options.validator.call(
-            vm?.appContext.config.globalProperties.$i18n,
-            props.fields,
-            value
-          )
-        }else {
-          return undefined
-        }
-      },
       async submit($event: Event){
         $event.preventDefault()
 
