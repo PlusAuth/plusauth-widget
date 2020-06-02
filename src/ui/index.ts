@@ -6,7 +6,7 @@ import { IPlusAuthContext, IWidgetSettings } from './interfaces';
 import { Translatable } from './mixins';
 import { router } from './utils/router';
 import { Theme } from './utils/theme';
-import { Translator } from './utils/translator';
+import { Translator, translatorKey } from './utils/translator';
 import App from './widget';
 
 export function createWidget(container: Element | string,
@@ -26,6 +26,7 @@ export function createWidget(container: Element | string,
 
   widget.directive('t', i18n)
   widget.mixin(Translatable)
+  widget.provide(translatorKey, translator)
   widget.use(router)
   widget.config.globalProperties.$i18n = translator
   widget.config.globalProperties.settings = reactive(settings)

@@ -9,16 +9,11 @@ import alias from '@rollup/plugin-alias';
 
 import { terser } from "rollup-plugin-terser";
 import { DEFAULT_EXTENSIONS } from '@babel/core';
-
+import livereload from 'rollup-plugin-livereload'
+import serve from 'rollup-plugin-serve'
 const extensions= [...DEFAULT_EXTENSIONS, '.ts', '.vue']
 
-console.log(process.env.NODE_ENV)
-const name = 'PlusAuthWidget';
-export default {
-  input: './src/index.ts',
-  external: [],
-
-  plugins: [
+const plugins = [
     alias({
       entries: {
         'vue': 'vue/dist/vue.runtime.esm-browser.prod.js'
@@ -41,7 +36,23 @@ export default {
       babelHelpers: 'bundled',
       include: ['src/**/*'],
     }),
-  ],
+  ]
+
+if (process.env.NODE_ENV === 'development') {
+  plugins.push(livereload())
+  plugins.push(serve({
+    historyApiFallback: true,
+    contentBase: ['dev', 'dist']
+  }))
+}
+
+console.log(process.env.NODE_ENV)
+const name = 'PlusAuthWidget';
+export default {
+  input: './src/index.ts',
+  external: [],
+
+  plugins,
 
   output: [
     {

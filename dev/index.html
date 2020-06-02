@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head >
+  <meta charset="UTF-8" >
+  <title >Title</title >
+  <script type="application/javascript" src="/plusauth-widget.min.js"></script >
+</head >
+<body >
+<div>
+  <a href="/signin" > Login </a >
+  <a href="/signup" > Register </a >
+</div>
+<div id="app">
+
+</div>
+<script >
+  window.PlusAuth = {
+    client : {
+      logoUri: 'http://api.plusauth.com/images/logo.png'
+    },
+    passwordPolicy: {
+      min: 4
+    },
+    details: {
+      email: 'test@plusauth.com',
+      challenges: [
+        'sms',
+        'email',
+        'ga'
+      ]
+    }
+  }
+  const auth = new PlusAuthWidget('#app', {
+  }, window.PlusAuth)
+  auth.view.mode = 'login'
+</script >
+</body >
+</html >
