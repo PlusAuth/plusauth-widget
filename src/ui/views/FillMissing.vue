@@ -19,6 +19,7 @@
       <p-text-field
         :key="field"
         v-model="options.value"
+        :error-messages="options.errors"
         v-bind="options.attrs"
         :type="options.type"
         :label="options.label"

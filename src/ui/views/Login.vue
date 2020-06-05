@@ -19,6 +19,7 @@
         :key="field"
         v-model="options.value"
         v-bind="options.attrs"
+        :error-messages="options.errors"
         :type="options.type"
         :label="options.label"
         :rules="options.validator ?
