@@ -1,5 +1,3 @@
-import { Translator } from '../utils/translator';
-
 export interface IClient {
   logoUri?: string;
   clientName?: string;
@@ -19,7 +17,6 @@ export type WidgetModes = 'login' | 'register'
 export type SocialConnections = 'google' | 'facebook' | 'linkedin'
 
 export type FieldValidator<T extends (string | number)> = (
-  this: Translator & { checkPasswordStrength: (...args: any) => any },
   fields: {
     [key in T]: FieldDefinition;
   },
@@ -37,6 +34,7 @@ export interface FieldDefinition {
   value?: unknown;
   label: string;
   validator?: FieldValidator<keyof AdditionalFields>;
+  errors?: string | string[] | null
   [key: string]: any;
 }
 

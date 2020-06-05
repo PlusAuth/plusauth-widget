@@ -15,7 +15,7 @@
       v-t="'fillMissing.title'"
       class="pa__form-title"
     />
-    <template v-for="(options, field) in fields">
+    <template v-for="(options, field) in _fields">
       <p-text-field
         :key="field"
         v-model="options.value"
@@ -41,12 +41,13 @@
 
 <script lang="ts">
 import PlusAuth from 'plusauth-web';
-import { defineComponent, getCurrentInstance,
+import { defineComponent,
   inject, reactive, ref } from 'vue';
 
-import { PForm } from '../components';
 import { AdditionalFields } from '../interfaces';
 import { resolveClientLogo } from '../utils';
+import form_generics from '../utils/form_generics';
+import { Translator, translatorKey } from '../utils/translator';
 
 
 export default defineComponent({
@@ -66,83 +67,62 @@ export default defineComponent({
       })
     },
   },
-  watch: {
-    finalFields: {
-      handler(this: any){
-        const contextFields = this['context']?.details?.fields
-        if(contextFields){
-          if(Array.isArray(contextFields)){
-            contextFields.forEach(field => {
-              this.fields[field] = {
-                value: null,
-                type: 'text',
-                label: `fillMissing.${field}`,
-                validator(fields: any, value: any){
-                  if(!value){
-                    return this.t(`fillMissing.errors.${field}Required`)
-                  }
-                  return true
-                }
-              }
-            })
-          }
-        }
-      }, immediate: true
-    }
-  },
   setup(props){
-    const vm = getCurrentInstance()
     const api = inject('api') as PlusAuth
-    const loading = ref(false)
-    const form = ref<any>(null)
+    const translator = inject(translatorKey) as Translator
 
+    const context = inject('context') as any
+    const contextFields = context?.details?.fields
+    const _fields = reactive({})
+
+    if(contextFields){
+      if(Array.isArray(contextFields)){
+        contextFields.forEach(field => {
+          let fieldName: string
+          let fieldType: string
+          if(typeof field === 'string'){
+            fieldName = field
+            fieldType = 'text'
+          }else {
+            fieldName = field.name
+            fieldType= field.type
+          }
+          _fields[field] = {
+            value: null,
+            type: fieldType,
+            label: `fillMissing.${fieldName}`,
+            validator(fields: any, value: any){
+              if(!value){
+                return translator.t(`fillMissing.errors.${fieldName}Required`)
+              }
+              return true
+            }
+          }
+        })
+      }
+    }
+
+    const { form, loading, submit, validate } = form_generics(_fields, async (fieldsWithValues) => {
+      try{
+        await api.auth.updateMissingInformation(fieldsWithValues)
+      }catch (e) {
+        if(e.field){
+          _fields[e.field].errors = e.error
+        }else{
+          // TODO: display error somewhere
+          console.error(e)
+        }
+      }
+    })
     return {
-      ...reactive(props),
+      _fields,
+      context,
+      translator,
       resolveClientLogo,
       form,
       loading,
-      async submit($event: Event): Promise<boolean> {
-        $event.preventDefault()
-
-        loading.value = true
-
-        const valid = form.value?.validate()
-        if(valid){
-          form.value?.resetValidation()
-          const fieldsWithValues = Object.keys(props.fields)
-            .reduce((prev, curr) => {
-              prev[curr] = props.fields[curr].value
-              return prev
-            }, {})
-          try{
-            await api.auth.updateMissingInformation(fieldsWithValues)
-          }catch (e) {
-            if(e.field){
-              props.fields[e.field].errors = e.error
-            }else{
-              // TODO: display error somewhere
-              console.error(e)
-            }
-          }finally {
-            loading.value = false
-          }
-          return false
-        }else{
-          loading.value = false
-          return false
-        }
-      },
-      validate: function (options: any, value: any): any {
-        if(options.validator){
-          return options.validator.call(
-            vm?.appContext.config.globalProperties.$i18n,
-            props.fields,
-            value
-          )
-        }else {
-          return undefined
-        }
-      },
+      submit,
+      validate,
     }
   },
 })

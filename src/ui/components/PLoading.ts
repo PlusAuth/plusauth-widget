@@ -1,9 +1,9 @@
 import { ComponentPublicInstance } from '@vue/runtime-core';
 import { VNode, computed, defineComponent, h } from 'vue';
 
-import { colorableProps } from '../common_props';
 import { Colorable } from '../mixins';
 import { convertToUnit } from '../utils';
+import { colorableProps } from '../utils/common_props';
 
 const RADIUS = 20;
 

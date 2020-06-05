@@ -30,8 +30,7 @@ export default defineComponent({
       if (!this.hasMessages) return []
 
       return this.validations.map((validation: string | any) => {
-        if (typeof validation === 'string') return validation
-
+        if (typeof validation === 'string' || validation?.constructor === Object) return validation
         const validationResult = validation(this.internalValue)
 
         return typeof validationResult === 'string' ? validationResult : ''
@@ -108,7 +107,11 @@ export default defineComponent({
             [i18n, this.label]
           ]) : '',
         this.$slots.append ? this.$slots.append(): '',]),
-      h(Message, {
+      this.$slots.message ? this.$slots.message({
+        message: this.messagesToDisplay,
+        hasState: this.hasState,
+        focus: this.isFocused
+      }) : h(Message, {
         class: 'pa__input-details',
         value: this.messagesToDisplay
       }),

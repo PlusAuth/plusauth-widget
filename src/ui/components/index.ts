@@ -1,5 +1,6 @@
 import { App } from 'vue';
 
+import PasswordStrength from './PasswordStrength';
 import PButton from './PBtn';
 import PForm from './PForm';
 import PLoading from './PLoading';
@@ -11,7 +12,8 @@ export {
   PForm,
   PLoading,
   PMessage,
-  PTextField
+  PTextField,
+  PasswordStrength
 }
 
 export function installComponents(Vue: App<Element>): void{

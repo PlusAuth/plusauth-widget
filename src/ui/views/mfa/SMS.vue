@@ -22,14 +22,17 @@
       } }"
       class="subtitle-2 text-left"
     />
-    <p-text-field
-      v-model="code"
-      label="mfa.sms.code"
-      :error-messages="error"
-      :rules="[
-        v => !!v ? true : 'mfa.sms.errors.codeRequired'
-      ]"
-    />
+    <template v-for="(options, field) in fields">
+      <p-text-field
+        :key="field"
+        v-model="options.value"
+        v-bind="options.attrs"
+        :type="options.type"
+        :label="options.label"
+        :rules="options.validator ?
+          [ validate.bind( null, options) ] : undefined"
+      />
+    </template>
 
     <p-btn
       type="submit"
@@ -56,6 +59,9 @@ import PlusAuth from 'plusauth-web';
 import { defineComponent, inject, ref } from 'vue';
 
 import PTimer from '../../components/PTimer';
+import { AdditionalFields } from '../../interfaces';
+import form_generics from '../../utils/form_generics';
+import { Translator, translatorKey } from '../../utils/translator';
 
 export default defineComponent({
   name: 'SMS',
@@ -68,38 +74,38 @@ export default defineComponent({
   },
   setup(){
     const api = inject('api') as PlusAuth
-    const code = ref<string | null>(null)
-    const error = ref<string>(null as any)
-    const form = ref(null as any)
-    const loading = ref(false)
-    return {
-      code,
-      loading,
-      error,
-      form,
-      async submit($event: Event){
-        $event.preventDefault()
+    const context = inject('context') as any
+    const translator = inject(translatorKey) as Translator
 
-        loading.value = true
-
-        const valid = form.value?.validate()
-        if(valid){
-            form.value?.resetValidation()
-            try{
-              await api.mfa.validateCode(
-                code.value as string,
-                'sms'
-              )
-            }catch (e) {
-              error.value = e.error;
-            }finally {
-              loading.value = false
-            }
-            return false
-        }else{
-          loading.value = false
+    const fields: AdditionalFields = {
+      code: {
+        type: 'text',
+        label: 'mfa.sms.code',
+        validator(fields, value){
+          if(!value){
+            return translator.t('mfa.sms.errors.codeRequired')
+          }
+          return true
         }
       }
+    }
+    const { form, loading, submit, validate } = form_generics(fields, async (fieldWithValues) => {
+      try{
+        await api.mfa.validateCode(
+          fieldWithValues.code.value as string,
+          'sms'
+        )
+      }catch (e) {
+        fields.code.errors = e.error;
+      }
+    })
+    return {
+      loading,
+      fields,
+      form,
+      context,
+      validate,
+      submit
     }
   }
 })

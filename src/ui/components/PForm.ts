@@ -71,10 +71,15 @@ export default defineComponent({
       return watchers
     },
     /** @dev */
-    validate(): boolean {
-      return this.inputs.filter(function (input: any) {
-        return !input.validate(true);
-      }).length === 0
+    async validate(): Promise<boolean> {
+      let invalid = 0;
+      for (let i = 0; i < this.inputs.length; i++) {
+        const input = this.inputs[i]
+        if(!await input.validate(true)){
+          invalid++
+        }
+      }
+      return invalid === 0
     },
     /** @dev */
     reset(): void {

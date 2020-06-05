@@ -85,46 +85,34 @@ details?id=com.google.android.apps.authenticator2"
 import PlusAuth from 'plusauth-web';
 import { inject, ref } from 'vue';
 
-import { PForm } from '../../components';
 import PCodeInput from '../../components/PCodeInput';
+import form_generics from '../../utils/form_generics';
 export default {
   name: 'GA',
   components: { PCodeInput },
   setup(){
     const api = inject('api') as PlusAuth
+    const context = inject('context') as any
     const code = ref<string>(null as any)
     const error = ref<string>(null as any)
-    const form = ref<any>(null as any)
-    const loading = ref<boolean>(false)
 
+    const { form, loading, submit } = form_generics({}, async (fieldWithValues) => {
+      try{
+        await api.mfa.validateCode(
+          code.value as string,
+          'ga'
+        )
+      }catch (e) {
+        error.value = e.error;
+      }
+    })
     return {
       code,
+      context,
       error,
       form,
       loading,
-      async submit($event: Event){
-        $event.preventDefault()
-
-        loading.value = true
-
-        const valid = form.value?.validate()
-        if(valid){
-          form.value?.resetValidation()
-          try{
-            await api.mfa.validateCode(
-              code.value as string,
-              'ga'
-            )
-          }catch (e) {
-            error.value = e.error;
-          }finally {
-            loading.value = false
-          }
-          return false
-        }else{
-          loading.value = false
-        }
-      }
+      submit
     }
   }
 }

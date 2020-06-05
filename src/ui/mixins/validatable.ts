@@ -18,6 +18,7 @@ export const Validatable: ComponentOptions = {
       default: () => [],
     },
     readonly: Boolean,
+    validateOnInit: Boolean,
     rules: {
       type: Array ,
       default: () => [],
@@ -121,7 +122,7 @@ export const Validatable: ComponentOptions = {
         return this.internalSuccessMessages
       } else if (this.messages.length > 0) {
         return this.internalMessages
-      } else if (this.shouldValidate) {
+      } else if (this.shouldValidate || this.validateOnInit) {
         return this.errorBucket
       } else return []
     },
@@ -208,11 +209,8 @@ export const Validatable: ComponentOptions = {
         if(Boolean(valid && typeof valid.then === 'function') ) {
           valid = await valid
         }
-        if (valid === false || typeof valid === 'string') {
+        if (typeof valid === 'string' || valid !== true) {
           errorBucket.push(valid || '')
-        } else if (typeof valid !== 'boolean') {
-          // eslint-disable-next-line max-len
-          console.error(`Rules should return a string or boolean, received '${typeof valid}' instead`, valid)
         }
       }
 

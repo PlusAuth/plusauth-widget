@@ -31,13 +31,13 @@ export default defineComponent({
   },
   render(){
     return h('button', this.setBackgroundColor(this.color, {
+      ...this.$attrs,
       class: {
         'pa__btn': true,
         'pa__size--default': true,
         'pa__btn--loading': !!this.loading,
         'pa__btn--block': this.block
       },
-      ...this.$attrs
     }),
     [
       this.loading ? this.genLoader() : h('div', {

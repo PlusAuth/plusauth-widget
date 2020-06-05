@@ -26,14 +26,20 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
-import { Router } from 'vue-router';
+import { defineComponent, inject } from 'vue';
+import { useRouter } from 'vue-router';
+
 export default defineComponent( {
   name: 'Challenge',
-  beforeCreate() {
-    const challenges = this['context'].details.challenges
+  setup() {
+    const context = inject('context') as any
+    const challenges = context.details.challenges
+    const router = useRouter()
     if(challenges?.length === 1){
-      (this['$router'] as Router).replace({ name: challenges[0] })
+      router.replace({ name: challenges[0] })
+    }
+    return {
+      context
     }
   }
 })

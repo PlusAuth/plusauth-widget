@@ -44,8 +44,8 @@
         border-radius: 10px
 
         input.pa__text-field
-          display: block
-          width: 100%
+          display: flex
+          flex: 1 1 auto
           background: transparent
           font: 15px Montserrat, sans-serif !important
           color: #555555
@@ -103,18 +103,6 @@
     &-has-value
       .pa__input--label
         transform: translateY(-20px) scale(.75)
-    //&:focus
-    //    position: absolute
-    //    display: block
-    //    width: 100%
-    //    height: 100%
-    //    pointer-events: none
-    //    border: 1px solid #6675df
-    //    border-radius: 10px
-    //    visibility: hidden
-    //    opacity: 0
-    //    transition: top 0.3s
-    //    transform: scaleX(1.1) scaleY(1.3)
 
     .pa__input-prepend-icon
         right: 15px
@@ -124,10 +112,17 @@
         display: flex
         align-self: center
 
-    //&-has-value, &-focused
-    //  .pa__input--label
-    //    transform: scale(.75) translateY(-30px)
-    //    left: 0
+.pa__pw-toggle-visibility
+  display: flex
+  height: unset !important
+  border-radius: 0 9px 9px 0
+  border-left: inherit
+  align-self: stretch
+  &.pa__btn
+    &.pa__size--default
+      font-family: Montserrat, sans-serif
+      font-size: 0.775rem !important
+      min-width: 80px
 
 .pa__form-error
   color: red

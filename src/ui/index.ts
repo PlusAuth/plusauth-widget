@@ -28,9 +28,9 @@ export function createWidget(container: Element | string,
   widget.mixin(Translatable)
   widget.provide(translatorKey, translator)
   widget.use(router)
+  widget.provide('context', context)
   widget.config.globalProperties.$i18n = translator
   widget.config.globalProperties.settings = reactive(settings)
-  widget.config.globalProperties.context = reactive(context)
 
   installComponents(widget)
 

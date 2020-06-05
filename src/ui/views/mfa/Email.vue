@@ -8,18 +8,20 @@
       src="/images/icons/email_question.svg"
     >
     <div
-      v-t="{ path: 'mfa.email.title', args: { email: context.details.email
-      } }"
+      v-t="{ path: 'mfa.email.title', args: { email: context.details.email } }"
       class="subtitle-2 text-left"
     />
-    <p-text-field
-      v-model="code"
-      label="mfa.email.code"
-      :error-messages="error"
-      :rules="[
-        v => !!v ? true : 'mfa.email.errors.codeRequired'
-      ]"
-    />
+    <template v-for="(options, field) in fields">
+      <p-text-field
+        :key="field"
+        v-model="options.value"
+        v-bind="options.attrs"
+        :type="options.type"
+        :label="options.label"
+        :rules="options.validator ?
+          [ validate.bind( null, options) ] : undefined"
+      />
+    </template>
 
     <p-btn
       type="submit"
@@ -47,44 +49,47 @@ import PlusAuth from 'plusauth-web';
 import { defineComponent, inject, ref } from 'vue';
 
 import { PForm } from '../../components';
+import { AdditionalFields } from '../../interfaces';
+import form_generics from '../../utils/form_generics';
+import { Translator, translatorKey } from '../../utils/translator';
 
 
 export default defineComponent({
   name: 'Email',
   setup(){
     const api = inject('api') as PlusAuth
-    const code = ref<string | null>(null)
-    const error = ref<string>(null as any)
-    const form = ref<any>(null)
-    const loading = ref(false)
-    return {
-      code,
-      loading,
-      error,
-      form,
-      async submit($event: Event){
-        $event.preventDefault()
+    const context = inject('context') as any
+    const translator = inject(translatorKey) as Translator
 
-        loading.value = true
-
-        const valid = form.value?.validate()
-        if(valid){
-          form.value?.resetValidation()
-          try{
-            await api.mfa.validateCode(
-              code.value as string,
-              'email'
-            )
-          }catch (e) {
-            error.value = e.error;
-          }finally {
-            loading.value = false
+    const fields: AdditionalFields = {
+      code: {
+        type: 'text',
+        label: 'mfa.email.code',
+        validator(fields, value){
+          if(!value){
+            return translator.t('mfa.email.errors.codeRequired')
           }
-          return false
-        }else{
-          loading.value = false
+          return true
         }
       }
+    }
+    const { form, loading, submit, validate } = form_generics(fields, async (fieldWithValues) => {
+      try{
+        await api.mfa.validateCode(
+          fieldWithValues.code.value as string,
+          'email'
+        )
+      }catch (e) {
+        fields.code.errors = e.error;
+      }
+    })
+    return {
+      loading,
+      fields,
+      form,
+      context,
+      validate,
+      submit
     }
   }
 })

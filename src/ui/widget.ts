@@ -21,7 +21,7 @@ export default function (theme: Theme): any {
       },[
         h('div', {
           class: ['col', 'pa-8',
-                  'col-sm-6', 'col-md-5', 'col-lg-3', 'col-12',
+                  'col-sm-8', 'col-md-5', 'col-lg-4', 'col-12',
                   'elevation-1'
           ],
         }, h(RouterView))

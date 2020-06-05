@@ -20,13 +20,12 @@
           v-t="'forgotPassword.title'"
           class="pa__form-title"
         />
-        <template v-for="(options, field) in fields">
+        <template v-for="(options, field) in _fields">
           <p-text-field
             :key="field"
             v-model="options.value"
             v-bind="options.attrs"
             :type="options.type"
-            :error-messages="options.errors"
             :label="options.label"
             :rules="options.validator ?
               [ validate.bind( null, options) ] : undefined"
@@ -64,13 +63,14 @@
 </template>
 
 <script lang="ts">
+import deepmerge from 'deepmerge';
 import PlusAuth from 'plusauth-web';
-import { defineComponent, getCurrentInstance,
-  inject, reactive, ref } from 'vue';
+import { defineComponent, inject, reactive, ref } from 'vue';
 
-import { PForm } from '../components';
 import { AdditionalFields } from '../interfaces';
 import { resolveClientLogo } from '../utils';
+import form_generics from '../utils/form_generics';
+import { Translator, translatorKey } from '../utils/translator';
 
 export default defineComponent({
   name: 'ForgotPassword',
@@ -85,85 +85,60 @@ export default defineComponent({
     },
     fields: {
       type: Object as () => AdditionalFields,
-      default: (): AdditionalFields => ({
-        email: {
-          type: 'email',
-          label: 'forgotPassword.email',
-          validator(fields, value){
-            if(!value){
-              return this.t('forgotPassword.errors.emailRequired')
-            }
-            return true
-          }
-        }
-      })
+      default: (): AdditionalFields => ({})
     },
   },
   setup(props){
-    const vm = getCurrentInstance()
     const api = inject('api') as PlusAuth
-    const form = ref<any>(null)
-    const loading = ref(false)
     const actionCompleted = ref(false)
+    const context = inject('context') as any
+    const translator = inject(translatorKey) as Translator
 
+    const defaultFields: AdditionalFields = {
+      email: {
+        type: 'email',
+        label: 'forgotPassword.email',
+        validator(fields, value){
+          if(!value){
+            return translator.t('forgotPassword.errors.emailRequired')
+          }
+          return true
+        }
+      }
+    }
+    const _fields = reactive(deepmerge(defaultFields, props.fields))
+    const { form, loading, submit, validate } = form_generics(_fields, async (fieldsWithValues) => {
+      try{
+        await api.auth.requestResetPassword(
+          fieldsWithValues.email.value as string
+        )
+        actionCompleted.value= true
+      }catch (e) {
+        console.error(e)
+        switch (e.error) {
+          case 'user_not_found':
+            _fields.email['errors'] = e.error;
+            break;
+          case 'invalid_credentials':
+            _fields.email['errors'] = e.error;
+            break;
+          case 'email_not_verified':
+            // TODO: email not verified
+            break;
+          default:
+            _fields.email['errors'] = e.error
+        }
+      }
+    })
     return {
-      ...reactive(props),
+      _fields,
+      context,
       form,
       actionCompleted,
       loading,
       resolveClientLogo,
-      validate: function (options: any, value: any): any {
-        if(options.validator){
-          return options.validator.call(
-            vm?.appContext.config.globalProperties.$i18n,
-            props.fields,
-            value
-          )
-        }else {
-          return undefined
-        }
-      },
-      async submit($event: Event){
-        $event.preventDefault()
-
-        Object.values(props.fields).forEach(field => {
-          field.errors = null
-        })
-        loading.value = true
-        const valid = form.value?.validate()
-
-        if(valid){
-          form.value?.resetValidation()
-          try{
-            await api.auth.requestResetPassword(
-              props.fields.email.value as string
-            )
-            actionCompleted.value= true
-          }catch (e) {
-            console.error(e)
-            switch (e.error) {
-              case 'user_not_found':
-                props.fields.email['errors'] = e.error;
-                break;
-              case 'invalid_credentials':
-                props.fields.email['errors'] = e.error;
-                break;
-              case 'email_not_verified':
-                // TODO: email not verified
-                break;
-              default:
-                props.fields.email['errors'] = e.error
-            }
-          }finally {
-            loading.value = false
-          }
-          return false
-        }else{
-          loading.value = false
-        }
-
-      },
-
+      validate,
+      submit
     }
   },
 })

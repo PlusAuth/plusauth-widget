@@ -12,6 +12,8 @@ export default {
     forgotPassword: 'Forgot Password',
     noAccount: 'Don\'t have an account ?',
     password: 'Password',
+    showPassword: 'SHOW',
+    hidePassword: 'HIDE',
     signIn: 'Sign In',
     signInWith: 'or Sign in with',
     signUp: 'Sign Up',
@@ -70,6 +72,8 @@ export default {
     haveAccount: 'Have an account?',
     password: 'Password',
     rePassword: 'Confirm Password',
+    showPassword: 'SHOW',
+    hidePassword: 'HIDE',
     signIn: 'Sign In',
     signUp: 'Sign Up',
     signUpWith: 'or Sign Up with',
@@ -85,5 +89,14 @@ export default {
     newPassword: 'New Password',
     rePassword: 'Confirm Password',
     successfullyReset: 'Your password has been successfully reset.'
+  },
+  passwordPolicy: {
+    min: 'Minimum {0} character',
+    max: 'Maximum {0} character',
+    number: 'At least {0} number',
+    lowerCase: 'At least {0} lowercase character',
+    upperCase: 'At least {0} uppercase character',
+    customChars: 'At least one of {0}',
+    customRegexp: ''
   }
 }

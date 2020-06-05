@@ -14,17 +14,33 @@
     <div class="pa__form-title">
       <span v-t="'login.signIn'" />
     </div>
-    <template v-for="(options, field) in fields">
+    <template v-for="(options, field) in _fields">
       <p-text-field
         :key="field"
         v-model="options.value"
         v-bind="options.attrs"
         :type="options.type"
         :label="options.label"
-        :error-messages="options.errors"
         :rules="options.validator ?
-          [ validate.bind(null, options ) ] : undefined"
-      />
+          [ validate.bind( null, options) ] : undefined"
+      >
+        <template
+          v-if="field === 'password'"
+          #append
+        >
+          <p-btn
+            type="button"
+            tabindex="0"
+            class="pa__pw-toggle-visibility"
+            @click="options.type === 'password' ? options.type = 'text' : options.type =
+              'password'"
+          >
+            <span
+              v-t="options.type === 'password' ? 'login.showPassword' : 'login.hidePassword'"
+            />
+          </p-btn>
+        </template>
+      </p-text-field>
     </template>
 
     <div class="pt-4">
@@ -80,14 +96,15 @@
 </template>
 
 <script lang="ts">
+import deepmerge from 'deepmerge';
 import PlusAuth from 'plusauth-web';
-import { defineComponent, reactive,
-  ref, inject, getCurrentInstance } from 'vue';
+import { defineComponent, reactive, ref, inject } from 'vue';
 
-import { PForm } from '../components';
 import SocialConnectionButton from '../components/SocialConnectionButton';
 import { AdditionalFields } from '../interfaces';
 import { resolveClientLogo } from '../utils';
+import form_generics from '../utils/form_generics';
+import { Translator, translatorKey } from '../utils/translator';
 
 export default defineComponent({
   name: 'Login',
@@ -107,97 +124,70 @@ export default defineComponent({
     },
     fields: {
       type: Object as () => AdditionalFields,
-      default: (): AdditionalFields => ({
-        username: {
-          type: 'text',
-          label: 'login.username',
-          errors: [],
-          validator: function (fields, value){
-            if(!value){
-              return this.t('login.errors.usernameRequired')
-            }
-            return true
-          }
-        },
-        password: {
-          type: 'password',
-          label: 'login.password',
-          errors: [],
-          validator: function (fields, value){
-            if(!value){
-              return this.t('login.errors.passwordRequired')
-            }
-            return true
-          }
-        },
-      })
+      default: (): AdditionalFields => ({})
     },
   },
   setup(props){
-    const vm = getCurrentInstance()
     const api = inject('api') as PlusAuth
-    const form = ref<any>(null)
+    const context = inject('context') as any
     const passwordVisible = ref(false)
-    const loading = ref(false)
+    const translator = inject(translatorKey) as Translator
 
+    const defaultFields: AdditionalFields = {
+      username: {
+        attrs: {
+          autocomplete: 'username'
+        },
+        type: 'text',
+        label: 'login.username',
+        validator(fields, value){
+          if(!value){
+            return translator.t('login.errors.usernameRequired')
+          }
+          return true
+        }
+      },
+      password: {
+        type: 'password',
+        label: 'login.password',
+        errors: [],
+        validator: function (fields, value){
+          if(!value){
+            return translator.t('login.errors.passwordRequired')
+          }
+          return true
+        }
+      },
+    }
+    const _fields = reactive(deepmerge(defaultFields, props.fields))
+
+    const { form, loading, submit, validate } = form_generics(_fields, async (fieldWithValues) => {
+      try{
+        await api.auth.signIn(fieldWithValues)
+      }catch (e) {
+        switch (e.error) {
+          case 'user_not_found':
+            _fields.username['errors'] = e.error;
+            break;
+          case 'invalid_credentials':
+            _fields.password['errors'] = e.error;
+            break;
+          case 'email_not_verified':
+            // TODO: email not verified
+            break;
+          default:
+            _fields.password['errors'] = e.error
+        }
+      }
+    })
     return {
-      ...reactive(props),
+      _fields,
+      context,
       form,
       loading,
       passwordVisible,
-      validate: function (options: any, value: any) {
-        if(options.validator){
-          return options.validator.call(
-            vm?.appContext.config.globalProperties.$i18n,
-            props.fields,
-            value
-          )
-        }else {
-          return undefined
-        }
-      },
-      async submit($event: Event){
-        $event.preventDefault()
-
-        Object.values(props.fields).forEach(field => {
-          field.errors = null
-        })
-
-        loading.value = true
-
-        const valid = form.value?.validate()
-        if(valid){
-          form.value?.resetValidation()
-          try{
-            await api.auth.signIn(
-              Object.keys(props.fields).reduce( (prev: any, curr: string ) => {
-                prev[curr] = props.fields[curr].value
-                return prev;
-              }, {})
-            )
-          }catch (e) {
-            switch (e.error) {
-              case 'user_not_found':
-                props.fields.username['errors'] = e.error;
-                break;
-              case 'invalid_credentials':
-                props.fields.password['errors'] = e.error;
-                break;
-              case 'email_not_verified':
-                // TODO: email not verified
-                break;
-              default:
-                props.fields.password['errors'] = e.error
-            }
-          }finally {
-            loading.value = false
-          }
-          return false
-        }else{
-          loading.value = false
-        }
-
-      },
+      validate,
+      submit,
       resolveClientLogo
     }
 

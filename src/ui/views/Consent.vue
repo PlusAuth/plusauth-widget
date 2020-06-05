@@ -62,8 +62,10 @@ export default defineComponent({
   },
   setup(){
     const api = inject('api') as PlusAuth
+    const context = inject('context') as any
 
     return {
+      context,
       submit: api.auth.acceptConsent,
       reject: api.auth.rejectConsent,
       resolveClientLogo,
