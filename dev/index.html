@@ -4,11 +4,33 @@
   <meta charset="UTF-8" >
   <title >Title</title >
   <script type="application/javascript" src="/plusauth-widget.min.js"></script >
+  <style >
+    .dev-navbar {
+      position: absolute;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .dev-navbar a {
+      display: inline-flex;
+      padding: 10px;
+      text-align: center;
+      border: 1px solid #dedede;
+      text-decoration: none;
+    }
+  </style >
 </head >
 <body >
-<div>
+<div class="dev-navbar">
   <a href="/signin" > Login </a >
   <a href="/signup" > Register </a >
+  <a href="/updateMissingInformation" > Fill Missing </a >
+  <a href="/signin/recovery" > Password Recovery </a >
+  <a href="/resetPassword/token" > Password Reset </a >
+  <a href="/signin/challenge" > Challenge </a >
+  <a href="/signin/challenge/sms" > SMS </a >
+  <a href="/signin/challenge/email" > EMAIL </a >
+  <a href="/signin/challenge/ga" > GA </a >
 </div>
 <div id="app">
 
@@ -19,10 +41,21 @@
       logoUri: 'http://api.plusauth.com/images/logo.png'
     },
     passwordPolicy: {
-      min: 4
+      min: 4,
+      max: 16,
+      upperCase: 2,
+      lowerCase: 2,
+      number: 1,
+      customChars: '$!'
     },
     details: {
       email: 'test@plusauth.com',
+      fields: [
+        {
+          name: 'phone_number',
+          type: 'tel'
+        }
+      ],
       challenges: [
         'sms',
         'email',
