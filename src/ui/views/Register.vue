@@ -14,27 +14,51 @@
     <div class="pa__form-title">
       <span v-t="'register.signUp'" />
     </div>
-    <p-text-field
-      v-model="username"
-      label="register.username"
-      :rules="[ value => !!value ||
-        $i18n.t('register.errors.usernameRequired')]"
-    />
-    <p-text-field
-      v-model="password"
-      type="password"
-      label="register.password"
-      :rules="[ value => !!value ||
-        $i18n.t('register.errors.passwordRequired')]"
-    />
-    <p-text-field
-      v-model="repassword"
-      type="password"
-      label="register.repassword"
-      :rules="[ value => !!value ||
-        $i18n.t('register.errors.repasswordRequired')]"
-    />
-
+    <template v-for="(options, field) in _fields">
+      <p-text-field
+        :key="field"
+        v-model="options.value"
+        v-bind="options.attrs"
+        :error-messages="options.errors"
+        :validate-on-init="field === 'password'"
+        :type="options.type"
+        :label="options.label"
+        :rules="options.validator ?
+          [ validate.bind( null, options) ] : undefined"
+      >
+        <template
+          v-if="field === 'password'"
+          #append
+        >
+          <p-btn
+            type="button"
+            tabindex="0"
+            class="pa__pw-toggle-visibility"
+            @click="options.type === 'password' ? options.type = 'text' : options.type =
+              'password'"
+          >
+            <span
+              v-t="options.type === 'password' ? 'register.showPassword' : 'register.hidePassword'"
+            />
+          </p-btn>
+        </template>
+        <template
+          v-if="field === 'password'"
+          #message="{ message: [ message ], focus, hasState }"
+        >
+          <PasswordStrength
+            v-if="focus || hasState"
+            class="pa__input-details"
+            :message="message"
+            :value="options.value"
+          />
+          <div
+            v-else
+            style="min-height: 14px"
+          />
+        </template>
+      </p-text-field>
+    </template>
     <div class="pt-4">
       <p-btn
         color="primary"
@@ -89,19 +113,22 @@
 </template>
 
 <script lang="ts" >
+import deepmerge from 'deepmerge';
 import PlusAuth from 'plusauth-web';
 import { defineComponent, getCurrentInstance,
   inject, reactive, ref } from 'vue';
 
-import { PForm } from '../components';
+import { PForm, PasswordStrength } from '../components';
+import PBtn from '../components/PBtn';
 import SocialConnectionButton from '../components/SocialConnectionButton';
 import { AdditionalFields, SocialConnections } from '../interfaces';
 import { resolveClientLogo } from '../utils';
+import form_generics from '../utils/form_generics';
 import { Translator, translatorKey } from '../utils/translator';
 
 export default defineComponent({
   name: 'Register',
-  components: { SocialConnectionButton },
+  components: { SocialConnectionButton, PasswordStrength },
   props: {
     features: {
       type: Object,
@@ -112,55 +139,7 @@ export default defineComponent({
     },
     fields: {
       type: Object as () => AdditionalFields,
-      default: (): AdditionalFields => ({
-        username: {
-          attrs: {
-            autocomplete: 'username'
-          },
-          type: 'text',
-          label: 'register.username',
-          validator(fields, value){
-            if(!value){
-              return this.t('register.errors.usernameRequired')
-            }
-            return true
-          }
-        },
-        password: {
-          type: 'password',
-          label: 'register.password',
-          attrs: {
-            autocomplete: 'new-password'
-          },
-          async validator(fields, value){
-            if(!value){
-              return this.t('register.errors.passwordRequired')
-            } else {
-              const checkResult = await this.checkPasswordStrength(
-                value,
-                window['PlusAuth'].passwordPolicy)
-              console.log(checkResult)
-            }
-            return true
-          }
-        },
-        rePassword: {
-          type: 'password',
-          label: 'register.rePassword',
-          attrs: {
-            autocomplete: 'new-password'
-          },
-          validator(fields, value){
-            if(!value){
-              return this.t('register.errors.rePasswordRequired')
-            }
-            if(fields.password.value !== value){
-              return this.t('register.errors.passwordsNotMatch')
-            }
-            return true
-          }
-        }
-      })
+      default: () => ({})
     },
     socialConnections: {
       type: Array as () => SocialConnections[],
@@ -168,61 +147,82 @@ export default defineComponent({
     }
   },
   setup(props){
-    const form = ref<any>(null)
-    const loading = ref(false)
     const api = inject('api') as PlusAuth
+    const context = inject('context') as any
+    const translator = inject(translatorKey) as Translator
 
-    const username = ref(null)
-    const password = ref(null)
-    const repassword = ref(null)
+    const defaultFields: AdditionalFields = {
+      username: {
+        attrs: {
+          autocomplete: 'username'
+        },
+        type: 'text',
+        label: 'register.username',
+        validator(fields, value){
+          if(!value){
+            return translator.t('register.errors.usernameRequired')
+          }
+          return true
+        }
+      },
+      password: {
+        type: 'password',
+        label: 'register.password',
+        attrs: {
+          autocomplete: 'new-password'
+        },
+        async validator(fields, value){
+          return api.auth.checkPasswordStrength(value, context.passwordPolicy)
+        }
+      },
+      rePassword: {
+        type: 'password',
+        label: 'register.rePassword',
+        attrs: {
+          autocomplete: 'new-password'
+        },
+        validator(fields, value){
+          if(!value){
+            return translator.t('register.errors.rePasswordRequired')
+          }
+          if(fields.password.value !== value){
+            return translator.t('register.errors.passwordsNotMatch')
+          }
+          return true
+        }
+      }
+    }
+
+    const _fields = reactive(deepmerge(defaultFields, props.fields))
+
+    const { form, loading, submit, validate } = form_generics(_fields, async (fieldWithValues) => {
+      try{
+        await api.auth.signUp(fieldWithValues)
+      }catch (e) {
+        switch (e.error) {
+          case 'already_exists':
+            _fields.username['errors'] = e.error;
+            break;
+          case 'invalid_credentials':
+            _fields.password['errors'] = e.error;
+            break;
+          case 'email_not_verified':
+            // TODO: email not verified
+            break;
+          default:
+            _fields.password['errors'] = e.error
+        }
+      }
+    })
+
     return {
-      ...reactive(props),
-      username,
-      password,
-      repassword,
+      form,
+      context,
+      _fields,
       loading,
       resolveClientLogo,
-      async submit($event: Event){
-        $event.preventDefault()
-
-        Object.values(props.fields).forEach(field => {
-          field.errors = null
-        })
-        loading.value = true
-        const valid = form.value?.validate()
-
-        if(valid){
-          form.value?.resetValidation()
-          try{
-            await api.auth.signUp(
-              Object.keys(props.fields).reduce( (prev: any, curr: string) => {
-                prev[curr] = props.fields[curr].value
-                return prev
-              }, {})
-            )
-          }catch (e) {
-            switch (e.error) {
-              case 'already_exists':
-                props.fields.username['errors'] = e.error;
-                break;
-              case 'invalid_credentials':
-                props.fields.password['errors'] = e.error;
-                break;
-              case 'email_not_verified':
-                // TODO: email not verified
-                break;
-              default:
-                props.fields.password['errors'] = e.error
-            }
-          }finally {
-            loading.value = false
-          }
-          return false
-        }else{
-          loading.value = false
-        }
-
-      },
+      validate,
+      submit
     }
   }
 })
