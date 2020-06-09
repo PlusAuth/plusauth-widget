@@ -1,3 +1,17 @@
+## [0.0.1-alpha.1](https://github.com/PlusAuth/plusauth-widget/compare/v0.0.1-alpha.0...v0.0.1-alpha.1) (2020-06-09)
+
+
+### Bug Fixes
+
+* missing error messages of form fields ([18da96d](https://github.com/PlusAuth/plusauth-widget/commit/18da96dc8a5739637ed4f9e2e3c3989d8ed6ba51))
+* password error message not displayed if policy doesnt exists ([df20b31](https://github.com/PlusAuth/plusauth-widget/commit/df20b3103a901c5d4d951a349dde7cd39bf07d2c))
+* password value displayed in password strength component ([634a8c2](https://github.com/PlusAuth/plusauth-widget/commit/634a8c229d1729b77c78c354fd8d0dded5261b1e))
+
+
+### Features
+
+* implement password strength policies ([8436b54](https://github.com/PlusAuth/plusauth-widget/commit/8436b542c8f9320b84ed51f702f71a9684844d50))
+
 ## 0.0.1-alpha.0 (2020-05-18)
 
 
