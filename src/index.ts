@@ -13,16 +13,21 @@ export default class PlusAuthWidget {
   constructor(container: Element | string,
     settings: Partial<IWidgetSettings> = {},
     context: Partial<IPlusAuthContext>) {
-    this.api = new PlusAuth(settings.apiUrl || window.location.origin)
+
+    this.api = new PlusAuth(settings.apiUrl ||
+    location.origin !== 'null' ? window.location.origin : '/')
+
     this._view = createWidget(container || document.body, deepmerge(settings, {
       locale: {
         defaultLocale: 'en',
         dictionary: defaultDictionary
       }
     }), context)
+
     this._view.provide('api', this.api)
   }
   get view(): IWidgetSettings {
+    // expose settings rather than vue app
     return this._view.config.globalProperties.settings;
   }
 }

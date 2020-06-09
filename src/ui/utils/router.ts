@@ -1,5 +1,10 @@
 import { defineComponent, h } from 'vue';
-import { createRouter, createWebHistory, RouterView } from 'vue-router';
+import {
+  createMemoryHistory,
+  createRouter,
+  createWebHistory,
+  RouterView
+} from 'vue-router';
 
 import Consent from '../views/Consent.vue';
 import FillMissing from '../views/FillMissing.vue';
@@ -17,8 +22,10 @@ const PlainRouterView = defineComponent( {
     return h(RouterView)
   }
 })
+
+
 export const router = createRouter({
-  history: createWebHistory(),
+  history: location.origin !== 'null' ? createWebHistory() : createMemoryHistory('/'),
   routes: [
     {
       path: '/signin',

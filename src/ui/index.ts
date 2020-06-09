@@ -21,8 +21,8 @@ export function createWidget(container: Element | string,
     light: true
   });
   theme.applyTheme();
-
-  const widget = createApp(App(theme));
+  const rSettings = reactive(settings)
+  const widget = createApp(App(theme, rSettings));
 
   widget.directive('t', i18n)
   widget.mixin(Translatable)
@@ -30,7 +30,7 @@ export function createWidget(container: Element | string,
   widget.use(router)
   widget.provide('context', context)
   widget.config.globalProperties.$i18n = translator
-  widget.config.globalProperties.settings = reactive(settings)
+  widget.config.globalProperties.settings = rSettings
 
   installComponents(widget)
 
