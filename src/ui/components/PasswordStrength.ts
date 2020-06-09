@@ -2,6 +2,8 @@ import { defineComponent, h, inject } from 'vue';
 
 import { Translator, translatorKey } from '../utils/translator';
 
+import PMessage from './PMessage';
+
 export default defineComponent({
   name: 'PasswordStrengthTooltip',
   props: {
@@ -12,7 +14,17 @@ export default defineComponent({
     const context = inject('context') as any
     return {
       generatePolicyElements(result: any) {
-        return Object.keys(context.passwordPolicy).map(( policy ) => {
+        if(!context.passwordPolicy || typeof result === 'string'){
+          return h(PMessage, {
+            class: 'pa__input-details',
+            value: result
+          })
+        }
+        return h('div', {
+          class: {
+            'pa-pw-strength': true
+          }
+        }, Object.keys(context.passwordPolicy).map(( policy ) => {
           const elemText = translator.t(
             `passwordPolicy.${ policy }`,
             [context.passwordPolicy[policy]]
@@ -30,14 +42,12 @@ export default defineComponent({
             elemText
           ])
         })
+        )
+
       }
     }
   },
   render(){
-    return h('div', {
-      class: {
-        'pa-pw-strength': true
-      }
-    }, this.generatePolicyElements(this.message))
+    return this.generatePolicyElements(this.message)
   }
 })
