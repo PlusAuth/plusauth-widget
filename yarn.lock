@@ -5307,10 +5307,10 @@ please-upgrade-node@^3.2.0:
   dependencies:
     semver-compare "^1.0.0"
 
-plusauth-web@^0.0.2-alpha.5:
-  version "0.0.2-alpha.5"
-  resolved "https://registry.yarnpkg.com/plusauth-web/-/plusauth-web-0.0.2-alpha.5.tgz#9d17b7935d49635af269d319fe3cd2d60fa10f3a"
-  integrity sha512-zx1XDFkqmP/tn/HxpZkHQeKeEw+6/E84itG/MzRJfE/3m58bs5r29tsaOgNlbz9nI/PsHIYiQ+IKoS1WyBbUzQ==
+plusauth-web@^0.0.2-alpha.6:
+  version "0.0.2-alpha.6"
+  resolved "https://registry.yarnpkg.com/plusauth-web/-/plusauth-web-0.0.2-alpha.6.tgz#07829abf5b29d5a2e6f82967c08b1a6e7d7344e8"
+  integrity sha512-htjxzAVptCh65lJ3jGx2gp40vw4IRAdGXBaCrW4i4bTGMpBQXF+rZfGrwrliPvydwxQT0SPbvFypyHY+XGz9vA==
   dependencies:
     whatwg-fetch "^3.0.0"
 
