@@ -75,7 +75,7 @@
               />
               <div
                 v-else
-                style="min-height: 14px"
+                class="pa__messages pa__input-details"
               />
             </template>
           </p-text-field>
