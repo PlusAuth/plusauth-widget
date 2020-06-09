@@ -9,7 +9,7 @@ This widget is a helper for rendering PlusAuth views.
 First we need to add the script to our page
 ```html
 <head>
-  <script src="https://unpkg.com/plusauth-widget@0.0.1-alpha.1/dist/plusauth-widget.js" type="application/javascript"></script>
+  <script src="https://unpkg.com/plusauth-widget@0.0.1-alpha.2/dist/plusauth-widget.min.js" type="application/javascript"></script>
 </head>
 ```
 After that all we need to initialize the widget like following:
