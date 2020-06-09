@@ -1,3 +1,10 @@
+## [0.0.1-alpha.2](https://github.com/PlusAuth/plusauth-widget/compare/v0.0.1-alpha.1...v0.0.1-alpha.2) (2020-06-09)
+
+
+### Features
+
+* resolve view from mode setting if set ([2ceaea0](https://github.com/PlusAuth/plusauth-widget/commit/2ceaea01849bfb6d1a5545a4c3d52a6f2cd7467b))
+
 ## [0.0.1-alpha.1](https://github.com/PlusAuth/plusauth-widget/compare/v0.0.1-alpha.0...v0.0.1-alpha.1) (2020-06-09)
 
 
