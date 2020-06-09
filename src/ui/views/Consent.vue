@@ -1,48 +1,46 @@
 <template>
-  <div class="col elevation-1 pa__8">
-    <p-form
-      class="text-center"
-      autocomplete="off"
-      @submit.prevent
+  <p-form
+    class="text-center"
+    autocomplete="off"
+    @submit.prevent
+  >
+    <img
+      style="max-height: 150px"
+      class="logo"
+      alt="Logo"
+      :src="resolveClientLogo(context.client)"
     >
-      <img
-        style="max-height: 150px"
-        class="logo"
-        alt="Logo"
-        :src="resolveClientLogo(context.client)"
+    <div class="pa__form-title">
+      <span
+        v-t="{ path: 'consent.title',
+               args: { clientName: context.client.clientName}
+        }"
+      />
+    </div>
+
+    <div class="text-left">
+      <template v-for="scope in scopes">
+        <li :key="scope">
+          {{ scope }}
+        </li>
+      </template>
+    </div>
+
+    <div class="pt-4">
+      <p-btn
+        color="success"
+        @click="allow"
       >
-      <div class="pa__form-title">
-        <span
-          v-t="{ path: 'consent.title',
-                 args: { clientName: context.client.clientName}
-          }"
-        />
-      </div>
-
-      <div class="text-left">
-        <template v-for="scope in scopes">
-          <li :key="scope">
-            {{ scope }}
-          </li>
-        </template>
-      </div>
-
-      <div class="pt-4">
-        <p-btn
-          color="success"
-          @click="allow"
-        >
-          <span v-t="'consent.allow'" />
-        </p-btn>
-        <p-btn
-          color="error"
-          @click="reject"
-        >
-          <span v-t="'consent.reject'" />
-        </p-btn>
-      </div>
-    </p-form>
-  </div>
+        <span v-t="'consent.allow'" />
+      </p-btn>
+      <p-btn
+        color="error"
+        @click="reject"
+      >
+        <span v-t="'consent.reject'" />
+      </p-btn>
+    </div>
+  </p-form>
 </template>
 
 <script lang="ts" >
