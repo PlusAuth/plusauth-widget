@@ -44,11 +44,10 @@
   </p-form>
 </template>
 
-<script lang="ts">
-import PlusAuth from 'plusauth-web';
-import { defineComponent, inject, ref } from 'vue';
+<script lang="ts" >
+import PlusAuth, { MFACodeType } from 'plusauth-web';
+import { defineComponent, inject } from 'vue';
 
-import { PForm } from '../../components';
 import { AdditionalFields } from '../../interfaces';
 import form_generics from '../../utils/form_generics';
 import { Translator, translatorKey } from '../../utils/translator';
@@ -77,7 +76,7 @@ export default defineComponent({
       try{
         await api.mfa.validateCode(
           fieldWithValues.code.value as string,
-          'email'
+          MFACodeType.EMAIL
         )
       }catch (e) {
         fields.code.errors = e.error;

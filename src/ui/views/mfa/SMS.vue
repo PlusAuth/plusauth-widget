@@ -54,9 +54,9 @@
   </p-form>
 </template>
 
-<script lang="ts">
-import PlusAuth from 'plusauth-web';
-import { defineComponent, inject, ref } from 'vue';
+<script lang="ts" >
+import PlusAuth, { MFACodeType } from 'plusauth-web';
+import { defineComponent, inject } from 'vue';
 
 import PTimer from '../../components/PTimer';
 import { AdditionalFields } from '../../interfaces';
@@ -93,7 +93,7 @@ export default defineComponent({
       try{
         await api.mfa.validateCode(
           fieldWithValues.code.value as string,
-          'sms'
+          MFACodeType.SMS
         )
       }catch (e) {
         fields.code.errors = e.error;

@@ -81,12 +81,13 @@ details?id=com.google.android.apps.authenticator2"
   </p-form>
 </template>
 
-<script lang="ts">
-import PlusAuth from 'plusauth-web';
+<script lang="ts" >
+import PlusAuth, { MFACodeType } from 'plusauth-web';
 import { inject, ref } from 'vue';
 
 import PCodeInput from '../../components/PCodeInput';
 import form_generics from '../../utils/form_generics';
+
 export default {
   name: 'GA',
   components: { PCodeInput },
@@ -100,7 +101,7 @@ export default {
       try{
         await api.mfa.validateCode(
           code.value as string,
-          'ga'
+          MFACodeType.GA
         )
       }catch (e) {
         error.value = e.error;
