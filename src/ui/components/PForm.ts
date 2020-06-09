@@ -2,7 +2,6 @@ import { defineComponent, h } from 'vue';
 
 export default defineComponent({
   name: 'PForm',
-  inheritAttrs: false,
 
   provide(){
     return {
@@ -12,6 +11,7 @@ export default defineComponent({
       }
     }
   },
+  inheritAttrs: false,
   props: {
     lazyValidation: Boolean,
     value: Boolean,

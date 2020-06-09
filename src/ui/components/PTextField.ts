@@ -16,6 +16,22 @@ export default defineComponent({
     label: { type: String, default: null },
     modelValue: { type: null, default: null },
   },
+  setup(props ){
+    const inputRef = ref<string>(null as any)
+    const vm = getCurrentInstance()
+    const state = reactive({
+      isFocused: false,
+      isActivated: false,
+      lazyValue: props.modelValue
+    })
+    return { ...toRefs(state),
+      inputRef,
+      focus(){
+        // @ts-ignore
+        vm?.refs.inputRef.focus()
+      }
+    }
+  },
   computed: {
     internalValue: {
       get(): any {
@@ -40,22 +56,6 @@ export default defineComponent({
   watch: {
     modelValue(value){
       this.lazyValue = value
-    }
-  },
-  setup(props ){
-    const inputRef = ref<string>(null as any)
-    const vm = getCurrentInstance()
-    const state = reactive({
-      isFocused: false,
-      isActivated: false,
-      lazyValue: props.modelValue
-    })
-    return { ...toRefs(state),
-      inputRef,
-      focus(){
-        // @ts-ignore
-        vm?.refs.inputRef.focus()
-      }
     }
   },
   render(){
