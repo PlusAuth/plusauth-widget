@@ -72,7 +72,6 @@
                 v-if="focus || hasState"
                 class="pa__input-details"
                 :message="message"
-                :value="options.value"
               />
               <div
                 v-else
