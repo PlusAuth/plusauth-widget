@@ -34,6 +34,8 @@ export default {
       emailRequired: 'Email is required',
     },
     email: 'Email',
+    emailSent: 'If there is an account with {email.value} you will receive an email containing a' +
+      ' link to reset your password.',
     submit: 'Submit',
     title: 'Reset your password'
   },

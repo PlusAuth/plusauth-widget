@@ -55,7 +55,7 @@
           >
         </div>
         <div
-          v-t="'forgotPassword.emailSent'"
+          v-t="{ path: 'forgotPassword.emailSent', args: _fields }"
           class="col col-12 text-center"
         />
       </div>
