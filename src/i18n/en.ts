@@ -32,6 +32,7 @@ export default {
   forgotPassword: {
     errors: {
       emailRequired: 'Email is required',
+      notValidEmail: 'Please enter a valid email address',
     },
     email: 'Email',
     emailSent: 'If there is an account with {email.value} you will receive an email containing a' +

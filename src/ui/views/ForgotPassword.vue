@@ -69,7 +69,7 @@ import PlusAuth from 'plusauth-web';
 import { defineComponent, inject, reactive, ref } from 'vue';
 
 import { AdditionalFields } from '../interfaces';
-import { resolveClientLogo } from '../utils';
+import { isEmail, resolveClientLogo } from '../utils';
 import form_generics from '../utils/form_generics';
 import { Translator, translatorKey } from '../utils/translator';
 
@@ -102,6 +102,9 @@ export default defineComponent({
         validator(fields, value){
           if(!value){
             return translator.t('forgotPassword.errors.emailRequired')
+          }
+          if( !isEmail(value)){
+            return translator.t('forgotPassword.errors.notValidEmail')
           }
           return true
         }

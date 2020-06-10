@@ -161,3 +161,7 @@ export function keysToDotNotation(obj: Record<string, any>,
 export function escapeRegExp(string: string) {
   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
+
+export function isEmail(value: string): boolean {
+  return /^[\w.!#$%&’*+/=?^_`{|}~-]+@[\w-]+(?:\.[\w-]+)*$/.test(value)
+}
