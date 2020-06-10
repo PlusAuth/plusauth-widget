@@ -142,7 +142,7 @@ export default defineComponent({
           autocomplete: 'new-password'
         },
         async validator(fields, value){
-          return !value ? translator.t('resetPassword.errors.passwordRequired') :
+          return !value ? translator.t('resetPassword.errors.newPasswordRequired') :
             api.auth.checkPasswordStrength(value,
               context.passwordPolicy || {})
         }
