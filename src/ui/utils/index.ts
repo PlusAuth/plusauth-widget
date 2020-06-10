@@ -139,3 +139,25 @@ export function looseEqual(a: any, b: any): boolean {
 export function resolveClientLogo(client: IClient) {
   return client?.logoUri || ''
 }
+
+export function keysToDotNotation(obj: Record<string, any>,
+                                  current?: string,
+                                  final?: Record<string, any>): Record<string, any>{
+  if(!final) {
+    final = {}
+  }
+  for (const key in obj) {
+    const value = obj[key]
+    const newKey = current ? `${current}.${key}` : key  // joined key with dot
+    if (value && typeof value === 'object') {
+      keysToDotNotation(value, newKey, final);  // it's a nested object, so do it again
+    } else {
+      final[newKey] = value;  // it's not an object, so set the property
+    }
+  }
+  return final
+}
+
+export function escapeRegExp(string: string) {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}

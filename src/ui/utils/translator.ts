@@ -1,4 +1,4 @@
-import { isObject, parseArgs, propertyAccessor } from '.';
+import { escapeRegExp, isObject, keysToDotNotation, parseArgs, propertyAccessor } from '.';
 
 export const translatorKey = Symbol('t')
 
@@ -33,9 +33,13 @@ export class Translator {
     if(Array.isArray(args)){
       args.forEach(arg => {
         if(isObject(arg)){
-          Object.keys(arg).forEach(key => {
-            str = str.replace(`{${key}}`,
-              arg[key] === null || arg[key] === undefined ? '' : arg[key])
+          const normalizedArg = keysToDotNotation(arg)
+          Object.keys(normalizedArg).forEach(key => {
+            const searchRegexp = new RegExp(`\\{\\s*${escapeRegExp(key)}\\s*\\}`, 'gm')
+            str = str.replace(searchRegexp,
+              normalizedArg[key] === null ||
+              normalizedArg[key] === undefined ? '' : normalizedArg[key]
+            )
           })
         }
       })
