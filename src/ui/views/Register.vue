@@ -11,7 +11,7 @@
       alt="Logo"
       :src="resolveClientLogo(context.client)"
     >
-    <div class="pa__form-title">
+    <div class="title">
       <span v-t="'register.signUp'" />
     </div>
     <template v-for="(options, field) in _fields">

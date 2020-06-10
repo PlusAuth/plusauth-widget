@@ -13,7 +13,7 @@
     >
     <div
       v-t="'fillMissing.title'"
-      class="pa__form-title"
+      class="title"
     />
     <template v-for="(options, field) in _fields">
       <p-text-field

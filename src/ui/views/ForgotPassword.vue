@@ -18,7 +18,11 @@
         >
         <div
           v-t="'forgotPassword.title'"
-          class="pa__form-title"
+          class="title"
+        />
+        <div
+          v-t="'forgotPassword.subtitle'"
+          class="subtitle-1"
         />
         <template v-for="(options, field) in _fields">
           <p-text-field

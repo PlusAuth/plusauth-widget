@@ -38,6 +38,7 @@ export default {
     emailSent: 'If there is an account with {email.value} you will receive an email containing a' +
       ' link to reset your password.',
     submit: 'Submit',
+    subtitle: 'Please enter your email address to request a password reset',
     title: 'Reset your password'
   },
   mfa: {
@@ -83,6 +84,7 @@ export default {
     username: 'Username'
   },
   resetPassword: {
+    title: 'Reset Password',
     errors: {
       newPasswordRequired: 'Password is required',
       passwordsNotMatch: 'Passwords doesn\'t match',
