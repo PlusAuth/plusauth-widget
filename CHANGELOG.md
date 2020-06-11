@@ -1,3 +1,17 @@
+## [0.0.1-alpha.3](https://github.com/PlusAuth/plusauth-widget/compare/v0.0.1-alpha.2...v0.0.1-alpha.3) (2020-06-11)
+
+
+### Bug Fixes
+
+* empty body on forgot and reset password requests ([0d49fa3](https://github.com/PlusAuth/plusauth-widget/commit/0d49fa3ea0f8bed94a1e6893e9ac2abc4883d385))
+* nested translate arguments are not resolved ([4e5fbae](https://github.com/PlusAuth/plusauth-widget/commit/4e5fbae46210e0a37be8250e4134b80551b6373e))
+* wrong message for password required ([731d0f0](https://github.com/PlusAuth/plusauth-widget/commit/731d0f05360850f67b313285ec2b8befc3dd90aa))
+
+
+### Features
+
+* add email validator ([554861e](https://github.com/PlusAuth/plusauth-widget/commit/554861e893053321d9d3f6231a7a3255552ac6ad))
+
 ## [0.0.1-alpha.2](https://github.com/PlusAuth/plusauth-widget/compare/v0.0.1-alpha.1...v0.0.1-alpha.2) (2020-06-09)
 
 
