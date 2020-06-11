@@ -1,3 +1,5 @@
+## [0.0.1-alpha.4](https://github.com/PlusAuth/plusauth-widget/compare/v0.0.1-alpha.3...v0.0.1-alpha.4) (2020-06-11)
+
 ## [0.0.1-alpha.3](https://github.com/PlusAuth/plusauth-widget/compare/v0.0.1-alpha.2...v0.0.1-alpha.3) (2020-06-11)
 
 
