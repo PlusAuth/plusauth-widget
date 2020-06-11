@@ -165,7 +165,7 @@ export default defineComponent({
     const { form, loading, submit, validate } = form_generics(_fields, async (fieldWithValues) => {
       try{
         await api.auth.resetPassword(
-          fieldWithValues.password.value as string,
+          fieldWithValues.password as string,
           route.params.token as string
         )
         actionCompleted.value= true
