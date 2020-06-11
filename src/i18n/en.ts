@@ -93,6 +93,7 @@ export default {
     informNewPassword: 'This is your temporary password.',
     newPassword: 'New Password',
     rePassword: 'Confirm Password',
+    submit: 'Submit',
     successfullyReset: 'Your password has been successfully reset.'
   },
   passwordPolicy: {
