@@ -1,3 +1,10 @@
+## [0.0.1-alpha.7](https://github.com/PlusAuth/plusauth-widget/compare/v0.0.1-alpha.6...v0.0.1-alpha.7) (2020-06-16)
+
+
+### Bug Fixes
+
+* this is undefined in consent reject calls ([6ed2271](https://github.com/PlusAuth/plusauth-widget/commit/6ed22715bdc872a934a40ef1c2cdeb968bed70e0))
+
 ## [0.0.1-alpha.6](https://github.com/PlusAuth/plusauth-widget/compare/v0.0.1-alpha.5...v0.0.1-alpha.6) (2020-06-16)
 
 
