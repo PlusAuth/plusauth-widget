@@ -1,3 +1,10 @@
+## [0.0.1-alpha.5](https://github.com/PlusAuth/plusauth-widget/compare/v0.0.1-alpha.4...v0.0.1-alpha.5) (2020-06-16)
+
+
+### Bug Fixes
+
+* wrong function call for consent submit ([ddc1628](https://github.com/PlusAuth/plusauth-widget/commit/ddc1628a9d46a6da6978a6a4623f78688398b606))
+
 ## [0.0.1-alpha.4](https://github.com/PlusAuth/plusauth-widget/compare/v0.0.1-alpha.3...v0.0.1-alpha.4) (2020-06-11)
 
 ## [0.0.1-alpha.3](https://github.com/PlusAuth/plusauth-widget/compare/v0.0.1-alpha.2...v0.0.1-alpha.3) (2020-06-11)
