@@ -64,8 +64,12 @@ export default defineComponent({
 
     return {
       context,
-      allow: api.auth.acceptConsent,
-      reject: api.auth.rejectConsent,
+      allow(){
+        return api.auth.acceptConsent()
+      },
+      reject(){
+        return api.auth.rejectConsent
+      } ,
       resolveClientLogo,
     }
   }
