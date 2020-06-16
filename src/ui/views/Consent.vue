@@ -68,7 +68,7 @@ export default defineComponent({
         return api.auth.acceptConsent()
       },
       reject(){
-        return api.auth.rejectConsent
+        return api.auth.rejectConsent()
       } ,
       resolveClientLogo,
     }
