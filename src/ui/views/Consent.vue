@@ -64,7 +64,7 @@ export default defineComponent({
 
     return {
       context,
-      submit: api.auth.acceptConsent,
+      allow: api.auth.acceptConsent,
       reject: api.auth.rejectConsent,
       resolveClientLogo,
     }
