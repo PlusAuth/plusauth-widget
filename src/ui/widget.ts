@@ -1,4 +1,4 @@
-import { defineComponent, h } from 'vue';
+import { defineComponent, h, ref,onBeforeUnmount } from 'vue';
 import './styles/main.sass'
 
 import { RouterView, useRoute } from 'vue-router';
@@ -46,9 +46,28 @@ export default function (theme: Theme, settings: any): any {
     provide: {
       theme
     },
+    setup(){
+      const isMobile = ref(false)
+      function onResize() {
+        isMobile.value = window.innerWidth < 600
+      }
+      onResize()
+      window.addEventListener('resize', onResize, { passive: true })
+
+      onBeforeUnmount(() => {
+        if (typeof window !== 'undefined') {
+          // @ts-ignore
+          window.removeEventListener('resize', onResize, { passive: true })
+        }
+      })
+
+      return {
+        isMobile
+      }
+    },
     render(){
       return h('div', {
-        class: 'pa__widget row',
+        class: 'pa__widget container fill-height',
         style: {
           margin: 0,
           alignItems: 'center',
@@ -56,11 +75,18 @@ export default function (theme: Theme, settings: any): any {
         }
       },[
         h('div', {
-          class: ['col', 'pa-8',
-                  'col-sm-8', 'col-md-5', 'col-lg-4', 'col-12',
-                  'elevation-1'
-          ],
-        }, resolveViewFromValue(settings.mode))
+          class: ['row', 'justify-center'],
+        },
+        h('div', {
+          class: {
+            col: true,
+            'col-sm-12': true,
+            'col-md-6': true,
+            'col-lg-4': true,
+            'col-12': true,
+            'elevation-1': !this.isMobile
+          }
+        }, resolveViewFromValue(settings.mode)))
       ])
     }
   });
