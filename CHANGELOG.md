@@ -1,3 +1,10 @@
+## [0.0.1-alpha.8](https://github.com/PlusAuth/plusauth-widget/compare/v0.0.1-alpha.7...v0.0.1-alpha.8) (2020-06-17)
+
+
+### Bug Fixes
+
+* provided scopes are not listed ([b198055](https://github.com/PlusAuth/plusauth-widget/commit/b19805585be84a50fd1c210c4be1985a637bebc0))
+
 ## [0.0.1-alpha.7](https://github.com/PlusAuth/plusauth-widget/compare/v0.0.1-alpha.6...v0.0.1-alpha.7) (2020-06-16)
 
 
