@@ -19,7 +19,7 @@
     </div>
 
     <div class="text-left">
-      <template v-for="scope in scopes">
+      <template v-for="scope in _scopes">
         <li :key="scope">
           {{ scope }}
         </li>
@@ -55,14 +55,16 @@ export default defineComponent({
   props: {
     scopes: {
       type: Array,
-      default: () => ['test', 'test2']
+      default: () => []
     }
   },
-  setup(){
+  setup(props){
     const api = inject('api') as PlusAuth
     const context = inject('context') as any
 
+    const _scopes = [...props.scopes, ...context.details.scopes?.new]
     return {
+      _scopes,
       context,
       allow(){
         return api.auth.acceptConsent()
