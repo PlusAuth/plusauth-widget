@@ -68,8 +68,8 @@
 </template>
 
 <script lang="ts">
+import { PlusAuthWeb } from '@plusauth/web';
 import deepmerge from 'deepmerge';
-import PlusAuth from 'plusauth-web';
 import { defineComponent, inject, reactive, ref } from 'vue';
 
 import { AdditionalFields } from '../interfaces';
@@ -94,7 +94,7 @@ export default defineComponent({
     },
   },
   setup(props){
-    const api = inject('api') as PlusAuth
+    const api = inject('api') as PlusAuthWeb
     const actionCompleted = ref(false)
     const context = inject('context') as any
     const translator = inject(translatorKey) as Translator

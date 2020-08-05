@@ -97,8 +97,8 @@
 </template>
 
 <script lang="ts">
+import { PlusAuthWeb } from '@plusauth/web';
 import deepmerge from 'deepmerge';
-import PlusAuth from 'plusauth-web';
 import { defineComponent, reactive, ref, inject } from 'vue';
 
 import SocialConnectionButton from '../components/SocialConnectionButton';
@@ -129,7 +129,7 @@ export default defineComponent({
     },
   },
   setup(props){
-    const api = inject('api') as PlusAuth
+    const api = inject('api') as PlusAuthWeb
     const context = inject('context') as any
     const passwordVisible = ref(false)
     const translator = inject(translatorKey) as Translator

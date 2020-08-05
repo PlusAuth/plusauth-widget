@@ -82,7 +82,7 @@ details?id=com.google.android.apps.authenticator2"
 </template>
 
 <script lang="ts" >
-import PlusAuth, { MFACodeType } from 'plusauth-web';
+import { PlusAuthWeb, MFACodeType } from '@plusauth/web';
 import { inject, ref } from 'vue';
 
 import PCodeInput from '../../components/PCodeInput';
@@ -92,7 +92,7 @@ export default {
   name: 'GA',
   components: { PCodeInput },
   setup(){
-    const api = inject('api') as PlusAuth
+    const api = inject('api') as PlusAuthWeb
     const context = inject('context') as any
     const code = ref<string>(null as any)
     const error = ref<string>(null as any)

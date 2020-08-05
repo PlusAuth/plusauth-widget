@@ -55,7 +55,7 @@
 </template>
 
 <script lang="ts" >
-import PlusAuth, { MFACodeType } from 'plusauth-web';
+import { PlusAuthWeb, MFACodeType } from '@plusauth/web';
 import { defineComponent, inject } from 'vue';
 
 import PTimer from '../../components/PTimer';
@@ -73,7 +73,7 @@ export default defineComponent({
     }
   },
   setup(){
-    const api = inject('api') as PlusAuth
+    const api = inject('api') as PlusAuthWeb
     const context = inject('context') as any
     const translator = inject(translatorKey) as Translator
 

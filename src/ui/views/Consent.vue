@@ -44,7 +44,7 @@
 </template>
 
 <script lang="ts" >
-import PlusAuth from 'plusauth-web';
+import { PlusAuthWeb } from '@plusauth/web';
 import { defineComponent, inject } from 'vue';
 
 import { resolveClientLogo } from '../utils';
@@ -59,7 +59,7 @@ export default defineComponent({
     }
   },
   setup(props){
-    const api = inject('api') as PlusAuth
+    const api = inject('api') as PlusAuthWeb
     const context = inject('context') as any
 
     const _scopes = [...props.scopes, ...context.details.scopes?.new]

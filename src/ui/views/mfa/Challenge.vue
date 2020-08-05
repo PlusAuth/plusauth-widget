@@ -16,7 +16,7 @@
     >
       <a
         :href="'/signin/challenge/'+ challenge"
-        class="pa__btn pa__btn--block justify-start"
+        class="pa__btn pa__btn--block justify-start px-4 py-2"
         @click.stop=""
       >
         <span v-t="'mfa.challenge.'+ challenge" />

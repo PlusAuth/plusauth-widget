@@ -45,7 +45,7 @@
 </template>
 
 <script lang="ts" >
-import PlusAuth, { MFACodeType } from 'plusauth-web';
+import { PlusAuthWeb, MFACodeType } from '@plusauth/web';
 import { defineComponent, inject } from 'vue';
 
 import { AdditionalFields } from '../../interfaces';
@@ -56,7 +56,7 @@ import { Translator, translatorKey } from '../../utils/translator';
 export default defineComponent({
   name: 'Email',
   setup(){
-    const api = inject('api') as PlusAuth
+    const api = inject('api') as PlusAuthWeb
     const context = inject('context') as any
     const translator = inject(translatorKey) as Translator
 

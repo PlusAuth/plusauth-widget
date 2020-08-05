@@ -69,7 +69,6 @@ export default function (theme: Theme, settings: any): any {
       return h('div', {
         class: 'pa__widget container fill-height',
         style: {
-          margin: 0,
           alignItems: 'center',
           justifyContent: 'center',
         }
