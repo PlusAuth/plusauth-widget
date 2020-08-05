@@ -1,4 +1,4 @@
-# plusauth-widget
+# @plusauth/plusauth-widget
 This widget is a helper for rendering PlusAuth views.
 
 # Table of Contents
