@@ -11,9 +11,11 @@
       v-t="{ path: 'mfa.email.title', args: { email: context.details.email } }"
       class="subtitle-2 text-left"
     />
-    <template v-for="(options, field) in fields">
+    <template
+      v-for="(options, field) in fields"
+      :key="field"
+    >
       <p-text-field
-        :key="field"
         v-model="options.value"
         v-bind="options.attrs"
         :type="options.type"

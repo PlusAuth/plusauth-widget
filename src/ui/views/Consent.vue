@@ -19,8 +19,11 @@
     </div>
 
     <div class="text-left">
-      <template v-for="scope in _scopes">
-        <li :key="scope">
+      <template
+        v-for="scope in _scopes"
+        :key="scope"
+      >
+        <li>
           {{ scope }}
         </li>
       </template>

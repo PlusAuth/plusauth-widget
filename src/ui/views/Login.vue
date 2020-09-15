@@ -14,9 +14,11 @@
     <div class="title">
       <span v-t="'login.signIn'" />
     </div>
-    <template v-for="(options, field) in _fields">
+    <template
+      v-for="(options, field) in _fields"
+      :key="field"
+    >
       <p-text-field
-        :key="field"
         v-model="options.value"
         v-bind="options.attrs"
         :error-messages="options.errors"

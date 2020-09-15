@@ -15,9 +15,11 @@
       v-t="'fillMissing.title'"
       class="title"
     />
-    <template v-for="(options, field) in _fields">
+    <template
+      v-for="(options, field) in _fields"
+      :key="field"
+    >
       <p-text-field
-        :key="field"
         v-model="options.value"
         :error-messages="options.errors"
         v-bind="options.attrs"
