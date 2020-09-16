@@ -66,7 +66,7 @@ export default defineComponent({
     const api = inject('api') as PlusAuthWeb
     const context = inject('context') as any
 
-    const _scopes = [...props.scopes, ...context.details.scopes?.new]
+    const _scopes = [...props.scopes, ...context.details.scopes?.new || []]
     return {
       _scopes,
       context,
