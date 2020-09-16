@@ -15,6 +15,7 @@ export default defineComponent({
     type: { type: String, default: 'text' },
     label: { type: String, default: null },
     modelValue: { type: null, default: null },
+    hideMessages: { type: Boolean, default: false }
   },
   setup(props ){
     const inputRef = ref<string>(null as any)
@@ -107,14 +108,14 @@ export default defineComponent({
             [i18n, this.label]
           ]) : '',
         this.$slots.append ? this.$slots.append(): '',]),
-      this.$slots.message ? this.$slots.message({
+      !this.hideMessages ? this.$slots.message ? this.$slots.message({
         message: this.messagesToDisplay,
         hasState: this.hasState,
         focus: this.isFocused
       }) : h(Message, {
         class: 'pa__input-details',
         value: this.messagesToDisplay
-      }),
+      }): null,
 
     ])
   }
