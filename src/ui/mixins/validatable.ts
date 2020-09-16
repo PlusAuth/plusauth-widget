@@ -38,7 +38,7 @@ export const Validatable: ComponentOptions = {
       hasInput: false,
       isFocused: false,
       isResetting: false,
-      lazyValue: this.modelValue,
+      lazyValue: null,
       valid: false,
     }
   },
@@ -171,6 +171,7 @@ export const Validatable: ComponentOptions = {
   },
 
   beforeMount() {
+    this.lazyValue = this.modelValue
     this.validate()
   },
 
