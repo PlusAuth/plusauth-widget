@@ -15,30 +15,30 @@ import ResetPassword from './views/ResetPassword.vue';
 function resolveViewFromValue(value = ''){
   const route = useRoute()
   if (route.matched.length > 0) {
-    return h(RouterView)
+    return RouterView
   }
   switch (value.toLowerCase()){
     case 'login':
     case 'signin':
-      return h(Login);
+      return Login;
     case 'register':
     case 'signup':
-      return h(Register);
+      return Register;
     case 'mfa':
     case 'challenge':
-      return h(Challenge);
+      return Challenge;
     case 'verifyemail':
-      return h(Login);
+      return Login;
     case 'consent':
-      return h(Consent);
+      return Consent;
     case 'recovery':
-      return h(ForgotPassword);
+      return ForgotPassword;
     case 'resetpassword':
-      return h(ResetPassword);
+      return ResetPassword;
     case 'fillmissing':
-      return h(FillMissing);
+      return FillMissing;
     default:
-      return h(RouterView)
+      return RouterView
   }
 }
 export default function (theme: Theme, settings: any): any {
@@ -87,7 +87,7 @@ export default function (theme: Theme, settings: any): any {
             'pa__col-12': true,
             'pa__elevation-1': !this.isMobile
           }
-        }, resolveViewFromValue(settings.mode)))
+        }, h(resolveViewFromValue(settings.mode) as any)))
       ])
     }
   });
