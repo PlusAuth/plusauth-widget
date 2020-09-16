@@ -1,3 +1,22 @@
+# [0.1.0](https://github.com/PlusAuth/plusauth-widget/compare/v0.0.2...v0.1.0) (2020-09-16)
+
+
+### Bug Fixes
+
+* consent screen crashes when no scopes exists in context ([e020814](https://github.com/PlusAuth/plusauth-widget/commit/e020814ddaedade30002368443b7629acb1ef03f))
+* lazyvalue typing error in validatable mixin ([8108dfc](https://github.com/PlusAuth/plusauth-widget/commit/8108dfc81b18391ace4e9def065d5348b69b6d8b))
+
+
+### Features
+
+* add flat prop and textColor to button component ([9c7dfbf](https://github.com/PlusAuth/plusauth-widget/commit/9c7dfbfe1b78d32489b27783135ee2ab2a551326))
+* add textColor to colorable mixin ([96c5150](https://github.com/PlusAuth/plusauth-widget/commit/96c5150fac0d3f3c8da7a84172222510b2065fb8))
+* add title for otp code screen ([358f1d7](https://github.com/PlusAuth/plusauth-widget/commit/358f1d791a6280e4b6138b0b117b769d2e717700))
+* add transition to message component ([d49da84](https://github.com/PlusAuth/plusauth-widget/commit/d49da846f7c8cf3bac731864523acadb0608ba23))
+* allow textField component to accepts same events used internally ([63ef2f7](https://github.com/PlusAuth/plusauth-widget/commit/63ef2f7462e48f697f81838c2813990a899f9710))
+* hideMessages option for textField component ([fa353b3](https://github.com/PlusAuth/plusauth-widget/commit/fa353b372739fd471a209c33be3afda65043258c))
+* make theme customizable ([49468eb](https://github.com/PlusAuth/plusauth-widget/commit/49468ebad3a5932b1457d24d228557d41ee82104))
+
 ## [0.0.2](https://github.com/PlusAuth/plusauth-widget/compare/v0.0.1...v0.0.2) (2020-08-05)
 
 ## [0.0.1](https://github.com/PlusAuth/plusauth-widget/compare/v0.0.1-alpha.8...v0.0.1) (2020-08-05)
