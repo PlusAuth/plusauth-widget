@@ -51,6 +51,12 @@ details?id=com.google.android.apps.authenticator2"
       </h3>
       <h4>3. Enable Google Two Factor Authentication</h4>
     </template>
+    <template v-else>
+      <div
+        v-t="{ path: 'mfa.ga.title'}"
+        class="subtitle-2 text-left"
+      />
+    </template>
     <PCodeInput
       v-model="code"
       color="primary"

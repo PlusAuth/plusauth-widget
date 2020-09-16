@@ -64,6 +64,9 @@ export default {
       submit: 'Submit',
       title: 'Enter verification code sent to: {phone_number}'
     },
+    ga: {
+      title: 'Enter verification code:'
+    },
     tryAnotherWay: 'Try another way'
   },
   register: {
