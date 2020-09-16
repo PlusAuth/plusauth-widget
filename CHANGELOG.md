@@ -1,3 +1,10 @@
+## [0.1.1](https://github.com/PlusAuth/plusauth-widget/compare/v0.1.0...v0.1.1) (2020-09-16)
+
+
+### Features
+
+* prefix all css classes ([0a30e71](https://github.com/PlusAuth/plusauth-widget/commit/0a30e71954c668079dd620cdca7b92646267640c))
+
 # [0.1.0](https://github.com/PlusAuth/plusauth-widget/compare/v0.0.2...v0.1.0) (2020-09-16)
 
 
