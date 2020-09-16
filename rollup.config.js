@@ -6,11 +6,12 @@ import pkg from './package.json';
 import postcss from 'rollup-plugin-postcss';
 import typescript from 'rollup-plugin-typescript2'
 import alias from '@rollup/plugin-alias';
-
 import { terser } from "rollup-plugin-terser";
 import { DEFAULT_EXTENSIONS } from '@babel/core';
 import livereload from 'rollup-plugin-livereload'
 import serve from 'rollup-plugin-serve'
+import purgecss from '@fullhuman/postcss-purgecss';
+
 const extensions= [...DEFAULT_EXTENSIONS, '.ts', '.vue']
 
 const plugins = [
@@ -24,7 +25,17 @@ const plugins = [
     vue(),
 
     postcss({
-      minimize: true
+      minimize: true,
+      plugins: [
+        purgecss({
+          content: [
+            './src/**/*.html',
+            './src/**/*.vue',
+            './src/**/*.ts'
+          ],
+          defaultExtractor: content => content.match(/[^<>"'`\s]*[^<>"'`\s:]/g) || []
+        })
+      ]
     }),
     typescript({
       include: [/\.tsx?$/, /\.vue\?.*?lang=ts/],

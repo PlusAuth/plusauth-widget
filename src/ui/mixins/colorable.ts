@@ -9,7 +9,7 @@ export const Colorable: ComponentOptions = {
 
   props: {
     color: String,
-    textColor: { type: String, required: false, default: 'white' }
+    textColor: { type: String, required: false, default: '#fff' }
   },
 
   methods: {
