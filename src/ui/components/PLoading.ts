@@ -3,7 +3,6 @@ import { VNode, computed, defineComponent, h } from 'vue';
 
 import { Colorable } from '../mixins';
 import { convertToUnit } from '../utils';
-import { colorableProps } from '../utils/common_props';
 
 const RADIUS = 20;
 
@@ -44,7 +43,7 @@ export default defineComponent({
   name: 'PLoading',
   mixins: [Colorable],
   props: {
-    ...colorableProps,
+    ...Colorable.props,
     button: Boolean,
     indeterminate: Boolean,
     rotate: {
