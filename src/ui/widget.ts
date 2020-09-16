@@ -78,6 +78,8 @@ export default function (theme: Theme, settings: any): any {
         },
         h('div', {
           class: {
+            'pa-8': !this.isMobile,
+            'pa-4': this.isMobile,
             col: true,
             'col-sm-12': true,
             'col-md-6': true,
