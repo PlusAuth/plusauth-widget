@@ -17,9 +17,8 @@ export default defineComponent({
     modelValue: { type: null, default: null },
     hideMessages: { type: Boolean, default: false }
   },
-  setup(props, { emit } ){
+  setup(props){
     const inputRef = ref<string>(null as any)
-    const vm = getCurrentInstance()
     const state = reactive({
       isFocused: false,
       isActivated: false,
