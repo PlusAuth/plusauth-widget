@@ -3,13 +3,20 @@ import {
   computed, getCurrentInstance, ref,
 } from 'vue';
 
+import { PTextField } from '.';
 
-function generateDigitInput(index: any, model: any, onUpdate: any,
+
+function generateDigitInput(index: any, ref: any, model: any, onUpdate: any,
                             onInput: any){
-  return  h('input', {
-    modelValue: model,
+  return  h(PTextField, {
+    modelValue: model.value,
     key: index,
     type: 'tel',
+    ref,
+    hideMessages: true,
+    rules: [
+      (v: any) => !!v
+    ],
     class: {
       'pa__code-input--digit-box': true
     },
@@ -34,6 +41,15 @@ function initializeDigitsModel(size: number) {
   }
   return digits
 }
+function initializeInputRefs(size: number) {
+  const inputRefs = []
+  for (let i = 0; i < size ; i++) {
+    // @ts-ignore
+    inputRefs.push(ref<typeof PTextField>(null))
+  }
+  return inputRefs
+}
+
 export default defineComponent({
   name: 'PCodeInput',
   props: {
@@ -42,9 +58,10 @@ export default defineComponent({
       default: 6
     }
   },
+  emits: ['update:modelValue'],
   setup(props, ctx){
-    const vm = getCurrentInstance()
     const digits = initializeDigitsModel(props.size)
+    const inputRefs = initializeInputRefs(props.size)
     const innerModelValue = computed(() => {
       return Object.keys(digits).reduce((p, c) => {
         if(digits[c].value !== null){
@@ -56,23 +73,10 @@ export default defineComponent({
     })
     return {
       digits,
+      inputRefs,
       onDigitInput(index: number, val: any){
-        const valueChars = val.toString();
-        if(val){
-          const focusIndex =index + valueChars.length < props.size ?
-            index + valueChars.length : props.size -1
-          for (let i = 0; i < valueChars.length; i++) {
-            if (index + i < props.size) {
-              digits[index + i].value = valueChars[i]
-              // @ts-ignore
-              vm.vnode.el.children[index + i].value = valueChars[i]
-            }
-          }
-          vm?.vnode.el?.children[focusIndex ].focus()
-        }else{
-          digits[index].value = 0
-          // @ts-ignore
-          vm.vnode.el.children[index].value = digits[index].value
+        if (!val) {
+          digits[index].value = null
         }
         ctx.emit('update:modelValue', innerModelValue.value)
       },
@@ -84,10 +88,8 @@ export default defineComponent({
           // 0-9 only
           event.preventDefault()
           digits[index].value = pressedKey
-          // @ts-ignore
-          vm.vnode.el.children[index].value = pressedKey
           const focusIndex =index + 1 < props.size ? index + 1 : props.size - 1
-          vm?.vnode.el?.children[focusIndex].focus()
+          inputRefs[focusIndex].value.focus()
         }else{
           event.preventDefault()
         }
@@ -97,17 +99,12 @@ export default defineComponent({
     }
   },
   render(){
-    const digitInputs: VNode[] = []
-    for (let i =0; i< this.size; i++){
-      digitInputs.push(
-        generateDigitInput.call(this, i, this.digits[i], this.onDigitUpdate,
-          this.onDigitInput)
-      )
-    }
     return h('div', {
       class: {
         'pa__code-input': true
       }
-    }, digitInputs)
+    }, Array(this.size).fill(0).map((v, i) =>
+      generateDigitInput.call(this, i, this.inputRefs[i], this.digits[i], this.onDigitUpdate,
+        this.onDigitInput)))
   }
 })
