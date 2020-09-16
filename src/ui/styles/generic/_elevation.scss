@@ -1,6 +1,6 @@
 @import '../tools/elevation';
 
-$z: 24;
+$z: 12;
 @while $z >= 0 {
   .pa__widget .elevation-#{$z} {
     @include elevation($z, $important: true);

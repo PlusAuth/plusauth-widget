@@ -1,11 +1,11 @@
 @import '../styles'
 
 // Theme
-+theme(pa__input--selection-controls) using ($material)
+.pa__input--selection-controls
   &.pa__input--is-disabled:not(.pa__input--indeterminate)
     .pa__icon
       // needed for helper override
-      color: map-deep-get($material, 'buttons', 'disabled') !important
+      color: map-deep-get($material-theme, 'buttons', 'disabled') !important
 
 .pa__input--selection-controls
   margin-top: $input-top-spacing

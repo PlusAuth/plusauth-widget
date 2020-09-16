@@ -10,31 +10,31 @@
   &.error,
   &.warning,
   &.info
-    color: map-deep-get($material-dark, 'text', 'primary')
+    color: map-deep-get($material-theme, 'text', 'primary')
 
-+theme(pa__btn) using ($material)
-  color: map-deep-get($material, 'text', 'primary')
+.pa__btn
+  color: map-deep-get($material-theme, 'text', 'primary')
 
   &.pa__btn--disabled
-    color: map-deep-get($material, 'buttons', 'disabled') !important
+    color: map-deep-get($material-theme, 'buttons', 'disabled') !important
 
     .pa__icon,
     .pa__btn__loading
-      color: map-deep-get($material, 'buttons', 'disabled') !important
+      color: map-deep-get($material-theme, 'buttons', 'disabled') !important
 
     &:not(.pa__btn--flat):not(.pa__btn--text):not(.pa__btn--outlined)
-      background-color: map-deep-get($material, 'buttons', 'focused') !important
+      background-color: map-deep-get($material-theme, 'buttons', 'focused') !important
 
   &:not(.pa__btn--flat):not(.pa__btn--text):not(.pa__btn--outlined)
-    background-color: map-get($material, 'app-bar')
+    background-color: map-get($material-theme, 'app-bar')
 
   &.pa__btn--outlined.pa__btn--text
-    border-color: map-get($material, 'dividers')
+    border-color: map-get($material-theme, 'dividers')
 
   &.pa__btn--icon
-    color: map-deep-get($material, 'icons', 'active')
+    color: map-deep-get($material-theme, 'icons', 'active')
 
-  +states($material)
+  +states($material-theme)
 
 // Block
 .pa__btn
@@ -169,7 +169,6 @@
   display: flex
   flex: 1 0 auto
   min-width: 100% !important
-  max-width: auto
 
 .pa__btn--contained
   +elevation(2)

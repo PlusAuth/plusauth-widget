@@ -5,6 +5,12 @@
   min-width: 1px // Ensure takes up space with no messages and inside of flex
   position: relative
 
+  +ltr()
+    text-align: left
+
+  +rtl()
+    text-align: right
+
   &__message
     line-height: 16px
     word-break: break-word
