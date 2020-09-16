@@ -16,9 +16,8 @@ export function createWidget(container: Element | string,
     settings.locale?.dictionary,
     settings.locale?.defaultLocale
   )
-
   const theme = new Theme({
-    light: true
+    theme: settings.theme
   });
   theme.applyTheme();
   const rSettings = reactive(settings)

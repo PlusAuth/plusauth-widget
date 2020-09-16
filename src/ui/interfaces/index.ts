@@ -42,6 +42,15 @@ export interface IWidgetSettings {
   locale: ILocaleSettings;
   mode: WidgetModes;
   apiUrl: string;
+  theme: {
+    primary?: string;
+    secondary?: string;
+    accent?: string;
+    error?: string;
+    info?: string;
+    success?: string;
+    warning?: string;
+  }
 }
 
 export interface ITenantSettings {
