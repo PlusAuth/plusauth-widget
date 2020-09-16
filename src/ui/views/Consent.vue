@@ -37,6 +37,7 @@
         <span v-t="'consent.allow'" />
       </p-btn>
       <p-btn
+        class="ml-2"
         color="error"
         @click="reject"
       >
