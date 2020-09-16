@@ -15,30 +15,17 @@ export class Theme {
 
   public styleEl?: HTMLStyleElement
 
-  public themes: any = {
-    light: {
-      primary: '#1976D2',   // blue.darken2
-      secondary: '#424242', // grey.darken3
-      accent: '#82B1FF',    // blue.accent1
-      error: '#FF5252',     // red.accent2
-      info: '#2196F3',      // blue.base
-      success: '#4CAF50',   // green.base
-      warning: '#FB8C00',    // amber.base
-    },
-    dark: {
-      primary: '#2196F3',   // blue.base
-      secondary: '#424242', // grey.darken3
-      accent: '#FF4081',    // pink.accent-2
-      error: '#FF5252',     // red.accent2
-      info: '#2196F3',      // blue.base
-      success: '#4CAF50',   // green.base
-      warning: '#FB8C00',    // amber.base
-    },
+  public theme: any = {
+    primary: '#1976D2',
+    secondary: '#424242',
+    accent: '#82B1FF',
+    error: '#FF5252',
+    info: '#2196F3',
+    success: '#4CAF50',
+    warning: '#FB8C00',
   }
 
-  public defaults: any = this.themes
-
-  private isDark = ref(null) as Ref
+  public defaults: any = this.theme
 
   constructor(options: any) {
     if (options.disable) {
@@ -52,32 +39,16 @@ export class Theme {
       ...options.options,
     }
 
-    this.dark = Boolean(options.dark)
-    const themes = options.themes || {}
+    const theme = options.theme || {}
 
-    this.themes = {
-      dark: this.fillVariant(themes.dark, true),
-      light: this.fillVariant(themes.light, false),
-    }
+    this.theme = Object.assign({},this.theme, theme )
+
   }
 
   // When setting css, check for element
   // and apply new values
   set css(val: string) {
     this.checkOrCreateStyleElement() && (this.styleEl!.innerHTML = val)
-  }
-
-  set dark(val: boolean) {
-    const oldDark = this.isDark.value
-
-    this.isDark.value = val
-    // Only apply theme after dark
-    // has already been set before
-    oldDark != null && this.applyTheme()
-  }
-
-  get dark() {
-    return Boolean(this.isDark.value)
   }
 
   // Apply current theme default
@@ -101,15 +72,14 @@ export class Theme {
   }
 
   // Allows for you to set target theme
-  public setTheme(theme: 'light' | 'dark', value: any) {
-    this.themes[theme] = Object.assign(this.themes[theme], value)
+  public setTheme( value: any) {
+    this.theme = Object.assign(this.theme, value)
     this.applyTheme()
   }
 
   // Reset theme defaults
   public resetThemes() {
-    this.themes.light = Object.assign({}, this.defaults.light)
-    this.themes.dark = Object.assign({}, this.defaults.dark)
+    this.theme = Object.assign({}, this.defaults)
     this.applyTheme()
   }
 
@@ -124,18 +94,6 @@ export class Theme {
     this.genStyleElement() // If doesn't have it, create it
 
     return Boolean(this.styleEl)
-  }
-
-  private fillVariant(
-    theme: any,
-    dark: boolean
-  ): any {
-    const defaultTheme = this.themes[dark ? 'dark' : 'light']
-
-    return Object.assign({},
-      defaultTheme,
-      theme
-    )
   }
 
   // Generate the style element
@@ -164,9 +122,7 @@ export class Theme {
   }
 
   get currentTheme() {
-    const target = this.dark ? 'dark' : 'light'
-
-    return this.themes[target]
+    return this.theme
   }
 
   get generatedStyles(): string {

@@ -86,8 +86,6 @@ export default defineComponent({
     }
     return h ('div', this.setTextColor(this.validationState, {
       class: {
-        'theme--dark': this.theme?.dark,
-        'theme--light': !this.theme?.dark,
         'pa__input': true,
         'pa__input-has-state': this.hasState,
         'pa__input-has-value': !!this.modelValue,

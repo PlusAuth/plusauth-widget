@@ -47,7 +47,6 @@ export const Validatable: ComponentOptions = {
     computedColor(): string | undefined {
       if (this.disabled) return undefined
       if (this.color) return this.color
-      if (this.isDark) return 'white'
       else return 'primary'
     },
     hasError(): boolean {
