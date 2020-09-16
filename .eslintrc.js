@@ -1,3 +1,4 @@
+const path = require('path')
 module.exports = {
   root: true,
   env: {
@@ -8,7 +9,7 @@ module.exports = {
   parser: "vue-eslint-parser",
   parserOptions: {
     parser: "@typescript-eslint/parser",
-    project: "./tsconfig.json",
+    project: path.resolve(__dirname, "tsconfig.json"),
     sourceType: "module",
     extraFileExtensions: [".vue"]
   },

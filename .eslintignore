@@ -5,5 +5,5 @@ dist/**
 *.log
 .eslintrc.js
 scripts
-rollup.config.js
+*.config.js
 public
