@@ -17,6 +17,7 @@ export default defineComponent({
     }, h('div', {
       class: 'pa__btn__content'
     }, h('i', {
+      // TODO: remove font awesome
       class: {
         'fa': true,
         'fa-2x': true,

@@ -21,19 +21,19 @@
       <p-form
         v-else
         ref="form"
-        class="text-center"
+        class="pa__text-center"
         autocomplete="off"
         @submit="submit"
       >
         <img
           style="max-height: 150px"
-          class="logo"
+          class="pa__logo"
           alt="Logo"
           :src="resolveClientLogo(context.client)"
         >
         <div
           v-t="'resetPassword.title'"
-          class="title"
+          class="pa__title"
         />
         <template
           v-for="(options, field) in _fields"
@@ -85,9 +85,9 @@
           </p-text-field>
         </template>
 
-        <div class="pt-4">
+        <div class="pa__pt-4">
           <p-btn
-            color="primary"
+            color="pa__primary"
             type="submit"
             :loading="loading"
             block

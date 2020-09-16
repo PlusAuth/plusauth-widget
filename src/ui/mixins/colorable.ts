@@ -66,7 +66,7 @@ export const Colorable: ComponentOptions = {
           .trim().split(' ', 2) as (string | undefined)[]
         data.class = {
           ...data.class,
-          [`${colorName  }--text`]: true,
+          [`pa__${colorName  }--text`]: true,
         }
         if (colorModifier) {
           data.class[`text--${  colorModifier}`] = true

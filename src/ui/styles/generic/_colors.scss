@@ -9,11 +9,11 @@
 
 // Put the loop in a function so it can't leak
 @each $color_name, $color_value in $shades {
-  .pa__widget .#{$color_name} {
+  .widget .#{$color_name} {
     @include background-color($color_value);
   }
 
-  .pa__widget .#{$color_name}--text {
+  .widget .#{$color_name}--text {
     @include text-color($color_value);
   }
 }
@@ -22,20 +22,20 @@
   @each $color_name, $color_color in $colors {
     @each $color_type, $color_value in $color_color {
       @if ($color_type == 'base') {
-        .pa__widget .#{$color_name} {
+        .widget .#{$color_name} {
           @include background-color($color_value);
         }
 
-        .pa__widget .#{$color_name}--text {
+        .widget .#{$color_name}--text {
           @include text-color($color_value);
         }
       }
       @else if ($color_type != 'shades') {
-        .pa__widget .#{$color_name}.#{$color_type} {
+        .widget .#{$color_name}.#{$color_type} {
           @include background-color($color_value);
         }
 
-        .pa__widget .#{$color_name}--text.text--#{$color_type} {
+        .widget .#{$color_name}--text.text--#{$color_type} {
           @include text-color($color_value);
         }
       }

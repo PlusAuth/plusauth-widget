@@ -11,43 +11,68 @@ import { DEFAULT_EXTENSIONS } from '@babel/core';
 import livereload from 'rollup-plugin-livereload'
 import serve from 'rollup-plugin-serve'
 import purgecss from '@fullhuman/postcss-purgecss';
+import postcssPrefixer from 'postcss-prefixer';
 
 const extensions= [...DEFAULT_EXTENSIONS, '.ts', '.vue']
 
 const plugins = [
-    alias({
-      entries: {
-        'vue': 'vue/dist/vue.runtime.esm-browser.prod.js'
-      }
-    }),
-    resolve({ extensions, browser: true}),
-    commonjs(),
-    vue(),
+  alias({
+    entries: {
+      'vue': 'vue/dist/vue.runtime.esm-browser.prod.js'
+    }
+  }),
+  resolve({ extensions, browser: true}),
+  commonjs(),
+  vue(),
 
-    postcss({
-      minimize: true,
-      plugins: [
-        purgecss({
-          content: [
-            './src/**/*.html',
-            './src/**/*.vue',
-            './src/**/*.ts'
-          ],
-          defaultExtractor: content => content.match(/[^<>"'`\s]*[^<>"'`\s:]/g) || []
-        })
-      ]
-    }),
-    typescript({
-      include: [/\.tsx?$/, /\.vue\?.*?lang=ts/],
-      useTsconfigDeclarationDir: true
-    }),
+  postcss({
+    minimize: process.env.NODE_ENV === "production",
+    // extract: 'plusauth-widget.css',
+    plugins: [
+      postcssPrefixer({
+        prefix: 'pa__'
+      }),
+      ...process.env.NODE_ENV === "production" ? [
+          purgecss({
+            content: [
+              './src/**/*.html',
+              './src/**/*.vue',
+              './src/**/*.ts'
+            ],
+            whitelistPatternsChildren: [
+              /^pa__primary--/,
+              /^pa__secondary--/,
+              /^pa__error--/,
+              /^pa__warning--/,
+              /^pa__success--/,
+              /^pa__info--/,
+            ],
+            defaultExtractor: content => {
+              //  `pa-(screen-1.5)`
+              const broadMatches = content.match(/[^<>"'`\s]*[^<>"'`\s:]/g) || []
 
-    babel({
-      extensions,
-      babelHelpers: 'bundled',
-      include: ['src/**/*'],
-    }),
-  ]
+              // .container(class="w-1/2")
+              const innerMatches = content.match(/[^<>"'`\s.()]*[^<>"'`\s.():]/g) || []
+
+              return broadMatches.concat(innerMatches)
+            }
+          })
+        ]
+        : []
+
+    ]
+  }),
+  typescript({
+    include: [/\.tsx?$/, /\.vue\?.*?lang=ts/],
+    useTsconfigDeclarationDir: true
+  }),
+
+  babel({
+    extensions,
+    babelHelpers: 'bundled',
+    include: ['src/**/*'],
+  }),
+]
 
 if (process.env.NODE_ENV === 'development') {
   plugins.push(livereload())

@@ -1,16 +1,16 @@
 <template>
   <p-form
-    class="text-center"
+    class="pa__text-center"
     autocomplete="off"
     @submit.prevent
   >
     <img
       style="max-height: 150px"
-      class="logo"
+      class="pa__logo"
       alt="Logo"
       :src="resolveClientLogo(context.client)"
     >
-    <div class="title">
+    <div class="pa__title">
       <span
         v-t="{ path: 'consent.title',
                args: { clientName: context.client.clientName}
@@ -18,7 +18,7 @@
       />
     </div>
 
-    <div class="text-left">
+    <div class="pa__text-left">
       <template
         v-for="scope in _scopes"
         :key="scope"
@@ -29,16 +29,16 @@
       </template>
     </div>
 
-    <div class="pt-4">
+    <div class="pa__pt-4">
       <p-btn
-        color="success"
+        color="pa__success"
         @click="allow"
       >
         <span v-t="'consent.allow'" />
       </p-btn>
       <p-btn
-        class="ml-2"
-        color="error"
+        class="pa__ml-2"
+        color="pa__error"
         @click="reject"
       >
         <span v-t="'consent.reject'" />

@@ -6,23 +6,23 @@
     <div v-if="!actionCompleted">
       <p-form
         ref="form"
-        class="text-center"
+        class="pa__text-center"
         autocomplete="off"
         @submit="submit"
       >
         <img
           style="max-height: 150px"
-          class="logo"
+          class="pa__logo"
           alt="Logo"
           :src="resolveClientLogo(context.client)"
         >
         <div
           v-t="'forgotPassword.title'"
-          class="title"
+          class="pa__title"
         />
         <div
           v-t="'forgotPassword.subtitle'"
-          class="subtitle-1"
+          class="pa__subtitle-1"
         />
         <template
           v-for="(options, field) in _fields"
@@ -39,9 +39,9 @@
           />
         </template>
 
-        <div class="pt-4">
+        <div class="pa__pt-4">
           <p-btn
-            color="primary"
+            color="pa__primary"
             type="submit"
             :loading="loading"
             block
@@ -52,8 +52,8 @@
       </p-form>
     </div>
     <div v-else>
-      <div class="row ">
-        <div class="col col-12 align-center text-center">
+      <div class="pa__row">
+        <div class="pa__col pa__col-12 pa__align-center pa__text-center">
           <img
             src="/images/icons/plane.svg"
             style="width: 128px; "
@@ -62,7 +62,7 @@
         </div>
         <div
           v-t="{ path: 'forgotPassword.emailSent', args: _fields }"
-          class="col col-12 text-center"
+          class="pa__col pa__col-12 pa__text-center"
         />
       </div>
     </div>

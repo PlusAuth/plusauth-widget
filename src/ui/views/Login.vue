@@ -1,17 +1,17 @@
 <template>
   <p-form
     ref="form"
-    class="text-center"
+    class="pa__text-center"
     autocomplete="off"
     @submit="submit"
   >
     <img
       style="max-height: 150px"
-      class="logo"
+      class="pa__logo"
       alt="Logo"
       :src="resolveClientLogo(context.client)"
     >
-    <div class="title">
+    <div class="pa__title">
       <span v-t="'login.signIn'" />
     </div>
     <template
@@ -48,9 +48,9 @@
       </p-text-field>
     </template>
 
-    <div class="pt-4">
+    <div class="pa__pt-4">
       <p-btn
-        color="primary"
+        color="pa__primary"
         type="submit"
         :loading="loading"
         block
@@ -64,10 +64,10 @@
         && context.client.social
         && context.client.social.length"
     >
-      <div class="text-center pt-4">
+      <div class="pa__text-center pa__pt-4">
         <span v-t="'login.signInWith'" />
       </div>
-      <div class="row justify-center">
+      <div class="pa__row pa__justify-center">
         <SocialConnectionButton
           v-for="connection in context.client.social"
           :key="connection"
@@ -79,11 +79,11 @@
 
     <div
       v-if="features.signUp"
-      class="text-center txt1 pt-4 pb-2"
+      class="pa__text-center pa__pt-4 pa__pb-2"
     >
       <span
         v-t="'login.noAccount'"
-        class="pr-2"
+        class="pa__pr-2"
       />
       <a
         v-t="'login.signUp'"
@@ -91,7 +91,7 @@
         @click.stop
       />
     </div>
-    <div class="text-center subtitle-2">
+    <div class="pa__text-center pa__subtitle-2">
       <a
         v-t="'login.forgotPassword'"
         href="/signin/recovery"

@@ -1,4 +1,4 @@
-.pa__input
+.input
   color: map-deep-get($material-theme, 'text', 'primary')
   &--wrap
     border-color: map-deep-get($material-theme, 'text', 'primary')
@@ -18,11 +18,11 @@
     textarea
       color: map-deep-get($material-theme, 'text', 'disabled')
 
-  .pa__input--label
+  .input--label
     color: map-deep-get($material-theme, 'text', 'secondary')
 
 
-.pa__input
+.input
     display: flex
     flex: 1 1 auto
     font-size: 16px
@@ -42,7 +42,7 @@
         border: 1px solid #e6e6e6
         border-radius: 10px
 
-        input.pa__text-field
+        input.text-field
           display: flex
           flex: 1 1 auto
           background: transparent
@@ -87,23 +87,23 @@
     &-details
       padding-left: 12px
 
-    input:-webkit-autofill + .pa__input--label
+    input:-webkit-autofill + .input--label
       transform: translateY(-20px) scale(.75)
 
     &-focused, &-has-error, &-has-state
-      .pa__input--wrap
+      .input--wrap
         border-color: currentColor
 
     &-focused, &-has-error
-      .pa__input--label
+      .input--label
         color: currentColor !important
         transform: translateY(-20px) scale(.75)
 
     &-has-value
-      .pa__input--label
+      .input--label
         transform: translateY(-20px) scale(.75)
 
-    .pa__input-prepend-icon
+    .input-prepend-icon
         right: 15px
         position: absolute
         font-size: 1.5rem
@@ -111,20 +111,20 @@
         display: flex
         align-self: center
 
-.pa__pw-toggle-visibility
+.pw-toggle-visibility
   display: flex
   height: unset !important
   border-radius: 0 9px 9px 0
   border-left: inherit
   align-self: stretch
   color: inherit
-  &.pa__btn
-    &.pa__size--default
+  &.btn
+    &.size--default
       font-family: Montserrat, sans-serif
       font-size: 0.775rem !important
       min-width: 80px
 
-.pa__form-error
+.form-error
   color: red
   text-align: left
   font-size: 14px

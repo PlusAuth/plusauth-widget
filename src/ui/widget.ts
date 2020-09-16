@@ -67,25 +67,25 @@ export default function (theme: Theme, settings: any): any {
     },
     render(){
       return h('div', {
-        class: 'pa__widget container fill-height',
+        class: 'pa__widget pa__container pa__fill-height',
         style: {
           alignItems: 'center',
           justifyContent: 'center',
         }
       },[
         h('div', {
-          class: ['row', 'justify-center'],
+          class: ['pa__row', 'pa__justify-center'],
         },
         h('div', {
           class: {
-            'pa-8': !this.isMobile,
-            'pa-4': this.isMobile,
-            col: true,
-            'col-sm-12': true,
-            'col-md-6': true,
-            'col-lg-4': true,
-            'col-12': true,
-            'elevation-1': !this.isMobile
+            'pa__pa-8': !this.isMobile,
+            'pa__pa-4': this.isMobile,
+            'pa__col': true,
+            'pa__col-sm-12': true,
+            'pa__col-md-6': true,
+            'pa__col-lg-4': true,
+            'pa__col-12': true,
+            'pa__elevation-1': !this.isMobile
           }
         }, resolveViewFromValue(settings.mode)))
       ])

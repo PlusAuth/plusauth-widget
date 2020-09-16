@@ -84,48 +84,49 @@ export default defineComponent({
 
       this.$emit('keydown', e)
     }
-    return h ('div', this.setTextColor(this.validationState, {
-      class: {
-        'pa__input': true,
-        'pa__input-has-state': this.hasState,
-        'pa__input-has-value': !!this.modelValue,
-        'pa__input-focused': this.isFocused
-      },
-    }),
-    [
-      h('div', {
-        class: { 'pa__input--wrap': true }
-      }, [
-        h('input', Object.assign({},this.$attrs,{
-          value: this.modelValue,
-          ref: 'inputRef',
-          name: this.$attrs.name,
-          type: this.type || 'text',
-          style: this.$attrs.style,
-          class: ['pa__text-field'],
-          onKeyPress: this.$attrs.onKeyPress,
-          onFocus,
-          onBlur,
-          onInput,
-          onKeyDown
-        })
-        ),
-        this.label ?
-          withDirectives(h('label', this.setTextColor(this.validationState,{
-            class: { 'pa__input--label': true }
-          })),[
-            [i18n, this.label]
-          ]) : '',
-        this.$slots.append ? this.$slots.append(): '',]),
-      !this.hideMessages ? this.$slots.message ? this.$slots.message({
-        message: this.messagesToDisplay,
-        hasState: this.hasState,
-        focus: this.isFocused
-      }) : h(Message, {
-        class: 'pa__input-details',
-        value: this.messagesToDisplay
-      }): null,
+    return h ('div',
+      this.setTextColor(this.validationState, {
+        class: {
+          'pa__input': true,
+          'pa__input-has-state': this.hasState,
+          'pa__input-has-value': !!this.modelValue,
+          'pa__input-focused': this.isFocused
+        },
+      }),
+      [
+        h('div', {
+          class: { 'pa__input--wrap': true }
+        }, [
+          h('input', Object.assign({},this.$attrs,{
+            value: this.modelValue,
+            ref: 'inputRef',
+            name: this.$attrs.name,
+            type: this.type || 'text',
+            style: this.$attrs.style,
+            class: ['pa__text-field'],
+            onKeyPress: this.$attrs.onKeyPress,
+            onFocus,
+            onBlur,
+            onInput,
+            onKeyDown
+          })
+          ),
+          this.label ?
+            withDirectives(h('label', this.setTextColor(this.validationState,{
+              class: { 'pa__input--label': true }
+            })),[
+              [i18n, this.label]
+            ]) : '',
+          this.$slots.append ? this.$slots.append(): '',]),
+        !this.hideMessages ? this.$slots.message ? this.$slots.message({
+          message: this.messagesToDisplay,
+          hasState: this.hasState,
+          focus: this.isFocused
+        }) : h(Message, {
+          class: 'pa__input-details',
+          value: this.messagesToDisplay
+        }): null,
 
-    ])
+      ])
   }
 })

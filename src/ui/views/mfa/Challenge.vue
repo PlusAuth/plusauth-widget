@@ -1,5 +1,5 @@
 <template>
-  <p-form class="text-center">
+  <p-form class="pa__text-center">
     <img
       style="max-height: 150px"
       alt="Logo"
@@ -7,16 +7,16 @@
     >
     <p
       v-t="'mfa.challenge.title'"
-      class="text-center title font-weight-thin"
+      class="pa__text-center pa__title pa__font-weight-thin"
     />
     <div
       v-for="challenge in context.details.challenges"
       :key="challenge"
-      class="row"
+      class="pa__row"
     >
       <a
         :href="'/signin/challenge/'+ challenge"
-        class="pa__btn pa__btn--flat pa__btn--block justify-start px-4 py-2"
+        class="pa__btn pa__btn--flat pa__btn--block pa__justify-start pa__px-4 pa__py-2"
         @click.stop=""
       >
         <span v-t="'mfa.challenge.'+ challenge" />

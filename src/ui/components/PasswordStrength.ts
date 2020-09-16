@@ -22,7 +22,7 @@ export default defineComponent({
         }
         return h('div', {
           class: {
-            'pa-pw-strength': true
+            'pa__pw-strength': true
           }
         }, Object.keys(context.passwordPolicy).map(( policy ) => {
           const elemText = translator.t(
@@ -31,8 +31,8 @@ export default defineComponent({
           )
           return h('div', {
             class: {
-              'pw-policy': true,
-              'success--text': !result || !result[policy]
+              'pa__pw-policy': true,
+              'pa__success--text': !result || !result[policy]
             },
             key: policy, ref: 'policy'
           },

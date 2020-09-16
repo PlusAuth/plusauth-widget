@@ -1,15 +1,15 @@
 <template>
-  <p-form class="text-center">
+  <p-form class="pa__text-center">
     <img
       id="mainLogo"
       style="max-height: 150px; margin-left: 40px;"
-      class="logo"
+      class="pa__logo"
       alt="Logo"
       src="/images/icons/email_question.svg"
     >
     <div
       v-t="{ path: 'mfa.email.title', args: { email: context.details.email } }"
-      class="subtitle-2 text-left"
+      class="pa__subtitle-2 pa__text-left"
     />
     <template
       v-for="(options, field) in fields"
@@ -25,11 +25,11 @@
       />
     </template>
 
-    <div class="pt-4">
+    <div class="pa__pt-4">
       <p-btn
         type="submit"
         block
-        color="primary"
+        color="pa__primary"
         :loading="loading"
       >
         <span v-t="'mfa.email.submit'" />
@@ -37,7 +37,7 @@
     </div>
     <div
       v-if="context.details.challenges.length > 1"
-      class="row justify-center pt-4"
+      class="pa__row pa__justify-center pa__pt-4"
     >
       <a
         v-t="'mfa.tryAnotherWay'"

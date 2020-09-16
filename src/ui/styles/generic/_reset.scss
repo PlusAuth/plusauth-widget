@@ -7,7 +7,7 @@
 /* # =================================================================
    # Global selectors
    # ================================================================= */
-
+/* purgecss start ignore */
 html {
   box-sizing: border-box;
   -webkit-text-size-adjust: 100%; /* Prevent adjustments of font size after orientation changes in iOS */
@@ -277,3 +277,4 @@ progress {
 [aria-disabled] {
   cursor: default;
 }
+/* purgecss end ignore */

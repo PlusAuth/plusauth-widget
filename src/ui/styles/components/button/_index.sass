@@ -2,7 +2,7 @@
 @import 'variables'
 
 // Theme
-.pa__btn:not(.pa__btn--outlined)
+.btn:not(.btn--outlined)
   &.primary,
   &.secondary,
   &.accent,
@@ -12,32 +12,32 @@
   &.info
     color: map-deep-get($material-theme, 'text', 'primary')
 
-.pa__btn
+.btn
   color: map-deep-get($material-theme, 'text', 'primary')
 
-  &.pa__btn--disabled
+  &.btn--disabled
     color: map-deep-get($material-theme, 'buttons', 'disabled') !important
 
-    .pa__icon,
-    .pa__btn__loading
+    .icon,
+    .btn__loading
       color: map-deep-get($material-theme, 'buttons', 'disabled') !important
 
-    &:not(.pa__btn--flat):not(.pa__btn--text):not(.pa__btn--outlined)
+    &:not(.btn--flat):not(.btn--text):not(.btn--outlined)
       background-color: map-deep-get($material-theme, 'buttons', 'focused') !important
 
-  &:not(.pa__btn--flat):not(.pa__btn--text):not(.pa__btn--outlined)
+  &:not(.btn--flat):not(.btn--text):not(.btn--outlined)
     background-color: map-get($material-theme, 'app-bar')
 
-  &.pa__btn--outlined.pa__btn--text
+  &.btn--outlined.btn--text
     border-color: map-get($material-theme, 'dividers')
 
-  &.pa__btn--icon
+  &.btn--icon
     color: map-deep-get($material-theme, 'icons', 'active')
 
   +states($material-theme)
 
 // Block
-.pa__btn
+.btn
   align-items: center
   border-radius: $btn-border-radius
   display: inline-flex
@@ -59,7 +59,7 @@
   white-space: nowrap
 
   @each $name, $size in $btn-font-sizes
-    &.pa__size--#{$name}
+    &.size--#{$name}
       font-size: $size
 
   &:before
@@ -78,12 +78,12 @@
   &:before
     background-color: currentColor
 
-  &:not(.pa__btn--disabled)
+  &:not(.btn--disabled)
     will-change: box-shadow
 
-  &:not(.pa__btn--round)
+  &:not(.btn--round)
     @each $name, $size in $btn-sizes
-      &.pa__size--#{$name}
+      &.size--#{$name}
         height: #{$size}px
         min-width: #{round($size * 1.777777777777778)}px // default ratio
         padding: 0 #{$size / 2.25}px
@@ -93,19 +93,19 @@
     transition: none
 
   +rtl()
-    .pa__icon--left
+    .icon--left
       margin-left: 8px
       margin-right: -4px
 
-    .pa__icon--right
+    .icon--right
       margin-left: -4px
       margin-right: 8px
 
-  > .pa__btn__content .pa__icon
+  > .btn__content .icon
     color: inherit
 
 // Elements
-.pa__btn__content
+.btn__content
   align-items: center
   color: inherit
   display: flex
@@ -114,21 +114,21 @@
   line-height: normal
   position: relative
 
-  .pa__icon--left,
-  .pa__icon--right
+  .icon--left,
+  .icon--right
     font-size: $btn-icon-font-size
     height: $btn-icon-font-size
     width: $btn-icon-font-size
 
-  .pa__icon--left
+  .icon--left
     margin-left: -4px
     margin-right: 8px
 
-  .pa__icon--right
+  .icon--right
     margin-left: 8px
     margin-right: -4px
 
-.pa__btn__loader
+.btn__loader
   align-items: center
   display: flex
   height: 100%
@@ -139,8 +139,8 @@
   width: 100%
 
 // Modifiers
-.pa__btn:not(.pa__btn--text):not(.pa__btn--outlined)
-  &.pa__btn--active:before
+.btn:not(.btn--text):not(.btn--outlined)
+  &.btn--active:before
     opacity: $btn-active-opacity
 
   &:hover:before
@@ -149,28 +149,28 @@
   &:focus:before
     opacity: $btn-focus-opacity
 
-.pa__btn--absolute,
-.pa__btn--fixed
+.btn--absolute,
+.btn--fixed
   position: absolute
 
-  &.pa__btn--right
+  &.btn--right
     right: map-get($grid-gutters, 'lg')
 
-  &.pa__btn--left
+  &.btn--left
     left: map-get($grid-gutters, 'lg')
 
-  &.pa__btn--top
+  &.btn--top
     top: map-get($grid-gutters, 'lg')
 
-  &.pa__btn--bottom
+  &.btn--bottom
     bottom: map-get($grid-gutters, 'lg')
 
-.pa__btn--block
+.btn--block
   display: flex
   flex: 1 0 auto
   min-width: 100% !important
 
-.pa__btn--contained
+.btn--contained
   +elevation(2)
 
   &:after
@@ -179,34 +179,34 @@
   &:active
     +elevation(8)
 
-.pa__btn--depressed
+.btn--depressed
   box-shadow: none !important
 
-.pa__btn--disabled
+.btn--disabled
   box-shadow: none
   pointer-events: none
 
-.pa__btn--icon,
-.pa__btn--fab
+.btn--icon,
+.btn--fab
   min-height: 0
   min-width: 0
   padding: 0
 
   @each $name, $size in $fab-icon-sizes
-    &.pa__size--#{$name}
-      .pa__icon
+    &.size--#{$name}
+      .icon
         height: #{$size}px
         font-size: #{$size}px
         width: #{$size}px
 
-.pa__btn--icon
+.btn--icon
   @each $name, $size in $btn-sizes
-    &.pa__size--#{$name}
+    &.size--#{$name}
       height: #{$size}px
       width: #{$size}px
 
-.pa__btn--fab
-  &.pa__btn--contained
+.btn--fab
+  &.btn--contained
     +elevation(6)
 
     &:after
@@ -215,59 +215,59 @@
     &:active
       +elevation(12)
 
-  &.pa__btn--fixed,
-  &.pa__btn--absolute
+  &.btn--fixed,
+  &.btn--absolute
     z-index: 4
 
   @each $name, $size in $fab-sizes
-    &.pa__size--#{$name}
+    &.size--#{$name}
       height: #{$size}px
       width: #{$size}px
 
-      &.pa__btn--absolute
-        &.pa__btn--bottom
+      &.btn--absolute
+        &.btn--bottom
           bottom: -#{$size / 2}px
 
-        &.pa__btn--top
+        &.btn--top
           top: -#{$size / 2}px
 
-.pa__btn--fixed
+.btn--fixed
   position: fixed
 
-.pa__btn--loading
+.btn--loading
   pointer-events: none
   transition: none
 
-  .pa__btn__content
+  .btn__content
     opacity: 0
 
-.pa__btn--outlined
+.btn--outlined
   border: $btn-outline-border-width solid currentColor
 
   &:before
     border-radius: 0
 
-.pa__btn--outlined,
-.pa__btn--round
-  .pa__btn__content
-    .pa__icon
+.btn--outlined,
+.btn--round
+  .btn__content
+    .icon
       color: currentColor
 
-.pa__btn--outlined,
-.pa__btn--flat,
-.pa__btn--text
+.btn--outlined,
+.btn--flat,
+.btn--text
   background-color: transparent
 
-.pa__btn--round,
-.pa__btn--rounded
+.btn--round,
+.btn--rounded
   &:before
     border-radius: inherit
 
-.pa__btn--round
+.btn--round
   border-radius: 50%
 
-.pa__btn--rounded
+.btn--rounded
   border-radius: $btn-rounded-border-radius
 
-.pa__btn--tile
+.btn--tile
   border-radius: 0

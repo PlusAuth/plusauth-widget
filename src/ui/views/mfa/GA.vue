@@ -34,10 +34,10 @@ details?id=com.google.android.apps.authenticator2"
         change. Please make sure to keep
         the key phrase; in a safe location before binding.
       </p>
-      <div class="text-center">
+      <div class="pa__text-center">
         <img
           id="mainLogo"
-          class="logo"
+          class="pa__logo"
           alt="Logo"
           style="max-width: 300px; max-height: 300px;"
           :src="context.details.dataUrl"
@@ -54,30 +54,30 @@ details?id=com.google.android.apps.authenticator2"
     <template v-else>
       <div
         v-t="{ path: 'mfa.ga.title'}"
-        class="subtitle-2 text-left"
+        class="pa__subtitle-2 pa__text-left"
       />
     </template>
     <PCodeInput
       v-model="code"
-      color="primary"
+      color="pa__primary"
     />
     <p-message
       :value="error"
-      color="error"
-      class="mb-4"
+      color="pa__error"
+      class="pa__mb-4"
     />
 
     <p-btn
       type="submit"
       block
-      color="primary"
+      color="pa__primary"
       :loading="loading"
     >
       <span v-t="'mfa.sms.submit'" />
     </p-btn>
     <div
       v-if="context.details.challenges.length > 1"
-      class="row justify-center pt-4"
+      class="pa__row pa__justify-center pa__pt-4"
     >
       <a
         v-t="'mfa.tryAnotherWay'"

@@ -40,11 +40,11 @@ export function parse(
  */
 const genBaseColor = (name: string, value: string): string => {
   return `
-.pa__widget .${name} {
+.pa__widget .pa__${name} {
   background-color: ${value} !important;
   border-color: ${value} !important;
 }
-.pa__widget .${name}--text {
+.pa__widget .pa__${name}--text {
   color: ${value} !important;
   caret-color: ${value} !important;
 }`
@@ -57,11 +57,11 @@ const genVariantColor = (name: string, variant: string, value: string):
 string => {
   const [type, n] = variant.split(/(\d)/, 2)
   return `
-.pa__widget .${name}.${type}-${n} {
+.pa__widget .pa__${name}.${type}-${n} {
   background-color: ${value} !important;
   border-color: ${value} !important;
 }
-.pa__widget .${name}--text.text--${type}-${n} {
+.pa__widget .pa__${name}--text.text--${type}-${n} {
   color: ${value} !important;
   caret-color: ${value} !important;
 }`
