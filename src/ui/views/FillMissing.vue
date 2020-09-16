@@ -34,6 +34,7 @@
       <p-btn
         color="primary"
         type="submit"
+        block
         :loading="loading"
       >
         <span v-t="'fillMissing.submit'" />

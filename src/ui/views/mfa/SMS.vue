@@ -36,14 +36,16 @@
       />
     </template>
 
-    <p-btn
-      type="submit"
-      block
-      color="primary"
-      :loading="loading"
-    >
-      <span v-t="'mfa.sms.submit'" />
-    </p-btn>
+    <div class="pt-4">
+      <p-btn
+        type="submit"
+        block
+        color="primary"
+        :loading="loading"
+      >
+        <span v-t="'mfa.sms.submit'" />
+      </p-btn>
+    </div>
     <div
       v-if="context.details.challenges.length > 1"
       class="row justify-center pt-4"

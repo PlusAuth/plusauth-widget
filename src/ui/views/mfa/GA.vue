@@ -77,7 +77,7 @@ details?id=com.google.android.apps.authenticator2"
     </p-btn>
     <div
       v-if="context.details.challenges.length > 1"
-      class="row justify-center "
+      class="row justify-center pt-4"
     >
       <a
         v-t="'mfa.tryAnotherWay'"

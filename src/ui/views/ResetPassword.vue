@@ -55,7 +55,9 @@
             >
               <p-btn
                 type="button"
+                flat
                 tabindex="0"
+                text-color="black"
                 class="pa__pw-toggle-visibility"
                 @click="options.type === 'password' ? options.type = 'text' : options.type =
                   'password'"

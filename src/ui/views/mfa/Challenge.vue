@@ -16,7 +16,7 @@
     >
       <a
         :href="'/signin/challenge/'+ challenge"
-        class="pa__btn pa__btn--block justify-start px-4 py-2"
+        class="pa__btn pa__btn--flat pa__btn--block justify-start px-4 py-2"
         @click.stop=""
       >
         <span v-t="'mfa.challenge.'+ challenge" />
@@ -31,6 +31,7 @@ import { useRouter } from 'vue-router';
 
 export default defineComponent( {
   name: 'Challenge',
+  props: {},
   setup() {
     const context = inject('context') as any
     const challenges = context.details.challenges

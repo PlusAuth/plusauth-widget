@@ -25,15 +25,16 @@
       />
     </template>
 
-    <p-btn
-      type="submit"
-      block
-      color="primary"
-      :loading="loading"
-    >
-      <span v-t="'mfa.email.submit'" />
-    </p-btn>
-
+    <div class="pt-4">
+      <p-btn
+        type="submit"
+        block
+        color="primary"
+        :loading="loading"
+      >
+        <span v-t="'mfa.email.submit'" />
+      </p-btn>
+    </div>
     <div
       v-if="context.details.challenges.length > 1"
       class="row justify-center pt-4"
@@ -57,6 +58,7 @@ import { Translator, translatorKey } from '../../utils/translator';
 
 export default defineComponent({
   name: 'Email',
+  props: {},
   setup(){
     const api = inject('api') as PlusAuthWeb
     const context = inject('context') as any
