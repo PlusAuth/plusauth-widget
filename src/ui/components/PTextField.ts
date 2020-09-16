@@ -17,7 +17,7 @@ export default defineComponent({
     modelValue: { type: null, default: null },
     hideMessages: { type: Boolean, default: false }
   },
-  setup(props ){
+  setup(props, { emit } ){
     const inputRef = ref<string>(null as any)
     const vm = getCurrentInstance()
     const state = reactive({
@@ -27,10 +27,6 @@ export default defineComponent({
     })
     return { ...toRefs(state),
       inputRef,
-      focus(){
-        // @ts-ignore
-        vm?.refs.inputRef.focus()
-      }
     }
   },
   computed: {
@@ -59,7 +55,36 @@ export default defineComponent({
       this.lazyValue = value
     }
   },
+  methods: {
+    focus(){
+      // @ts-ignore
+      this.$refs.inputRef.focus()
+    },
+  },
   render(){
+    const onFocus = (e: FocusEvent) => {
+      // @ts-ignore
+      this.hasColor = true
+      this.isFocused = true
+      this.isActivated = true
+      this.$emit('focus', e)
+    }
+
+    const onBlur = (e: FocusEvent) => {
+      // @ts-ignore
+      this.hasColor = false
+      this.isFocused = false
+      this.$emit('blur', e)
+    }
+    const onInput = (event: InputEvent) => {
+      this.isActivated = true
+      this.$emit('update:modelValue', (event.currentTarget as HTMLInputElement)?.value)
+    };
+    const onKeyDown =  (e: KeyboardEvent) => {
+      if (e.code === '13') this.$emit('change', this.internalValue)
+
+      this.$emit('keydown', e)
+    }
     return h ('div', this.setTextColor(this.validationState, {
       class: {
         'theme--dark': this.theme?.dark,
@@ -74,32 +99,19 @@ export default defineComponent({
       h('div', {
         class: { 'pa__input--wrap': true }
       }, [
-        h('input', {
-          autocomplete: this.$attrs.autocomplete,
+        h('input', Object.assign({},this.$attrs,{
           value: this.modelValue,
           ref: 'inputRef',
           name: this.$attrs.name,
           type: this.type || 'text',
           style: this.$attrs.style,
           class: ['pa__text-field'],
-          'onFocus': () => {
-            // @ts-ignore
-            this.hasColor = true
-            this.isFocused = true
-            this.isActivated = true
-          },
-          'onBlur': () => {
-            // @ts-ignore
-            this.hasColor = false
-            this.isFocused = false
-          },
-          'onInput': (event: InputEvent) => {
-            this.isActivated = true
-            // @ts-ignore
-            this.$emit('update:modelValue', event.currentTarget?.value)
-          },
           onKeyPress: this.$attrs.onKeyPress,
-        }
+          onFocus,
+          onBlur,
+          onInput,
+          onKeyDown
+        })
         ),
         this.label ?
           withDirectives(h('label', this.setTextColor(this.validationState,{
