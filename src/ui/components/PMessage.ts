@@ -1,4 +1,4 @@
-import { defineComponent, h, withDirectives, VNode } from 'vue';
+import { defineComponent, h, withDirectives, VNode, Transition } from 'vue';
 
 import { i18n } from '../directives/i18n';
 import { Colorable } from '../mixins';
@@ -38,14 +38,16 @@ export default defineComponent({
     value: { type: [String, Array], default: null },
   },
   render(){
-    return h(
+    return  h(
       'div',
       this.setTextColor(this.color, {
         class: {
           'pa__messages': true
         }
       }),
-      generateMessages(this.value)
+      h(Transition,{ name: 'message-transition', css: true },
+        generateMessages(this.value)
+      )
     )
   }
 })
