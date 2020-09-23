@@ -16,6 +16,7 @@ export default defineComponent({
   props: {
     ...Colorable.props,
     loading: { type: Boolean },
+    disabled: { type: Boolean, default: false },
     block: { type: Boolean, default: false },
     flat: { type: Boolean, default: false }
   },
@@ -42,6 +43,7 @@ export default defineComponent({
           'pa__size--default': true,
           'pa__btn--loading': !!this.loading,
           'pa__btn--block': this.block,
+          'pa__btn--disabled': this.disabled,
           'pa__btn--flat': this.flat
         },
       }),
