@@ -39,14 +39,16 @@ const plugins = [
               './src/**/*.vue',
               './src/**/*.ts'
             ],
-            whitelistPatternsChildren: [
-              /^pa__primary--/,
-              /^pa__secondary--/,
-              /^pa__error--/,
-              /^pa__warning--/,
-              /^pa__success--/,
-              /^pa__info--/,
-            ],
+            safelist: {
+              greedy: [
+                /^pa__primary--/,
+                /^pa__secondary--/,
+                /^pa__error--/,
+                /^pa__warning--/,
+                /^pa__success--/,
+                /^pa__info--/,
+              ]
+            },
             defaultExtractor: content => {
               //  `pa-(screen-1.5)`
               const broadMatches = content.match(/[^<>"'`\s]*[^<>"'`\s:]/g) || []
