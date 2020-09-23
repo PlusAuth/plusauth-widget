@@ -40,7 +40,6 @@ export default defineComponent({
         ...this.$attrs,
         class: {
           'pa__btn': true,
-          'pa__size--default': true,
           'pa__btn--loading': !!this.loading,
           'pa__btn--block': this.block,
           'pa__btn--disabled': this.disabled,
@@ -52,7 +51,7 @@ export default defineComponent({
 
           h('div',
             this.setTextColor(this.textColor,{
-              class: ['pa__btn__content', 'pa__size--default']
+              class: ['pa__btn__content']
             }),
             [getContent.call(this)]
           )
