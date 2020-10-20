@@ -1,3 +1,15 @@
+# [0.2.0](https://github.com/PlusAuth/plusauth-widget/compare/v0.1.1...v0.2.0) (2020-10-20)
+
+
+### Bug Fixes
+
+* color is not passed to loader inside btn ([6f6c0bc](https://github.com/PlusAuth/plusauth-widget/commit/6f6c0bcd22baca8328eb147a8995f581fbbe44a3))
+
+
+### Features
+
+* disabled prop for buton component ([843d30d](https://github.com/PlusAuth/plusauth-widget/commit/843d30daf187e8620abaab8aa11dda104d72b111))
+
 ## [0.1.1](https://github.com/PlusAuth/plusauth-widget/compare/v0.1.0...v0.1.1) (2020-09-16)
 
 
