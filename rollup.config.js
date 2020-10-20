@@ -6,6 +6,7 @@ import pkg from './package.json';
 import postcss from 'rollup-plugin-postcss';
 import typescript from 'rollup-plugin-typescript2'
 import alias from '@rollup/plugin-alias';
+import replace from '@rollup/plugin-replace'
 import { terser } from "rollup-plugin-terser";
 import { DEFAULT_EXTENSIONS } from '@babel/core';
 import livereload from 'rollup-plugin-livereload'
@@ -84,8 +85,8 @@ if (process.env.NODE_ENV === 'development') {
   }))
 }
 
-console.log(process.env.NODE_ENV)
 const name = 'PlusAuthWidget';
+
 export default {
   input: './src/index.ts',
   external: [],
@@ -107,7 +108,10 @@ export default {
       name,
       globals: {},
       plugins: [
-        terser()
+        terser(),
+        replace({
+          'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+        })
       ]
     }
   ],
