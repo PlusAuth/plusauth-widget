@@ -82,8 +82,6 @@ export function genStyles(theme: any, cssVar = false): string {
   let variablesCss = ''
   let css = ''
 
-  const aColor = cssVar ? genColorVariable('anchor') : anchor
-  css += `.pa__widget a { color: ${aColor}; }`
   // eslint-disable-next-line max-len
   cssVar && (variablesCss += `  ${genColorVariableName('anchor')}: ${anchor};\n`)
 
