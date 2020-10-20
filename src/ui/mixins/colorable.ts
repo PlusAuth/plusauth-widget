@@ -69,7 +69,7 @@ export const Colorable: ComponentOptions = {
           [`pa__${colorName  }--text`]: true,
         }
         if (colorModifier) {
-          data.class[`text--${  colorModifier}`] = true
+          data.class[`pa__text--${  colorModifier}`] = true
         }
       }
       return data

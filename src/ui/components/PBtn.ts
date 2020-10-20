@@ -27,6 +27,7 @@ export default defineComponent({
       },
       (this.$slots.loader ? this.$slots.loader() : false) || [
         h(Loading, {
+          color: this.textColor,
           indeterminate: true,
           size: 23,
           width: 2,
