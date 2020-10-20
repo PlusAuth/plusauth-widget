@@ -82,7 +82,6 @@ export function genStyles(theme: any, cssVar = false): string {
   let variablesCss = ''
   let css = ''
 
-  // eslint-disable-next-line max-len
   cssVar && (variablesCss += `  ${genColorVariableName('anchor')}: ${anchor};\n`)
 
   for (let i = 0; i < colors.length; ++i) {
@@ -91,7 +90,7 @@ export function genStyles(theme: any, cssVar = false): string {
 
     css += genBaseColor(name, cssVar ? genColorVariable(name)
       : value.base || value)
-    // eslint-disable-next-line max-len
+
     cssVar && (variablesCss += `  ${genColorVariableName(name)}: ${value.base};\n`)
 
     const variants = Object.keys(value)
@@ -102,7 +101,6 @@ export function genStyles(theme: any, cssVar = false): string {
 
       css += genVariantColor(name, variant,
         cssVar ? genColorVariable(name, variant) : variantValue)
-      // eslint-disable-next-line max-len
       cssVar && (variablesCss += `  ${genColorVariableName(name, variant)}: ${variantValue};\n`)
     }
   }
