@@ -5,7 +5,7 @@
       style="max-height: 150px; margin-left: 40px;"
       class="pa__logo"
       alt="Logo"
-      src="/images/icons/email_question.svg"
+      src="https://api.plusauth.com/assets/images/icons/email_question.svg"
     >
     <div
       v-t="{ path: 'mfa.email.title', args: { email: context.details.email } }"

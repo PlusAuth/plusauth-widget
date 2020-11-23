@@ -3,7 +3,7 @@
     <img
       style="max-height: 150px"
       alt="Logo"
-      src="/images/icons/select.svg"
+      src="https://api.plusauth.com/assets/images/icons/select.svg"
     >
     <p
       v-t="'mfa.challenge.title'"

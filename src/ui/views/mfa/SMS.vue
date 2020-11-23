@@ -10,7 +10,7 @@
       style="max-height: 150px; margin-left: 40px;"
       class="pa__logo"
       alt="Logo"
-      src="/images/icons/message-on-phone.svg"
+      src="https://api.plusauth.com/assets/images/icons/message-on-phone.svg"
     >
     <PTimer
       v-if="timerEnabled"

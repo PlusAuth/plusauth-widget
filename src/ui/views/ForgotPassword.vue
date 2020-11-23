@@ -55,7 +55,7 @@
       <div class="pa__row">
         <div class="pa__col pa__col-12 pa__align-center pa__text-center">
           <img
-            src="/images/icons/plane.svg"
+            src="https://api.plusauth.com/assets/images/icons/plane.svg"
             style="width: 128px; "
             alt="Mail Confirmation"
           >
