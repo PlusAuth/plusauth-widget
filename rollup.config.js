@@ -9,10 +9,6 @@ import alias from '@rollup/plugin-alias';
 import replace from '@rollup/plugin-replace'
 import { terser } from "rollup-plugin-terser";
 import { DEFAULT_EXTENSIONS } from '@babel/core';
-import livereload from 'rollup-plugin-livereload'
-import serve from 'rollup-plugin-serve'
-import purgecss from '@fullhuman/postcss-purgecss';
-import postcssPrefixer from 'postcss-prefixer';
 
 const extensions= [...DEFAULT_EXTENSIONS, '.ts', '.vue']
 
@@ -26,45 +22,7 @@ const plugins = [
   commonjs(),
   vue(),
 
-  postcss({
-    minimize: process.env.NODE_ENV === "production",
-    // extract: 'plusauth-widget.css',
-    plugins: [
-      postcssPrefixer({
-        prefix: 'pa__'
-      }),
-      ...process.env.NODE_ENV === "production" ? [
-          purgecss({
-            content: [
-              './src/**/*.html',
-              './src/**/*.vue',
-              './src/**/*.ts'
-            ],
-            safelist: {
-              greedy: [
-                /^pa__primary--/,
-                /^pa__secondary--/,
-                /^pa__error--/,
-                /^pa__warning--/,
-                /^pa__success--/,
-                /^pa__info--/,
-              ]
-            },
-            defaultExtractor: content => {
-              //  `pa-(screen-1.5)`
-              const broadMatches = content.match(/[^<>"'`\s]*[^<>"'`\s:]/g) || []
-
-              // .container(class="w-1/2")
-              const innerMatches = content.match(/[^<>"'`\s.()]*[^<>"'`\s.():]/g) || []
-
-              return broadMatches.concat(innerMatches)
-            }
-          })
-        ]
-        : []
-
-    ]
-  }),
+  postcss(),
   typescript({
     include: [/\.tsx?$/, /\.vue\?.*?lang=ts/],
     useTsconfigDeclarationDir: true
@@ -76,14 +34,6 @@ const plugins = [
     include: ['src/**/*'],
   }),
 ]
-
-if (process.env.NODE_ENV === 'development') {
-  plugins.push(livereload())
-  plugins.push(serve({
-    historyApiFallback: true,
-    contentBase: ['dev', 'dist']
-  }))
-}
 
 const name = 'PlusAuthWidget';
 

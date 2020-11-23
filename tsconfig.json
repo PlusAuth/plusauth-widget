@@ -6,7 +6,7 @@
     "declarationDir": "dist/types/",
     "esModuleInterop": true,
     "experimentalDecorators": true,
-    "module": "es2015",
+    "module": "ESNext",
     "moduleResolution": "node",
     "noImplicitAny": true,
     "noLib": false,
@@ -14,7 +14,7 @@
     "strict": true,
     "strictPropertyInitialization": false,
     "suppressImplicitAnyIndexErrors": true,
-    "target": "es2015",
+    "target": "ESNext",
     "baseUrl": "."
   },
   "exclude": [
@@ -23,6 +23,7 @@
   "include": [
     "./src/**/*.ts",
     "./src/**/*.js",
-    "./src/**/*.vue"
+    "./src/**/*.vue",
+    "*.vue"
   ]
 }

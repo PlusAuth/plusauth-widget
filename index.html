@@ -3,10 +3,11 @@
 <head >
   <meta charset="UTF-8" >
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">  <title >Title</title >
-  <script type="application/javascript" src="/plusauth-widget.min.js"></script >
-<!--  <link rel="stylesheet" href="/plusauth-widget.css" >-->
+  <script  src="/src/index.ts" type="module"></script >
+  <!--  <link rel="stylesheet" href="/plusauth-widget.css" >-->
   <style >
     html, body{
+      margin: 0;
       height: 100%;
     }
     .dev-navbar {
@@ -28,6 +29,7 @@
 <div class="dev-navbar">
   <a href="/signin" > Login </a >
   <a href="/signup" > Register </a >
+  <a href="/verifyEmail" > VerifyEmail </a >
   <a href="/signin/consent" > Consent </a >
   <a href="/updateMissingInformation" > Fill Missing </a >
   <a href="/signin/recovery" > Password Recovery </a >
@@ -35,15 +37,16 @@
   <a href="/signin/challenge" > Challenge </a >
   <a href="/signin/challenge/sms" > SMS </a >
   <a href="/signin/challenge/email" > EMAIL </a >
-  <a href="/signin/challenge/ga" > GA </a >
+  <a href="/signin/challenge/otp" > OTP </a >
 </div>
 <div id="app" style="height: 100%">
 
 </div>
-<script >
+<script type="module">
+  import PlusAuthWidget from '/src/index.ts';
   window.PlusAuth = {
     client : {
-      logoUri: 'http://api.plusauth.com/images/logo.png'
+      logoUri: 'https://api.plusauth.com/assets/images/logo.png'
     },
     passwordPolicy: {
       min: 4,
@@ -53,7 +56,9 @@
       number: 1,
       customChars: '$!'
     },
+    autoSignIn: true,
     details: {
+      tenantLoginUrl: 'http://dashboard.plusauth.com:8080',
       email: 'test@plusauth.com',
       fields: [
         {
@@ -64,11 +69,20 @@
       challenges: [
         'sms',
         'email',
-        'ga'
+        'otp'
       ]
     }
   }
   const auth = new PlusAuthWidget('#app', {
+    modeOptions: {
+      login: {
+        fields: {
+          username: {
+            label: 'Email'
+          }
+        }
+      }
+    }
   }, window.PlusAuth)
   auth.view.mode = 'login'
 </script >
