@@ -10,6 +10,9 @@ import FillMissing from './views/FillMissing.vue';
 import ForgotPassword from './views/ForgotPassword.vue';
 import Login from './views/Login.vue';
 import Challenge from './views/mfa/Challenge.vue';
+import Email from './views/mfa/Email.vue';
+import OTP from './views/mfa/OTP.vue';
+import SMS from './views/mfa/SMS.vue';
 import Register from './views/Register.vue';
 import ResetPassword from './views/ResetPassword.vue';
 import VerifyEmail from './views/VerifyEmail.vue';
@@ -30,6 +33,12 @@ DefineComponent<any, any, any, any, any, any, any, any, any, any>{
     case 'mfa':
     case 'challenge':
       return Challenge;
+    case 'email':
+      return Email;
+    case 'sms':
+      return SMS;
+    case 'otp':
+      return OTP;
     case 'verifyemail':
       return VerifyEmail;
     case 'consent':
