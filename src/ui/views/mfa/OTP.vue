@@ -53,7 +53,7 @@ details?id=com.google.android.apps.authenticator2"
     </template>
     <template v-else>
       <div
-        v-t="{ path: 'mfa.ga.title'}"
+        v-t="{ path: 'mfa.otp.title'}"
         class="pa__subtitle-2 pa__text-left"
       />
     </template>
@@ -95,7 +95,7 @@ import PCodeInput from '../../components/PCodeInput';
 import form_generics from '../../utils/form_generics';
 
 export default {
-  name: 'GA',
+  name: 'OTP',
   components: { PCodeInput },
   setup(){
     const api = inject('api') as PlusAuthWeb
@@ -107,7 +107,7 @@ export default {
       try{
         await api.mfa.validateCode(
           code.value as string,
-          MFACodeType.GA
+          MFACodeType.OTP
         )
       }catch (e) {
         error.value = e.error;

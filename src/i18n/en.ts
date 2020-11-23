@@ -44,7 +44,7 @@ export default {
   mfa: {
     challenge: {
       email: 'Email',
-      ga: 'Google Authenticator',
+      otp: 'Google Authenticator',
       sms: 'SMS',
       title: 'Try another way to sign in'
     },
@@ -64,7 +64,7 @@ export default {
       submit: 'Submit',
       title: 'Enter verification code sent to: {phone_number}'
     },
-    ga: {
+    otp: {
       title: 'Enter verification code:'
     },
     tryAnotherWay: 'Try another way'

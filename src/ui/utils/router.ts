@@ -12,7 +12,7 @@ import ForgotPassword from '../views/ForgotPassword.vue';
 import Login from '../views/Login.vue';
 import Challenge from '../views/mfa/Challenge.vue';
 import Email from '../views/mfa/Email.vue';
-import GA from '../views/mfa/GA.vue';
+import OTP from '../views/mfa/OTP.vue';
 import SMS from '../views/mfa/SMS.vue';
 import Register from '../views/Register.vue';
 import ResetPassword from '../views/ResetPassword.vue';
@@ -62,9 +62,10 @@ export const router = createRouter({
               component: Email
             },
             {
-              path: 'ga',
-              name: 'ga',
-              component: GA
+              path: 'otp',
+              name: 'otp',
+              component: OTP,
+              props: settings && settings.modeOptions && settings.modeOptions.otp
             }
           ]
         },
