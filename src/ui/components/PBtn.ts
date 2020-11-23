@@ -1,5 +1,5 @@
-import { ComponentPublicInstance } from '@vue/runtime-core';
-import { defineComponent, h } from 'vue';
+import { ComponentPublicInstance , defineComponent, h } from 'vue';
+
 
 import { Colorable, Themeable, Translatable, Validatable } from '../mixins';
 

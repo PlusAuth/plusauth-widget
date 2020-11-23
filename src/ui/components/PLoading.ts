@@ -1,5 +1,4 @@
-import { ComponentPublicInstance } from '@vue/runtime-core';
-import { VNode, computed, defineComponent, h } from 'vue';
+import { ComponentPublicInstance , VNode, computed, defineComponent, h } from 'vue';
 
 import { Colorable } from '../mixins';
 import { convertToUnit } from '../utils';
