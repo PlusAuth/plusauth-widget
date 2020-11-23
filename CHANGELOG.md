@@ -1,3 +1,18 @@
+## [0.3.1](https://github.com/PlusAuth/plusauth-widget/compare/v0.2.0...v0.3.1) (2020-11-23)
+
+
+### Bug Fixes
+
+* incorrect component rendered with mode: verifyEmail ([db8a962](https://github.com/PlusAuth/plusauth-widget/commit/db8a962e519c8452a6623397f4e2d77819d1716b))
+
+
+### Features
+
+* ability to override props in views with `modeOptions` ([a60f7d1](https://github.com/PlusAuth/plusauth-widget/commit/a60f7d154fe0dfdcbee55da9ef117f782568d70b))
+* mfa view modes ([234e75a](https://github.com/PlusAuth/plusauth-widget/commit/234e75a4c956f1da171fc48c18dfb89aa00d8c47))
+* use static image paths ([6a5f6f8](https://github.com/PlusAuth/plusauth-widget/commit/6a5f6f81956fc01d5d1d7066c276e97effd46a21))
+* verify email view ([e5d7c6d](https://github.com/PlusAuth/plusauth-widget/commit/e5d7c6d7fc7c6b00f41870696e5fffaf838cc759))
+
 # [0.2.0](https://github.com/PlusAuth/plusauth-widget/compare/v0.1.1...v0.2.0) (2020-10-20)
 
 
