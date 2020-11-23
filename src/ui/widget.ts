@@ -12,6 +12,7 @@ import Login from './views/Login.vue';
 import Challenge from './views/mfa/Challenge.vue';
 import Register from './views/Register.vue';
 import ResetPassword from './views/ResetPassword.vue';
+import VerifyEmail from './views/VerifyEmail.vue';
 
 function resolveViewFromValue(value = ''):
 DefineComponent<any, any, any, any, any, any, any, any, any, any>{
@@ -30,7 +31,7 @@ DefineComponent<any, any, any, any, any, any, any, any, any, any>{
     case 'challenge':
       return Challenge;
     case 'verifyemail':
-      return Login;
+      return VerifyEmail;
     case 'consent':
       return Consent;
     case 'recovery':
