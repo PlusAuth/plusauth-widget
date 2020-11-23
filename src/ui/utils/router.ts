@@ -6,6 +6,7 @@ import {
   RouterView
 } from 'vue-router';
 
+import { IWidgetSettings } from '../interfaces';
 import Consent from '../views/Consent.vue';
 import FillMissing from '../views/FillMissing.vue';
 import ForgotPassword from '../views/ForgotPassword.vue';
@@ -16,6 +17,7 @@ import OTP from '../views/mfa/OTP.vue';
 import SMS from '../views/mfa/SMS.vue';
 import Register from '../views/Register.vue';
 import ResetPassword from '../views/ResetPassword.vue';
+import VerifyEmail from '../views/VerifyEmail.vue';
 
 const PlainRouterView = defineComponent( {
   render(){
@@ -24,7 +26,7 @@ const PlainRouterView = defineComponent( {
 })
 
 
-export const router = createRouter({
+export const router = (settings: Partial<IWidgetSettings>) => createRouter({
   history: location.origin !== 'null' ? createWebHistory() : createMemoryHistory('/'),
   routes: [
     {
@@ -33,15 +35,18 @@ export const router = createRouter({
       children: [
         {
           path: '',
-          component: Login
+          component: Login,
+          props: settings && settings.modeOptions && settings.modeOptions.login
         },
         {
           path: 'consent',
-          component: Consent
+          component: Consent,
+          props: settings && settings.modeOptions && settings.modeOptions.consent
         },
         {
           path: 'recovery',
-          component: ForgotPassword
+          component: ForgotPassword,
+          props: settings && settings.modeOptions && settings.modeOptions.recovery
         },
         {
           path: 'challenge',
@@ -49,17 +54,20 @@ export const router = createRouter({
           children: [
             {
               path: '',
-              component: Challenge
+              component: Challenge,
+              props: settings && settings.modeOptions && settings.modeOptions.challenge
             },
             {
               path: 'sms',
               name: 'sms',
               component: SMS,
+              props: settings && settings.modeOptions && settings.modeOptions.sms
             },
             {
               path: 'email',
               name: 'email',
-              component: Email
+              component: Email,
+              props: settings && settings.modeOptions && settings.modeOptions.email
             },
             {
               path: 'otp',
@@ -73,15 +81,23 @@ export const router = createRouter({
     },
     {
       path: '/signup',
-      component: Register
+      component: Register,
+      props: settings && settings.modeOptions && settings.modeOptions.signup
+    },
+    {
+      path: '/verifyEmail',
+      component: VerifyEmail,
+      props: settings && settings.modeOptions && settings.modeOptions.verifyEmail
     },
     {
       path: '/updateMissingInformation',
       component: FillMissing,
+      props: settings && settings.modeOptions && settings.modeOptions.fillMissing
     },
     {
       path: '/resetPassword/:token?',
-      component: ResetPassword
+      component: ResetPassword,
+      props: settings && settings.modeOptions && settings.modeOptions.resetPassword
     }
   ]
 })

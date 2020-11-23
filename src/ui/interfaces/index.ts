@@ -12,7 +12,9 @@ export interface ILocaleSettings {
   defaultLocale: string;
 }
 
-export type WidgetModes = 'login' | 'register'
+export type WidgetModes = 'login' | 'register' | 'recovery' | 'consent'
+| 'challenge' | 'sms' | 'email' | 'otp'
+| 'signup' | 'resetPassword' | 'fillMissing' | 'verifyEmail'
 
 export type SocialConnections = 'google' | 'facebook' | 'linkedin'
 
@@ -41,6 +43,7 @@ export interface FieldDefinition {
 export interface IWidgetSettings {
   locale: ILocaleSettings;
   mode: WidgetModes;
+  modeOptions: Record<WidgetModes, any>,
   apiUrl: string;
   theme: {
     primary?: string;

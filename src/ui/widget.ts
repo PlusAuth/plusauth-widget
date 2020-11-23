@@ -1,8 +1,9 @@
-import { defineComponent, h, ref,onBeforeUnmount } from 'vue';
+import { defineComponent, h, ref,onBeforeUnmount, DefineComponent } from 'vue';
 import './styles/main.sass'
 
 import { RouterView, useRoute } from 'vue-router';
 
+import { IWidgetSettings } from './interfaces';
 import { Theme } from './utils/theme';
 import Consent from './views/Consent.vue';
 import FillMissing from './views/FillMissing.vue';
@@ -12,7 +13,8 @@ import Challenge from './views/mfa/Challenge.vue';
 import Register from './views/Register.vue';
 import ResetPassword from './views/ResetPassword.vue';
 
-function resolveViewFromValue(value = ''){
+function resolveViewFromValue(value = ''):
+DefineComponent<any, any, any, any, any, any, any, any, any, any>{
   const route = useRoute()
   if (route.matched.length > 0) {
     return RouterView
@@ -41,7 +43,7 @@ function resolveViewFromValue(value = ''){
       return RouterView
   }
 }
-export default function (theme: Theme, settings: any): any {
+export default function (theme: Theme, settings: Partial<IWidgetSettings>): any {
   return defineComponent({
     provide: {
       theme
@@ -56,8 +58,7 @@ export default function (theme: Theme, settings: any): any {
 
       onBeforeUnmount(() => {
         if (typeof window !== 'undefined') {
-          // @ts-ignore
-          window.removeEventListener('resize', onResize, { passive: true })
+          window.removeEventListener('resize', onResize)
         }
       })
 
@@ -73,21 +74,33 @@ export default function (theme: Theme, settings: any): any {
           justifyContent: 'center',
         }
       },[
-        h('div', {
-          class: ['pa__row', 'pa__justify-center'],
-        },
-        h('div', {
-          class: {
-            'pa__pa-8': !this.isMobile,
-            'pa__pa-4': this.isMobile,
-            'pa__col': true,
-            'pa__col-sm-12': true,
-            'pa__col-md-6': true,
-            'pa__col-lg-4': true,
-            'pa__col-12': true,
-            'pa__elevation-1': !this.isMobile
-          }
-        }, h(resolveViewFromValue(settings.mode) as any)))
+        h(
+          'div',
+          {
+            class: ['pa__row', 'pa__justify-center'],
+          },
+          h(
+            'div',
+            {
+              class: {
+                'pa__pa-8': !this.isMobile,
+                'pa__pa-4': this.isMobile,
+                'pa__col': true,
+                'pa__col-sm-12': true,
+                'pa__col-md-6': true,
+                'pa__col-lg-4': true,
+                'pa__col-12': true,
+                'pa__elevation-1': !this.isMobile
+              }
+            },
+            [
+              h(
+                resolveViewFromValue(settings.mode),
+                settings.mode && settings.modeOptions && settings.modeOptions[settings.mode] || {}
+              )
+            ]
+          )
+        )
       ])
     }
   });

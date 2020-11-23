@@ -26,7 +26,7 @@ export function createWidget(container: Element | string,
   widget.directive('t', i18n)
   widget.mixin(Translatable)
   widget.provide(translatorKey, translator)
-  widget.use(router)
+  widget.use(router(rSettings))
   widget.provide('context', context)
   widget.config.globalProperties.$i18n = translator
   widget.config.globalProperties.settings = rSettings
