@@ -15,7 +15,8 @@ const extensions= [...DEFAULT_EXTENSIONS, '.ts', '.vue']
 const plugins = [
   alias({
     entries: {
-      'vue': 'vue/dist/vue.runtime.esm-browser.prod.js'
+      'vue': 'vue/dist/vue.runtime.esm-browser.prod.js',
+      'vue-router': 'vue-router/dist/vue-router.esm-browser.js'
     }
   }),
   resolve({ extensions, browser: true}),
