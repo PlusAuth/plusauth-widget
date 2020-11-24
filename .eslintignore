@@ -8,3 +8,4 @@ scripts
 *.config.js
 public
 tests
+vite.config.ts
