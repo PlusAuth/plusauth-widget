@@ -109,6 +109,9 @@ module.exports = {
         "named": "never"
       }
     ],
-    "vue/no-mutating-props": "warn"
+    "vue/no-mutating-props": "warn",
+    'vue/valid-v-slot': ['error', {
+      allowModifiers: true,
+    }],
   }
 };
