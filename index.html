@@ -3,8 +3,8 @@
 <head >
   <meta charset="UTF-8" >
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">  <title >Title</title >
-  <script  src="/src/index.ts" type="module"></script >
   <!--  <link rel="stylesheet" href="/plusauth-widget.css" >-->
+<!--  <script  src="./dist/plusauth-widget.min.js" type="application/javascript"></script >-->
   <style >
     html, body{
       margin: 0;
@@ -49,6 +49,10 @@
 <script type="module">
   import PlusAuthWidget from '/src/index.ts';
   window.PlusAuth = {
+    ui_locales: [
+      { name: 'Turkce', value: 'tr'},
+      { name: 'English', value: 'en'},
+    ],
     client : {
       clientName: "TestApp",
       tosUri: 'https://sometosuri.com',
@@ -92,6 +96,16 @@
     }
   }
   const auth = new PlusAuthWidget('#app', {
+    locale: {
+      defaultLocale: 'en',
+      dictionary: {
+        tr: {
+          login: {
+            signIn: "Giris yap"
+          }
+        }
+      }
+    },
     footer: {
       enabled: true
     },
