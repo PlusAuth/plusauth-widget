@@ -1,5 +1,4 @@
-import { defineComponent, h, withDirectives, reactive, toRefs,
-  getCurrentInstance, ref } from 'vue';
+import { defineComponent, h, withDirectives, reactive, toRefs, ref } from 'vue';
 
 import { i18n } from '../directives/i18n';
 import { Colorable , Themeable , Translatable , Validatable } from '../mixins';
@@ -17,6 +16,7 @@ export default defineComponent({
     modelValue: { type: null, default: null },
     hideMessages: { type: Boolean, default: false }
   },
+  emits: ['focus', 'keydown', 'change', 'input', 'update:modelValue', 'blur', 'update:error'],
   setup(props){
     const inputRef = ref<string>(null as any)
     const state = reactive({

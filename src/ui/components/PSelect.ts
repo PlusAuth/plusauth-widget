@@ -11,6 +11,10 @@ import Message from './PMessage';
 export default defineComponent({
   name: 'PSelect',
   mixins: [Translatable, Validatable, Colorable, Themeable],
+  emits: [
+    'click','focus', 'keydown',
+    'change', 'input', 'update:modelValue', 'blur', 'update:error'
+  ],
   props: {
     ...Validatable.props,
     ...Colorable.props,
