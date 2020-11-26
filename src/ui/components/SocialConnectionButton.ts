@@ -1,5 +1,8 @@
 import { defineComponent, h } from 'vue';
 
+function getIconLink(type: string){
+  return `https://raw.githubusercontent.com/edent/SuperTinyIcons/master/images/svg/${type}.svg`
+}
 export default defineComponent({
   name: 'SocialConnectionButton',
   props: {
@@ -10,19 +13,13 @@ export default defineComponent({
   },
   render(){
     return h('a', {
-      class: {
-        'pa__btn': true,
-        'pa__btn--fab': true,
-      }
+
+      style: {
+        backgroundImage: `url(${getIconLink(this.type)})`
+      },
+      class: ['pa__btn', 'pa__widget-social-icon', 'pa__btn--fab'],
     }, h('div', {
-      class: 'pa__btn__content'
-    }, h('i', {
-      // TODO: remove font awesome
-      class: {
-        'fa': true,
-        'fa-2x': true,
-        [`fa-${ this.type}`]: true
-      }
-    })))
+      class: 'pa__btn__content',
+    },))
   }
 })
