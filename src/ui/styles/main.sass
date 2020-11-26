@@ -1,7 +1,178 @@
 @import url(https://fonts.googleapis.com/css?family=Montserrat&display=swap)
 @import 'settings/index'
-@import 'tools/index'
-@import 'generic/index'
-@import 'elements/index'
-@import 'components/index'
-@import 'utilities/index'
+
+.widget
+  font-family: $body-font-family
+  height: 100%
+
+  button,
+  input,
+  select,
+  textarea
+    background-color: transparent
+    border-style: none
+
+  @media (min-width: 601px)
+    display: flex
+    flex-direction: column
+    position: relative
+    justify-content: center
+
+  //&:before
+  //  min-height: 30px
+  //
+  //&:before, &:after
+  //  content: ''
+  //  display: block
+  //  box-flex: 1
+  //  flex-grow: 1
+  //  height: 32px
+
+  &-info-section
+    text-align: center
+
+  &-social-section
+    padding: 12px 0
+    text-align: center
+    & + .widget-helpers-section
+      padding: 0
+  &-helpers-section
+    text-align: center
+    padding: 12px 0 0
+    line-height: 24px
+    a
+      padding-left: 4px
+  &-social-icons
+    display: flex
+    justify-content: center
+    padding-top: 4px
+  &-social-icon
+    width: 36px !important
+    height: 36px !important
+    border-radius: 50%
+    margin: 0 4px
+    &:hover
+      filter: brightness(0.8)
+  &-content
+    background: #fff
+    display: flex
+    flex-direction: column
+    max-width: 100%
+    min-height: 100%
+    position: relative
+    z-index: 2
+
+    @media (min-width: 601px)
+      display: block
+      flex-shrink: 0
+      margin: 0 auto
+      min-height: 0
+      width: 450px
+      transition: .2s
+
+    &-main
+      box-flex: 1
+      flex-grow: 1
+      overflow: hidden
+      padding: 24px 24px 36px
+
+      @media (min-width: 450px)
+        padding: 36px 40px 36px
+
+      @media (min-width: 601px)
+        border: 1px solid #dadce0
+        border-radius: 8px
+        height: auto
+        //min-height: 500px
+        overflow-y: auto
+        transition: .2s
+
+    &-actions
+      display: flex
+      justify-content: center
+      padding-top: 12px
+
+    &-footer
+      align-items: center
+      display: flex
+      flex-wrap: wrap
+      justify-content: space-between
+      font-size: 12px
+      line-height: 1.4
+      padding: 0 12px 14px
+
+      @media (min-width: 450px)
+        padding-left: 40px
+        padding-right: 40px
+      @media (min-width: 601px)
+        padding: 12px 0 0
+
+      &-link-list
+        list-style: none
+        margin: 8px -16px
+        padding: 0
+
+        li
+          display: inline-block
+          margin: 0
+        a
+          border-radius: 2px
+          color: #757575
+          display: inline-block
+          padding: 6px 16px
+          transition: background .2s
+        @media (min-width: 601px)
+          margin-top: 0
+          margin-bottom: 0
+
+  a
+    color: #1a73e8
+    cursor: pointer
+    font-weight: 500
+    text-decoration: none
+    outline: none
+    &:not(.btn):focus
+      outline: auto
+
+  h1, h2, h3, h4, h5, h6
+    color: #202124
+    padding-bottom: 0
+    font-family: 'Montserrat','Noto Sans Myanmar UI',arial,sans-serif
+    font-weight: 400
+    margin-bottom: 0
+    margin-top: 0
+
+  h1
+    font-size: 20px
+    padding-top: 16px
+    font-weight: 400
+  h2
+    font-size: 16px
+    padding-top: 14px
+    font-weight: 400
+
+  .logo-container
+    display: flex
+    justify-content: center
+    min-height: 100px
+    .logo
+      //margin: 0 auto
+      max-height: 120px
+
+  .column
+    display: flex
+    flex-direction: column
+  .row
+    display: flex
+    flex-direction: row
+    flex-wrap: wrap
+
+  .challenge-timer
+    margin-top: 16px
+  .signin-challenges
+    padding-top: 8px
+    .signin-challenge
+      text-align: left
+      justify-content: start
+
+  @import 'components/index'
