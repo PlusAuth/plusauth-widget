@@ -1,3 +1,5 @@
+import defaultDictionary from '../../i18n/en';
+
 export interface IClient {
   logoUri?: string;
   clientName?: string;
@@ -7,8 +9,9 @@ export interface IClient {
   social: string[];
 }
 
+type DictionaryItem = string | Record<string, string>
 export interface ILocaleSettings {
-  dictionary: any;
+  dictionary: Record<string, typeof defaultDictionary | DictionaryItem>;
   defaultLocale: string;
 }
 

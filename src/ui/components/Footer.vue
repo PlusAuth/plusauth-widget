@@ -34,7 +34,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject, ref } from 'vue';
+import { defineComponent, inject, reactive, ref, watch } from 'vue';
+
+import { translatorKey } from '../utils/translator';
 
 export default defineComponent({
   name: 'Footer',
@@ -47,19 +49,21 @@ export default defineComponent({
       type: String as () => string,
       default: null
     },
-    languages: {
-      type: Array as () => string[],
-      default: [{ name: 'Turkce', value: 'tr' }]
-    }
   },
   setup(){
     const context = inject('context') as any
+    const translator = inject(translatorKey) as any
     const client = context.client
-    const selectedLang = ref<string>('tr')
+    const selectedLang = ref<string>(translator.locale)
+    watch(selectedLang, (val)=>{
+      translator.locale = val
+    })
+    const languages = reactive(context.ui_locales || [])
     return {
       selectedLang,
+      languages,
       tosUri: client.tosUri,
-      policyUri: client.policyUri
+      policyUri: client.policyUri,
     }
   }
 })

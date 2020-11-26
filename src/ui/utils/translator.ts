@@ -1,3 +1,5 @@
+import { Ref, ref } from 'vue';
+
 import { escapeRegExp, isObject, keysToDotNotation, parseArgs, propertyAccessor } from '.';
 
 export const translatorKey = Symbol('t')
@@ -6,21 +8,22 @@ export const translatorKey = Symbol('t')
 export class Translator {
   private fallBackLocale: string;
   private dictionary: any;
-  private selectedLocale: string
+  private selectedLocale: Ref
   constructor(dictionary: any, fallbackLocale?: string) {
     this.dictionary = dictionary;
-    this.fallBackLocale = fallbackLocale || 'i18n'
+    this.fallBackLocale = fallbackLocale || 'en'
+    this.selectedLocale = ref<string | null>(this.fallBackLocale)
   }
   set locale(locale: string){
-    this.selectedLocale = locale
+    this.selectedLocale.value = locale
   }
   get locale(): string {
-    return this.selectedLocale
+    return this.selectedLocale.value
   }
 
   t(key: string, ...values: any){
     const parsedArgs = parseArgs(values)
-    const locale = parsedArgs.locale || this.fallBackLocale
+    const locale = parsedArgs.locale || this.locale
     return this._interpolate(propertyAccessor(this.dictionary[locale], key)
           || propertyAccessor(this.dictionary[this.fallBackLocale], key)
           || key,

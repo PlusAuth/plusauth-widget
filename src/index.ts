@@ -17,12 +17,12 @@ export default class PlusAuthWidget {
     this.api = new PlusAuthWeb(settings.apiUrl ||
     location.origin !== 'null' ? window.location.origin : '/')
 
-    this._view = createWidget(container || document.body, deepmerge(settings, {
+    this._view = createWidget(container || document.body, deepmerge( {
       locale: {
         defaultLocale: 'en',
         dictionary: defaultDictionary
       }
-    }), context)
+    }, settings), context)
 
     this._view.provide('api', this.api)
   }
