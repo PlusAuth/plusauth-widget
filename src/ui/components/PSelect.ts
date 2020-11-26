@@ -175,12 +175,12 @@ export default defineComponent({
     }
 
     const onBlur = (e: FocusEvent) => {
+      this.isFocused = false
       e.preventDefault()
       e.stopPropagation()
       if(!(e.target as Element).contains(e.relatedTarget as Element)){
         // @ts-ignore
         this.hasColor = false
-        this.isFocused = false
         this.isOpen = false
         this.$emit('blur', e)
       }
@@ -203,17 +203,17 @@ export default defineComponent({
           'pa__input-select-is-open': this.isOpen,
           'pa__input-focused': this.isFocused
         },
-
+        tabindex: 0,
+        onClick,
+        onFocus,
+        onKeyDown,
+        onBlur,
       }),
       [
         h('div', {
           class: { 'pa__input--wrap': true },
           ref: 'containerRef',
-          tabindex: 0,
-          onClick,
-          onFocus,
-          onKeyDown,
-          onBlur,
+
         }, [
           h(
             'div',
