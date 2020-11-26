@@ -13,7 +13,7 @@
 
   <GenericForm
     ref="form"
-    :fields="_fields"
+    :fields="finalFields"
     :validate="validate"
   />
 
@@ -36,6 +36,7 @@ import { defineComponent,
 
 import GenericForm from '../components/GenericForm.vue';
 import { AdditionalFields } from '../interfaces';
+import { CustomizableFormProps } from '../mixins/customizable_form';
 import { resolveClientLogo } from '../utils';
 import form_generics from '../utils/form_generics';
 import { Translator, translatorKey } from '../utils/translator';
@@ -45,11 +46,7 @@ export default defineComponent({
   name: 'FillMissing',
   components: { GenericForm },
   props: {
-    fields: {
-      type: Object as () => AdditionalFields,
-      default: (): AdditionalFields => ({
-      })
-    },
+    ...CustomizableFormProps
   },
   setup(props){
     const api = inject('api') as PlusAuthWeb
@@ -58,21 +55,23 @@ export default defineComponent({
     const context = inject('context') as any
     const contextFields = context?.details?.fields
 
-    const { form, loading, submit, validate, fields: _fields } = form_generics(
-      {},
-      props.fields,
+    const { form, loading, submit, validate, fields: finalFields } = form_generics.call(
+      props,
+      null,
       async (fieldsWithValues) => {
         try{
           await api.auth.updateMissingInformation(fieldsWithValues)
         }catch (e) {
           if(e.field){
-            _fields[e.field].errors = e.error
+            finalFields[e.field].errors = e.error
           }else{
           // TODO: display error somewhere
             console.error(e)
           }
+          throw e
         }
-      })
+      }
+    )
 
     if(contextFields){
       if(Array.isArray(contextFields)){
@@ -86,7 +85,7 @@ export default defineComponent({
             fieldName = field.name
             fieldType= field.type
           }
-          _fields[field.name] = {
+          finalFields[field.name] = {
             value: null,
             type: fieldType,
             label: `fillMissing.${fieldName}`,
@@ -102,7 +101,7 @@ export default defineComponent({
     }
 
     return {
-      _fields,
+      finalFields,
       context,
       translator,
       resolveClientLogo,

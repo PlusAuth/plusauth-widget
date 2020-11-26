@@ -32,6 +32,7 @@
     >
       <span v-t="'consent.allow'" />
     </p-btn>
+    <div style="padding: 4px" />
     <p-btn
       class="pa__ml-2"
       color="pa__error"

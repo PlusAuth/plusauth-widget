@@ -1,18 +1,18 @@
 import deepmerge from 'deepmerge';
-import { computed, reactive, ref } from 'vue';
+import { computed, reactive, ref, Prop } from 'vue';
 
 import { AdditionalFields, FieldDefinition } from '../interfaces';
 
-export default (
-  defaultFields: AdditionalFields,
-  fields: AdditionalFields,
+export default function (
+  this: Record<string, any>,
+  defaultFields: AdditionalFields | null,
   action: (fields: Record<string, any>) => Promise<any>,
-  responseErrorHandler?: (err: Error) => void,
-) => {
+) {
   const form = ref<any>(null)
   const loading = ref(false)
 
-  const mergedFields = reactive( deepmerge(defaultFields, fields, { clone: false }))
+  const { fields, responseErrorHandler } = this
+  const mergedFields = reactive( deepmerge(defaultFields || {}, fields, { clone: false }))
 
   for (const field in mergedFields) {
     if(!mergedFields[field]){
@@ -72,4 +72,4 @@ export default (
       }
     }
   }
-};
+}

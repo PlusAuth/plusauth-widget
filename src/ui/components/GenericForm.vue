@@ -2,6 +2,7 @@
   <p-form
     ref="formRef"
     autocomplete="off"
+    @submit="submit"
   >
     <template
       v-for="(options, field) in sortedFields"

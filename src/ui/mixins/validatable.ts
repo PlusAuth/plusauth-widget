@@ -178,7 +178,7 @@ export const Validatable: ComponentOptions = {
     this.form?.register(this)
   },
 
-  beforeDestroy() {
+  beforeUnmount() {
     this.form?.unregister(this)
   },
 

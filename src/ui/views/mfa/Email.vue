@@ -16,7 +16,7 @@
 
   <GenericForm
     ref="form"
-    :fields="_fields"
+    :fields="finalFields"
     :validate="validate"
   />
 
@@ -76,21 +76,24 @@ export default defineComponent({
         }
       }
     }
-    const { form, loading, submit, validate, fields: _fields } = form_generics(
+    const { form, loading, submit, validate, fields: finalFields } = form_generics.call(
+      props,
       defaultFields,
-      props.fields,async (fieldWithValues) => {
+      async (fieldWithValues) => {
         try{
           await api.mfa.validateCode(
             fieldWithValues.code.value as string,
             MFACodeType.EMAIL
           )
         }catch (e) {
-          _fields.code.errors = e.error;
+          finalFields.code.errors = e.error;
+          throw e
         }
-      })
+      }
+    )
     return {
       loading,
-      _fields,
+      finalFields,
       form,
       context,
       validate,

@@ -13,7 +13,7 @@
 
   <GenericForm
     ref="form"
-    :fields="_fields"
+    :fields="finalFields"
     :validate="validate"
   >
     <template #password.message="{ message: [ message ], focus, hasState }">
@@ -77,14 +77,14 @@
 <script lang="ts" >
 import { PlusAuthWeb } from '@plusauth/web';
 import deepmerge from 'deepmerge';
-import { defineComponent, getCurrentInstance,
-  inject, reactive, ref } from 'vue';
+import { defineComponent, inject, reactive, ref } from 'vue';
 
 import { PForm, PasswordStrength } from '../components';
 import GenericForm from '../components/GenericForm.vue';
 import PBtn from '../components/PBtn';
 import SocialConnectionButton from '../components/SocialConnectionButton';
 import { AdditionalFields, SocialConnections } from '../interfaces';
+import { CustomizableFormProps } from '../mixins/customizable_form';
 import { resolveClientLogo } from '../utils';
 import form_generics from '../utils/form_generics';
 import { Translator, translatorKey } from '../utils/translator';
@@ -100,14 +100,11 @@ export default defineComponent({
         forgotPassword: true,
       })
     },
-    fields: {
-      type: Object as () => AdditionalFields,
-      default: () => ({})
-    },
     socialConnections: {
       type: Array as () => SocialConnections[],
       default: (): SocialConnections[] => ['google', 'facebook']
-    }
+    },
+    ...CustomizableFormProps
   },
   setup(props){
     const api = inject('api') as PlusAuthWeb
@@ -161,33 +158,34 @@ export default defineComponent({
       }
     }
 
-    const { form, loading, submit, validate, fields: _fields } = form_generics(
+    const { form, loading, submit, validate, fields: finalFields } = form_generics.call(
+      props,
       defaultFields,
-      props.fields,
       async (fieldWithValues) => {
         try{
           await api.auth.signUp(fieldWithValues)
         }catch (e) {
           switch (e.error) {
             case 'already_exists':
-              _fields.username['errors'] = e.error;
+              finalFields.username['errors'] = e.error;
               break;
             case 'invalid_credentials':
-              _fields.password['errors'] = e.error;
+              finalFields.password['errors'] = e.error;
               break;
             case 'email_not_verified':
               // TODO: email not verified
               break;
             default:
-              _fields.password['errors'] = e.error
+              finalFields.password['errors'] = e.error
           }
+          throw e
         }
       })
 
     return {
       form,
       context,
-      _fields,
+      finalFields,
       loading,
       resolveClientLogo,
       validate,

@@ -86,23 +86,24 @@ details?id=com.google.android.apps.authenticator2"
 
 <script lang="ts" >
 import { PlusAuthWeb, MFACodeType } from '@plusauth/web';
-import { inject, ref } from 'vue';
+import { defineComponent, inject, ref } from 'vue';
 
 import PCodeInput from '../../components/PCodeInput';
 import form_generics from '../../utils/form_generics';
 
-export default {
+export default defineComponent({
   name: 'OTP',
   components: { PCodeInput },
-  setup(){
+  setup(props){
     const api = inject('api') as PlusAuthWeb
     const context = inject('context') as any
     const code = ref<string>(null as any)
     const error = ref<string>(null as any)
 
-    const { form, loading, submit } = form_generics(
-      {},
-      {},async () => {
+    const { form, loading, submit } = form_generics.call(
+      props,
+      null,
+      async () => {
         try{
           await api.mfa.validateCode(
             code.value as string,
@@ -110,8 +111,10 @@ export default {
           )
         }catch (e) {
           error.value = e.error;
+          throw e
         }
-      })
+      }
+    )
     return {
       code,
       context,
@@ -121,7 +124,7 @@ export default {
       submit
     }
   }
-}
+})
 </script >
 
 <style scoped >

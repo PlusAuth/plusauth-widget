@@ -19,7 +19,7 @@
 
       <GenericForm
         ref="form"
-        :fields="_fields"
+        :fields="finalFields"
         :validate="validate"
       />
 
@@ -44,7 +44,7 @@
           >
         </div>
         <div class="pa__widget-info-section">
-          <h1 v-t="{ path: 'forgotPassword.emailSent', args: _fields }" />
+          <h1 v-t="{ path: 'forgotPassword.emailSent', args: finalFields }" />
         </div>
       </div>
     </template>
@@ -58,6 +58,7 @@ import { defineComponent, inject, reactive, ref } from 'vue';
 
 import GenericForm from '../components/GenericForm.vue';
 import { AdditionalFields } from '../interfaces';
+import { CustomizableFormProps } from '../mixins/customizable_form';
 import { isEmail, resolveClientLogo } from '../utils';
 import form_generics from '../utils/form_generics';
 import { Translator, translatorKey } from '../utils/translator';
@@ -66,10 +67,7 @@ export default defineComponent({
   name: 'ForgotPassword',
   components: { GenericForm },
   props: {
-    fields: {
-      type: Object as () => AdditionalFields,
-      default: (): AdditionalFields => ({})
-    },
+    ...CustomizableFormProps
   },
   setup(props){
     const api = inject('api') as PlusAuthWeb
@@ -93,9 +91,9 @@ export default defineComponent({
       }
     }
 
-    const { form, loading, submit, validate, fields: _fields } = form_generics(
+    const { form, loading, submit, validate, fields: finalFields } = form_generics.call(
+      props,
       defaultFields,
-      props.fields,
       async (fieldsWithValues) => {
         try{
           await api.auth.requestResetPassword(
@@ -103,25 +101,25 @@ export default defineComponent({
           )
           actionCompleted.value= true
         }catch (e) {
-          console.error(e)
           switch (e.error) {
             case 'user_not_found':
-              _fields.email['errors'] = e.error;
+              finalFields.email['errors'] = e.error;
               break;
             case 'invalid_credentials':
-              _fields.email['errors'] = e.error;
+              finalFields.email['errors'] = e.error;
               break;
             case 'email_not_verified':
             // TODO: email not verified
               break;
             default:
-              _fields.email['errors'] = e.error
+              finalFields.email['errors'] = e.error
           }
+          throw e
         }
       })
 
     return {
-      _fields,
+      finalFields,
       context,
       form,
       actionCompleted,

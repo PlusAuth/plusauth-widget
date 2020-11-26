@@ -34,8 +34,6 @@
 import { defineComponent,
   inject, ref, onMounted } from 'vue';
 
-
-import { AdditionalFields } from '../interfaces';
 import { resolveClientLogo } from '../utils';
 
 export default defineComponent({
@@ -48,10 +46,6 @@ export default defineComponent({
         signUp: true,
         resetPassword: true
       })
-    },
-    fields: {
-      type: Object as () => AdditionalFields,
-      default: (): AdditionalFields => ({})
     },
   },
   setup(){

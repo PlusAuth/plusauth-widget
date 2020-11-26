@@ -13,8 +13,9 @@
 
   <GenericForm
     ref="form"
-    :fields="_fields"
+    :fields="finalFields"
     :validate="validate"
+    :submit="submit"
   />
 
   <div class="pa__widget-content-actions">
@@ -54,6 +55,7 @@
       />
       <a
         v-t="'login.signUp'"
+        tabindex="0"
         href="/signup"
         @click.stop
       />
@@ -61,6 +63,7 @@
     <div v-if="features.forgotPassword">
       <a
         v-t="'login.forgotPassword'"
+        tabindex="0"
         href="/signin/recovery"
       />
     </div>
@@ -132,31 +135,32 @@ export default defineComponent({
       },
     }
 
-    const { form, loading, submit, validate, fields: _fields } = form_generics(
+    const { form, loading, submit, validate, fields: finalFields } = form_generics.call(
+      props,
       defaultFields,
-      props.fields,
       async (fieldWithValues) => {
         try{
           await api.auth.signIn(fieldWithValues)
         }catch (e) {
           switch (e.error) {
             case 'user_not_found':
-              _fields.username['errors'] = e.error;
+              finalFields.username['errors'] = e.error;
               break;
             case 'invalid_credentials':
-              _fields.password['errors'] = e.error;
+              finalFields.password['errors'] = e.error;
               break;
             case 'email_not_verified':
               // TODO: email not verified
               break;
             default:
-              _fields.password['errors'] = e.error
+              finalFields.password['errors'] = e.error
           }
+          throw e
         }
       })
 
     return {
-      _fields,
+      finalFields,
       context,
       form,
       loading,
