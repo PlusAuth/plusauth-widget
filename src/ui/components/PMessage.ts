@@ -46,7 +46,7 @@ export default defineComponent({
         }
       }),
       h(Transition,{ name: 'message-transition', css: true },
-        generateMessages(this.value)
+        { default: generateMessages.bind(this, this.value) }
       )
     )
   }
