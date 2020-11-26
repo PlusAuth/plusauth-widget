@@ -1,38 +1,33 @@
 <template>
-  <transition
-    name="slide-x-transition"
-    mode="out-in"
-  >
-    <div class="row ">
-      <template v-if="error === 'incorrect_code'">
-        <div class="col-12 title text-center">
-          <img
-            src="https://api.plusauth.com/assets/images/icons/email_error.svg"
-            style="width: 128px; "
-            alt="Mail Confirmation"
-          >
-        </div>
-        <div class="col col-12 text-center">
-          Incorrect verification code received.
-        </div>
-      </template>
-      <template v-else>
-        <div
-          class="col col-12 align-center text-center"
-        >
-          <img
-            src="https://api.plusauth.com/assets/images/icons/mail_confirm.svg"
-            style="width: 128px; "
-            alt="Mail Confirmation"
-          >
-        </div>
-        <div class="col col-12 text-center">
-          Your email verified successfully.
-          <span v-if="loginUrl">  Redirecting to application in {{ time }} seconds.</span>
-        </div>
-      </template>
+  <template v-if="error === 'incorrect_code'">
+    <div class="pa__logo-container">
+      <img
+        src="https://api.plusauth.com/assets/images/icons/email_error.svg"
+        style="width: 128px; "
+        alt="Mail Confirmation"
+      >
     </div>
-  </transition>
+    <div class="pa__widget-info-section">
+      <h1>
+        Incorrect verification code received.
+      </h1>
+    </div>
+  </template>
+  <template v-else>
+    <div class="pa__logo-container">
+      <img
+        src="https://api.plusauth.com/assets/images/icons/mail_confirm.svg"
+        style="width: 128px; "
+        alt="Mail Confirmation"
+      >
+    </div>
+    <div class="pa__widget-info-section">
+      <h1>
+        Your email verified successfully.
+        <span v-if="loginUrl">  Redirecting to application in {{ time }} seconds.</span>
+      </h1>
+    </div>
+  </template>
 </template>
 
 <script lang="ts">
@@ -63,13 +58,13 @@ export default defineComponent({
     const context = inject('context') as any
     const actionCompleted = ref(false)
     const error  = context.error?.error
-    let loginUrl = context.details?.tenantLoginUrl
+    let loginUrl = context.autoSignIn && context.details?.tenantLoginUrl
     let time = ref<number>(5);
 
     onMounted(() => {
       if(context.autoSignIn){
         setInterval(()=>{
-          time.value--;
+          time.value && time.value--;
         }, 1000)
         setTimeout(()=>{
           if(loginUrl){

@@ -1,72 +1,68 @@
 <template>
-  <p-form
-    ref="form"
-    autocomplete="off"
-    @submit="submit"
-  >
-    <template v-if="context.details.dataUrl">
-      <h4>
-        1. Download Google Authenticator
-        <a
-          target="_blank"
-          href="https://play.google.com/store/apps/
+  <template v-if="context.details.dataUrl">
+    <h4>
+      1. Download Google Authenticator
+      <a
+        target="_blank"
+        href="https://play.google.com/store/apps/
 details?id=com.google.android.apps.authenticator2"
-        >
-          Android
-        </a>
-        /
-        <a
-          href="https://apps.apple.com/us/app/google-authenticator/id388497605"
-          target="_blank"
-        >iOS</a>
-      </h4>
-      <p>
-        Google Authenticator can be downloaded from the App store or
-        Google Play. Search "Google Authenticator"
-        and proceed to download.
-      </p>
-      <h4>2. Add Authentication Token in Google 2FA and keep the key phrase</h4>
-      <p>
-        Open Google 2FA, scan below QR code or manually enter the key phrase
-        to add a token.
-        <br>
-        Key Phrase is used to recover Google 2FA in the case of phone loss or
-        change. Please make sure to keep
-        the key phrase; in a safe location before binding.
-      </p>
-      <div class="pa__text-center">
-        <img
-          id="mainLogo"
-          class="pa__logo"
-          alt="Logo"
-          style="max-width: 300px; max-height: 300px;"
-          :src="context.details.dataUrl"
-        >
-      </div>
-      <h3
-        style="text-align: center;
-      background-color: lightgray; border: 1px solid black;"
       >
-        {{ context.details.secret }}
-      </h3>
-      <h4>3. Enable Google Two Factor Authentication</h4>
-    </template>
-    <template v-else>
-      <div
-        v-t="{ path: 'mfa.otp.title'}"
-        class="pa__subtitle-2 pa__text-left"
-      />
-    </template>
-    <PCodeInput
-      v-model="code"
-      color="pa__primary"
+        Android
+      </a>
+      /
+      <a
+        href="https://apps.apple.com/us/app/google-authenticator/id388497605"
+        target="_blank"
+      >iOS</a>
+    </h4>
+    <p>
+      Google Authenticator can be downloaded from the App store or
+      Google Play. Search "Google Authenticator"
+      and proceed to download.
+    </p>
+    <h4>2. Add Authentication Token in Google 2FA and keep the key phrase</h4>
+    <p>
+      Open Google 2FA, scan below QR code or manually enter the key phrase
+      to add a token.
+      <br>
+      Key Phrase is used to recover Google 2FA in the case of phone loss or
+      change. Please make sure to keep
+      the key phrase; in a safe location before binding.
+    </p>
+    <div class="pa__logo-container">
+      <img
+        id="mainLogo"
+        class="pa__logo"
+        alt="Logo"
+        style="max-width: 300px; max-height: 300px;"
+        :src="context.details.dataUrl"
+      >
+    </div>
+    <h3
+      style="text-align: center;
+      background-color: lightgray; border: 1px solid black;"
+    >
+      {{ context.details.secret }}
+    </h3>
+    <h4>3. Enable Google Two Factor Authentication</h4>
+  </template>
+  <template v-else>
+    <div
+      v-t="{ path: 'mfa.otp.title'}"
+      class="pa__subtitle-2 pa__text-left"
     />
-    <p-message
-      :value="error"
-      color="pa__error"
-      class="pa__mb-4"
-    />
+  </template>
+  <PCodeInput
+    v-model="code"
+    color="pa__primary"
+  />
+  <p-message
+    :value="error"
+    color="pa__error"
+    class="pa__mb-4"
+  />
 
+  <div class="pa__widget-content-actions">
     <p-btn
       type="submit"
       block
@@ -75,16 +71,17 @@ details?id=com.google.android.apps.authenticator2"
     >
       <span v-t="'mfa.sms.submit'" />
     </p-btn>
-    <div
-      v-if="context.details.challenges.length > 1"
-      class="pa__row pa__justify-center pa__pt-4"
-    >
-      <a
-        v-t="'mfa.tryAnotherWay'"
-        href="/signin/challenge"
-      />
-    </div>
-  </p-form>
+  </div>
+
+  <div
+    v-if="context.details.challenges.length > 1"
+    class="pa__widget-helpers-section"
+  >
+    <a
+      v-t="'mfa.tryAnotherWay'"
+      href="/signin/challenge"
+    />
+  </div>
 </template>
 
 <script lang="ts" >
@@ -103,16 +100,18 @@ export default {
     const code = ref<string>(null as any)
     const error = ref<string>(null as any)
 
-    const { form, loading, submit } = form_generics({}, async (fieldWithValues) => {
-      try{
-        await api.mfa.validateCode(
-          code.value as string,
-          MFACodeType.OTP
-        )
-      }catch (e) {
-        error.value = e.error;
-      }
-    })
+    const { form, loading, submit } = form_generics(
+      {},
+      {},async () => {
+        try{
+          await api.mfa.validateCode(
+            code.value as string,
+            MFACodeType.OTP
+          )
+        }catch (e) {
+          error.value = e.error;
+        }
+      })
     return {
       code,
       context,

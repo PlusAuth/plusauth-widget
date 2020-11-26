@@ -1,103 +1,50 @@
 <template>
-  <transition
-    name="slide-x-transition"
-    mode="out-in"
-  >
-    <div
-      v-if="context.settings && context.settings.passwordResetFlow === 'newPassword'
-        && context.newPassword"
-    >
-      <span v-t="'resetPassword.informNewPassword'" />
-
-      <div>
-        {{ context.newPassword }}
-      </div>
-    </div>
-    <div v-else>
-      <div
-        v-if="actionCompleted"
-        v-t="'resetPassword.successfullyReset'"
-      />
-      <p-form
-        v-else
-        ref="form"
-        class="pa__text-center"
-        autocomplete="off"
-        @submit="submit"
+  <div
+    v-if="actionCompleted"
+    v-t="'resetPassword.successfullyReset'"
+  />
+  <template v-else>
+    <div class="pa__logo-container">
+      <img
+        class="pa__logo"
+        alt="Logo"
+        :src="resolveClientLogo(context.client)"
       >
-        <img
-          style="max-height: 150px"
-          class="pa__logo"
-          alt="Logo"
-          :src="resolveClientLogo(context.client)"
-        >
-        <div
-          v-t="'resetPassword.title'"
-          class="pa__title"
-        />
-        <template
-          v-for="(options, field) in _fields"
-          :key="field"
-        >
-          <p-text-field
-            v-model="options.value"
-            v-bind="options.attrs"
-            :error-messages="options.errors"
-            :validate-on-init="field === 'password'"
-            :type="options.type"
-            :label="options.label"
-            :rules="options.validator ?
-              [ validate.bind( null, options) ] : undefined"
-          >
-            <template
-              v-if="field === 'password'"
-              #append
-            >
-              <p-btn
-                type="button"
-                flat
-                tabindex="0"
-                text-color="#000"
-                class="pa__pw-toggle-visibility"
-                @click="options.type === 'password' ? options.type = 'text' : options.type =
-                  'password'"
-              >
-                <span
-                  v-t="options.type === 'password' ?
-                    'register.showPassword' : 'register.hidePassword'"
-                />
-              </p-btn>
-            </template>
-            <template
-              v-if="field === 'password'"
-              #message="{ message: [ message ], focus, hasState }"
-            >
-              <PasswordStrength
-                v-if="focus || hasState"
-                class="pa__input-details"
-                :message="message"
-              />
-              <div
-                v-else
-                class="pa__messages pa__input-details"
-              />
-            </template>
-          </p-text-field>
-        </template>
-
-        <div class="pa__pt-4">
-          <p-btn
-            color="pa__primary"
-            type="submit"
-            :loading="loading"
-            block
-          >
-            <span v-t="'resetPassword.submit'" />
-          </p-btn>
-        </div>
-      </p-form>
     </div>
-  </transition>
+    <div class="pa__widget-info-section">
+      <h1 v-t="'resetPassword.title'" />
+    </div>
+
+    <GenericForm
+      ref="form"
+      :fields="_fields"
+      :validate="validate"
+    >
+      <template #password.message="{ message: [ message ], focus, hasState }">
+        <PasswordStrength
+          v-if="focus || hasState"
+          class="pa__input-details"
+          :message="message"
+        />
+        <div
+          v-else
+          class="pa__messages pa__input-details"
+        />
+      </template>
+    </GenericForm>
+
+
+    <div class="pa__widget-content-actions">
+      <p-btn
+        color="pa__primary"
+        :loading="loading"
+        block
+        @click="submit"
+      >
+        <span v-t="'resetPassword.submit'" />
+      </p-btn>
+    </div>
+  </template>
 </template>
 
 <script lang="ts">
@@ -109,6 +56,7 @@ import { defineComponent,
 import { useRoute } from 'vue-router';
 
 import { PasswordStrength } from '../components';
+import GenericForm from '../components/GenericForm.vue';
 import { AdditionalFields } from '../interfaces';
 import { resolveClientLogo } from '../utils';
 import form_generics from '../utils/form_generics';
@@ -116,7 +64,7 @@ import { Translator, translatorKey } from '../utils/translator';
 
 export default defineComponent({
   name: 'ResetPassword',
-  components: { PasswordStrength },
+  components: { GenericForm, PasswordStrength },
   props: {
     features: {
       type: Object,
@@ -165,19 +113,21 @@ export default defineComponent({
         }
       }
     }
-    const _fields = reactive(deepmerge(defaultFields, props.fields))
-    const { form, loading, submit, validate } = form_generics(_fields, async (fieldWithValues) => {
-      try{
-        await api.auth.resetPassword(
-          fieldWithValues.password as string,
-          route.params.token as string
-        )
-        actionCompleted.value= true
-      }catch (e) {
-        console.error(e)
-        _fields.password['errors'] = e.error;
-      }
-    })
+    const { form, loading, submit, validate, fields: _fields } = form_generics(
+      defaultFields,
+      props.fields,
+      async (fieldWithValues) => {
+        try{
+          await api.auth.resetPassword(
+            fieldWithValues.password as string,
+            route.params.token as string
+          )
+          actionCompleted.value= true
+        }catch (e) {
+          console.error(e)
+          _fields.password['errors'] = e.error;
+        }
+      })
     return {
       _fields,
       form,

@@ -1,5 +1,5 @@
 <template>
-  <p-form class="pa__text-center">
+  <div class="pa__logo-container">
     <img
       id="mainLogo"
       style="max-height: 150px; margin-left: 40px;"
@@ -7,64 +7,64 @@
       alt="Logo"
       src="https://api.plusauth.com/assets/images/icons/email_question.svg"
     >
-    <div
+  </div>
+  <div class="pa__widget-info-section">
+    <h2
       v-t="{ path: 'mfa.email.title', args: { email: context.details.email } }"
-      class="pa__subtitle-2 pa__text-left"
     />
-    <template
-      v-for="(options, field) in fields"
-      :key="field"
-    >
-      <p-text-field
-        v-model="options.value"
-        v-bind="options.attrs"
-        :type="options.type"
-        :label="options.label"
-        :rules="options.validator ?
-          [ validate.bind( null, options) ] : undefined"
-      />
-    </template>
+  </div>
 
-    <div class="pa__pt-4">
-      <p-btn
-        type="submit"
-        block
-        color="pa__primary"
-        :loading="loading"
-      >
-        <span v-t="'mfa.email.submit'" />
-      </p-btn>
-    </div>
-    <div
-      v-if="context.details.challenges.length > 1"
-      class="pa__row pa__justify-center pa__pt-4"
+  <GenericForm
+    ref="form"
+    :fields="_fields"
+    :validate="validate"
+  />
+
+  <div class="pa__widget-content-actions">
+    <p-btn
+      block
+      color="pa__primary"
+      :loading="loading"
+      @click="submit"
     >
-      <a
-        v-t="'mfa.tryAnotherWay'"
-        href="/signin/challenge"
-      />
-    </div>
-  </p-form>
+      <span v-t="'mfa.email.submit'" />
+    </p-btn>
+  </div>
+
+  <div
+    v-if="context.details.challenges.length > 1"
+    class="pa__widget-helpers-section"
+  >
+    <a
+      v-t="'mfa.tryAnotherWay'"
+      href="/signin/challenge"
+    />
+  </div>
 </template>
 
 <script lang="ts" >
 import { PlusAuthWeb, MFACodeType } from '@plusauth/web';
 import { defineComponent, inject } from 'vue';
 
+import GenericForm from '../../components/GenericForm.vue';
 import { AdditionalFields } from '../../interfaces';
+import { CustomizableFormProps } from '../../mixins/customizable_form';
 import form_generics from '../../utils/form_generics';
 import { Translator, translatorKey } from '../../utils/translator';
 
 
 export default defineComponent({
   name: 'Email',
-  props: {},
-  setup(){
+  components: { GenericForm },
+  props: {
+    ...CustomizableFormProps
+  },
+  setup(props){
     const api = inject('api') as PlusAuthWeb
     const context = inject('context') as any
     const translator = inject(translatorKey) as Translator
 
-    const fields: AdditionalFields = {
+    const defaultFields: AdditionalFields = {
       code: {
         type: 'text',
         label: 'mfa.email.code',
@@ -76,19 +76,21 @@ export default defineComponent({
         }
       }
     }
-    const { form, loading, submit, validate } = form_generics(fields, async (fieldWithValues) => {
-      try{
-        await api.mfa.validateCode(
-          fieldWithValues.code.value as string,
-          MFACodeType.EMAIL
-        )
-      }catch (e) {
-        fields.code.errors = e.error;
-      }
-    })
+    const { form, loading, submit, validate, fields: _fields } = form_generics(
+      defaultFields,
+      props.fields,async (fieldWithValues) => {
+        try{
+          await api.mfa.validateCode(
+            fieldWithValues.code.value as string,
+            MFACodeType.EMAIL
+          )
+        }catch (e) {
+          _fields.code.errors = e.error;
+        }
+      })
     return {
       loading,
-      fields,
+      _fields,
       form,
       context,
       validate,

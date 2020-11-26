@@ -35,6 +35,7 @@ export interface FieldDefinition {
   type?: 'password' | 'text' | 'email';
   value?: unknown;
   label: string;
+  order?: number;
   validator?: FieldValidator<keyof AdditionalFields>;
   errors?: string | string[] | null
   [key: string]: any;
@@ -44,6 +45,9 @@ export interface IWidgetSettings {
   locale: ILocaleSettings;
   mode: WidgetModes;
   modeOptions: Record<WidgetModes, any>,
+  footer?: {
+    enabled?: boolean
+  },
   apiUrl: string;
   theme: {
     primary?: string;

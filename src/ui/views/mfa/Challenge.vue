@@ -1,28 +1,27 @@
 <template>
-  <p-form class="pa__text-center">
+  <div class="pa__logo-container">
     <img
       style="max-height: 150px"
       alt="Logo"
       src="https://api.plusauth.com/assets/images/icons/select.svg"
     >
-    <p
+  </div>
+  <div class="pa__widget-info-section">
+    <h2
       v-t="'mfa.challenge.title'"
-      class="pa__text-center pa__title pa__font-weight-thin"
     />
-    <div
+  </div>
+  <div class="pa__signin-challenges">
+    <a
       v-for="challenge in context.details.challenges"
       :key="challenge"
-      class="pa__row"
+      :href="'/signin/challenge/'+ challenge"
+      class="pa__btn pa__btn--flat pa__btn--block pa__signin-challenge"
+      @click.stop=""
     >
-      <a
-        :href="'/signin/challenge/'+ challenge"
-        class="pa__btn pa__btn--flat pa__btn--block pa__justify-start pa__px-4 pa__py-2"
-        @click.stop=""
-      >
-        <span v-t="'mfa.challenge.'+ challenge" />
-      </a>
-    </div>
-  </p-form>
+      <span v-t="'mfa.challenge.'+ challenge" />
+    </a>
+  </div>
 </template>
 
 <script lang="ts">

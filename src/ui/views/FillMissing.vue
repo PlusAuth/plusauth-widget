@@ -1,46 +1,32 @@
 <template>
-  <p-form
-    ref="form"
-    class="pa__text-center"
-    autocomplete="off"
-    @submit="submit"
-  >
+  <div class="pa__logo-container">
     <img
-      style="max-height: 150px"
       class="pa__logo"
       alt="Logo"
       :src="resolveClientLogo(context.client)"
     >
-    <div
-      v-t="'fillMissing.title'"
-      class="pa__title"
-    />
-    <template
-      v-for="(options, field) in _fields"
-      :key="field"
-    >
-      <p-text-field
-        v-model="options.value"
-        :error-messages="options.errors"
-        v-bind="options.attrs"
-        :type="options.type"
-        :label="options.label"
-        :rules="options.validator ?
-          [ validate.bind( null, options) ] : undefined"
-      />
-    </template>
+  </div>
 
-    <div class="pa__pt-4">
-      <p-btn
-        color="pa__primary"
-        type="submit"
-        block
-        :loading="loading"
-      >
-        <span v-t="'fillMissing.submit'" />
-      </p-btn>
-    </div>
-  </p-form>
+  <div class="pa__widget-info-section">
+    <h1 v-t="'fillMissing.title'" />
+  </div>
+
+  <GenericForm
+    ref="form"
+    :fields="_fields"
+    :validate="validate"
+  />
+
+  <div class="pa__widget-content-actions">
+    <p-btn
+      color="pa__primary"
+      block
+      :loading="loading"
+      @click="submit"
+    >
+      <span v-t="'fillMissing.submit'" />
+    </p-btn>
+  </div>
 </template>
 
 <script lang="ts">
@@ -48,6 +34,7 @@ import { PlusAuthWeb } from '@plusauth/web';
 import { defineComponent,
   inject, reactive, ref } from 'vue';
 
+import GenericForm from '../components/GenericForm.vue';
 import { AdditionalFields } from '../interfaces';
 import { resolveClientLogo } from '../utils';
 import form_generics from '../utils/form_generics';
@@ -56,15 +43,8 @@ import { Translator, translatorKey } from '../utils/translator';
 
 export default defineComponent({
   name: 'FillMissing',
+  components: { GenericForm },
   props: {
-    features: {
-      type: Object,
-      default: () => ({
-        socialConnections: true,
-        signUp: true,
-        forgotPassword: true
-      })
-    },
     fields: {
       type: Object as () => AdditionalFields,
       default: (): AdditionalFields => ({
@@ -77,13 +57,28 @@ export default defineComponent({
 
     const context = inject('context') as any
     const contextFields = context?.details?.fields
-    const _fields = reactive({})
+
+    const { form, loading, submit, validate, fields: _fields } = form_generics(
+      {},
+      props.fields,
+      async (fieldsWithValues) => {
+        try{
+          await api.auth.updateMissingInformation(fieldsWithValues)
+        }catch (e) {
+          if(e.field){
+            _fields[e.field].errors = e.error
+          }else{
+          // TODO: display error somewhere
+            console.error(e)
+          }
+        }
+      })
 
     if(contextFields){
       if(Array.isArray(contextFields)){
         contextFields.forEach(field => {
           let fieldName: string
-          let fieldType: string
+          let fieldType
           if(typeof field === 'string'){
             fieldName = field
             fieldType = 'text'
@@ -91,7 +86,7 @@ export default defineComponent({
             fieldName = field.name
             fieldType= field.type
           }
-          _fields[field] = {
+          _fields[field.name] = {
             value: null,
             type: fieldType,
             label: `fillMissing.${fieldName}`,
@@ -106,18 +101,6 @@ export default defineComponent({
       }
     }
 
-    const { form, loading, submit, validate } = form_generics(_fields, async (fieldsWithValues) => {
-      try{
-        await api.auth.updateMissingInformation(fieldsWithValues)
-      }catch (e) {
-        if(e.field){
-          _fields[e.field].errors = e.error
-        }else{
-          // TODO: display error somewhere
-          console.error(e)
-        }
-      }
-    })
     return {
       _fields,
       context,

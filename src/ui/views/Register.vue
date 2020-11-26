@@ -1,118 +1,77 @@
 <template>
-  <p-form
-    ref="form"
-    class="pa__text-center"
-    autocomplete="off"
-    @submit="submit"
-  >
+  <div class="pa__logo-container">
     <img
-      style="max-height: 150px"
       class="pa__logo"
       alt="Logo"
       :src="resolveClientLogo(context.client)"
     >
-    <div class="pa__title">
+  </div>
+
+  <div class="pa__widget-info-section">
+    <h1 v-t="'register.signUp'" />
+  </div>
+
+  <GenericForm
+    ref="form"
+    :fields="_fields"
+    :validate="validate"
+  >
+    <template #password.message="{ message: [ message ], focus, hasState }">
+      <PasswordStrength
+        v-if="focus || hasState"
+        class="pa__input-details"
+        :message="message"
+      />
+      <div
+        v-else
+        class="pa__messages pa__input-details"
+      />
+    </template>
+  </GenericForm>
+  <div class="pa__widget-content-actions">
+    <p-btn
+      color="pa__primary"
+      :loading="loading"
+      block
+      @click="submit"
+    >
       <span v-t="'register.signUp'" />
-    </div>
-    <template
-      v-for="(options, field) in _fields"
-      :key="field"
-    >
-      <p-text-field
-        v-model="options.value"
-        v-bind="options.attrs"
-        :error-messages="options.errors"
-        :validate-on-init="field === 'password'"
-        :type="options.type"
-        :label="options.label"
-        :rules="options.validator ?
-          [ validate.bind( null, options) ] : undefined"
-      >
-        <template
-          v-if="field === 'password'"
-          #append
-        >
-          <p-btn
-            type="button"
-            tabindex="0"
-            flat
-            text-color="#000"
-            class="pa__pw-toggle-visibility"
-            @click="options.type === 'password' ? options.type = 'text' : options.type =
-              'password'"
-          >
-            <span
-              v-t="options.type === 'password' ? 'register.showPassword' : 'register.hidePassword'"
-            />
-          </p-btn>
-        </template>
-        <template
-          v-if="field === 'password'"
-          #message="{ message: [ message ], focus, hasState }"
-        >
-          <PasswordStrength
-            v-if="focus || hasState"
-            class="pa__input-details"
-            :message="message"
-          />
-          <div
-            v-else
-            class="pa__messages pa__input-details"
-          />
-        </template>
-      </p-text-field>
-    </template>
-    <div class="pa__pt-4">
-      <p-btn
-        color="pa__primary"
-        type="submit"
-        :loading="loading"
-        block
-      >
-        <span v-t="'register.signUp'" />
-      </p-btn>
-    </div>
+    </p-btn>
+  </div>
 
-    <template
-      v-if="features.socialConnections && context.client
-        && context.client.social
-        && context.client.social.length"
-    >
-      <div class="pa__text-center pa__pt-4">
-        <span v-t="'login.signInWith'" />
-      </div>
-      <div class="pa__row pa__justify-center">
-        <SocialConnectionButton
-          v-for="connection in context.client.social"
-          :key="connection"
-          :type="connection"
-          :href="'/social?provider=' + connection"
-        />
-      </div>
-    </template>
-
-    <div
-      class="pa__text-center pa__pt-4 pa__pb-2"
-    >
-      <span
-        v-t="'register.haveAccount'"
-        class="pa__pr-2"
+  <div
+    v-if="features.socialConnections && context.client
+      && context.client.social
+      && context.client.social.length"
+    class="pa__widget-social-section"
+  >
+    <h4 v-t="'login.signInWith'" />
+    <div class="pa__widget-social-icons">
+      <SocialConnectionButton
+        v-for="connection in context.client.social"
+        :key="connection"
+        :type="connection"
+        :href="'/social?provider=' + connection"
       />
+    </div>
+  </div>
+
+  <div class="pa__widget-helpers-section">
+    <span
+      v-t="'register.haveAccount'"
+    />
+    <a
+      v-t="'login.signIn'"
+      href="/signin"
+      @click.stop
+    />
+    <div v-if="features.forgotPassword">
       <a
-        v-t="'login.signIn'"
-        href="/signin"
-        @click.stop
+        v-t="'login.forgotPassword'"
+        href="/signin/recovery"
       />
     </div>
-    <template v-if="features.forgotPassword">
-      <div class="pa__text-center pa__subtitle-2">
-        <a
-          v-t="'login.forgotPassword'"
-          href="/signin/recovery"
-        />
-      </div>
-    </template>
-  </p-form>
+  </div>
 </template>
 
 <script lang="ts" >
@@ -122,6 +81,7 @@ import { defineComponent, getCurrentInstance,
   inject, reactive, ref } from 'vue';
 
 import { PForm, PasswordStrength } from '../components';
+import GenericForm from '../components/GenericForm.vue';
 import PBtn from '../components/PBtn';
 import SocialConnectionButton from '../components/SocialConnectionButton';
 import { AdditionalFields, SocialConnections } from '../interfaces';
@@ -131,7 +91,7 @@ import { Translator, translatorKey } from '../utils/translator';
 
 export default defineComponent({
   name: 'Register',
-  components: { SocialConnectionButton, PasswordStrength },
+  components: { GenericForm, SocialConnectionButton, PasswordStrength },
   props: {
     features: {
       type: Object,
@@ -156,6 +116,7 @@ export default defineComponent({
 
     const defaultFields: AdditionalFields = {
       username: {
+        order: 0,
         attrs: {
           autocomplete: 'username'
         },
@@ -169,6 +130,7 @@ export default defineComponent({
         }
       },
       password: {
+        order: 1,
         type: 'password',
         label: 'register.password',
         attrs: {
@@ -181,6 +143,7 @@ export default defineComponent({
         }
       },
       rePassword: {
+        order: 2,
         type: 'password',
         label: 'register.rePassword',
         attrs: {
@@ -198,27 +161,28 @@ export default defineComponent({
       }
     }
 
-    const _fields = reactive(deepmerge(defaultFields, props.fields))
-
-    const { form, loading, submit, validate } = form_generics(_fields, async (fieldWithValues) => {
-      try{
-        await api.auth.signUp(fieldWithValues)
-      }catch (e) {
-        switch (e.error) {
-          case 'already_exists':
-            _fields.username['errors'] = e.error;
-            break;
-          case 'invalid_credentials':
-            _fields.password['errors'] = e.error;
-            break;
-          case 'email_not_verified':
-            // TODO: email not verified
-            break;
-          default:
-            _fields.password['errors'] = e.error
+    const { form, loading, submit, validate, fields: _fields } = form_generics(
+      defaultFields,
+      props.fields,
+      async (fieldWithValues) => {
+        try{
+          await api.auth.signUp(fieldWithValues)
+        }catch (e) {
+          switch (e.error) {
+            case 'already_exists':
+              _fields.username['errors'] = e.error;
+              break;
+            case 'invalid_credentials':
+              _fields.password['errors'] = e.error;
+              break;
+            case 'email_not_verified':
+              // TODO: email not verified
+              break;
+            default:
+              _fields.password['errors'] = e.error
+          }
         }
-      }
-    })
+      })
 
     return {
       form,
