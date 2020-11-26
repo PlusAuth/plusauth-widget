@@ -3,6 +3,7 @@ import './styles/main.sass'
 
 import { RouterView, useRoute } from 'vue-router';
 
+import Footer from './components/Footer.vue';
 import { IWidgetSettings } from './interfaces';
 import { Theme } from './utils/theme';
 import Consent from './views/Consent.vue';
@@ -77,41 +78,32 @@ export default function (theme: Theme, settings: Partial<IWidgetSettings>): any 
       }
     },
     render(){
-      return h('div', {
-        class: 'pa__widget pa__container pa__fill-height',
-        style: {
-          alignItems: 'center',
-          justifyContent: 'center',
-        }
-      },[
-        h(
-          'div',
-          {
-            class: ['pa__row', 'pa__justify-center'],
-          },
-          h(
-            'div',
-            {
-              class: {
-                'pa__pa-8': !this.isMobile,
-                'pa__pa-4': this.isMobile,
-                'pa__col': true,
-                'pa__col-sm-12': true,
-                'pa__col-md-6': true,
-                'pa__col-lg-4': true,
-                'pa__col-12': true,
-                'pa__elevation-1': !this.isMobile
-              }
-            },
-            [
-              h(
-                resolveViewFromValue(settings.mode),
-                settings.mode && settings.modeOptions && settings.modeOptions[settings.mode] || {}
-              )
-            ]
-          )
-        )
-      ])
+      const resolvedView = resolveViewFromValue(settings.mode)
+      return h(
+        'div',
+        {
+          class: 'pa__widget',
+        },
+        h('div', { class: 'pa__widget-content' },
+          [
+            h(
+              'div',
+              {
+                class: ['pa__widget-content-main']
+              },
+              [
+                h(
+                  resolvedView,
+                  resolvedView === RouterView ? {} :
+                    settings.mode && settings.modeOptions && settings.modeOptions[settings.mode]
+                )
+              ]
+            ),
+            settings.footer && settings.footer.enabled && h(Footer as any,
+              { class: 'pa__widget-content-footer' })
+          ] )
+
+      )
     }
   });
 }
