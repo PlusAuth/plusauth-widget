@@ -44,7 +44,7 @@ export default {
   mfa: {
     challenge: {
       email: 'Email',
-      otp: 'Google Authenticator',
+      otp: 'Authenticator Application',
       sms: 'SMS',
       title: 'Try another way to sign in'
     },
