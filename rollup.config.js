@@ -59,7 +59,11 @@ export default {
       name,
       globals: {},
       plugins: [
-        terser(),
+        terser({
+          format: {
+            comments: false
+          }
+        }),
         replace({
           'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
         })
