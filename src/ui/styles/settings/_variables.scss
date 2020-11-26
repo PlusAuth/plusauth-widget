@@ -136,18 +136,7 @@ $headings: (
     'letter-spacing': .03125em,
     'line-height': 1.5rem
   ),
-  'caption': (
-    'size': .75rem,
-    'weight': 400,
-    'letter-spacing': .0333333333em,
-    'line-height': 1.25rem
-  ),
-  'overline': (
-    'size': .625rem,
-    'weight': 400,
-    'letter-spacing': .1666666667em,
-    'line-height': 1rem
-  )
+
 ) !default;
 
 $transition: (
@@ -170,10 +159,6 @@ $ripple-animation-visible-opacity: 0.15 !default;
 $bootable-transition: 0.2s map-get($transition, 'fast-out-slow-in') !default;
 $blockquote-font-size: 18px !default;
 $blockquote-font-weight: 300 !default;
-$code-color: #bd4147 !default;
-$code-kbd-border-radius: 3px !default;
-$code-kbd-font-size: 85% !default;
-$code-kbd-font-weight: 900 !default;
 
 $input-top-spacing: 16px !default;
 $text-field-active-label-height: 12px !default;
