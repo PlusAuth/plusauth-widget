@@ -2,7 +2,6 @@ import { defineComponent, h } from 'vue';
 
 export default defineComponent({
   name: 'PForm',
-
   provide(){
     return {
       form: {
@@ -16,6 +15,7 @@ export default defineComponent({
     lazyValidation: Boolean,
     value: Boolean,
   },
+  emits: ['input', 'submit'],
 
   data: () => ({
     inputs: [] as any,
@@ -108,18 +108,18 @@ export default defineComponent({
       this.watchers.push(this.watchInput(input))
     },
     unregister(input: any) {
-      const found = this.inputs.find( (i: any) => i._.uid === input._.uid)
+      const found = this.inputs.find( (i: any) => i._?.uid === input._.uid)
 
       if (!found) return
 
-      const unwatch = this.watchers.find((i: any) => i._.uid === found._.uid)
+      const unwatch = this.watchers.find((i: any) => i._?.uid === found._.uid)
       if (unwatch) {
         unwatch.valid()
         unwatch.shouldValidate()
       }
 
-      this.watchers = this.watchers.filter((i: any) => i._.uid !== found._.uid)
-      this.inputs = this.inputs.filter((i: any) => i._.uid !== found._.uid)
+      this.watchers = this.watchers.filter((i: any) => i._?.uid !== found._.uid)
+      this.inputs = this.inputs.filter((i: any) => i._?.uid !== found._.uid)
       delete this.errorBag[found._.uid]
     },
   },

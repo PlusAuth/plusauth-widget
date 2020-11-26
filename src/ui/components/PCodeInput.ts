@@ -1,7 +1,4 @@
-import {
-  defineComponent, h, VNode,
-  computed, getCurrentInstance, ref,
-} from 'vue';
+import { defineComponent, h, computed, ref } from 'vue';
 
 import { PTextField } from '.';
 
