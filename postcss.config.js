@@ -1,5 +1,6 @@
 const purgecss = require('@fullhuman/postcss-purgecss');
 const postcssPrefixer = require('postcss-prefixer');
+const autoprefixer = require('autoprefixer')
 
 module.exports = {
   minimize: process.env.NODE_ENV === "production",
@@ -8,6 +9,7 @@ module.exports = {
     postcssPrefixer({
       prefix: 'pa__'
     }),
+    autoprefixer,
     ...process.env.NODE_ENV === "production" ? [
         purgecss({
           content: [
