@@ -10,7 +10,7 @@ export default {
       usernameRequired: 'Username is required',
     },
     forgotPassword: 'Forgot Password',
-    noAccount: 'Don\'t have an account ?',
+    noAccount: 'Don\'t have an account?',
     password: 'Password',
     showPassword: 'SHOW',
     hidePassword: 'HIDE',
