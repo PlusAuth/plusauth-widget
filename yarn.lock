@@ -1417,10 +1417,10 @@
   dependencies:
     "@types/node" ">= 8"
 
-"@plusauth/web@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@plusauth/web/-/web-0.1.0.tgz#e0c9d3cbdbc20cc72b0815573e188f7aee7ae5ba"
-  integrity sha512-jSn+93QyE6Vz4NXD2mmKRETBz43sMzB4AMZKj8BLGOIZdIaDBdyiuqOozWscdB03Td+1XfDFmim0zgJd5S2rZg==
+"@plusauth/web@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@plusauth/web/-/web-0.1.1.tgz#f2587014e52f2ff2db8b199c8dab2b386f5f10a6"
+  integrity sha512-FMNoNusJZMTDT+9KSlXAXVJsRfvi660OD1KRN0LUjAfCo7aCG167x4eWu9GaIE/BkatU2Dbk5/+waOQnAiLWMw==
   dependencies:
     whatwg-fetch "^3.4.1"
 
