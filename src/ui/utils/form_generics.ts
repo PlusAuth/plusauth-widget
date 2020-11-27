@@ -30,7 +30,7 @@ export default function (
     validate(options: FieldDefinition, value: any): any {
       if (options.validator) {
         return options.validator.call(
-          { $t: translator.t },
+          { $t: translator.t.bind(translator) },
           mergedFields,
           value
         )
