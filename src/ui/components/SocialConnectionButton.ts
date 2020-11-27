@@ -12,14 +12,20 @@ export default defineComponent({
     }
   },
   render(){
-    return h('a', {
-
-      style: {
-        backgroundImage: `url(${getIconLink(this.type)})`
+    return h(
+      'a',
+      {
+        style: {
+          backgroundImage: `url(${getIconLink(this.type)})`
+        },
+        class: ['pa__btn', 'pa__widget-social-icon', 'pa__btn--fab'],
       },
-      class: ['pa__btn', 'pa__widget-social-icon', 'pa__btn--fab'],
-    }, h('div', {
-      class: 'pa__btn__content',
-    },))
+      h(
+        'div',
+        {
+          class: 'pa__btn__content',
+        }
+      )
+    )
   }
 })

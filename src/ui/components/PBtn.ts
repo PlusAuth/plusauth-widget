@@ -20,8 +20,8 @@ export default defineComponent({
     block: { type: Boolean, default: false },
     flat: { type: Boolean, default: false }
   },
-  methods: {
-    genLoader(){
+  render(){
+    const genLoader = () => {
       return h('span', {
         class: 'pa__btn__loader',
       },
@@ -34,8 +34,6 @@ export default defineComponent({
         })
       ])
     }
-  },
-  render(){
     return h('button',
       this.setBackgroundColor(this.color, {
         ...this.$attrs,
@@ -48,7 +46,7 @@ export default defineComponent({
         },
       }),
       [
-        this.loading ? this.genLoader() :
+        this.loading ? genLoader() :
 
           h('div',
             this.setTextColor(this.textColor,{

@@ -24,7 +24,8 @@ export default defineComponent({
       isActivated: false,
       lazyValue: props.modelValue
     })
-    return { ...toRefs(state),
+    return {
+      ...toRefs(state),
       inputRef,
     }
   },

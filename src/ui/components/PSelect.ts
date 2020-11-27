@@ -213,7 +213,6 @@ export default defineComponent({
         h('div', {
           class: { 'pa__input--wrap': true },
           ref: 'containerRef',
-
         }, [
           h(
             'div',
