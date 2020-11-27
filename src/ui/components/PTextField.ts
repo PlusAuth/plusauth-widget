@@ -118,7 +118,8 @@ export default defineComponent({
             })),[
               [i18n, this.label]
             ]) : '',
-          this.$slots.append ? this.$slots.append(): '',]),
+          this.$slots.append ? this.$slots.append(): '',
+        ]),
         !this.hideMessages ? this.$slots.message ? this.$slots.message({
           message: this.messagesToDisplay,
           hasState: this.hasState,
