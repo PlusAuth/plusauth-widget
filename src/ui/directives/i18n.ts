@@ -54,7 +54,8 @@ function translate(el: any, binding: DirectiveBinding,
   }
 
   const $i18n = binding?.instance?.$.appContext.config.globalProperties.$i18n
-  el._vt = el.textContent = $i18n?.t(path, ...makeParams(locale, args))
+  el._vt = el[path.endsWith('|html') ? 'innerHTML': 'textContent'] =
+    $i18n?.t(path, ...makeParams(locale, args))
   el._locale = $i18n?.locale
 }
 
