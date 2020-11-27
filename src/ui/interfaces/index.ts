@@ -15,7 +15,7 @@ export interface ILocaleSettings {
   defaultLocale: string;
 }
 
-export type WidgetModes = 'login' | 'register' | 'recovery' | 'consent'
+export type WidgetModes = 'login' | 'recovery' | 'consent'
 | 'challenge' | 'sms' | 'email' | 'otp'
 | 'signup' | 'resetPassword' | 'fillMissing' | 'verifyEmail'
 
