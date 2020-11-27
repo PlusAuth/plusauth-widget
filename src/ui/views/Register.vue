@@ -153,21 +153,6 @@ export default defineComponent({
           }
           return true
         }
-      },
-      acceptTerms: {
-        order: 99,
-        type: 'checkbox',
-        label: 'register.acceptTerms|html',
-        attrs: {
-          hideMessages: true,
-          autocomplete: 'off'
-        },
-        validator(fields, value){
-          if(!value){
-            return this.$t('register.errors.rePasswordRequired')
-          }
-          return true
-        }
       }
     }
 

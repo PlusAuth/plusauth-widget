@@ -70,8 +70,6 @@ export default {
     tryAnotherWay: 'Try another way'
   },
   register: {
-    'acceptTerms|html': 'I have read and accept the <a href="asdasd" style="padding-left:' +
-      ' 4px">terms</a>',
     errors: {
       passwordRequired: 'Password is required',
       passwordsNotMatch: 'Passwords doesn\'t match',
