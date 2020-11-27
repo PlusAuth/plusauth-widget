@@ -12,7 +12,7 @@ export default function (
   const loading = ref(false)
 
   const { fields, responseErrorHandler } = this
-  const mergedFields = reactive( deepmerge(defaultFields || {}, fields, { clone: false }))
+  const mergedFields = reactive( deepmerge(defaultFields || {}, fields || {}, { clone: false }))
 
   for (const field in mergedFields) {
     if(!mergedFields[field]){

@@ -89,11 +89,15 @@ import { PlusAuthWeb, MFACodeType } from '@plusauth/web';
 import { defineComponent, inject, ref } from 'vue';
 
 import PCodeInput from '../../components/PCodeInput';
+import { CustomizableFormProps } from '../../mixins/customizable_form';
 import form_generics from '../../utils/form_generics';
 
 export default defineComponent({
   name: 'OTP',
   components: { PCodeInput },
+  props: {
+    ...CustomizableFormProps
+  },
   setup(props){
     const api = inject('api') as PlusAuthWeb
     const context = inject('context') as any
