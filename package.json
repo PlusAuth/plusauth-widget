@@ -114,7 +114,8 @@
           "refactor",
           "revert",
           "style",
-          "test"
+          "test",
+          "type"
         ]
       ]
     }
