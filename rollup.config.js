@@ -20,8 +20,8 @@ const plugins = [
     }
   }),
   resolve({ extensions, browser: true}),
-  commonjs(),
   vue(),
+  commonjs(),
 
   postcss(),
   typescript({
