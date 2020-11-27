@@ -21,28 +21,34 @@ export type WidgetModes = 'login' | 'register' | 'recovery' | 'consent'
 
 export type SocialConnections = 'google' | 'facebook' | 'linkedin'
 
-export type FieldValidator<T extends (string | number)> = (
-  fields: {
-    [key in T]: FieldDefinition;
-  },
-  value: any
-)
-=> string | boolean | Promise<string | boolean>;
 
 
 export interface AdditionalFields {
   [key: string]: FieldDefinition;
 }
 
-export interface FieldDefinition {
-  type?: 'password' | 'text' | 'email';
+interface CommonFieldProps {
+  type: string;
+  attrs?: Record<string, string>;
   value?: unknown;
-  label: string;
+  label?: string;
   order?: number;
-  validator?: FieldValidator<keyof AdditionalFields>;
-  errors?: string | string[] | null
-  [key: string]: any;
+  errors?: string | string[] | null;
+  validator?(this: { $t: (key: string, ...args: any) => string },fields: {
+    [key in keyof AdditionalFields]: FieldDefinition;
+  },
+    value: any): ()  => string | boolean | Promise<string | boolean>
 }
+export type FieldDefinition = CommonFieldProps & (
+  {
+    type: 'password' | 'text' | 'email';
+  }
+  |
+  {
+    type: 'code',
+    length?: number
+  }
+)
 
 export interface IWidgetSettings {
   locale: ILocaleSettings;

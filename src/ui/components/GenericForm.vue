@@ -8,7 +8,32 @@
       v-for="(options, field) in sortedFields"
       :key="field"
     >
+      <template v-if="options.type === 'code'">
+        <PCodeInput
+          v-model="options.value"
+          v-bind="options.attrs"
+          :size="options.length"
+          color="pa__primary"
+        />
+        <p-message
+          :value="options.errors"
+          color="pa__error"
+          class="pa__mb-4"
+        />
+      </template>
+      <template v-else-if="options.type === 'checkbox'">
+        <PCheckBox
+          v-model="options.value"
+          v-bind="options.attrs"
+          :error-messages="options.errors"
+          :type="options.type"
+          :label="options.label"
+          :rules="options.validator ?
+            [ validate.bind( null, options) ] : undefined"
+        />
+      </template>
       <p-text-field
+        v-else
         v-model="options.value"
         v-bind="options.attrs"
         :error-messages="options.errors"
@@ -55,8 +80,12 @@ import { computed, defineComponent, ref } from 'vue';
 
 import { AdditionalFields } from '../interfaces';
 
+import PCheckBox from './PCheckBox';
+import PCodeInput from './PCodeInput';
+
 export default defineComponent( {
   name: 'GenericForm',
+  components: { PCheckBox, PCodeInput },
   props: {
     submit: {
       type: Function as () => any,

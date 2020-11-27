@@ -2,6 +2,7 @@ import { App } from 'vue';
 
 import PasswordStrength from './PasswordStrength';
 import PButton from './PBtn';
+import PCheckBox from './PCheckBox';
 import PForm from './PForm';
 import PLoading from './PLoading';
 import PMessage from './PMessage';
@@ -10,6 +11,7 @@ import PTextField from './PTextField';
 
 export {
   PButton,
+  PCheckBox,
   PForm,
   PLoading,
   PMessage,
