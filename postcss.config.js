@@ -20,6 +20,7 @@ module.exports = {
           safelist: {
             greedy: [
               /^pa__primary--/,
+              /^pa__progress-circular/,
               /^pa__secondary--/,
               /^pa__error--/,
               /^pa__warning--/,
