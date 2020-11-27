@@ -20,6 +20,7 @@ export default defineComponent({
   setup(props){
     const inputRef = ref<string>(null as any)
     const state = reactive({
+      isChecked: props.modelValue,
       isFocused: false,
       isActivated: false,
       lazyValue: props.modelValue
@@ -52,6 +53,7 @@ export default defineComponent({
   },
   watch: {
     modelValue(value){
+      this.isChecked = value
       this.lazyValue = value
     }
   },
@@ -91,17 +93,18 @@ export default defineComponent({
           [
             h(
               'input',
-              Object.assign({},this.$attrs,{
-                value: this.modelValue,
-                ref: 'inputRef',
-                name: this.$attrs.name,
-                type: 'checkbox',
-                style: this.$attrs.style,
-                onKeyPress: this.$attrs.onKeyPress,
-                onFocus,
-                onBlur,
-                onInput
-              })
+              this.setTextColor( this.isChecked ? this.computedColor : this.validationState,
+                Object.assign({},this.$attrs,{
+                  value: this.modelValue,
+                  ref: 'inputRef',
+                  name: this.$attrs.name,
+                  type: 'checkbox',
+                  style: this.$attrs.style,
+                  onKeyPress: this.$attrs.onKeyPress,
+                  onFocus,
+                  onBlur,
+                  onInput
+                }))
             ),
             this.label ?
               withDirectives(h('label', this.setTextColor(this.validationState,{
