@@ -53,7 +53,6 @@
 
 <script lang="ts">
 import { PlusAuthWeb } from '@plusauth/web';
-import deepmerge from 'deepmerge';
 import { defineComponent, inject, reactive, ref } from 'vue';
 
 import GenericForm from '../components/GenericForm.vue';
@@ -61,7 +60,6 @@ import { AdditionalFields } from '../interfaces';
 import { CustomizableFormProps } from '../mixins/customizable_form';
 import { isEmail, resolveClientLogo } from '../utils';
 import form_generics from '../utils/form_generics';
-import { Translator, translatorKey } from '../utils/translator';
 
 export default defineComponent({
   name: 'ForgotPassword',
@@ -73,7 +71,6 @@ export default defineComponent({
     const api = inject('api') as PlusAuthWeb
     const actionCompleted = ref(false)
     const context = inject('context') as any
-    const translator = inject(translatorKey) as Translator
 
     const defaultFields: AdditionalFields = {
       email: {
@@ -81,10 +78,10 @@ export default defineComponent({
         label: 'forgotPassword.email',
         validator(fields, value){
           if(!value){
-            return translator.t('forgotPassword.errors.emailRequired')
+            return this.$t('forgotPassword.errors.emailRequired')
           }
           if( !isEmail(value)){
-            return translator.t('forgotPassword.errors.notValidEmail')
+            return this.$t('forgotPassword.errors.notValidEmail')
           }
           return true
         }

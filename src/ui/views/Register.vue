@@ -87,7 +87,6 @@ import { AdditionalFields, SocialConnections } from '../interfaces';
 import { CustomizableFormProps } from '../mixins/customizable_form';
 import { resolveClientLogo } from '../utils';
 import form_generics from '../utils/form_generics';
-import { Translator, translatorKey } from '../utils/translator';
 
 export default defineComponent({
   name: 'Register',
@@ -109,7 +108,6 @@ export default defineComponent({
   setup(props){
     const api = inject('api') as PlusAuthWeb
     const context = inject('context') as any
-    const translator = inject(translatorKey) as Translator
 
     const defaultFields: AdditionalFields = {
       username: {
@@ -121,7 +119,7 @@ export default defineComponent({
         label: 'register.username',
         validator(fields, value){
           if(!value){
-            return translator.t('register.errors.usernameRequired')
+            return this.$t('register.errors.usernameRequired')
           }
           return true
         }
@@ -134,7 +132,7 @@ export default defineComponent({
           autocomplete: 'new-password'
         },
         async validator(fields, value){
-          return !value ? translator.t('register.errors.passwordRequired') :
+          return !value ? this.$t('register.errors.passwordRequired') :
             api.auth.checkPasswordStrength(value,
               context.passwordPolicy || {})
         }
@@ -148,10 +146,25 @@ export default defineComponent({
         },
         validator(fields, value){
           if(!value){
-            return translator.t('register.errors.rePasswordRequired')
+            return this.$t('register.errors.rePasswordRequired')
           }
           if(fields.password.value !== value){
-            return translator.t('register.errors.passwordsNotMatch')
+            return this.$t('register.errors.passwordsNotMatch')
+          }
+          return true
+        }
+      },
+      acceptTerms: {
+        order: 99,
+        type: 'checkbox',
+        label: 'register.acceptTerms|html',
+        attrs: {
+          hideMessages: true,
+          autocomplete: 'off'
+        },
+        validator(fields, value){
+          if(!value){
+            return this.$t('register.errors.rePasswordRequired')
           }
           return true
         }

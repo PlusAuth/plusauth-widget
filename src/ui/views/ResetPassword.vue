@@ -59,7 +59,6 @@ import { AdditionalFields } from '../interfaces';
 import { CustomizableFormProps } from '../mixins/customizable_form';
 import { resolveClientLogo } from '../utils';
 import form_generics from '../utils/form_generics';
-import { Translator, translatorKey } from '../utils/translator';
 
 export default defineComponent({
   name: 'ResetPassword',
@@ -80,7 +79,6 @@ export default defineComponent({
     const context = inject('context') as any
     const actionCompleted = ref(false)
     const route = useRoute()
-    const translator = inject(translatorKey) as Translator
 
     const defaultFields: AdditionalFields = {
       password: {
@@ -90,7 +88,7 @@ export default defineComponent({
           autocomplete: 'new-password'
         },
         async validator(fields, value){
-          return !value ? translator.t('resetPassword.errors.newPasswordRequired') :
+          return !value ? this.$t('resetPassword.errors.newPasswordRequired') :
             api.auth.checkPasswordStrength(value,
               context.passwordPolicy || {})
         }
@@ -100,10 +98,10 @@ export default defineComponent({
         label: 'resetPassword.rePassword',
         validator(fields, value){
           if(!value){
-            return translator.t('resetPassword.errors.rePasswordRequired')
+            return this.$t('resetPassword.errors.rePasswordRequired')
           }
           if(fields.password.value !== value){
-            return translator.t('resetPassword.errors.passwordsNotMatch')
+            return this.$t('resetPassword.errors.passwordsNotMatch')
           }
           return true
         }

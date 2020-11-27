@@ -80,7 +80,6 @@ import { AdditionalFields } from '../interfaces';
 import {  CustomizableFormProps } from '../mixins/customizable_form';
 import { resolveClientLogo } from '../utils';
 import form_generics from '../utils/form_generics';
-import { Translator, translatorKey } from '../utils/translator';
 
 export default defineComponent({
   name: 'Login',
@@ -104,7 +103,6 @@ export default defineComponent({
     const api = inject('api') as PlusAuthWeb
     const context = inject('context') as any
     const passwordVisible = ref(false)
-    const translator = inject(translatorKey) as Translator
 
     const defaultFields: AdditionalFields = {
       username: {
@@ -116,7 +114,7 @@ export default defineComponent({
         label: 'login.username',
         validator(fields, value){
           if(!value){
-            return translator.t('login.errors.usernameRequired')
+            return this.$t('login.errors.usernameRequired')
           }
           return true
         }
@@ -128,7 +126,7 @@ export default defineComponent({
         errors: [],
         validator: function (fields, value){
           if(!value){
-            return translator.t('login.errors.passwordRequired')
+            return this.$t('login.errors.passwordRequired')
           }
           return true
         }

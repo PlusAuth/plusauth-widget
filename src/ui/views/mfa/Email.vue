@@ -50,7 +50,6 @@ import GenericForm from '../../components/GenericForm.vue';
 import { AdditionalFields } from '../../interfaces';
 import { CustomizableFormProps } from '../../mixins/customizable_form';
 import form_generics from '../../utils/form_generics';
-import { Translator, translatorKey } from '../../utils/translator';
 
 
 export default defineComponent({
@@ -62,7 +61,6 @@ export default defineComponent({
   setup(props){
     const api = inject('api') as PlusAuthWeb
     const context = inject('context') as any
-    const translator = inject(translatorKey) as Translator
 
     const defaultFields: AdditionalFields = {
       code: {
@@ -70,7 +68,7 @@ export default defineComponent({
         label: 'mfa.email.code',
         validator(fields, value){
           if(!value){
-            return translator.t('mfa.email.errors.codeRequired')
+            return this.$t('mfa.email.errors.codeRequired')
           }
           return true
         }

@@ -54,7 +54,6 @@ import PTimer from '../../components/PTimer';
 import { AdditionalFields } from '../../interfaces';
 import { CustomizableFormProps } from '../../mixins/customizable_form';
 import form_generics from '../../utils/form_generics';
-import { Translator, translatorKey } from '../../utils/translator';
 
 export default defineComponent({
   name: 'SMS',
@@ -69,7 +68,6 @@ export default defineComponent({
   setup(props){
     const api = inject('api') as PlusAuthWeb
     const context = inject('context') as any
-    const translator = inject(translatorKey) as Translator
 
     const defaultFields: AdditionalFields = {
       code: {
@@ -77,7 +75,7 @@ export default defineComponent({
         label: 'mfa.sms.code',
         validator(fields, value){
           if(!value){
-            return translator.t('mfa.sms.errors.codeRequired')
+            return this.$t('mfa.sms.errors.codeRequired')
           }
           return true
         }

@@ -31,15 +31,12 @@
 
 <script lang="ts">
 import { PlusAuthWeb } from '@plusauth/web';
-import { defineComponent,
-  inject, reactive, ref } from 'vue';
+import { defineComponent, inject } from 'vue';
 
 import GenericForm from '../components/GenericForm.vue';
-import { AdditionalFields } from '../interfaces';
 import { CustomizableFormProps } from '../mixins/customizable_form';
 import { resolveClientLogo } from '../utils';
 import form_generics from '../utils/form_generics';
-import { Translator, translatorKey } from '../utils/translator';
 
 
 export default defineComponent({
@@ -50,9 +47,8 @@ export default defineComponent({
   },
   setup(props){
     const api = inject('api') as PlusAuthWeb
-    const translator = inject(translatorKey) as Translator
-
     const context = inject('context') as any
+
     const contextFields = context?.details?.fields
 
     const { form, loading, submit, validate, fields: finalFields } = form_generics.call(
@@ -91,7 +87,7 @@ export default defineComponent({
             label: `fillMissing.${fieldName}`,
             validator(fields: any, value: any){
               if(!value){
-                return translator.t(`fillMissing.errors.${fieldName}Required`)
+                return this.$t(`fillMissing.errors.${fieldName}Required`)
               }
               return true
             }
@@ -103,7 +99,6 @@ export default defineComponent({
     return {
       finalFields,
       context,
-      translator,
       resolveClientLogo,
       form,
       loading,
