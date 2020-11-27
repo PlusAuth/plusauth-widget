@@ -21,6 +21,14 @@ export type WidgetModes = 'login' | 'register' | 'recovery' | 'consent'
 
 export type SocialConnections = 'google' | 'facebook' | 'linkedin'
 
+export type FieldValidator<T extends (string | number)> = (
+  this: { $t: (key: string, ...args: any) => string },
+  fields: {
+    [key in T]: FieldDefinition;
+  },
+  value: any
+)
+=> string | boolean | Promise<string | boolean>;
 
 
 export interface AdditionalFields {
@@ -28,27 +36,23 @@ export interface AdditionalFields {
 }
 
 interface CommonFieldProps {
-  type: string;
-  attrs?: Record<string, string>;
+  attrs?: {
+    hideMessages?: boolean
+    [key: string]: string | boolean | number | undefined
+  };
   value?: unknown;
-  label?: string;
+  type: string;
   order?: number;
   errors?: string | string[] | null;
-  validator?(this: { $t: (key: string, ...args: any) => string },fields: {
-    [key in keyof AdditionalFields]: FieldDefinition;
-  },
-    value: any): ()  => string | boolean | Promise<string | boolean>
+  validator?: FieldValidator<keyof AdditionalFields>;
 }
-export type FieldDefinition = CommonFieldProps & (
-  {
-    type: 'password' | 'text' | 'email';
-  }
-  |
-  {
-    type: 'code',
-    length?: number
-  }
-)
+export type FieldDefinition = CommonFieldProps & ({
+  type: 'password' | 'text' | 'email' | 'checkbox';
+  label?: string;
+} | {
+  type: 'code',
+  length?: number
+})
 
 export interface IWidgetSettings {
   locale: ILocaleSettings;

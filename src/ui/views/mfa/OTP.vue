@@ -52,22 +52,19 @@ details?id=com.google.android.apps.authenticator2"
       class="pa__subtitle-2 pa__text-left"
     />
   </template>
-  <PCodeInput
-    v-model="code"
-    color="pa__primary"
-  />
-  <p-message
-    :value="error"
-    color="pa__error"
-    class="pa__mb-4"
+  <GenericForm
+    ref="form"
+    :fields="finalFields"
+    :validate="validate"
+    :submit="submit"
   />
 
   <div class="pa__widget-content-actions">
     <p-btn
-      type="submit"
       block
       color="pa__primary"
       :loading="loading"
+      @click="submit"
     >
       <span v-t="'mfa.sms.submit'" />
     </p-btn>
@@ -88,13 +85,14 @@ details?id=com.google.android.apps.authenticator2"
 import { PlusAuthWeb, MFACodeType } from '@plusauth/web';
 import { defineComponent, inject, ref } from 'vue';
 
-import PCodeInput from '../../components/PCodeInput';
+import GenericForm from '../../components/GenericForm.vue';
+import { AdditionalFields, FieldDefinition } from '../../interfaces';
 import { CustomizableFormProps } from '../../mixins/customizable_form';
 import form_generics from '../../utils/form_generics';
 
 export default defineComponent({
   name: 'OTP',
-  components: { PCodeInput },
+  components: {  GenericForm },
   props: {
     ...CustomizableFormProps
   },
@@ -104,13 +102,19 @@ export default defineComponent({
     const code = ref<string>(null as any)
     const error = ref<string>(null as any)
 
-    const { form, loading, submit } = form_generics.call(
+    const defaultFields: AdditionalFields = {
+      code: {
+        type: 'code',
+        value: null,
+      }
+    }
+    const { form, loading, submit, fields: finalFields, validate } = form_generics.call(
       props,
-      null,
-      async () => {
+      defaultFields,
+      async (fieldWithValues) => {
         try{
           await api.mfa.validateCode(
-            code.value as string,
+            fieldWithValues.code as string,
             MFACodeType.OTP
           )
         }catch (e) {
@@ -120,6 +124,8 @@ export default defineComponent({
       }
     )
     return {
+      finalFields,
+      validate,
       code,
       context,
       error,

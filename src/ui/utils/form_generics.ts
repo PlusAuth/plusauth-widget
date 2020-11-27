@@ -1,7 +1,9 @@
 import deepmerge from 'deepmerge';
-import { computed, reactive, ref, Prop } from 'vue';
+import { computed, reactive, ref, Prop, inject } from 'vue';
 
 import { AdditionalFields, FieldDefinition } from '../interfaces';
+
+import { Translator, translatorKey } from './translator';
 
 export default function (
   this: Record<string, any>,
@@ -10,6 +12,7 @@ export default function (
 ) {
   const form = ref<any>(null)
   const loading = ref(false)
+  const translator = inject(translatorKey) as Translator
 
   const { fields, responseErrorHandler } = this
   const mergedFields = reactive( deepmerge(defaultFields || {}, fields || {}, { clone: false }))
@@ -26,7 +29,8 @@ export default function (
     fields: mergedFields,
     validate(options: FieldDefinition, value: any): any {
       if (options.validator) {
-        return options.validator(
+        return options.validator.call(
+          { $t: translator.t },
           mergedFields,
           value
         )
