@@ -1,3 +1,35 @@
+# [0.4.0](https://github.com/PlusAuth/plusauth-widget/compare/v0.3.1...v0.4.0) (2020-11-30)
+
+
+### Bug Fixes
+
+* `this` is undefined in bound translator function ([4e7d54f](https://github.com/PlusAuth/plusauth-widget/commit/4e7d54f9fa51cba65d2c8f1c08b18989d9671f69))
+* error when fields are undefined for generic form ([135257f](https://github.com/PlusAuth/plusauth-widget/commit/135257f6f4fc3ed17ecfbb5fa2238b628d6ba62d))
+* focus on select is not lost on click outside ([8c1333f](https://github.com/PlusAuth/plusauth-widget/commit/8c1333f57e4f2d00f145465a11b912bedc091c03))
+* language change is not applied ([81b96d0](https://github.com/PlusAuth/plusauth-widget/commit/81b96d09852559b9420051c5ab2dfcbd6a6c82fc))
+* progress css is removed from build ([abf8512](https://github.com/PlusAuth/plusauth-widget/commit/abf85121e15ee9d0fb7ffe19bbf4958376389335))
+* remove default accept terms checkbox from register page ([26c760d](https://github.com/PlusAuth/plusauth-widget/commit/26c760de2a490b729a956257ec8b1c3786de8327))
+
+
+### Features
+
+* ability to pass html for i18n values ([ba0fa86](https://github.com/PlusAuth/plusauth-widget/commit/ba0fa86a11e9aaba5d77c9a72a532145e4f8b381))
+* apply new styles and generic components ([34bda47](https://github.com/PlusAuth/plusauth-widget/commit/34bda47ed4dd464a194f10b96addda6b109d5b8a))
+* bind translator to validator function ([2fa03ee](https://github.com/PlusAuth/plusauth-widget/commit/2fa03eee874b50d0e76e60453a855df3bbe8c82e))
+* checkbox component ([d942f75](https://github.com/PlusAuth/plusauth-widget/commit/d942f758773b1547b22dbd70123f7d9ec7d7c128))
+* component for generic form ([90b7997](https://github.com/PlusAuth/plusauth-widget/commit/90b7997ad18cf4edcb3086657f6195a60e462521))
+* footer component ([21061e4](https://github.com/PlusAuth/plusauth-widget/commit/21061e422c7f14ab2e07d358108f07eb7d630b83))
+* insert footer ([3600ffc](https://github.com/PlusAuth/plusauth-widget/commit/3600ffc245b4521cd9db6c1e790fc99b6631852a))
+* keep color when checkbox is checked ([1414b3b](https://github.com/PlusAuth/plusauth-widget/commit/1414b3b3a76d5707d2099758d98c3bd698e2366e))
+* make selected language reactive ([8153048](https://github.com/PlusAuth/plusauth-widget/commit/8153048f768b8686e1fec0683ed7486fd7e4f07c))
+* select component ([6b497f1](https://github.com/PlusAuth/plusauth-widget/commit/6b497f1fd53993d41f062635378d67409b3fa6de))
+* use super tiny icons for social icons ([081a420](https://github.com/PlusAuth/plusauth-widget/commit/081a4202d66e5e17103afe6810752a19c77ff647))
+
+
+### Performance Improvements
+
+* use default slot for messages ([9e4a8e1](https://github.com/PlusAuth/plusauth-widget/commit/9e4a8e169d871c2ecb6bed8dbf73033faa35a004))
+
 ## [0.3.1](https://github.com/PlusAuth/plusauth-widget/compare/v0.2.0...v0.3.1) (2020-11-23)
 
 
