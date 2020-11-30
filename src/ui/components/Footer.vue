@@ -2,7 +2,7 @@
   <footer>
     <template v-if="languages && languages.length">
       <PSelect
-        v-model="selectedLang"
+        v-model="translator.locale"
         flat
         dense
         hide-messages
@@ -54,13 +54,9 @@ export default defineComponent({
     const context = inject('context') as any
     const translator = inject(translatorKey) as any
     const client = context.client
-    const selectedLang = ref<string>(translator.locale)
-    watch(selectedLang, (val)=>{
-      translator.locale = val
-    })
     const languages = reactive(context.ui_locales || [])
     return {
-      selectedLang,
+      translator,
       languages,
       tosUri: client.tosUri,
       policyUri: client.policyUri,

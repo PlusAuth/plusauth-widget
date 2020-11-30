@@ -1,6 +1,6 @@
 import { PlusAuthWeb } from '@plusauth/web';
 import deepmerge from 'deepmerge';
-import { App } from 'vue';
+import { App, reactive } from 'vue';
 
 import defaultDictionary from './i18n'
 import { createWidget } from './ui';
@@ -17,12 +17,12 @@ export default class PlusAuthWidget {
     this.api = new PlusAuthWeb(settings.apiUrl ||
     location.origin !== 'null' ? window.location.origin : '/')
 
-    this._view = createWidget(container || document.body, deepmerge( {
+    this._view = createWidget(container || document.body, reactive(deepmerge( {
       locale: {
         defaultLocale: 'en',
         dictionary: defaultDictionary
       }
-    }, settings), context)
+    }, settings, { clone: true })), context)
 
     this._view.provide('api', this.api)
   }

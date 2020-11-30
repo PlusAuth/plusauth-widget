@@ -13,6 +13,7 @@ type DictionaryItem = string | Record<string, string>
 export interface ILocaleSettings {
   dictionary: Record<string, typeof defaultDictionary | DictionaryItem>;
   defaultLocale: string;
+  selectedLocale: string;
 }
 
 export type WidgetModes = 'login' | 'recovery' | 'consent'
@@ -55,13 +56,13 @@ export type FieldDefinition = CommonFieldProps & ({
 })
 
 export interface IWidgetSettings {
+  apiUrl: string;
   locale: ILocaleSettings;
-  mode: WidgetModes;
-  modeOptions: Record<WidgetModes, any>,
+  mode?: WidgetModes;
+  modeOptions?: Record<WidgetModes, any>,
   footer?: {
     enabled?: boolean
   },
-  apiUrl: string;
   theme: {
     primary?: string;
     secondary?: string;

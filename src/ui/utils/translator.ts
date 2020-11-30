@@ -9,10 +9,10 @@ export class Translator {
   private fallBackLocale: string;
   private dictionary: any;
   private selectedLocale: Ref
-  constructor(dictionary: any, fallbackLocale?: string) {
+  constructor(dictionary: any, fallbackLocale?: string, selectedLocale?: string) {
     this.dictionary = dictionary;
     this.fallBackLocale = fallbackLocale || 'en'
-    this.selectedLocale = ref<string | null>(this.fallBackLocale)
+    this.selectedLocale = ref<string | undefined>(selectedLocale)
   }
   set locale(locale: string){
     this.selectedLocale.value = locale
