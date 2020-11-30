@@ -12,7 +12,7 @@ export class Translator {
   constructor(dictionary: any, fallbackLocale?: string, selectedLocale?: string) {
     this.dictionary = dictionary;
     this.fallBackLocale = fallbackLocale || 'en'
-    this.selectedLocale = ref<string | undefined>(selectedLocale)
+    this.selectedLocale = ref<string | undefined>(selectedLocale || this.fallBackLocale)
   }
   set locale(locale: string){
     this.selectedLocale.value = locale
