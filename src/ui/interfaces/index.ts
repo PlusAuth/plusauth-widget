@@ -43,12 +43,13 @@ interface CommonFieldProps {
   };
   value?: unknown;
   type: string;
+  format?: 'tel' | 'email';
   order?: number;
   errors?: string | string[] | null;
   validator?: FieldValidator<keyof AdditionalFields>;
 }
 export type FieldDefinition = CommonFieldProps & ({
-  type: 'password' | 'text' | 'email' | 'checkbox';
+  type: 'password' | 'text' | 'checkbox';
   label?: string;
 } | {
   type: 'code',
