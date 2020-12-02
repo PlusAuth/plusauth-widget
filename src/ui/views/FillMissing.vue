@@ -81,7 +81,7 @@ export default defineComponent({
             fieldName = field.name
             fieldType= field.type
           }
-          finalFields[field.name] = {
+          finalFields[fieldName] = {
             value: null,
             type: fieldType,
             label: `fillMissing.${fieldName}`,
