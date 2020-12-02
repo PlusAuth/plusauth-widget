@@ -74,7 +74,8 @@ export default defineComponent({
 
     const defaultFields: AdditionalFields = {
       email: {
-        type: 'email',
+        type: 'text',
+        format: 'email',
         label: 'common.fields.email',
         validator(fields, value){
           if(!value){
