@@ -95,7 +95,8 @@ export default function (theme: Theme, settings: Partial<IWidgetSettings>): any 
                 h(
                   resolvedView,
                   resolvedView === RouterView ? {} :
-                    settings.mode && settings.modeOptions && settings.modeOptions[settings.mode]
+                    settings.mode && settings.modeOptions
+                    && settings.modeOptions[settings.mode.toLowerCase()]
                 )
               ]
             ),
