@@ -111,10 +111,12 @@ export default defineComponent({
           autocomplete: 'username'
         },
         type: 'text',
-        label: 'login.username',
+        label: 'common.fields.username',
         validator(fields, value){
           if(!value){
-            return this.$t('login.errors.usernameRequired')
+            return this.$t('errors.fieldRequired', [
+              this.$t('common.fields.username')
+            ])
           }
           return true
         }
@@ -122,11 +124,13 @@ export default defineComponent({
       password: {
         order: 1,
         type: 'password',
-        label: 'login.password',
+        label: 'common.fields.password',
         errors: [],
         validator: function (fields, value){
           if(!value){
-            return this.$t('login.errors.passwordRequired')
+            return this.$t('errors.fieldRequired', [
+              this.$t('common.fields.password')
+            ])
           }
           return true
         }
@@ -140,18 +144,20 @@ export default defineComponent({
         try{
           await api.auth.signIn(fieldWithValues)
         }catch (e) {
-          switch (e.error) {
-            case 'user_not_found':
-              finalFields.username['errors'] = e.error;
-              break;
-            case 'invalid_credentials':
-              finalFields.password['errors'] = e.error;
-              break;
-            case 'email_not_verified':
-              // TODO: email not verified
-              break;
-            default:
-              finalFields.password['errors'] = e.error
+          if(e.error){
+            switch (e.error) {
+              case 'user_not_found':
+                finalFields.username['errors'] = `errors.${e.error}`;
+                break;
+              case 'invalid_credentials':
+                finalFields.password['errors'] = `errors.${e.error}`;
+                break;
+              case 'email_not_verified':
+                finalFields.email['errors'] = finalFields.email['username'] = `errors.${e.error}`;
+                break;
+              default:
+                finalFields.password['errors'] = `errors.${e.error}`
+            }
           }
           throw e
         }

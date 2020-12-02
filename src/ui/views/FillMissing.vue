@@ -24,7 +24,7 @@
       :loading="loading"
       @click="submit"
     >
-      <span v-t="'fillMissing.submit'" />
+      <span v-t="'common.submit'" />
     </p-btn>
   </div>
 </template>
@@ -84,10 +84,12 @@ export default defineComponent({
           finalFields[fieldName] = {
             value: null,
             type: fieldType,
-            label: `fillMissing.${fieldName}`,
+            label: `common.fields.${fieldName}`,
             validator(fields: any, value: any){
               if(!value){
-                return this.$t(`fillMissing.errors.${fieldName}Required`)
+                return this.$t('errors.fieldRequired', [
+                  this.$t(`common.fields.${fieldName}`)
+                ])
               }
               return true
             }

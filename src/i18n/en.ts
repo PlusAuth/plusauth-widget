@@ -1,45 +1,47 @@
+/* eslint-disable max-len */
 export default {
+  common: {
+    allow: 'Allow',
+    fields: {
+      code: 'Code',
+      email: 'Email',
+      newPassword: 'New Password',
+      password: 'Password',
+      phone_number: 'Phone number',
+      rePassword: 'Password confirmation',
+      username: 'Username'
+    },
+    hide: 'Hide',
+    reject: 'Reject',
+    show: 'Show',
+    submit: 'Submit'
+  },
   consent: {
     allow: 'Allow',
     reject: 'Reject',
     title: '{clientName} asks for your consent for the followings'
   },
-  login: {
-    errors: {
-      passwordRequired: 'Password is required',
-      usernameRequired: 'Username is required',
-    },
-    forgotPassword: 'Forgot Password',
-    noAccount: 'Don\'t have an account?',
-    password: 'Password',
-    showPassword: 'SHOW',
-    hidePassword: 'HIDE',
-    signIn: 'Sign In',
-    signInWith: 'or Sign in with',
-    signUp: 'Sign Up',
-    username: 'Username'
+  errors: {
+    email_not_verified: 'Email is not verified.',
+    fieldNotValid: '{0} is not valid.',
+    fieldRequired: '{0} is required.',
+    invalid_credentials: 'Invalid login credentials. Please try again.',
+    passwordsNotMatch: "Passwords doesn't match"
   },
   fillMissing: {
-    errors: {
-      phone_numberRequired: 'Phone Number is required',
-      password: 'Password is required'
-    },
-    title: 'Fill missing information',
-    phone_number: 'Phone number',
-    password: 'Password',
-    submit: 'Submit',
+    title: 'Fill missing information'
   },
   forgotPassword: {
-    errors: {
-      emailRequired: 'Email is required',
-      notValidEmail: 'Please enter a valid email address',
-    },
-    email: 'Email',
-    emailSent: 'If there is an account with {email.value} you will receive an email containing a' +
-      ' link to reset your password.',
-    submit: 'Submit',
+    emailSent: 'If there is an account with {email.value} you will receive an email containing a link to reset your password.',
     subtitle: 'Please enter your email address to request a password reset',
     title: 'Reset your password'
+  },
+  login: {
+    forgotPassword: 'Forgot Password',
+    noAccount: "Don't have an account?",
+    signIn: 'Sign In',
+    signInWith: 'or Sign in with',
+    signUp: 'Sign Up'
   },
   mfa: {
     challenge: {
@@ -49,63 +51,33 @@ export default {
       title: 'Try another way to sign in'
     },
     email: {
-      code: 'Code',
-      errors: {
-        codeRequired: 'Code required'
-      },
-      submit: 'Submit',
-      title: 'Enter verification code sent to: {email}'
-    },
-    sms: {
-      code: 'Code',
-      errors: {
-        codeRequired: 'Code required'
-      },
-      submit: 'Submit',
-      title: 'Enter verification code sent to: {phone_number}'
+      'title|html': 'Enter verification code sent to: <strong>{email}</strong>'
     },
     otp: {
       title: 'Enter verification code:'
     },
+    sms: {
+      'title|html': 'Enter verification code sent to: <strong>{phone_number}</strong>'
+    },
     tryAnotherWay: 'Try another way'
   },
+  passwordPolicy: {
+    customChars: 'At least one of {0}',
+    customRegexp: '',
+    lowerCase: 'At least {0} lowercase character',
+    max: 'Maximum {0} character',
+    min: 'Minimum {0} character',
+    number: 'At least {0} number',
+    upperCase: 'At least {0} uppercase character'
+  },
   register: {
-    errors: {
-      passwordRequired: 'Password is required',
-      passwordsNotMatch: 'Passwords doesn\'t match',
-      rePasswordRequired: 'Password confirmation is required',
-      usernameRequired: 'Username is required'
-    },
     haveAccount: 'Have an account?',
-    password: 'Password',
-    rePassword: 'Confirm Password',
-    showPassword: 'SHOW',
-    hidePassword: 'HIDE',
     signIn: 'Sign In',
     signUp: 'Sign Up',
-    signUpWith: 'or Sign Up with',
-    username: 'Username'
+    signUpWith: 'or Sign Up with'
   },
   resetPassword: {
-    title: 'Reset Password',
-    errors: {
-      newPasswordRequired: 'Password is required',
-      passwordsNotMatch: 'Passwords doesn\'t match',
-      rePasswordRequired: 'Password confirmation is required'
-    },
-    informNewPassword: 'This is your temporary password.',
-    newPassword: 'New Password',
-    rePassword: 'Confirm Password',
-    submit: 'Submit',
-    successfullyReset: 'Your password has been successfully reset.'
-  },
-  passwordPolicy: {
-    min: 'Minimum {0} character',
-    max: 'Maximum {0} character',
-    number: 'At least {0} number',
-    lowerCase: 'At least {0} lowercase character',
-    upperCase: 'At least {0} uppercase character',
-    customChars: 'At least one of {0}',
-    customRegexp: ''
+    successfullyReset: 'Your password has been successfully reset.',
+    title: 'Reset Password'
   }
 }

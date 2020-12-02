@@ -14,7 +14,7 @@
       class="pa__challenge-timer"
       :duration="120"
     />
-    <h2 v-t="{ path: 'mfa.sms.title', args: { phone_number: context.details.phone_number} }" />
+    <h2 v-t="{ path: 'mfa.sms.title|html', args: { phone_number: context.details.phone_number} }" />
   </div>
 
   <GenericForm
@@ -30,7 +30,7 @@
       :loading="loading"
       @click="submit"
     >
-      <span v-t="'mfa.sms.submit'" />
+      <span v-t="'common.submit'" />
     </p-btn>
   </div>
 
@@ -72,10 +72,12 @@ export default defineComponent({
     const defaultFields: AdditionalFields = {
       code: {
         type: 'text',
-        label: 'mfa.sms.code',
+        label: 'common.fields.code',
         validator(fields, value){
           if(!value){
-            return this.$t('mfa.sms.errors.codeRequired')
+            return this.$t('errors.fieldRequired', [
+              this.$t('common.fields.code')
+            ])
           }
           return true
         }

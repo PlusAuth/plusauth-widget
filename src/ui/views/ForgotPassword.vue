@@ -30,7 +30,7 @@
           block
           @click="submit"
         >
-          <span v-t="'forgotPassword.submit'" />
+          <span v-t="'common.submit'" />
         </p-btn>
       </div>
     </div>
@@ -75,13 +75,17 @@ export default defineComponent({
     const defaultFields: AdditionalFields = {
       email: {
         type: 'email',
-        label: 'forgotPassword.email',
+        label: 'common.fields.email',
         validator(fields, value){
           if(!value){
-            return this.$t('forgotPassword.errors.emailRequired')
+            return this.$t('errors.fieldRequired', [
+              this.$t('common.fields.email')
+            ])
           }
           if( !isEmail(value)){
-            return this.$t('forgotPassword.errors.notValidEmail')
+            return this.$t('errors.fieldNotValid', [
+              this.$t('common.fields.email')
+            ])
           }
           return true
         }

@@ -30,7 +30,7 @@
       color="pa__success"
       @click="allow"
     >
-      <span v-t="'consent.allow'" />
+      <span v-t="'common.allow'" />
     </p-btn>
     <div style="padding: 4px" />
     <p-btn
@@ -38,7 +38,7 @@
       color="pa__error"
       @click="reject"
     >
-      <span v-t="'consent.reject'" />
+      <span v-t="'common.reject'" />
     </p-btn>
   </div>
 </template>

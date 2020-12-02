@@ -56,7 +56,7 @@
               'password'"
           >
             <span
-              v-t="options.type === 'password' ? 'login.showPassword' : 'login.hidePassword'"
+              v-t="options.type === 'password' ? 'common.show' : 'common.hide'"
             />
           </p-btn>
           <slot :name="field" />

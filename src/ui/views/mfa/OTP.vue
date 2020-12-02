@@ -66,7 +66,7 @@ details?id=com.google.android.apps.authenticator2"
       :loading="loading"
       @click="submit"
     >
-      <span v-t="'mfa.sms.submit'" />
+      <span v-t="'common.submit'" />
     </p-btn>
   </div>
 

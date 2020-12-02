@@ -41,7 +41,7 @@
         block
         @click="submit"
       >
-        <span v-t="'resetPassword.submit'" />
+        <span v-t="'common.submit'" />
       </p-btn>
     </div>
   </template>
@@ -83,25 +83,29 @@ export default defineComponent({
     const defaultFields: AdditionalFields = {
       password: {
         type: 'password',
-        label: 'resetPassword.newPassword',
+        label: 'fields.newPassword',
         attrs: {
           autocomplete: 'new-password'
         },
         async validator(fields, value){
-          return !value ? this.$t('resetPassword.errors.newPasswordRequired') :
+          return !value ? this.$t('errors.fieldRequired', [
+            this.$t('common.fields.password')
+          ]) :
             api.auth.checkPasswordStrength(value,
               context.passwordPolicy || {})
         }
       },
       rePassword: {
         type: 'password',
-        label: 'resetPassword.rePassword',
+        label: 'common.fields.rePassword',
         validator(fields, value){
           if(!value){
-            return this.$t('resetPassword.errors.rePasswordRequired')
+            return this.$t('errors.fieldRequired', [
+              this.$t('common.fields.rePassword')
+            ])
           }
           if(fields.password.value !== value){
-            return this.$t('resetPassword.errors.passwordsNotMatch')
+            return this.$t('errors.passwordsNotMatch')
           }
           return true
         }

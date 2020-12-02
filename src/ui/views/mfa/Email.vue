@@ -10,7 +10,7 @@
   </div>
   <div class="pa__widget-info-section">
     <h2
-      v-t="{ path: 'mfa.email.title', args: { email: context.details.email } }"
+      v-t="{ path: 'mfa.email.title|html', args: { email: context.details.email } }"
     />
   </div>
 
@@ -27,7 +27,7 @@
       :loading="loading"
       @click="submit"
     >
-      <span v-t="'mfa.email.submit'" />
+      <span v-t="'common.submit'" />
     </p-btn>
   </div>
 
@@ -65,10 +65,12 @@ export default defineComponent({
     const defaultFields: AdditionalFields = {
       code: {
         type: 'text',
-        label: 'mfa.email.code',
+        label: 'common.fields.code',
         validator(fields, value){
           if(!value){
-            return this.$t('mfa.email.errors.codeRequired')
+            return this.$t('errors.fieldRequired', [
+              this.$t('common.fields.code')
+            ])
           }
           return true
         }

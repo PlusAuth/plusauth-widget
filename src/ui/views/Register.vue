@@ -116,10 +116,12 @@ export default defineComponent({
           autocomplete: 'username'
         },
         type: 'text',
-        label: 'register.username',
+        label: 'common.fields.username',
         validator(fields, value){
           if(!value){
-            return this.$t('register.errors.usernameRequired')
+            return this.$t('errors.fieldRequired', [
+              this.$t('common.fields.username')
+            ])
           }
           return true
         }
@@ -127,12 +129,14 @@ export default defineComponent({
       password: {
         order: 1,
         type: 'password',
-        label: 'register.password',
+        label: 'common.fields.password',
         attrs: {
           autocomplete: 'new-password'
         },
         async validator(fields, value){
-          return !value ? this.$t('register.errors.passwordRequired') :
+          return !value ?  this.$t('errors.fieldRequired', [
+            this.$t('common.fields.password')
+          ]) :
             api.auth.checkPasswordStrength(value,
               context.passwordPolicy || {})
         }
@@ -140,16 +144,18 @@ export default defineComponent({
       rePassword: {
         order: 2,
         type: 'password',
-        label: 'register.rePassword',
+        label: 'common.fields.rePassword',
         attrs: {
           autocomplete: 'new-password'
         },
         validator(fields, value){
           if(!value){
-            return this.$t('register.errors.rePasswordRequired')
+            return this.$t('errors.fieldRequired', [
+              this.$t('common.fields.rePassword')
+            ])
           }
           if(fields.password.value !== value){
-            return this.$t('register.errors.passwordsNotMatch')
+            return this.$t('errors.passwordsNotMatch')
           }
           return true
         }
