@@ -118,7 +118,7 @@ export default defineComponent({
             MFACodeType.OTP
           )
         }catch (e) {
-          error.value = e.error;
+          error.value = `errors.${e.error}`;
           throw e
         }
       }

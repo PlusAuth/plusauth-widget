@@ -93,7 +93,7 @@ export default defineComponent({
             MFACodeType.SMS
           )
         }catch (e) {
-          finalFields.code.errors = e.error;
+          finalFields.code.errors = `errors.${e.error}`;
           throw e
         }
       }

@@ -84,8 +84,9 @@
       email: 'test@plusauth.com',
       fields: [
         {
-          name: 'phone_number',
-          type: 'tel'
+          name: 'email',
+          type: 'text',
+          format: 'email'
         }
       ],
       challenges: [
@@ -115,11 +116,12 @@
           username: undefined,
           email: {
             type: 'text',
+            errors: [],
             label: 'Email',
             attrs: {
               autocomplete: 'username'
             },
-          }
+          },
         }
       }
     }

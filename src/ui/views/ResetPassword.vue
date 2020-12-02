@@ -122,7 +122,7 @@ export default defineComponent({
           )
           actionCompleted.value= true
         }catch (e) {
-          finalFields.password['errors'] = e.error;
+          finalFields.password['errors'] = `errors.${e.error}`;
           throw e
         }
       })

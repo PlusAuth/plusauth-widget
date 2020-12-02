@@ -171,16 +171,10 @@ export default defineComponent({
         }catch (e) {
           switch (e.error) {
             case 'already_exists':
-              finalFields.username['errors'] = e.error;
-              break;
-            case 'invalid_credentials':
-              finalFields.password['errors'] = e.error;
-              break;
-            case 'email_not_verified':
-              // TODO: email not verified
+              finalFields.username['errors'] = `errors.${e.error}`;
               break;
             default:
-              finalFields.password['errors'] = e.error
+              finalFields.password['errors'] = `errors.${e.error}`
           }
           throw e
         }

@@ -147,16 +147,16 @@ export default defineComponent({
           if(e.error){
             switch (e.error) {
               case 'user_not_found':
-                finalFields.username['errors'] = `errors.${e.error}`;
+                finalFields.username.errors = `errors.${e.error}`;
                 break;
               case 'invalid_credentials':
-                finalFields.password['errors'] = `errors.${e.error}`;
+                finalFields.password.errors = `errors.${e.error}`;
                 break;
               case 'email_not_verified':
-                finalFields.email['errors'] = finalFields.email['username'] = `errors.${e.error}`;
+                finalFields.email.errors = finalFields.username.errors  = `errors.${e.error}`;
                 break;
               default:
-                finalFields.password['errors'] = `errors.${e.error}`
+                finalFields.password.errors = `errors.${e.error}`
             }
           }
           throw e

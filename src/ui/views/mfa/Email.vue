@@ -86,7 +86,7 @@ export default defineComponent({
             MFACodeType.EMAIL
           )
         }catch (e) {
-          finalFields.code.errors = e.error;
+          finalFields.code.errors = `errors.${e.error}`;
           throw e
         }
       }
