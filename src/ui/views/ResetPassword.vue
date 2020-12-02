@@ -83,7 +83,7 @@ export default defineComponent({
     const defaultFields: AdditionalFields = {
       password: {
         type: 'password',
-        label: 'fields.newPassword',
+        label: 'common.fields.newPassword',
         attrs: {
           autocomplete: 'new-password'
         },
