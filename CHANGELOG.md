@@ -1,3 +1,18 @@
+# [0.5.0](https://github.com/PlusAuth/plusauth-widget/compare/v0.4.0...v0.5.0) (2020-12-02)
+
+
+### Bug Fixes
+
+* incorrect translation key for reset password ([721dfa2](https://github.com/PlusAuth/plusauth-widget/commit/721dfa285a00bd634149a05b31de4f240a4f3145))
+* mode options passed in a case sensitive way ([edf5093](https://github.com/PlusAuth/plusauth-widget/commit/edf5093399b27020d20af296019abc96795f82df))
+* wrong missing information body when fields are string ([448a20a](https://github.com/PlusAuth/plusauth-widget/commit/448a20acfc5745dde49019a39078d3a997392a08))
+* wrong type for email field in forgot password ([93085cd](https://github.com/PlusAuth/plusauth-widget/commit/93085cd1c63e3f529d256d4738bf43637795e3b4))
+
+
+### Features
+
+* use fallbacklocale if selected locale is not configured ([d48e6c8](https://github.com/PlusAuth/plusauth-widget/commit/d48e6c8fd22244b81185e36b074ee3292e3d2fb2))
+
 # [0.4.0](https://github.com/PlusAuth/plusauth-widget/compare/v0.3.1...v0.4.0) (2020-11-30)
 
 
