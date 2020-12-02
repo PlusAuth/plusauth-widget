@@ -23,12 +23,6 @@ export const Validatable: ComponentOptions = {
       type: Array ,
       default: () => [],
     },
-    success: Boolean,
-    successMessages: {
-      type: [String, Array],
-      default: () => [],
-    },
-    value: { required: false },
   },
   data() {
     return {
@@ -56,12 +50,6 @@ export const Validatable: ComponentOptions = {
         this.error
       )
     },
-    hasSuccess(): boolean {
-      return (
-        this.internalSuccessMessages.length > 0 ||
-        this.success
-      )
-    },
     externalError(): boolean {
       return this.internalErrorMessages.length > 0 || this.error
     },
@@ -72,7 +60,6 @@ export const Validatable: ComponentOptions = {
       if (this.disabled) return false
 
       return (
-        this.hasSuccess ||
         this.shouldValidate && this.hasError
       )
     },
@@ -81,9 +68,6 @@ export const Validatable: ComponentOptions = {
     },
     internalMessages() {
       return this.genInternalMessages(this.messages)
-    },
-    internalSuccessMessages() {
-      return this.genInternalMessages(this.successMessages)
     },
     internalValue: {
       get(): any {
@@ -110,15 +94,12 @@ export const Validatable: ComponentOptions = {
     validationState(): string | undefined {
       if (this.disabled) return undefined
       if (this.hasError && this.shouldValidate) return 'error'
-      if (this.hasSuccess) return 'success'
       if (this.hasColor) return this.computedColor
       return undefined
     },
     validationTarget() {
       if (this.internalErrorMessages.length > 0) {
         return this.internalErrorMessages
-      } else if (this.successMessages.length > 0) {
-        return this.internalSuccessMessages
       } else if (this.messages.length > 0) {
         return this.internalMessages
       } else if (this.shouldValidate || this.validateOnInit) {
@@ -129,7 +110,7 @@ export const Validatable: ComponentOptions = {
 
   watch: {
     rules: {
-      handler(newVal, oldVal) {
+      handler() {
         this.validate()
       },
       deep: true,
