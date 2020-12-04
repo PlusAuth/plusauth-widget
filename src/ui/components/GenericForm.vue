@@ -72,6 +72,11 @@
         </template>
       </p-text-field>
     </template>
+    <input
+      type="submit"
+      hidden
+      style="display: none"
+    >
   </p-form>
 </template>
 
