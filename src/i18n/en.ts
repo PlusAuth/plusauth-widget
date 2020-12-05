@@ -22,7 +22,7 @@ export default {
     title: '{clientName} asks for your consent for the followings'
   },
   errors: {
-    email_not_verified: 'Email is not verified.',
+    email_not_verified: 'Email is not verified. Please verify your email by clicking the link that has been sent to your email account.',
     fieldNotValid: '{0} is not valid.',
     fieldRequired: '{0} is required.',
     invalid_credentials: 'Invalid login credentials. Please try again.',
