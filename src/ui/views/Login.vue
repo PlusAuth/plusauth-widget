@@ -153,7 +153,8 @@ export default defineComponent({
                 finalFields.password.errors = `errors.${e.error}`;
                 break;
               case 'email_not_verified':
-                finalFields.email.errors = finalFields.username.errors  = `errors.${e.error}`;
+                finalFields.email ? finalFields.email.errors = `errors.${e.error}` :
+                  finalFields.username ? finalFields.username.errors  = `errors.${e.error}`: null;
                 break;
               default:
                 finalFields.password.errors = `errors.${e.error}`
