@@ -171,10 +171,13 @@ export default defineComponent({
         }catch (e) {
           switch (e.error) {
             case 'already_exists':
-              finalFields.username['errors'] = `errors.${e.error}`;
+              finalFields.email ? finalFields.email.errors = `errors.${e.error}` :
+                finalFields.username ? finalFields.username.errors  = `errors.${e.error}`: null;
               break;
             default:
-              finalFields.password['errors'] = `errors.${e.error}`
+              if(finalFields.password){
+                finalFields.password['errors'] = `errors.${e.error}`
+              }
           }
           throw e
         }

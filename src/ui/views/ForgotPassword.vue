@@ -103,19 +103,22 @@ export default defineComponent({
           )
           actionCompleted.value= true
         }catch (e) {
-          switch (e.error) {
-            case 'user_not_found':
-              finalFields.email['errors'] = `errors.${e.error}`;
-              break;
-            case 'invalid_credentials':
-              finalFields.email['errors'] = `errors.${e.error}`;
-              break;
-            case 'email_not_verified':
-            // TODO: email not verified
-              break;
-            default:
-              finalFields.email['errors'] = `errors.${e.error}`
+          if(finalFields.email){
+            switch (e.error) {
+              case 'user_not_found':
+                finalFields.email['errors'] = `errors.${e.error}`;
+                break;
+              case 'invalid_credentials':
+                finalFields.email['errors'] = `errors.${e.error}`;
+                break;
+              case 'email_not_verified':
+                // TODO: email not verified
+                break;
+              default:
+                finalFields.email['errors'] = `errors.${e.error}`
+            }
           }
+
           throw e
         }
       })

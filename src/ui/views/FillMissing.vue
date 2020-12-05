@@ -59,7 +59,9 @@ export default defineComponent({
           await api.auth.updateMissingInformation(fieldsWithValues)
         }catch (e) {
           if(e.field){
-            finalFields[e.field].errors = `errors.${e.error}`
+            if(finalFields[e.field]){
+              finalFields[e.field].errors = `errors.${e.error}`
+            }
           }else{
           // TODO: display error somewhere
             console.error(e)
