@@ -16,24 +16,6 @@
 
 * include popper to vite's optimized dependencies ([5b90eaa](https://github.com/PlusAuth/plusauth-widget/commit/5b90eaab6c49cafee2dbe65eefdffb831e609868))
 
-# [0.6.0](https://github.com/PlusAuth/plusauth-widget/compare/v0.5.0...v0.6.0) (2020-12-05)
-
-
-### Bug Fixes
-
-* assign email not verified error to email field if exists ([098921e](https://github.com/PlusAuth/plusauth-widget/commit/098921e825d2f66be4f564db371b717f0a10b37d))
-* error when errors cannot be set when related fields dont exist ([47978c9](https://github.com/PlusAuth/plusauth-widget/commit/47978c95df001ee35e9b9422f5d1d3810c9cb1e2))
-
-
-### Features
-
-* submit forms on enter ([2319e81](https://github.com/PlusAuth/plusauth-widget/commit/2319e810db5bb7d38e2bf970c652ee6e4a161fbc))
-
-
-### Performance Improvements
-
-* include popper to vite's optimized dependencies ([5b90eaa](https://github.com/PlusAuth/plusauth-widget/commit/5b90eaab6c49cafee2dbe65eefdffb831e609868))
-
 # [0.5.0](https://github.com/PlusAuth/plusauth-widget/compare/v0.4.0...v0.5.0) (2020-12-02)
 
 
