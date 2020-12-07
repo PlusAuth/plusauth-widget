@@ -16,23 +16,36 @@ export default {
     show: 'Show',
     submit: 'Submit'
   },
+  verifyEmail: {
+    checkText: "We\'ve sent an email to <strong>{email}</strong>, please click the link included" +
+      ' to verify your email address.',
+    resendText: 'Didn\'t receive email?',
+    resendAction: 'Resend',
+    title: 'Check Your Email'
+  },
   consent: {
     allow: 'Allow',
     reject: 'Reject',
     title: '{clientName} asks for your consent for the followings'
   },
   errors: {
+    code_already_used: 'Code was already used',
+    code_expired: 'Code has expired',
     email_not_verified: 'Email is not verified. Please verify your email by clicking the link that has been sent to your email account.',
     fieldNotValid: '{0} is not valid.',
     fieldRequired: '{0} is required.',
+    incorrect_code: 'Verification code is invalid',
     invalid_credentials: 'Invalid login credentials. Please try again.',
-    passwordsNotMatch: "Passwords doesn't match"
+    passwordsNotMatch: "Passwords doesn't match",
+    user_not_found: 'User not found',
   },
   fillMissing: {
     title: 'Fill missing information'
   },
   forgotPassword: {
-    emailSent: 'If there is an account with {email.value} you will receive an email containing a link to reset your password.',
+    'emailSent': 'If there is an account with <strong>{email}</strong> you will receive an' +
+      ' email' +
+      ' containing a link to reset your password.',
     subtitle: 'Please enter your email address to request a password reset',
     title: 'Reset your password'
   },
@@ -51,13 +64,13 @@ export default {
       title: 'Try another way to sign in'
     },
     email: {
-      'title|html': 'Enter verification code sent to: <strong>{email}</strong>'
+      'title': 'Enter verification code sent to: <strong>{email}</strong>'
     },
     otp: {
       title: 'Enter verification code:'
     },
     sms: {
-      'title|html': 'Enter verification code sent to: <strong>{phone_number}</strong>'
+      'title': 'Enter verification code sent to: <strong>{phone_number}</strong>'
     },
     tryAnotherWay: 'Try another way'
   },
