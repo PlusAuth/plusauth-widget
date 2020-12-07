@@ -10,7 +10,7 @@
   </div>
   <div class="pa__widget-info-section">
     <h2
-      v-t="{ path: 'mfa.email.title|html', args: { email: context.details.email } }"
+      v-t="{ path: 'mfa.email.title', args: { email: context.details.email } }"
     />
   </div>
 

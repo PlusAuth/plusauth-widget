@@ -39,12 +39,12 @@
         <div class="pa__logo-container">
           <img
             src="https://api.plusauth.com/assets/images/icons/plane.svg"
-            style="width: 128px; "
+            class="pa__logo"
             alt="Mail Confirmation"
           >
         </div>
         <div class="pa__widget-info-section">
-          <h1 v-t="{ path: 'forgotPassword.emailSent', args: finalFields }" />
+          <h2 v-t="{ path: 'forgotPassword.emailSent', args: {email: finalFields.email.value } }" />
         </div>
       </div>
     </template>
