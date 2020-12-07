@@ -1,3 +1,11 @@
+# [0.8.0](https://github.com/PlusAuth/plusauth-widget/compare/v0.7.0...v0.8.0) (2020-12-07)
+
+
+### Features
+
+* set html of translatable element instead of text ([c18bd9d](https://github.com/PlusAuth/plusauth-widget/commit/c18bd9dfdf8688852505391b9dfb132232284714))
+* use new prompt configuration ([c3cc312](https://github.com/PlusAuth/plusauth-widget/commit/c3cc312bdd55ee8a8374d995e3499cf31ace5c9a))
+
 # [0.7.0](https://github.com/PlusAuth/plusauth-widget/compare/v0.5.0...v0.7.0) (2020-12-05)
 
 
