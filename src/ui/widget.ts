@@ -101,7 +101,7 @@ export default function (theme: Theme, settings: Partial<IWidgetSettings>): any 
               ]
             ),
             settings.footer && settings.footer.enabled && h(Footer as any,
-              { class: 'pa__widget-content-footer' })
+              { class: 'pa__widget-footer' })
           ] )
 
       )
