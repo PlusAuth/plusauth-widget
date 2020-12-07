@@ -10,7 +10,7 @@
       />
     </template>
 
-    <ul class="pa__widget-content-footer-link-list">
+    <ul class="pa__widget-footer-link-list">
       <li
         v-if="tosUri"
       >

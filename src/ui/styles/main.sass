@@ -4,6 +4,8 @@
 .widget
   font-family: $body-font-family
   height: 100%
+  p
+    margin: 0
 
   button,
   input,
@@ -78,6 +80,9 @@
 
       @media (min-width: 450px)
         padding: 36px 40px 36px
+        display: flex
+        flex-direction: column
+        justify-content: center
 
       @media (min-width: 601px)
         border: 1px solid #dadce0
@@ -91,39 +96,46 @@
       display: flex
       justify-content: center
       padding-top: 12px
-
     &-footer
-      align-items: center
-      display: flex
-      flex-wrap: wrap
-      justify-content: space-between
-      font-size: 12px
-      line-height: 1.4
-      padding: 0 12px 14px
-
-      @media (min-width: 450px)
-        padding-left: 40px
-        padding-right: 40px
+      border: none
+      font-size: 14px
+      margin: 24px -40px -36px
+      padding: 12px 0
       @media (min-width: 601px)
-        padding: 4px 0 0
+        border-top: 1px solid #dadce0
 
-      &-link-list
-        list-style: none
-        margin: 8px -16px
-        padding: 0
+  &-footer
+    align-items: center
+    display: flex
+    flex-wrap: wrap
+    justify-content: space-between
+    font-size: 12px
+    line-height: 1.4
+    padding: 0 12px 14px
 
-        li
-          display: inline-block
-          margin: 0
-        a
-          border-radius: 2px
-          color: #757575
-          display: inline-block
-          padding: 6px 16px
-          transition: background .2s
-        @media (min-width: 601px)
-          margin-top: 0
-          margin-bottom: 0
+    @media (min-width: 450px)
+      padding-left: 40px
+      padding-right: 40px
+    @media (min-width: 601px)
+      padding: 4px 0 0
+
+    &-link-list
+      list-style: none
+      margin: 8px -12px
+      padding: 0
+
+      li
+        display: inline-block
+        margin: 0
+      a
+        border-radius: 2px
+        color: #757575
+        display: inline-block
+        padding: 6px 16px
+        transition: background .2s
+      @media (min-width: 601px)
+        margin-top: 0
+        margin-bottom: 0
 
   a
     color: #1a73e8
