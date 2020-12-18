@@ -1,3 +1,10 @@
+# [0.9.0](https://github.com/PlusAuth/plusauth-widget/compare/v0.8.0...v0.9.0) (2020-12-18)
+
+
+### Features
+
+* redirect to verify email page in case of email not verified ([b5e906f](https://github.com/PlusAuth/plusauth-widget/commit/b5e906fde28c88a0120cd7f6b73c1585cfd6f6d3))
+
 # [0.8.0](https://github.com/PlusAuth/plusauth-widget/compare/v0.7.0...v0.8.0) (2020-12-07)
 
 
