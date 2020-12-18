@@ -63,8 +63,19 @@ export default defineComponent({
               finalFields[e.field].errors = `errors.${e.error}`
             }
           }else{
-          // TODO: display error somewhere
-            console.error(e)
+            switch (e.error) {
+              case 'already_exists':
+                finalFields.email ? finalFields.email.errors = `errors.${e.error}` :
+                  finalFields.username ? finalFields.username.errors  = `errors.${e.error}`: null;
+                break;
+              case 'email_not_verified':
+                window.location.assign('/verifyEmail')
+                break;
+              default:
+                if(finalFields.password){
+                  finalFields.password['errors'] = `errors.${e.error}`
+                }
+            }
           }
           throw e
         }
