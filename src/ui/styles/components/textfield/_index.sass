@@ -41,7 +41,8 @@
         align-items: flex-end
         width: 100%
         position: relative
-        border: 1px solid #cccccc
+        background: #fff
+        border: 1px solid #B5C6D9
         border-radius: 4px
 
         input.text-field
@@ -118,8 +119,12 @@
   &.btn
     font-family: Montserrat, sans-serif
     font-size: 0.775rem !important
-    min-width: 82px
+    min-width: 52px
 
+@media (max-width: 401px)
+  .pw-toggle-visibility
+    &.btn
+      border-left: none
 .form-error
   color: red
   text-align: left
