@@ -1,3 +1,10 @@
+# [0.12.0](https://github.com/PlusAuth/plusauth-widget/compare/v0.11.0...v0.12.0) (2020-12-21)
+
+
+### Features
+
+* push to verifyEmail after registration with an email ([6ca4cbb](https://github.com/PlusAuth/plusauth-widget/commit/6ca4cbb0cd4acfee66d255795dbd2454834fb688))
+
 # [0.11.0](https://github.com/PlusAuth/plusauth-widget/compare/v0.10.0...v0.11.0) (2020-12-21)
 
 
