@@ -8,7 +8,7 @@
   </div>
 
   <div class="pa__widget-info-section">
-    <h1 v-t="'login.signIn'" />
+    <h1 v-t="'login.title'" />
   </div>
 
   <GenericForm

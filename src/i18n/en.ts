@@ -53,6 +53,7 @@ export default {
   login: {
     forgotPassword: 'Forgot Password',
     noAccount: "Don't have an account?",
+    title: 'Sign In',
     signIn: 'Sign In',
     signInWith: 'or Sign in with',
     signUp: 'Sign Up'
@@ -86,6 +87,7 @@ export default {
   },
   register: {
     haveAccount: 'Have an account?',
+    title: 'Sign Up',
     signIn: 'Sign In',
     signUp: 'Sign Up',
     signUpWith: 'or Sign Up with'

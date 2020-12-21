@@ -8,7 +8,7 @@
   </div>
 
   <div class="pa__widget-info-section">
-    <h1 v-t="'register.signUp'" />
+    <h1 v-t="'register.title'" />
   </div>
 
   <GenericForm
