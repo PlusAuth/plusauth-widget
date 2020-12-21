@@ -11,7 +11,7 @@
       <h1 v-t="'errors.'+error" />
     </div>
   </template>
-  <template v-else-if="context.prompt.mode === 'check' || !context.details.email_verified">
+  <template v-else-if="context.prompt?.mode === 'check' || !context.details.email_verified">
     <div class="pa__logo-container">
       <img
         src="https://api.plusauth.com/assets/images/icons/plane.svg"

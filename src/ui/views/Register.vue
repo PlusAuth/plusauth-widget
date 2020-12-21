@@ -80,6 +80,8 @@ import { PlusAuthWeb } from '@plusauth/web';
 import deepmerge from 'deepmerge';
 import { defineComponent, inject, reactive, ref } from 'vue';
 
+import { useRouter } from 'vue-router';
+
 import { PForm, PasswordStrength } from '../components';
 import GenericForm from '../components/GenericForm.vue';
 import PBtn from '../components/PBtn';
@@ -109,7 +111,7 @@ export default defineComponent({
   setup(props){
     const api = inject('api') as PlusAuthWeb
     const context = inject('context') as any
-
+    const router = useRouter()
     const defaultFields: AdditionalFields = {
       username: {
         order: 0,
@@ -168,7 +170,14 @@ export default defineComponent({
       defaultFields,
       async (fieldWithValues) => {
         try{
-          await api.auth.signUp(fieldWithValues)
+          const result = await api.auth.signUp(fieldWithValues)
+          if(result && result.message === 'verification_email_sent'){
+            context.details.email = finalFields.email?.value
+            context.details.email_verified = false
+            router.push({
+              path: '/verifyEmail'
+            })
+          }
         }catch (e) {
           switch (e.error) {
             case 'already_exists':
