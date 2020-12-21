@@ -19,6 +19,7 @@
     <template #password.message="{ message: [ message ], focus, hasState }">
       <PasswordStrength
         v-if="focus || hasState"
+        :rules="context.settings?.passwordPolicy"
         class="pa__input-details"
         :message="message"
       />
@@ -138,7 +139,7 @@ export default defineComponent({
             this.$t('common.fields.password')
           ]) :
             api.auth.checkPasswordStrength(value,
-              context.passwordPolicy || {})
+              context.settings?.passwordPolicy || {})
         }
       },
       rePassword: {
@@ -179,7 +180,7 @@ export default defineComponent({
               break;
             default:
               if(finalFields.password){
-                finalFields.password['errors'] = `errors.${e.error}`
+                finalFields.password['errors'] = `errors.${e.error || e.message || e.name || e}`
               }
           }
           throw e

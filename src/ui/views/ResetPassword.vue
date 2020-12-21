@@ -23,6 +23,7 @@
       <template #password.message="{ message: [ message ], focus, hasState }">
         <PasswordStrength
           v-if="focus || hasState"
+          :rules="context.settings?.passwordPolicy"
           class="pa__input-details"
           :message="message"
         />
@@ -92,7 +93,7 @@ export default defineComponent({
             this.$t('common.fields.password')
           ]) :
             api.auth.checkPasswordStrength(value,
-              context.passwordPolicy || {})
+              context.settings?.passwordPolicy || {})
         }
       },
       rePassword: {
