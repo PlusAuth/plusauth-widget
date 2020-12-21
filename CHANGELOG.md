@@ -1,3 +1,10 @@
+# [0.11.0](https://github.com/PlusAuth/plusauth-widget/compare/v0.10.0...v0.11.0) (2020-12-21)
+
+
+### Features
+
+* **i18n:** add title for login and register pages ([98b9a50](https://github.com/PlusAuth/plusauth-widget/commit/98b9a5065d65deafc462f566d0c6c01098fce503))
+
 # [0.10.0](https://github.com/PlusAuth/plusauth-widget/compare/v0.9.0...v0.10.0) (2020-12-21)
 
 
