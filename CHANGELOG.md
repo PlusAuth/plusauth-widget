@@ -1,3 +1,15 @@
+# [0.10.0](https://github.com/PlusAuth/plusauth-widget/compare/v0.9.0...v0.10.0) (2020-12-21)
+
+
+### Bug Fixes
+
+* use correct place for password policy ([5bfff3d](https://github.com/PlusAuth/plusauth-widget/commit/5bfff3d0a384cc20e25ab91c0b250cdaa497f540))
+
+
+### Features
+
+* add already_exists error translation ([e9d6701](https://github.com/PlusAuth/plusauth-widget/commit/e9d67014d6d8084126950a9faa2d6d1e887d042d))
+
 # [0.9.0](https://github.com/PlusAuth/plusauth-widget/compare/v0.8.0...v0.9.0) (2020-12-18)
 
 
