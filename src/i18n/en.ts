@@ -29,6 +29,7 @@ export default {
     title: '{clientName} asks for your consent for the followings'
   },
   errors: {
+    already_exists: 'User already exists',
     code_already_used: 'Code was already used',
     code_expired: 'Code has expired',
     email_not_verified: 'Email is not verified. Please verify your email by clicking the link that has been sent to your email account.',
