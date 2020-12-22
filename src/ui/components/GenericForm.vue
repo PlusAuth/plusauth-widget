@@ -29,8 +29,7 @@
           :error-messages="options.errors"
           :type="options.type"
           :label="options.label"
-          :rules="options.validator ?
-            [ validate.bind( null, options, field) ] : undefined"
+          :rules="[ validate.bind( null, options, field) ]"
         />
       </template>
       <p-text-field
@@ -41,8 +40,7 @@
         :name="field"
         :type="options.type"
         :label="options.label"
-        :rules="options.validator ?
-          [ validate.bind( null, options, field) ] : undefined"
+        :rules="[ validate.bind( null, options, field) ] "
       >
         <template
           v-if="field === 'password'"

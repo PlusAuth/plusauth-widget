@@ -190,7 +190,7 @@ export const Validatable: ComponentOptions = {
         if(Boolean(valid && typeof valid.then === 'function') ) {
           valid = await valid
         }
-        if (typeof valid === 'string' || valid !== true) {
+        if (typeof valid === 'string' || valid !== true && valid !== undefined) {
           errorBucket.push(valid || '')
         }
       }
