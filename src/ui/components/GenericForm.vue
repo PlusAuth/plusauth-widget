@@ -25,11 +25,12 @@
         <PCheckBox
           v-model="options.value"
           v-bind="options.attrs"
+          :name="field"
           :error-messages="options.errors"
           :type="options.type"
           :label="options.label"
           :rules="options.validator ?
-            [ validate.bind( null, options) ] : undefined"
+            [ validate.bind( null, options, field) ] : undefined"
         />
       </template>
       <p-text-field
@@ -37,10 +38,11 @@
         v-model="options.value"
         v-bind="options.attrs"
         :error-messages="options.errors"
+        :name="field"
         :type="options.type"
         :label="options.label"
         :rules="options.validator ?
-          [ validate.bind( null, options) ] : undefined"
+          [ validate.bind( null, options, field) ] : undefined"
       >
         <template
           v-if="field === 'password'"

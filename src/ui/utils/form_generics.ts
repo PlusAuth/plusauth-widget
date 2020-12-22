@@ -5,6 +5,8 @@ import { AdditionalFields, FieldDefinition } from '../interfaces';
 
 import { Translator, translatorKey } from './translator';
 
+import { isEmail, isPhone } from '.';
+
 export default function (
   this: Record<string, any>,
   defaultFields: AdditionalFields | null,
@@ -13,7 +15,6 @@ export default function (
   const form = ref<any>(null)
   const loading = ref(false)
   const translator = inject(translatorKey) as Translator
-
   const { fields, responseErrorHandler } = this
   const mergedFields = reactive( deepmerge(defaultFields || {}, fields || {}, { clone: false }))
 
@@ -27,7 +28,20 @@ export default function (
     form,
     loading,
     fields: mergedFields,
-    validate(options: FieldDefinition, value: any): any {
+    validate(options: FieldDefinition, field: string, value: any): any {
+      if(value){
+        if(options.format === 'email' && !isEmail(value)){
+          return translator.t('errors.invalid_entity', [
+            translator.t(`common.fields.${field}`)
+          ])
+        }
+        if(options.format === 'tel' && !isPhone(value)){
+          return translator.t('errors.invalid_entity', [
+            translator.t(`common.fields.${field}`)
+          ])
+        }
+      }
+
       if (options.validator) {
         return options.validator.call(
           { $t: translator.t.bind(translator) },
