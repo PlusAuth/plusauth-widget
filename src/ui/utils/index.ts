@@ -165,3 +165,7 @@ export function escapeRegExp(string: string) {
 export function isEmail(value: string): boolean {
   return /^[\w.!#$%&’*+/=?^_`{|}~-]+@[\w-]+(?:\.[\w-]+)*$/.test(value)
 }
+
+export function isPhone(value: string): boolean {
+  return /^(\+)?([ 0-9]){10,16}$/.test(value)
+}
