@@ -68,7 +68,7 @@ export default defineComponent({
         label: 'common.fields.code',
         validator(fields, value){
           if(!value){
-            return this.$t('errors.fieldRequired', [
+            return this.$t('errors.field_required', [
               this.$t('common.fields.code')
             ])
           }

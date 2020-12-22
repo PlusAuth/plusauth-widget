@@ -9,6 +9,7 @@
 
   <div class="pa__widget-info-section">
     <h1 v-t="'fillMissing.title'" />
+    <h2 v-t="'fillMissing.subtitle'" />
   </div>
 
   <GenericForm
@@ -100,7 +101,7 @@ export default defineComponent({
             label: `common.fields.${fieldName}`,
             validator(fields: any, value: any){
               if(!value){
-                return this.$t('errors.fieldRequired', [
+                return this.$t('errors.field_required', [
                   this.$t(`common.fields.${fieldName}`)
                 ])
               }

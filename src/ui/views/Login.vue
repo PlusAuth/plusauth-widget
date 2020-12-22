@@ -114,7 +114,7 @@ export default defineComponent({
         label: 'common.fields.username',
         validator(fields, value){
           if(!value){
-            return this.$t('errors.fieldRequired', [
+            return this.$t('errors.field_required', [
               this.$t('common.fields.username')
             ])
           }
@@ -128,7 +128,7 @@ export default defineComponent({
         errors: [],
         validator: function (fields, value){
           if(!value){
-            return this.$t('errors.fieldRequired', [
+            return this.$t('errors.field_required', [
               this.$t('common.fields.password')
             ])
           }
@@ -148,7 +148,8 @@ export default defineComponent({
             switch (e.error) {
               case 'user_not_found':
                 if(finalFields.username){
-                  finalFields.username.errors = `errors.${e.error}`;
+                  finalFields.email ? finalFields.email.errors = `errors.${e.error}` :
+                    finalFields.username ? finalFields.username.errors  = `errors.${e.error}`: null;
                 }
                 break;
               case 'invalid_credentials':

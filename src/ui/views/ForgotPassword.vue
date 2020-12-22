@@ -53,12 +53,12 @@
 
 <script lang="ts">
 import { PlusAuthWeb } from '@plusauth/web';
-import { defineComponent, inject, reactive, ref } from 'vue';
+import { defineComponent, inject, ref } from 'vue';
 
 import GenericForm from '../components/GenericForm.vue';
 import { AdditionalFields } from '../interfaces';
 import { CustomizableFormProps } from '../mixins/customizable_form';
-import { isEmail, resolveClientLogo } from '../utils';
+import { resolveClientLogo } from '../utils';
 import form_generics from '../utils/form_generics';
 
 export default defineComponent({
@@ -79,12 +79,7 @@ export default defineComponent({
         label: 'common.fields.email',
         validator(fields, value){
           if(!value){
-            return this.$t('errors.fieldRequired', [
-              this.$t('common.fields.email')
-            ])
-          }
-          if( !isEmail(value)){
-            return this.$t('errors.fieldNotValid', [
+            return this.$t('errors.field_required', [
               this.$t('common.fields.email')
             ])
           }
