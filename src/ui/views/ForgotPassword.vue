@@ -101,7 +101,8 @@ export default defineComponent({
           if(finalFields.email){
             switch (e.error) {
               case 'user_not_found':
-                finalFields.email['errors'] = `errors.${e.error}`;
+                finalFields.email ? finalFields.email.errors = `errors.${e.error}` :
+                  finalFields.username ? finalFields.username.errors  = `errors.${e.error}`: null;
                 break;
               case 'invalid_credentials':
                 finalFields.email['errors'] = `errors.${e.error}`;
