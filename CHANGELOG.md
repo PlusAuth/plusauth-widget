@@ -1,3 +1,13 @@
+# [0.13.0](https://github.com/PlusAuth/plusauth-widget/compare/v0.12.0...v0.13.0) (2020-12-22)
+
+
+### Features
+
+* pass input name to messages for better errors ([cd80a55](https://github.com/PlusAuth/plusauth-widget/commit/cd80a55c813d459ec5922e9c78cd97e487918d96))
+* simple phone validation ([12cac7b](https://github.com/PlusAuth/plusauth-widget/commit/12cac7b06d3dc96a5cd263c3b9893df9ee4ba34d))
+* translate interpolated keys ([cb42b3e](https://github.com/PlusAuth/plusauth-widget/commit/cb42b3ed85e87b2b4d63215ec97133fbe0c93851))
+* validate fields with format ([904eb53](https://github.com/PlusAuth/plusauth-widget/commit/904eb5377f916d41bf37037fdbce77e8945d7286))
+
 # [0.12.0](https://github.com/PlusAuth/plusauth-widget/compare/v0.11.0...v0.12.0) (2020-12-21)
 
 
