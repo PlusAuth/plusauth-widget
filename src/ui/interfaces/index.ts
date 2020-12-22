@@ -46,6 +46,7 @@ interface CommonFieldProps {
   format?: 'tel' | 'email';
   order?: number;
   errors?: string | string[] | null;
+  required?: boolean;
   validator?: FieldValidator<keyof AdditionalFields>;
 }
 export type FieldDefinition = CommonFieldProps & ({

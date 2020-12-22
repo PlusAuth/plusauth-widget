@@ -111,29 +111,13 @@ export default defineComponent({
           autocomplete: 'username'
         },
         type: 'text',
-        label: 'common.fields.username',
-        validator(fields, value){
-          if(!value){
-            return this.$t('errors.field_required', [
-              this.$t('common.fields.username')
-            ])
-          }
-          return true
-        }
+        label: 'common.fields.username'
       },
       password: {
         order: 1,
         type: 'password',
         label: 'common.fields.password',
-        errors: [],
-        validator: function (fields, value){
-          if(!value){
-            return this.$t('errors.field_required', [
-              this.$t('common.fields.password')
-            ])
-          }
-          return true
-        }
+        errors: []
       },
     }
 

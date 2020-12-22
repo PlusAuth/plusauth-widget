@@ -29,6 +29,11 @@ export default function (
     loading,
     fields: mergedFields,
     validate(options: FieldDefinition, field: string, value: any): any {
+      if(options.required !== false && !value){
+        return translator.t('errors.field_required', [
+          translator.t(`common.fields.${field}`)
+        ])
+      }
       if(value){
         if(options.format === 'email' && !isEmail(value)){
           return translator.t('errors.invalid_entity', [

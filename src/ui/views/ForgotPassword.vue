@@ -76,15 +76,7 @@ export default defineComponent({
       email: {
         type: 'text',
         format: 'email',
-        label: 'common.fields.email',
-        validator(fields, value){
-          if(!value){
-            return this.$t('errors.field_required', [
-              this.$t('common.fields.email')
-            ])
-          }
-          return true
-        }
+        label: 'common.fields.email'
       }
     }
 

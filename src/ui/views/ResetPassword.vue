@@ -89,22 +89,13 @@ export default defineComponent({
           autocomplete: 'new-password'
         },
         async validator(fields, value){
-          return !value ? this.$t('errors.field_required', [
-            this.$t('common.fields.password')
-          ]) :
-            api.auth.checkPasswordStrength(value,
-              context.settings?.passwordPolicy || {})
+          return api.auth.checkPasswordStrength(value,context.settings?.passwordPolicy || {})
         }
       },
       rePassword: {
         type: 'password',
         label: 'common.fields.rePassword',
         validator(fields, value){
-          if(!value){
-            return this.$t('errors.field_required', [
-              this.$t('common.fields.rePassword')
-            ])
-          }
           if(fields.password.value !== value){
             return this.$t('errors.passwords_not_match')
           }

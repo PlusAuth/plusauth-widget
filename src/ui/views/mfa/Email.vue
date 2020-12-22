@@ -65,15 +65,7 @@ export default defineComponent({
     const defaultFields: AdditionalFields = {
       code: {
         type: 'text',
-        label: 'common.fields.code',
-        validator(fields, value){
-          if(!value){
-            return this.$t('errors.field_required', [
-              this.$t('common.fields.code')
-            ])
-          }
-          return true
-        }
+        label: 'common.fields.code'
       }
     }
     const { form, loading, submit, validate, fields: finalFields } = form_generics.call(
