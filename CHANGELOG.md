@@ -1,3 +1,15 @@
+# [0.14.0](https://github.com/PlusAuth/plusauth-widget/compare/v0.13.1...v0.14.0) (2020-12-22)
+
+
+### Bug Fixes
+
+* validate function is not called when validator is not provided ([96825be](https://github.com/PlusAuth/plusauth-widget/commit/96825bedf1bd05b6e50eadcfe2ff76e12d4d00e9))
+
+
+### Features
+
+* add required option to field props which defaults to true ([013c6d0](https://github.com/PlusAuth/plusauth-widget/commit/013c6d0a24450a74781d891e20b8135351431324))
+
 ## [0.13.1](https://github.com/PlusAuth/plusauth-widget/compare/v0.13.0...v0.13.1) (2020-12-22)
 
 
