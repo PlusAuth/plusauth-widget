@@ -126,7 +126,8 @@ export default defineComponent({
           focus: this.isFocused
         }) : h(Message, {
           class: 'pa__input-details',
-          value: this.messagesToDisplay
+          value: this.messagesToDisplay,
+          field: this.$attrs.name
         }): null,
 
       ])

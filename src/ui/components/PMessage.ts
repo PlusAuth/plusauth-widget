@@ -3,31 +3,31 @@ import { defineComponent, h, withDirectives, VNode, Transition } from 'vue';
 import { i18n } from '../directives/i18n';
 import { Colorable } from '../mixins';
 
-function generateMessageVNode(message: string): VNode{
+function generateMessageVNode(message: string, name: string): VNode{
   return withDirectives(
     h('div', {
       class: 'pa__messages__message',
     }),
-    [[i18n, message]]
+    [[i18n, { args: { field: name && `common.fields.${name}` }, path: message }]]
   )
 }
 
-function generateMessages(messages: any): VNode | VNode[] | undefined {
+function generateMessages(messages: any, name: string): VNode | VNode[] | undefined {
   if(!messages){
     return undefined
   }
   if(Array.isArray(messages)){
-    return messages.map(message => generateMessageVNode(message))
+    return messages.map(message => generateMessageVNode(message, name))
   }else if( messages instanceof Set) {
     const nodes = []
     for (const value of messages.values()) {
       nodes.push(
-        generateMessageVNode(value)
+        generateMessageVNode(value, name)
       )
     }
     return nodes
   }else{
-    return generateMessageVNode(messages)
+    return generateMessageVNode(messages, name)
   }
 }
 export default defineComponent({
@@ -36,6 +36,7 @@ export default defineComponent({
   props: {
     ...Colorable.props,
     value: { type: [String, Array], default: null },
+    field: { type: String, default: null }
   },
   render(){
     return  h(
@@ -46,7 +47,7 @@ export default defineComponent({
         }
       }),
       h(Transition,{ name: 'message-transition', css: true },
-        { default: generateMessages.bind(this, this.value) }
+        { default: generateMessages.bind(this, this.value, this.field) }
       )
     )
   }
