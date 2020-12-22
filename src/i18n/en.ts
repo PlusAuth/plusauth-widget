@@ -11,6 +11,7 @@ export default {
       rePassword: 'Password confirmation',
       username: 'Username'
     },
+    field: 'Field',
     hide: 'Hide',
     reject: 'Reject',
     show: 'Show',
@@ -33,15 +34,16 @@ export default {
     code_already_used: 'Code was already used',
     code_expired: 'Code has expired',
     email_not_verified: 'Email is not verified. Please verify your email by clicking the link that has been sent to your email account.',
-    fieldNotValid: '{0} is not valid.',
-    fieldRequired: '{0} is required.',
+    field_required: '{0} is required.',
     incorrect_code: 'Verification code is invalid',
+    invalid_entity: 'Invalid {field}',
     invalid_credentials: 'Invalid login credentials. Please try again.',
-    passwordsNotMatch: "Passwords doesn't match",
+    passwords_not_match: "Passwords doesn't match",
     user_not_found: 'User not found',
   },
   fillMissing: {
-    title: 'Fill missing information'
+    title: 'Fill missing information',
+    subtitle: 'Please fill in additional information required to proceed application.',
   },
   forgotPassword: {
     'emailSent': 'If there is an account with <strong>{email}</strong> you will receive an' +

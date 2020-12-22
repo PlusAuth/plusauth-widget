@@ -27,9 +27,9 @@ export class Translator {
     return this._interpolate(propertyAccessor(this.dictionary[locale], key)
           || propertyAccessor(this.dictionary[this.fallBackLocale], key)
           || key,
-    parsedArgs.params)
+    parsedArgs.params, locale)
   }
-  _interpolate(str: string, args: any){
+  _interpolate(str: string, args: any, locale: string){
     if(!str){
       return str
     }
@@ -39,9 +39,12 @@ export class Translator {
           const normalizedArg = keysToDotNotation(arg)
           Object.keys(normalizedArg).forEach(key => {
             const searchRegexp = new RegExp(`\\{\\s*${escapeRegExp(key)}\\s*\\}`, 'gm')
+            const v = normalizedArg[key]
             str = str.replace(searchRegexp,
-              normalizedArg[key] === null ||
-              normalizedArg[key] === undefined ? '' : normalizedArg[key]
+              v === null ||
+              v === undefined ? '' : propertyAccessor(this.dictionary[locale], v)
+                || propertyAccessor(this.dictionary[this.fallBackLocale], v)
+                || v
             )
           })
         }
