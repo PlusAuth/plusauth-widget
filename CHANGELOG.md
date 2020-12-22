@@ -1,3 +1,10 @@
+## [0.13.1](https://github.com/PlusAuth/plusauth-widget/compare/v0.13.0...v0.13.1) (2020-12-22)
+
+
+### Bug Fixes
+
+* login form doesn't reflect error on email field ([16714f3](https://github.com/PlusAuth/plusauth-widget/commit/16714f3f2b5fde4eba65a30721d314c3ff2a860c))
+
 # [0.13.0](https://github.com/PlusAuth/plusauth-widget/compare/v0.12.0...v0.13.0) (2020-12-22)
 
 
