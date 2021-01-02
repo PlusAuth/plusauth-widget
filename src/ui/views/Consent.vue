@@ -27,7 +27,7 @@
 
   <div class="pa__widget-content-actions">
     <p-btn
-      color="pa__success"
+      color="success"
       @click="allow"
     >
       <span v-t="'common.allow'" />
@@ -35,7 +35,7 @@
     <div style="padding: 4px" />
     <p-btn
       class="pa__ml-2"
-      color="pa__error"
+      color="error"
       @click="reject"
     >
       <span v-t="'common.reject'" />

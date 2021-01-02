@@ -1,0 +1,27 @@
+.alert
+  display: block
+  font-size: 12px
+  margin-bottom: 4px
+  padding: 8px 12px
+  position: relative
+  text-align: start
+  border-radius: 2px
+  &-error
+    background-color: red
+    color: white
+  &-info
+    background-color: cyan
+    color: white
+  &-warning
+    background-color: yellow
+    color: white
+  &-success
+    background-color: green
+    color: white
+  &--tile
+    border-radius: 0
+
+.alert
+  &.alert--text
+    background-color: transparent !important
+    color: inherit

@@ -62,7 +62,7 @@ details?id=com.google.android.apps.authenticator2"
   <div class="pa__widget-content-actions">
     <p-btn
       block
-      color="pa__primary"
+      color="primary"
       :loading="loading"
       @click="submit"
     >

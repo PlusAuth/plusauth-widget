@@ -20,7 +20,7 @@
 
   <div class="pa__widget-content-actions">
     <p-btn
-      color="pa__primary"
+      color="primary"
       block
       :loading="loading"
       @click="submit"

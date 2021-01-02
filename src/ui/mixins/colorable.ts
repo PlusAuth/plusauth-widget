@@ -1,4 +1,4 @@
-import { ComponentOptions } from 'vue';
+import { ComponentOptions, PropType } from 'vue';
 
 function isCssColor(color?: string | false): boolean {
   return !!color && !!color.match(/^(#|var\(--|(rgb|hsl)a?\()/)
@@ -8,8 +8,8 @@ export const Colorable: ComponentOptions = {
   name: 'Colorable',
 
   props: {
-    color: String,
-    textColor: { type: String, required: false, default: '#fff' }
+    color: String as PropType<string>,
+    textColor: { type: String as PropType<string>, required: false, default: '#fff' }
   },
 
   methods: {
@@ -35,7 +35,7 @@ export const Colorable: ComponentOptions = {
       } else if (color) {
         data.class = {
           ...data.class,
-          [color]: true,
+          [`pa__${color}`]: true,
         }
       }
 
@@ -63,7 +63,7 @@ export const Colorable: ComponentOptions = {
         }
       } else if (color) {
         const [colorName, colorModifier] = color.toString()
-          .trim().split(' ', 2) as (string | undefined)[]
+          .trim().split(' ', 2) as string[]
         data.class = {
           ...data.class,
           [`pa__${colorName  }--text`]: true,
