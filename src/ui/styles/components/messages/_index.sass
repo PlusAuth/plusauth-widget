@@ -17,3 +17,17 @@
     overflow-wrap: break-word
     word-wrap: break-word
     hyphens: auto
+
+
+.message-transition-enter-active
+  transition: all .3s ease-out
+
+.message-transition-leave-active
+  transition: all .1s ease-out
+
+.message-transition-enter-from
+  transform: translateX(20px)
+  opacity: 0
+.message-transition-leave-to
+  transform: translateX(-20px)
+  opacity: 0

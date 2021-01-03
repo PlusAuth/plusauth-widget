@@ -62,7 +62,7 @@ export default defineComponent({
           'pa__messages': true
         }
       }),
-      h(Transition, { name: 'message-transition', css: true },
+      h(Transition, { name: 'pa__message-transition', css: true },
         { default: generateMessages.bind(this, this.value, this.field) }
       )
     )
