@@ -45,7 +45,7 @@ interface CommonFieldProps {
   type: string;
   format?: 'tel' | 'email';
   order?: number;
-  errors?: string | string[] | null;
+  errors?: string | string[] | ITranslatePath | null ;
   required?: boolean;
   validator?: FieldValidator<keyof AdditionalFields>;
 }
@@ -86,4 +86,10 @@ export interface IPlusAuthContext {
   settings: Partial<ITenantSettings>;
   details: any;
   params: any;
+}
+
+export type ITranslatePath = string | {
+  path: string,
+  args?: Record<string, any> | any[],
+  locale?: string
 }

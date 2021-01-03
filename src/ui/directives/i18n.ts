@@ -1,5 +1,6 @@
 import {  DirectiveBinding, ObjectDirective } from 'vue';
 
+import { ITranslatePath } from '../interfaces';
 import { isPlainObject } from '../utils';
 
 function makeParams(locale: string, args: any): Array<any> {
@@ -13,7 +14,7 @@ function makeParams(locale: string, args: any): Array<any> {
   return params
 }
 
-function parseValue(value: any): any {
+function parseValue(value: ITranslatePath): any {
   let path: string
   let locale: string | undefined = undefined
   let args: any = undefined

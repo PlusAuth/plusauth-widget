@@ -1,9 +1,10 @@
 import { defineComponent, h, withDirectives, VNode, Transition } from 'vue';
 
 import { i18n } from '../directives/i18n';
+import { ITranslatePath } from '../interfaces';
 import { Colorable } from '../mixins';
 
-function generateMessageVNode(message: string | Record<string, any>, name: string): VNode {
+function generateMessageVNode(message: ITranslatePath, name: string): VNode {
   if (message && typeof message === 'object') {
     return withDirectives(
       h('div', {
