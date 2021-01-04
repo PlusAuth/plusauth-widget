@@ -56,6 +56,9 @@ export default defineComponent({
     }
   },
   methods: {
+    reset(){
+      this.internalValue = null
+    },
     focus(){
       // @ts-ignore
       this.$refs.inputRef.focus()
