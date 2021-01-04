@@ -99,7 +99,7 @@ export default defineComponent({
           class: { 'pa__input--wrap': true }
         }, [
           h('input', Object.assign({},this.$attrs,{
-            value: this.modelValue,
+            value: this.internalValue,
             ref: 'inputRef',
             name: this.$attrs.name,
             type: this.type || 'text',
