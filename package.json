@@ -29,7 +29,7 @@
     "postcss": "^8.1.14"
   },
   "dependencies": {
-    "@plusauth/web": "^0.1.1",
+    "@plusauth/web": "^0.2.0",
     "@popperjs/core": "^2.6.0",
     "core-js": "^3.8.1",
     "deepmerge": "^4.2.2",

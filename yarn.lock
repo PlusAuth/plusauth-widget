@@ -1666,10 +1666,10 @@
   dependencies:
     "@octokit/openapi-types" "^4.0.3"
 
-"@plusauth/web@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@plusauth/web/-/web-0.1.1.tgz#f2587014e52f2ff2db8b199c8dab2b386f5f10a6"
-  integrity sha512-FMNoNusJZMTDT+9KSlXAXVJsRfvi660OD1KRN0LUjAfCo7aCG167x4eWu9GaIE/BkatU2Dbk5/+waOQnAiLWMw==
+"@plusauth/web@^0.2.0":
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/@plusauth/web/-/web-0.2.0.tgz#e2feac5f6b99f56354ca766b7276c84339fec6fa"
+  integrity sha512-TWWVff+yBP6JhLHePW2UEi9GtkXOGrDhXtW13uzkCapEOZzRjdAgtmJbYtLKNhNMXxtXXiXXey+UvH0RzBSn5A==
   dependencies:
     whatwg-fetch "^3.4.1"
 
