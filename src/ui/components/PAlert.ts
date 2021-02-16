@@ -1,4 +1,4 @@
-import { defineComponent, h, PropType, Transition } from 'vue';
+import { defineComponent, h, PropType, Transition, watchEffect } from 'vue';
 
 import { Colorable, Themeable } from '../mixins';
 
@@ -54,7 +54,7 @@ export default defineComponent({
               this.$emit('update:modelValue', false)
             },
             class: 'pa__alert-dismiss-icon',
-            color: this.text ? this.color : this.textColor
+            color: this.text ? this.type : this.textColor
           }, 'pa__close')
         ])
         )
