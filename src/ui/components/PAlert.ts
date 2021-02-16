@@ -36,7 +36,6 @@ export default defineComponent({
           this.$slots.default ? this.$slots.default() : null,
           this.dismissible && h(PIcon, {
             onClick: () => {
-              console.log('icon click')
               this.$emit('update:modelValue', false)
             },
             class: 'pa__alert-dismiss-icon',
