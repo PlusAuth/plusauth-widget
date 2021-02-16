@@ -1,4 +1,4 @@
-import {  DirectiveBinding, VNode, ObjectDirective } from 'vue';
+import {  DirectiveBinding, ObjectDirective } from 'vue';
 
 import { isPlainObject } from '../utils';
 
@@ -35,8 +35,7 @@ function parseValue(value: any): any {
   }
 }
 
-function translate(el: any, binding: DirectiveBinding,
-                   vnode: VNode<any, any>): void {
+function translate(el: any, binding: DirectiveBinding): void {
   const value: any = binding.value
 
   const { path, locale, args } = parseValue(value)
@@ -56,15 +55,13 @@ function translate(el: any, binding: DirectiveBinding,
 }
 
 export const i18n: ObjectDirective = {
-  beforeMount: (el, binding, vnode) => {
-    translate(el, binding, vnode)
+  beforeMount: (el, binding) => {
+    translate(el, binding)
   },
-  beforeUpdate: (el, binding, vnode, prevVNode) => {
-
-    translate(el, binding, vnode)
+  beforeUpdate: (el, binding) => {
+    translate(el, binding)
   },
-  unmounted: (el, binding, vnode, prevVNode) => {
-
+  unmounted: (el) => {
     el._vt = undefined
     delete el['_vt']
     el._locale = undefined
