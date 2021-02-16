@@ -1,6 +1,8 @@
-import { defineComponent, h, PropType } from 'vue';
+import { defineComponent, h, PropType, Transition } from 'vue';
 
 import { Colorable, Themeable } from '../mixins';
+
+import PIcon from './PIcon';
 
 export default defineComponent({
   name: 'PAlert',
@@ -17,15 +19,32 @@ export default defineComponent({
     modelValue: { type: Boolean as PropType<boolean>, default: true }
   },
   emits: ['update:modelValue'],
-  render(){
-    return this.modelValue &&  h('div',this.setBackgroundColor(
-      this.type,
-      this.setTextColor(this.text ? this.type : this.textColor, {
-        class: {
-          'pa__alert': true,
-          'pa__alert--text': this.text,
-          'pa__alert--tile': this.tile,
-        }
-      })),[this.$slots.default ? this.$slots.default(): null])
+  render() {
+    return h(Transition,
+      { name: 'pa__message-transition', css: true },
+      {
+        default: () => this.modelValue && h('div', this.setBackgroundColor(this.type,
+          this.setTextColor(this.text ? this.type : this.textColor, {
+            class: {
+              'pa__alert': true,
+              'pa__alert--text': this.text,
+              'pa__alert--tile': this.tile,
+            }
+          })
+        ),
+        h('div', { class: 'pa__alert-content' }, [
+          this.$slots.default ? this.$slots.default() : null,
+          this.dismissible && h(PIcon, {
+            onClick: () => {
+              console.log('icon click')
+              this.$emit('update:modelValue', false)
+            },
+            class: 'pa__alert-dismiss-icon',
+            color: this.text ? this.color : this.textColor
+          }, 'pa__close')
+        ])
+        )
+      }
+    )
   }
 })
