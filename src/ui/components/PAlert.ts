@@ -16,9 +16,24 @@ export default defineComponent({
     text: { type: Boolean as PropType<boolean>, default: false },
     tile: { type: Boolean as PropType<boolean>, default: false },
     dismissible: { type: Boolean as PropType<boolean>, default: false },
-    modelValue: { type: Boolean as PropType<boolean>, default: true }
+    modelValue: { type: Boolean as PropType<boolean>, default: true },
+    timeout: { type: Number as PropType<string | number>, default: 0 }
   },
   emits: ['update:modelValue'],
+  setup(props, ctx){
+    let closeTimeout: any
+    watchEffect( () => {
+      if(props.modelValue && props.timeout){
+        const timeoutVal = Number(props.timeout)
+        if(closeTimeout){
+          clearTimeout(closeTimeout)
+        }
+        closeTimeout = setTimeout(()=> {
+          ctx.emit('update:modelValue', false)
+        }, timeoutVal)
+      }
+    })
+  },
   render() {
     return h(Transition,
       { name: 'pa__message-transition', css: true },
