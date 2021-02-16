@@ -17,7 +17,6 @@ function parseValue(value: any): any {
   let path: string
   let locale: string | undefined = undefined
   let args: any = undefined
-  let choice: number | undefined  = undefined
 
   if (typeof value === 'string' || !value) {
     path = value
@@ -25,7 +24,6 @@ function parseValue(value: any): any {
     path = value.path
     locale = value.locale
     args = value.args
-    choice = value.choice
   }else{
     throw new Error('unsupported value')
   }
@@ -33,8 +31,7 @@ function parseValue(value: any): any {
   return {
     path,
     locale,
-    args,
-    choice
+    args
   }
 }
 
@@ -42,7 +39,7 @@ function translate(el: any, binding: DirectiveBinding,
                    vnode: VNode<any, any>): void {
   const value: any = binding.value
 
-  const { path, locale, args, choice } = parseValue(value)
+  const { path, locale, args } = parseValue(value)
   if (!path && !locale && !args) {
     console.warn('value type not supported')
     return
