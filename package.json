@@ -30,11 +30,11 @@
   },
   "dependencies": {
     "@plusauth/web": "^0.2.0",
-    "@popperjs/core": "^2.6.0",
-    "core-js": "^3.8.1",
+    "@popperjs/core": "^2.7.0",
+    "core-js": "^3.8.3",
     "deepmerge": "^4.2.2",
-    "vue": "^3.0.4",
-    "vue-router": "^4.0.1"
+    "vue": "^3.0.5",
+    "vue-router": "^4.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
@@ -52,8 +52,9 @@
     "@rollup/plugin-node-resolve": "^11.2.0",
     "@rollup/plugin-replace": "^2.3.4",
     "@types/jest": "^26.0.20",
-    "@typescript-eslint/eslint-plugin": "^4.15.0",
-    "@typescript-eslint/parser": "^4.15.0",
+    "@typescript-eslint/eslint-plugin": "^4.15.1",
+    "@typescript-eslint/parser": "^4.15.1",
+    "@vitejs/plugin-vue": "^1.1.4",
     "@vue/compiler-sfc": "^3.0.5",
     "@vue/test-utils": "^2.0.0-rc.1",
     "@vuedx/typecheck": "^0.6.3",
