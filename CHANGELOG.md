@@ -1,3 +1,11 @@
+## [0.15.1](https://github.com/PlusAuth/plusauth-widget/compare/v0.15.0...v0.15.1) (2021-02-18)
+
+
+### Bug Fixes
+
+* passing translate path object to alert not working ([7fe1d78](https://github.com/PlusAuth/plusauth-widget/commit/7fe1d78df9987bb662eb98f2af62fbed019ad12d))
+* translator interpolation fails when arg is not string ([a36407b](https://github.com/PlusAuth/plusauth-widget/commit/a36407b5c3f35d0ffe685487026ee57922e9d065))
+
 # [0.15.0](https://github.com/PlusAuth/plusauth-widget/compare/v0.10.0...v0.15.0) (2021-02-18)
 
 # [0.14.0](https://github.com/PlusAuth/plusauth-widget/compare/v0.13.1...v0.14.0) (2020-12-22)
