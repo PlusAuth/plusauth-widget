@@ -125,7 +125,8 @@ export default defineComponent({
       props,
       defaultFields,
       async (fieldWithValues) => {
-        try{
+        form.value.toggleError(null)
+        try {
           await api.auth.signIn(fieldWithValues)
         } catch (e) {
           if (e.error) {
@@ -137,10 +138,22 @@ export default defineComponent({
               case 'email_not_verified':
                 window.location.assign('/verifyEmail')
                 break;
-              default:
-                if(finalFields.password){
-                  finalFields.password.errors = `errors.${e.error}`
+              case 'too_many_requests':
+                const retryAfter = e._raw.headers.get('retry-after')
+                if (finalFields.password) {
+                  finalFields.password.errors = {
+                    path: `errors.${e.error}`,
+                    args: {
+                      retry: retryAfter
+                    }
+                  }
                 }
+                break;
+              default:
+                form.value.toggleError(`errors.${e.error}`, {
+                  dismissible: false,
+                  type: 'error'
+                })
             }
           }
           throw e
