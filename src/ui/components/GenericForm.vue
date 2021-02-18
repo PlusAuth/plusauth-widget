@@ -13,11 +13,11 @@
           v-model="options.value"
           v-bind="options.attrs"
           :size="options.length"
-          color="pa__primary"
+          color="primary"
         />
         <p-message
           :value="options.errors"
-          color="pa__error"
+          color="error"
           class="pa__mb-4"
         />
       </template>
@@ -72,6 +72,14 @@
         </template>
       </p-text-field>
     </template>
+    <p-alert
+      v-model="alert"
+      text
+      color="error"
+      v-bind="alertOptions.value"
+    >
+      <p-message :value="alertMsg" />
+    </p-alert>
     <input
       type="submit"
       hidden
@@ -81,10 +89,11 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from 'vue';
+import { computed, defineComponent, reactive, ref, toRefs } from 'vue';
 
 import { AdditionalFields } from '../interfaces';
 
+import { PAlertProps } from './PAlert';
 import PCheckBox from './PCheckBox';
 import PCodeInput from './PCodeInput';
 
@@ -107,7 +116,9 @@ export default defineComponent( {
   },
   setup(props){
     const formRef = ref<any>(null)
-
+    const alert = ref<boolean>(false)
+    const alertMsg = ref<string | null>(null)
+    const alertOptions = reactive<Record<string, any>>({})
     const sortedFields = computed(()=> {
       return Object.keys(props.fields)
         .sort((a, b) => (props.fields[a]?.order || 0) - (props.fields[b]?.order || 0))
@@ -119,7 +130,26 @@ export default defineComponent( {
 
     return {
       formRef,
+      alert,
+      alertMsg,
+      alertOptions,
       sortedFields,
+      /**
+       * @param message Message to display in alert. Pass null or undefined to hide alert.
+       * @param options PAlert properties
+       */
+      toggleError(message?: string | null, options?: Partial<PAlertProps>): void {
+        alert.value = false
+        if(!message){
+          alertMsg.value = null
+          return
+        }
+        alertMsg.value = message.toString()
+        alertOptions.value = options
+        setTimeout(() => {
+          alert.value = true
+        })
+      }
     }
   }
 })
