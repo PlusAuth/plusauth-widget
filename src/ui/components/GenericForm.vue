@@ -144,7 +144,7 @@ export default defineComponent( {
           alertMsg.value = null
           return
         }
-        alertMsg.value = message.toString()
+        alertMsg.value = message
         alertOptions.value = options
         setTimeout(() => {
           alert.value = true
