@@ -1,3 +1,5 @@
+# [0.15.0](https://github.com/PlusAuth/plusauth-widget/compare/v0.10.0...v0.15.0) (2021-02-18)
+
 # [0.14.0](https://github.com/PlusAuth/plusauth-widget/compare/v0.13.1...v0.14.0) (2020-12-22)
 
 
