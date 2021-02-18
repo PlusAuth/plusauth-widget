@@ -140,14 +140,15 @@ export default defineComponent({
                 break;
               case 'too_many_requests':
                 const retryAfter = e._raw.headers.get('retry-after')
-                if (finalFields.password) {
-                  finalFields.password.errors = {
-                    path: `errors.${e.error}`,
-                    args: {
-                      retry: retryAfter
-                    }
+                form.value.toggleError({
+                  path: `errors.${e.error}`,
+                  args: {
+                    retry: retryAfter
                   }
-                }
+                }, {
+                  dismissible: false,
+                  type: 'error'
+                })
                 break;
               default:
                 form.value.toggleError(`errors.${e.error}`, {
