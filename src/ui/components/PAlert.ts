@@ -4,20 +4,26 @@ import { Colorable, Themeable } from '../mixins';
 
 import PIcon from './PIcon';
 
+export type PAlertProps = {
+  color: string,
+  textColor: string,
+  type: 'info' | 'error' | 'success' | 'warning',
+  text: boolean,
+  tile: boolean,
+  dismissible: boolean,
+  timeout: number| string
+}
 export default defineComponent({
   name: 'PAlert',
   mixins: [Colorable, Themeable],
   props: {
     ...Colorable.props,
-    type: {
-      type: String as PropType<'info' | 'error' | 'success' | 'warning'>,
-      default: 'error'
-    },
-    text: { type: Boolean as PropType<boolean>, default: false },
-    tile: { type: Boolean as PropType<boolean>, default: false },
-    dismissible: { type: Boolean as PropType<boolean>, default: false },
     modelValue: { type: Boolean as PropType<boolean>, default: true },
-    timeout: { type: Number as PropType<string | number>, default: 0 }
+    dismissible: { type: Boolean as PropType<PAlertProps['dismissible']>, default: false },
+    type: { type: String as PropType<PAlertProps['type']>, default: 'error' },
+    text: { type: Boolean as PropType<PAlertProps['text']>, default: false },
+    tile: { type: Boolean as PropType<PAlertProps['tile']>, default: false },
+    timeout: { type: Number as PropType<PAlertProps['timeout']>, default: 0 }
   },
   emits: ['update:modelValue'],
   setup(props, ctx){
