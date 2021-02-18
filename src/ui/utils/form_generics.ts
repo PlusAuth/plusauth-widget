@@ -1,6 +1,7 @@
 import deepmerge from 'deepmerge';
-import { computed, reactive, ref, Prop, inject } from 'vue';
+import {  reactive, ref, inject } from 'vue';
 
+import GenericForm from '../components/GenericForm.vue';
 import { AdditionalFields, FieldDefinition } from '../interfaces';
 
 import { Translator, translatorKey } from './translator';
@@ -12,8 +13,8 @@ export default function (
   defaultFields: AdditionalFields | null,
   action: (fields: Record<string, any>) => Promise<any>,
 ) {
-  const form = ref<any>(null)
-  const loading = ref(false)
+  const form = ref<InstanceType<typeof GenericForm>>(null as any)
+  const loading = ref<boolean>(false)
   const translator = inject(translatorKey) as Translator
   const { fields, responseErrorHandler } = this
   const mergedFields = reactive( deepmerge(defaultFields || {}, fields || {}, { clone: false }))
