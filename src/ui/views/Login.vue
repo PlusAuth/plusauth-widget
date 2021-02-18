@@ -146,14 +146,12 @@ export default defineComponent({
                     retry: retryAfter
                   }
                 }, {
-                  dismissible: false,
-                  type: 'error'
+                  dismissible: false
                 })
                 break;
               default:
                 form.value.toggleError(`errors.${e.error}`, {
-                  dismissible: false,
-                  type: 'error'
+                  dismissible: false
                 })
             }
           }
