@@ -70,14 +70,14 @@
   </div>
 </template>
 
-<script lang="ts">
+<script lang="ts" >
 import { PlusAuthWeb } from '@plusauth/web';
-import { defineComponent,  ref, inject } from 'vue';
+import { defineComponent, ref, inject } from 'vue';
 
 import GenericForm from '../components/GenericForm.vue';
 import SocialConnectionButton from '../components/SocialConnectionButton';
 import { AdditionalFields } from '../interfaces';
-import {  CustomizableFormProps } from '../mixins/customizable_form';
+import { CustomizableFormProps } from '../mixins/customizable_form';
 import { resolveClientLogo } from '../utils';
 import form_generics from '../utils/form_generics';
 
@@ -99,7 +99,7 @@ export default defineComponent({
     },
     ...CustomizableFormProps
   },
-  setup(props){
+  setup(props) {
     const api = inject('api') as PlusAuthWeb
     const context = inject('context') as any
     const passwordVisible = ref(false)
@@ -127,17 +127,12 @@ export default defineComponent({
       async (fieldWithValues) => {
         try{
           await api.auth.signIn(fieldWithValues)
-        }catch (e) {
-          if(e.error){
+        } catch (e) {
+          if (e.error) {
             switch (e.error) {
               case 'user_not_found':
                 finalFields.email ? finalFields.email.errors = `errors.${e.error}` :
-                  finalFields.username ? finalFields.username.errors  = `errors.${e.error}`: null;
-                break;
-              case 'invalid_credentials':
-                if(finalFields.password) {
-                  finalFields.password.errors = `errors.${e.error}`;
-                }
+                  finalFields.username ? finalFields.username.errors = `errors.${e.error}` : null;
                 break;
               case 'email_not_verified':
                 window.location.assign('/verifyEmail')
