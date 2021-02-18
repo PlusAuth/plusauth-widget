@@ -74,7 +74,6 @@
     </template>
     <p-alert
       v-model="alert"
-      text
       color="error"
       v-bind="alertOptions.value"
     >
