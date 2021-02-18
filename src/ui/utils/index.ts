@@ -54,7 +54,7 @@ export function propertyAccessor(object: Record<string, any>,
   if(!object){
     return undefined
   }
-  array = array || keys?.split('.')
+  array = array || keys?.toString().split('.')
 
   if (array.length > 1) {
     return propertyAccessor(object[array.shift()], null, array)
