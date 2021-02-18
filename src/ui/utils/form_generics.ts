@@ -13,7 +13,7 @@ export default function (
   defaultFields: AdditionalFields | null,
   action: (fields: Record<string, any>) => Promise<any>,
 ) {
-  const form = ref<InstanceType<typeof GenericForm>>(null as any)
+  const form = ref<typeof GenericForm>(null as any)
   const loading = ref<boolean>(false)
   const translator = inject(translatorKey) as Translator
   const { fields, responseErrorHandler } = this
