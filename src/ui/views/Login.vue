@@ -138,6 +138,11 @@ export default defineComponent({
               case 'email_not_verified':
                 window.location.assign('/verifyEmail')
                 break;
+              case 'invalid_password':
+                if(finalFields.password) {
+                  finalFields.password.errors = `errors.${e.error}`;
+                }
+                break;
               case 'too_many_requests':
                 const retryAfter = e._raw.headers.get('retry-after')
                 form.value.toggleError({
