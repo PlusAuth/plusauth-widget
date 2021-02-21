@@ -1,6 +1,6 @@
 {
   "name": "@plusauth/plusauth-widget",
-  "version": "0.15.1",
+  "version": "0.16.0",
   "main": "dist/plusauth-widget.cjs.js",
   "module": "dist/plusauth-widget.esm.js",
   "browser": "dist/plusauth-widget.min.js",

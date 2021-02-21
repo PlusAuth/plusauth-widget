@@ -1,3 +1,10 @@
+# [0.16.0](https://github.com/PlusAuth/plusauth-widget/compare/v0.15.1...v0.16.0) (2021-02-21)
+
+
+### Features
+
+* add invalid_password error handling in Login ([89c0dc4](https://github.com/PlusAuth/plusauth-widget/commit/89c0dc4a5ef495f8bd07d2268672c487d4c4024c))
+
 ## [0.15.1](https://github.com/PlusAuth/plusauth-widget/compare/v0.15.0...v0.15.1) (2021-02-18)
 
 
