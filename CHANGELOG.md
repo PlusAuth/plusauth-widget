@@ -1,3 +1,10 @@
+## [0.16.1](https://github.com/PlusAuth/plusauth-widget/compare/v0.16.0...v0.16.1) (2021-02-22)
+
+
+### Bug Fixes
+
+* missing translation for invalid password ([92d3389](https://github.com/PlusAuth/plusauth-widget/commit/92d33891b9f2d877d2e9daaab8c5a492d82fbab9))
+
 # [0.16.0](https://github.com/PlusAuth/plusauth-widget/compare/v0.15.1...v0.16.0) (2021-02-21)
 
 
