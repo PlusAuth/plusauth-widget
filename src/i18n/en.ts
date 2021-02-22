@@ -38,6 +38,7 @@ export default {
     incorrect_code: 'Verification code is invalid',
     invalid_entity: 'Invalid {field}',
     invalid_credentials: 'Invalid login credentials. Please try again.',
+    invalid_password: 'Invalid password provided.',
     passwords_not_match: "Passwords doesn't match",
     user_not_found: 'User not found',
     too_many_requests: 'You have ben trying too fast. Try again in {retry} seconds.',
