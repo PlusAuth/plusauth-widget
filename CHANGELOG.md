@@ -1,3 +1,10 @@
+## [0.16.3](https://github.com/PlusAuth/plusauth-widget/compare/v0.16.2...v0.16.3) (2021-03-24)
+
+
+### Bug Fixes
+
+* enter does not submit form in most views ([be947c8](https://github.com/PlusAuth/plusauth-widget/commit/be947c89ce717e4daf3ab590094991b7efc04c45))
+
 ## [0.16.2](https://github.com/PlusAuth/plusauth-widget/compare/v0.16.1...v0.16.2) (2021-03-24)
 
 
