@@ -9,3 +9,4 @@ scripts
 public
 tests
 vite.config.ts
+dev.ts

@@ -6,6 +6,7 @@
     "declarationDir": "dist/types/",
     "esModuleInterop": true,
     "experimentalDecorators": true,
+    "lib": ["esnext", "dom"],
     "module": "ESNext",
     "moduleResolution": "node",
     "noImplicitAny": true,
@@ -16,12 +17,14 @@
     "strictPropertyInitialization": false,
     "suppressImplicitAnyIndexErrors": true,
     "target": "ESNext",
-    "baseUrl": "."
+    "baseUrl": ".",
+    "types": ["vite/client"]
   },
   "exclude": [
     "./node_modules"
   ],
   "include": [
+    "./dev/**/*.ts",
     "./src/**/*.ts",
     "./src/**/*.js",
     "./src/**/*.vue",

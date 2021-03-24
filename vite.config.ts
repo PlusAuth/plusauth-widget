@@ -1,8 +1,13 @@
-import {UserConfig} from "vite";
+import vue from '@vitejs/plugin-vue'
+import { defineConfig } from 'vite'
 
-const config: UserConfig = {
+export default  defineConfig({
   plugins: [
+    vue()
   ],
+  resolve: {
+    dedupe: ["vue"],
+  },
   optimizeDeps: {
     include: [
       "@popperjs/core/lib/modifiers/offset",
@@ -11,5 +16,4 @@ const config: UserConfig = {
       "@popperjs/core/lib/popper-lite"
     ]
   }
-}
-export default config
+})

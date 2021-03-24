@@ -9,11 +9,11 @@ export interface IClient {
   social: string[];
 }
 
-type DictionaryItem = string | Record<string, string>
+type DictionaryItem = string | Record<string, any>
 export interface ILocaleSettings {
   dictionary: Record<string, typeof defaultDictionary | DictionaryItem>;
   defaultLocale: string;
-  selectedLocale: string;
+  selectedLocale?: string;
 }
 
 export type WidgetModes = 'login' | 'recovery' | 'consent'
@@ -61,7 +61,7 @@ export interface IWidgetSettings {
   apiUrl: string;
   locale: ILocaleSettings;
   mode?: WidgetModes;
-  modeOptions?: Record<WidgetModes, any>,
+  modeOptions: Partial<Record<WidgetModes, any>>,
   footer?: {
     enabled?: boolean
   },
