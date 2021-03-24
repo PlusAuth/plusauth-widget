@@ -1,3 +1,11 @@
+## [0.16.5](https://github.com/PlusAuth/plusauth-widget/compare/v0.16.4...v0.16.5) (2021-03-24)
+
+
+### Bug Fixes
+
+* mfa errors are not displayed in form ([bde1f54](https://github.com/PlusAuth/plusauth-widget/commit/bde1f541b857c59a6eb5868e61e1fc22efbbba6a))
+* zero is validated az null in code input ([1c93771](https://github.com/PlusAuth/plusauth-widget/commit/1c9377148ce28a9f2db9a98beb7aa3d82c1636ac))
+
 ## [0.16.4](https://github.com/PlusAuth/plusauth-widget/compare/v0.16.3...v0.16.4) (2021-03-24)
 
 
