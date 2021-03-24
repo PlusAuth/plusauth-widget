@@ -86,7 +86,11 @@ export default defineComponent({
             MFACodeType.SMS
           )
         }catch (e) {
-          finalFields.code.errors = `errors.${e.error}`;
+          if (e.error) {
+            form.value.toggleError(`errors.${e.error}`, {
+              dismissible: false
+            })
+          }
           throw e
         }
       }

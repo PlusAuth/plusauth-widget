@@ -118,7 +118,11 @@ export default defineComponent({
             MFACodeType.OTP
           )
         }catch (e) {
-          error.value = `errors.${e.error}`;
+          if (e.error) {
+            form.value.toggleError(`errors.${e.error}`, {
+              dismissible: false
+            })
+          }
           throw e
         }
       }

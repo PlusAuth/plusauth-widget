@@ -79,7 +79,11 @@ export default defineComponent({
             MFACodeType.EMAIL
           )
         }catch (e) {
-          finalFields.code.errors = `errors.${e.error}`;
+          if (e.error) {
+            form.value.toggleError(`errors.${e.error}`, {
+              dismissible: false
+            })
+          }
           throw e
         }
       }
