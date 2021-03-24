@@ -85,7 +85,7 @@ export default defineComponent({
           || /Numpad\d/gm.test(event.code)) {
           // 0-9 only
           event.preventDefault()
-          digits[index].value = pressedKey
+          digits[index].value = String(pressedKey)
           if(index + 1 < props.size){
             inputRefs[index + 1].value.focus()
           }
