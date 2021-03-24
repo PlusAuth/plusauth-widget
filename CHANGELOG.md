@@ -1,3 +1,15 @@
+## [0.16.4](https://github.com/PlusAuth/plusauth-widget/compare/v0.16.3...v0.16.4) (2021-03-24)
+
+
+### Bug Fixes
+
+* onKeyPress event not triggered on code input ([c1d9a3d](https://github.com/PlusAuth/plusauth-widget/commit/c1d9a3dc6001fae28ad821bf0b00830b2bc88c80))
+
+
+### Features
+
+* disable text highlighting on code input ([680bf14](https://github.com/PlusAuth/plusauth-widget/commit/680bf14c645ef2514e95b857012b98042640cac0))
+
 ## [0.16.3](https://github.com/PlusAuth/plusauth-widget/compare/v0.16.2...v0.16.3) (2021-03-24)
 
 
