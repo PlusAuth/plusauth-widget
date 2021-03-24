@@ -1,3 +1,10 @@
+## [0.16.2](https://github.com/PlusAuth/plusauth-widget/compare/v0.16.1...v0.16.2) (2021-03-24)
+
+
+### Bug Fixes
+
+* code is not passed to request for mfa ([feb709f](https://github.com/PlusAuth/plusauth-widget/commit/feb709f50ae4f1c92a71a1c49fcab29a4a0f12f7))
+
 ## [0.16.1](https://github.com/PlusAuth/plusauth-widget/compare/v0.16.0...v0.16.1) (2021-02-22)
 
 
