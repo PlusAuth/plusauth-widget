@@ -81,7 +81,7 @@ export default defineComponent({
       async (fieldWithValues) => {
         try{
           await api.mfa.validateCode(
-            fieldWithValues.code.value as string,
+            fieldWithValues.code,
             MFACodeType.SMS
           )
         }catch (e) {

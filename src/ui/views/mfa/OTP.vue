@@ -114,7 +114,7 @@ export default defineComponent({
       async (fieldWithValues) => {
         try{
           await api.mfa.validateCode(
-            fieldWithValues.code as string,
+            fieldWithValues.code,
             MFACodeType.OTP
           )
         }catch (e) {
