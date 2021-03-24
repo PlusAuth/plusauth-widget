@@ -19,8 +19,10 @@ function generateDigitInput(index: any, ref: any, model: any, onUpdate: any,
     },
     onFocus($event: FocusEvent){
       const el = $event.target as HTMLInputElement
-      if(el.setSelectionRange)
-        el.setSelectionRange(0,-1)
+      if(el.setSelectionRange){
+        el.setSelectionRange(el.value.length,el.value.length)
+      }
+
     },
     'onUpdate:modelValue': (val: any) => {
       onInput(index, val)
@@ -84,8 +86,9 @@ export default defineComponent({
           // 0-9 only
           event.preventDefault()
           digits[index].value = pressedKey
-          const focusIndex =index + 1 < props.size ? index + 1 : props.size - 1
-          inputRefs[focusIndex].value.focus()
+          if(index + 1 < props.size){
+            inputRefs[index + 1].value.focus()
+          }
         }else{
           event.preventDefault()
         }

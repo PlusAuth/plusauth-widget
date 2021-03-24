@@ -63,6 +63,10 @@ export default defineComponent({
       // @ts-ignore
       this.$refs.inputRef.focus()
     },
+    blur(){
+      // @ts-ignore
+      this.$refs.inputRef.blur()
+    },
   },
   render(){
     const onFocus = (e: FocusEvent) => {
