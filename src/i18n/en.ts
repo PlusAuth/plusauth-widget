@@ -36,6 +36,7 @@ export default {
     email_not_verified: 'Email is not verified. Please verify your email by clicking the link that has been sent to your email account.',
     field_required: '{0} is required.',
     incorrect_code: 'Verification code is invalid',
+    invalid_code: 'Code is invalid',
     invalid_entity: 'Invalid {field}',
     invalid_credentials: 'Invalid login credentials. Please try again.',
     invalid_password: 'Invalid password provided.',
@@ -71,13 +72,13 @@ export default {
       title: 'Try another way to sign in'
     },
     email: {
-      'title': 'Enter verification code sent to: <strong>{email}</strong>'
+      'title': 'Enter authorization code sent to: <strong>{email}</strong>'
     },
     otp: {
-      title: 'Enter verification code:'
+      title: 'Enter authorization code:'
     },
     sms: {
-      'title': 'Enter verification code sent to: <strong>{phone_number}</strong>'
+      'title': 'Enter authorization code sent to: <strong>{phone_number}</strong>'
     },
     tryAnotherWay: 'Try another way'
   },
