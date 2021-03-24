@@ -18,6 +18,7 @@
     ref="form"
     :fields="finalFields"
     :validate="validate"
+    :submit="submit"
   />
 
   <div class="pa__widget-content-actions">

@@ -19,6 +19,7 @@
       ref="form"
       :fields="finalFields"
       :validate="validate"
+      :submit="submit"
     >
       <template #password.message="{ message: [ message ], focus, hasState }">
         <PasswordStrength

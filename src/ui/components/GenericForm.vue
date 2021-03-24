@@ -102,6 +102,7 @@ export default defineComponent( {
   props: {
     submit: {
       type: Function as () => any,
+      required: true,
       default: () => false
     },
     validate: {
