@@ -25,7 +25,7 @@ function generateDigitInput(index: any, ref: any, model: any, onUpdate: any,
     'onUpdate:modelValue': (val: any) => {
       onInput(index, val)
     },
-    onKeyPress($event: KeyboardEvent){
+    onKeypress($event: KeyboardEvent){
       onUpdate(index, $event)
     },
   })
@@ -41,8 +41,7 @@ function initializeDigitsModel(size: number) {
 function initializeInputRefs(size: number) {
   const inputRefs = []
   for (let i = 0; i < size ; i++) {
-    // @ts-ignore
-    inputRefs.push(ref<typeof PTextField>(null))
+    inputRefs.push(ref<typeof PTextField>(null as any))
   }
   return inputRefs
 }

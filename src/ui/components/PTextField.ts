@@ -108,7 +108,6 @@ export default defineComponent({
             type: this.type || 'text',
             style: this.$attrs.style,
             class: ['pa__text-field'],
-            onKeyPress: this.$attrs.onKeyPress,
             onFocus,
             onBlur,
             onInput,
