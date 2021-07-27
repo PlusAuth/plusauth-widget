@@ -125,7 +125,7 @@ export default defineComponent({
       props,
       defaultFields,
       async (fieldWithValues) => {
-        form.value.toggleError(null)
+        form.value.toggleAlert(null)
         try {
           await api.auth.signIn(fieldWithValues)
         } catch (e) {
@@ -145,7 +145,7 @@ export default defineComponent({
                 break;
               case 'too_many_requests':
                 const retryAfter = e._raw.headers.get('retry-after')
-                form.value.toggleError({
+                form.value.toggleAlert({
                   path: `errors.${e.error}`,
                   args: {
                     retry: retryAfter
@@ -155,7 +155,7 @@ export default defineComponent({
                 })
                 break;
               default:
-                form.value.toggleError(`errors.${e.error}`, {
+                form.value.toggleAlert(`errors.${e.error}`, {
                   dismissible: false
                 })
             }

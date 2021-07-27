@@ -80,7 +80,7 @@ export default defineComponent({
           )
         }catch (e) {
           if (e.error) {
-            form.value.toggleError(`errors.${e.error}`, {
+            form.value.toggleAlert(`errors.${e.error}`, {
               dismissible: false
             })
           }

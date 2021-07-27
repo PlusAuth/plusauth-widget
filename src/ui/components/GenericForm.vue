@@ -74,7 +74,7 @@
     </template>
     <p-alert
       v-model="alert"
-      color="error"
+      :color="alertOptions.type || 'error'"
       v-bind="alertOptions.value"
     >
       <p-message :value="alertMsg" />
@@ -138,7 +138,7 @@ export default defineComponent( {
        * @param message Message to display in alert. Pass null or undefined to hide alert.
        * @param options PAlert properties
        */
-      toggleError(message?: string | null, options?: Partial<PAlertProps>): void {
+      toggleAlert(message?: string | null, options?: Partial<PAlertProps>): void {
         alert.value = false
         if(!message){
           alertMsg.value = null
