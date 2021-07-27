@@ -100,7 +100,7 @@ export default defineComponent({
   setup(props){
     const api = inject('api') as PlusAuthWeb
     const context = inject('context') as any
-    const loadingMsg = ref<string>(null as any)
+    const loadingMsg = ref<string | null>(null as any)
     const deviceOk = ref<boolean>(false)
     const selectedFinger = ref<number>(1 as any)
     const error = ref<string>(null as any)
@@ -198,7 +198,7 @@ export default defineComponent({
             }else{
               loadingMsg.value = 'mfa.fv.verifyInProgress'
               const resp = await fv.verify(1, Object.values(templates))
-              await api.mfa.validateCode(resp, 'fv')
+              await api.mfa.validateCode(resp, MFACodeType.FINGER_VEIN)
             }
 
           }
