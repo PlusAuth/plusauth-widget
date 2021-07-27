@@ -31,7 +31,7 @@ export class H1FingerVeinService {
     return this.fetch( '25' )
   }
 
-  async deviceStatus(){
+  async deviceStatus(): Promise<Record<string, any>>{
     const statusText: string = await this.fetch( '27' )
     return statusText.split(';').map(sec => sec.split('=')).reduce((prev, cur) => {
       prev[cur[0]] = cur[1]
