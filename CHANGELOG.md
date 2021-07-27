@@ -1,3 +1,16 @@
+# [0.17.0-beta.0](https://github.com/PlusAuth/plusauth-widget/compare/v0.16.5...v0.17.0-beta.0) (2021-07-27)
+
+
+### Bug Fixes
+
+* select options overflowing container ([4d764c0](https://github.com/PlusAuth/plusauth-widget/commit/4d764c0f3dfca25e87e25e4965df67905deabef5))
+
+
+### Features
+
+* finger vein mfa page ([3a95bae](https://github.com/PlusAuth/plusauth-widget/commit/3a95bae55573cfa289e495d88658f560e1f13270))
+* **GenericForm:** customizable alert type ([533315f](https://github.com/PlusAuth/plusauth-widget/commit/533315f945c283e8815e1842c035b6adba263fb9))
+
 ## [0.16.5](https://github.com/PlusAuth/plusauth-widget/compare/v0.16.4...v0.16.5) (2021-03-24)
 
 
