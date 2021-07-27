@@ -34,11 +34,36 @@ export default defineComponent({
     const popperInstance = ref<Instance>(null as any);
     onMounted(()=>{
       popperInstance.value = createPopper(containerRef.value, popoverRef.value, {
+        strategy: 'fixed',
         modifiers: [
-          { ...preventOverflow,
+          {
+            name: 'matchReferenceSize',
+            enabled: true,
+            fn: ({ state, instance }) => {
+              const widthOrHeight =
+                state.placement.startsWith('left') ||
+                state.placement.startsWith('right')
+                  ? 'height'
+                  : 'width';
+              const popperSize = state.rects.popper[widthOrHeight];
+              const referenceSize = state.rects.reference[widthOrHeight];
+              console.log(popperSize, referenceSize)
+              if (popperSize >= referenceSize) return;
+
+              state.styles.popper[widthOrHeight] = `${referenceSize}px`;
+              // instance.update();
+            },
+            phase: 'beforeWrite',
+            requires: ['computeStyles']
+          },
+          {
+            ...preventOverflow,
             options: {
+              rootBoundary: containerRef.value,
+              altBoundary: true,
               padding: 0
-            } },
+            }
+          },
           flip,
           {
             ...offset,
@@ -99,10 +124,10 @@ export default defineComponent({
   },
   methods: {
     getText(item: string | Record<string, any>){
-      return typeof item === 'string' ? item : item[this.itemText]
+      return typeof item === 'object' ?  item[this.itemText] : item
     },
     getValue(item: string | Record<string, any>){
-      return typeof item === 'string' ? item : item[this.itemValue]
+      return typeof item === 'object' ?  item[this.itemValue] : item
     },
     genIcon(){
       return h('svg', {
