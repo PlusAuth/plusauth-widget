@@ -13,6 +13,7 @@ import ForgotPassword from '../views/ForgotPassword.vue';
 import Login from '../views/Login.vue';
 import Challenge from '../views/mfa/Challenge.vue';
 import Email from '../views/mfa/Email.vue';
+import FingerVein from '../views/mfa/FingerVein.vue';
 import OTP from '../views/mfa/OTP.vue';
 import SMS from '../views/mfa/SMS.vue';
 import Register from '../views/Register.vue';
@@ -74,6 +75,12 @@ export const router = (settings: Partial<IWidgetSettings>) => createRouter({
               name: 'otp',
               component: OTP,
               props: settings && settings.modeOptions && settings.modeOptions.otp
+            },
+            {
+              path: 'fv',
+              name: 'fv',
+              component: FingerVein,
+              props: settings && settings.modeOptions && settings.modeOptions.fv
             }
           ]
         },

@@ -17,7 +17,7 @@ export interface ILocaleSettings {
 }
 
 export type WidgetModes = 'login' | 'recovery' | 'consent'
-| 'challenge' | 'sms' | 'email' | 'otp'
+| 'challenge' | 'sms' | 'email' | 'otp' | 'fv'
 | 'signup' | 'resetPassword' | 'fillMissing' | 'verifyEmail'
 
 export type SocialConnections = 'google' | 'facebook' | 'linkedin'

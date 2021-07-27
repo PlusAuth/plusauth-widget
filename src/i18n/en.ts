@@ -15,6 +15,7 @@ export default {
     hide: 'Hide',
     reject: 'Reject',
     show: 'Show',
+    verify: 'Verify',
     submit: 'Submit'
   },
   verifyEmail: {
@@ -30,6 +31,39 @@ export default {
     title: '{clientName} asks for your consent for the followings'
   },
   errors: {
+    fv: {
+      'enrollRequired': 'You must enroll at least one finger',
+      '9999': 'Invalid request',
+      '0x100010e': 'Capture timeout',
+      '0x1000118': 'Capture cancelled',
+      '0x3001001': 'Device initialization failed',
+      '0x3001002': 'Invalid licence',
+      '0x3001003': 'Invalid parameters',
+      '0x3001004': 'Template count should be more than zero',
+      '0x3001005': 'Encryption error',
+      '0x3001006': 'Internal error',
+      '0x3000006': 'Finger placement is not correct',
+      '0x300000e': 'Finger not matched',
+      '0x2000011': 'Device disconnected',
+      '0x02000011': 'Device disconnected',
+      '0x02000021': 'Device disconnected',
+      '0x03000001': 'Scanner device not found',
+      '0x03000002': 'Invalid BIR format',
+      '0x03000003': 'Base64 encode failed',
+      '0x03000004': 'Invalid BIR out parameter',
+      '0x03000005': 'Verification capture was not close enough to match',
+      '0x03000006': 'Finger capture consistency check failed',
+      '0x03000007': 'Too many retries',
+      '0x03000008': 'Scanner error invalid parameter',
+      '0x03000009': 'General scanner error',
+      '0x0300000A': 'Scanner error match failed',
+      '0x0300000B': 'No template to verify against',
+      '0x0300000C': 'No device detected',
+      '0x0300000D': 'Could not allocate enough memory internally',
+      '0x0300000E': 'Finger verification does not match',
+      '0x0300000F': 'Finger identification no match found',
+      '0x03000010': 'Finger identification multiple matches',
+    },
     already_exists: 'User already exists',
     code_already_used: 'Code was already used',
     code_expired: 'Code has expired',
@@ -67,18 +101,29 @@ export default {
   mfa: {
     challenge: {
       email: 'Email',
+      fv: 'Finger Vein',
+      sc: 'SmartCard/E-Signature',
       otp: 'Authenticator Application',
       sms: 'SMS',
       title: 'Try another way to sign in'
     },
     email: {
-      'title': 'Enter authorization code sent to: <strong>{email}</strong>'
+      title: 'Enter authorization code sent to: <strong>{email}</strong>'
+    },
+    fv: {
+      enrollmentInProgress: 'Enrollment in progress',
+      verifyInProgress: 'Verification in progress',
+      saving: 'Saving enrollments',
+      checkingDevice: 'Checking device connectivity',
+      checkDevice: 'Make sure your device is connected and necessary software is installed. Refresh this page when device is ready.',
+      enroll: 'Select a finger to enroll. You can enroll multiple fingers.',
+      verify: 'Click to <strong>VERIFY</strong> when you are ready to scan your finger.'
     },
     otp: {
       title: 'Enter authorization code:'
     },
     sms: {
-      'title': 'Enter authorization code sent to: <strong>{phone_number}</strong>'
+      title: 'Enter authorization code sent to: <strong>{phone_number}</strong>'
     },
     tryAnotherWay: 'Try another way'
   },

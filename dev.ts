@@ -36,7 +36,9 @@ window['PlusAuth'] = {
     challenges: [
       'sms',
       'email',
-      'otp'
+      'otp',
+      'sc',
+      'fv'
     ]
   }
 }
@@ -65,6 +67,19 @@ const auth = new PlusAuthWidget('#app', {
           label: 'Email',
           attrs: {
             autocomplete: 'username'
+          },
+        },
+      }
+    },
+
+    signup: {
+      fields: {
+        username: undefined,
+        email: {
+          type: 'text',
+          label: 'Email',
+          attrs: {
+            autocomplete: 'email'
           },
         },
       }
