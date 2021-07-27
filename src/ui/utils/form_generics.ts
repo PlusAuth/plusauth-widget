@@ -10,8 +10,8 @@ import { isEmail, isPhone } from '.';
 
 export default function (
   this: Record<string, any>,
-  defaultFields: AdditionalFields | null,
-  action: (fields: Record<string, any>) => Promise<any>,
+  defaultFields?: AdditionalFields | null,
+  action?: (fields: Record<string, any>) => Promise<any>,
 ) {
   const form = ref<typeof GenericForm>(null as any)
   const loading = ref<boolean>(false)
@@ -82,7 +82,7 @@ export default function (
         }, {})
 
         try{
-          await action(fieldsWithValues)
+          await action?.(fieldsWithValues)
         }catch (e) {
           if(responseErrorHandler){
             responseErrorHandler.call(undefined, e)
