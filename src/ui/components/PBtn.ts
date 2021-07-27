@@ -1,7 +1,7 @@
 import { ComponentPublicInstance , defineComponent, h } from 'vue';
 
 
-import { Colorable, Themeable, Translatable, Validatable } from '../mixins';
+import { Colorable, Themeable } from '../mixins';
 
 import Loading from './PLoading';
 
