@@ -1,3 +1,10 @@
+# [0.17.0-beta.1](https://github.com/PlusAuth/plusauth-widget/compare/v0.17.0-beta.0...v0.17.0-beta.1) (2021-07-28)
+
+
+### Features
+
+* **FingerVein:** expect salt included in template ([e35ba36](https://github.com/PlusAuth/plusauth-widget/commit/e35ba3612eecbf443b6bca7960736c1dadaf69b8))
+
 # [0.17.0-beta.0](https://github.com/PlusAuth/plusauth-widget/compare/v0.16.5...v0.17.0-beta.0) (2021-07-27)
 
 
