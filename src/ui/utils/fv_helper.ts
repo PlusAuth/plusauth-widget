@@ -1,9 +1,4 @@
 export class H1FingerVeinService {
-  salt: string
-  constructor(salt: string) {
-    this.salt = salt
-  }
-
   private async fetch( body: string){
     const res = await fetch('http://127.0.0.1:8125/root/', {
       method: 'POST',
@@ -43,10 +38,8 @@ export class H1FingerVeinService {
     return this.fetch( `22${fingerIndex}` )
   }
 
-  verify(fingerIndex: number, templates: string[]){
-    const body = `34${ fingerIndex }${templates.length}${
-      templates.map(template => template.length.toString().padStart(4, '0') + template).join('')
-    }${this.salt.length.toString().padStart(4,'0')}${this.salt}`
+  verify(fingerIndex: number, templateEnc: string){
+    const body = `34${ fingerIndex }${ templateEnc }`
 
     return this.fetch(body)
   }

@@ -1,7 +1,7 @@
 <template>
   <!-- eslint-disable max-len -->
   <div style="position: relative">
-    <template v-if="deviceOk && (!context.details.templates || context.details.templates.length === 0)">
+    <template v-if="deviceOk && (!context.details.fv_template || context.details.fv_template.length === 0)">
       <div class="pa__widget-info-section">
         <h2 v-t="'mfa.fv.enroll'" />
       </div>
@@ -49,7 +49,7 @@
         :loading="loading"
         @click="submit"
       >
-        <span v-t="context.details.templates?.length > 0 ? 'common.verify' : 'common.submit'" />
+        <span v-t="context.details.fv_template?.length > 0 ? 'common.verify' : 'common.submit'" />
       </p-btn>
     </div>
     <div
@@ -104,24 +104,13 @@ export default defineComponent({
     const deviceOk = ref<boolean>(false)
     const selectedFinger = ref<number>(1 as any)
     const error = ref<string>(null as any)
-    const templates = reactive(Object.assign({}, context.details.templates || {}))
-
-    const templateIndexes = Object.keys(templates).map(k =>  Number(k))
+    const templates = reactive({})
 
     const enrolledFingers = reactive({
-      left: templateIndexes.filter(ind => ind < 4 ) as number[],
-      right: templateIndexes.filter(ind => ind >= 4 ).map(ind => ind -= 3) as number[],
+      left: [] as number[],
+      right: [] as number[],
     })
-
-    function getRandomStrBase64(length: number) {
-      let randomChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-      let result = '';
-      for ( let i = 0; i < length; i++ ) {
-        result += randomChars.charAt(Math.floor(Math.random() * randomChars.length));
-      }
-      return btoa(result);
-    }
-    const fv = new H1FingerVeinService(getRandomStrBase64(64))
+    const fv = new H1FingerVeinService()
 
     const { form, loading, fields: finalFields, validate } = form_generics.call(props)
     loading.value= true
@@ -185,19 +174,19 @@ export default defineComponent({
       async submit(){
         loading.value = true
         try{
-          if(Object.keys(templates).length === 0 ){
+          if(!templates || Object.keys(templates).length === 0 ){
             form.value.toggleAlert('errors.fv.enrollRequired', {
               dismissible: false
             })
           }else{
-            if(Object.keys(context.details.templates || {}).length === 0){
+            if(!context.details.fv_template || context.details.fv_template.length === 0){
               loadingMsg.value = 'mfa.fv.saving'
               await api.auth.updateMissingInformation({
                 templates
               })
             }else{
               loadingMsg.value = 'mfa.fv.verifyInProgress'
-              const resp = await fv.verify(1, Object.values(templates))
+              const resp = await fv.verify(1, context.details.fv_template)
               await api.mfa.validateCode(resp, MFACodeType.FINGER_VEIN)
             }
 
