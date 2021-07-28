@@ -1,3 +1,10 @@
+# [0.17.0-beta.3](https://github.com/PlusAuth/plusauth-widget/compare/v0.17.0-beta.2...v0.17.0-beta.3) (2021-07-28)
+
+
+### Bug Fixes
+
+* **FingerVein:** verification errors are not shown ([d3ecad1](https://github.com/PlusAuth/plusauth-widget/commit/d3ecad1ede97cfb4028b4d43418661f29506c9eb))
+
 # [0.17.0-beta.2](https://github.com/PlusAuth/plusauth-widget/compare/v0.17.0-beta.1...v0.17.0-beta.2) (2021-07-28)
 
 
