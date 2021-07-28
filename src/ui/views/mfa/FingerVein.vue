@@ -173,6 +173,7 @@ export default defineComponent({
 
       async submit(){
         loading.value = true
+        loadingMsg.value = null
         try{
           if (!context.details.fv_template || context.details.fv_template.length === 0) {
             if (!templates || Object.keys(templates).length === 0) {
@@ -191,14 +192,17 @@ export default defineComponent({
             await api.mfa.validateCode(resp, MFACodeType.FINGER_VEIN)
           }
         }catch (e) {
-          if (e.error) {
+          if(e.retCode){
+            form.value.toggleAlert(`errors.fv.${e.retCode}`, {
+              dismissible: false
+            })
+          } else if (e.error) {
             form.value.toggleAlert(`errors.${e.error}`, {
               dismissible: false
             })
           }
           throw e
         }finally {
-          loadingMsg.value = null
           loading.value = false
         }
       }
