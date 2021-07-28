@@ -174,7 +174,7 @@ export default defineComponent({
       async submit(){
         loading.value = true
         try{
-          if(!templates || Object.keys(templates).length === 0 ){
+          if(!context.details.fv_template && (!templates || Object.keys(templates).length === 0) ){
             form.value.toggleAlert('errors.fv.enrollRequired', {
               dismissible: false
             })
