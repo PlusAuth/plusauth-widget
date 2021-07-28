@@ -174,22 +174,21 @@ export default defineComponent({
       async submit(){
         loading.value = true
         try{
-          if(!context.details.fv_template && (!templates || Object.keys(templates).length === 0) ){
-            form.value.toggleAlert('errors.fv.enrollRequired', {
-              dismissible: false
-            })
-          }else{
-            if(!context.details.fv_template || context.details.fv_template.length === 0){
+          if (!context.details.fv_template || context.details.fv_template.length === 0) {
+            if (!templates || Object.keys(templates).length === 0) {
+              form.value.toggleAlert('errors.fv.enrollRequired', {
+                dismissible: false
+              })
+            } else {
               loadingMsg.value = 'mfa.fv.saving'
               await api.auth.updateMissingInformation({
                 templates
               })
-            }else{
-              loadingMsg.value = 'mfa.fv.verifyInProgress'
-              const resp = await fv.verify(1, context.details.fv_template)
-              await api.mfa.validateCode(resp, MFACodeType.FINGER_VEIN)
             }
-
+          }else {
+            loadingMsg.value = 'mfa.fv.verifyInProgress'
+            const resp = await fv.verify(1, context.details.fv_template)
+            await api.mfa.validateCode(resp, MFACodeType.FINGER_VEIN)
           }
         }catch (e) {
           if (e.error) {
