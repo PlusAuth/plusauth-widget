@@ -1,3 +1,10 @@
+# [0.17.0-beta.2](https://github.com/PlusAuth/plusauth-widget/compare/v0.17.0-beta.1...v0.17.0-beta.2) (2021-07-28)
+
+
+### Bug Fixes
+
+* **FingerVein:** wrong check for fv templates ([f37067d](https://github.com/PlusAuth/plusauth-widget/commit/f37067d305d66fdc9a3ae988985b6ddc0d6b3699))
+
 # [0.17.0-beta.1](https://github.com/PlusAuth/plusauth-widget/compare/v0.17.0-beta.0...v0.17.0-beta.1) (2021-07-28)
 
 
