@@ -92,17 +92,17 @@ export const router = (settings: Partial<IWidgetSettings>) => createRouter({
       props: settings && settings.modeOptions && settings.modeOptions.signup
     },
     {
-      path: '/verifyEmail',
+      path: '/account/verifyEmail',
       component: VerifyEmail,
       props: settings && settings.modeOptions && settings.modeOptions.verifyEmail
     },
     {
-      path: '/updateMissingInformation',
+      path: '/account/updateMissingInformation',
       component: FillMissing,
       props: settings && settings.modeOptions && settings.modeOptions.fillMissing
     },
     {
-      path: '/resetPassword/:token?',
+      path: '/account/resetPassword/:token?',
       component: ResetPassword,
       props: settings && settings.modeOptions && settings.modeOptions.resetPassword
     }

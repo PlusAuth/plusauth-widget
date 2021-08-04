@@ -36,6 +36,7 @@
     </template>
     <GenericForm
       ref="form"
+      style="padding-top: 24px"
       :fields="finalFields"
       :validate="validate"
       :submit="submit"
