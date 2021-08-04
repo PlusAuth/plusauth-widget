@@ -71,7 +71,7 @@ export default defineComponent({
                   finalFields.username ? finalFields.username.errors  = `errors.${e.error}`: null;
                 break;
               case 'email_not_verified':
-                window.location.assign('/verifyEmail')
+                window.location.assign('/account/verifyEmail')
                 break;
               default:
                 if(finalFields.password){

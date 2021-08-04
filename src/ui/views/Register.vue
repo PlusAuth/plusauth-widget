@@ -158,9 +158,7 @@ export default defineComponent({
           if(result && result.message === 'verification_email_sent'){
             context.details.email = finalFields.email?.value
             context.details.email_verified = false
-            router.push({
-              path: '/verifyEmail'
-            })
+            window.location.assign('/account/verifyEmail')
           }
         }catch (e) {
           switch (e.error) {
@@ -169,7 +167,7 @@ export default defineComponent({
                 finalFields.username ? finalFields.username.errors  = `errors.${e.error}`: null;
               break;
             case 'email_not_verified':
-              window.location.assign('/verifyEmail')
+              window.location.assign('/account/verifyEmail')
               break;
             default:
               if(finalFields.password){
