@@ -1,3 +1,5 @@
+# [0.17.0-beta.4](https://github.com/PlusAuth/plusauth-widget/compare/v0.17.0-beta.3...v0.17.0-beta.4) (2021-08-04)
+
 # [0.17.0-beta.3](https://github.com/PlusAuth/plusauth-widget/compare/v0.17.0-beta.2...v0.17.0-beta.3) (2021-07-28)
 
 
