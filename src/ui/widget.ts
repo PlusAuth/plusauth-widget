@@ -12,6 +12,7 @@ import ForgotPassword from './views/ForgotPassword.vue';
 import Login from './views/Login.vue';
 import Challenge from './views/mfa/Challenge.vue';
 import Email from './views/mfa/Email.vue';
+import FingerVein from './views/mfa/FingerVein.vue';
 import OTP from './views/mfa/OTP.vue';
 import SMS from './views/mfa/SMS.vue';
 import Register from './views/Register.vue';
@@ -33,22 +34,32 @@ DefineComponent<any, any, any, any, any, any, any, any, any, any>{
       return Register;
     case 'mfa':
     case 'challenge':
+    case 'mfa-challenge':
       return Challenge;
     case 'email':
+    case 'mfa-email':
       return Email;
     case 'sms':
+    case 'mfa-sms':
       return SMS;
     case 'otp':
+    case 'mfa-otp':
       return OTP;
+    case 'fv':
+    case 'mfa-fv':
+      return FingerVein;
     case 'verifyemail':
       return VerifyEmail;
     case 'consent':
       return Consent;
     case 'recovery':
+    case 'forgotpassword':
+    case 'passwordrecovery':
       return ForgotPassword;
     case 'resetpassword':
       return ResetPassword;
     case 'fillmissing':
+    case 'updatemissinginformation':
       return FillMissing;
     default:
       return RouterView
