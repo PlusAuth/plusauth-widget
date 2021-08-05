@@ -76,6 +76,7 @@ export default {
     invalid_password: 'Invalid password provided.',
     passwords_not_match: "Passwords doesn't match",
     user_not_found: 'User not found',
+    weak_password: 'Password is too weak',
     too_many_requests: 'You have ben trying too fast. Try again in {retry} seconds.',
     account_blocked: 'Your account is blocked. Please check your email for further instructions.',
   },
