@@ -1,3 +1,15 @@
+# [0.17.0-beta.5](https://github.com/PlusAuth/plusauth-widget/compare/v0.17.0-beta.4...v0.17.0-beta.5) (2021-08-05)
+
+
+### Bug Fixes
+
+* error when prompt mode is not provided ([63a73ac](https://github.com/PlusAuth/plusauth-widget/commit/63a73acb542bcf097c83299fb47bab8dbded6e7b))
+
+
+### Features
+
+* more constants for mode resolving ([af93fb8](https://github.com/PlusAuth/plusauth-widget/commit/af93fb8614c0f6dc22ba0f5e470ab88d11fc022a))
+
 # [0.17.0-beta.4](https://github.com/PlusAuth/plusauth-widget/compare/v0.17.0-beta.3...v0.17.0-beta.4) (2021-08-04)
 
 # [0.17.0-beta.3](https://github.com/PlusAuth/plusauth-widget/compare/v0.17.0-beta.2...v0.17.0-beta.3) (2021-07-28)
