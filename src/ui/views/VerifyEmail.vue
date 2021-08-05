@@ -80,7 +80,7 @@ export default defineComponent({
     const queryParams = parseQueryUrl(window.location.search)
     const resendLink = `${window.location.pathname  }/resend`
     onMounted(() => {
-      if(context.prompt.mode !== 'check' && context.autoSignIn && !error){
+      if(context.prompt?.mode && context.prompt.mode !== 'check' && context.autoSignIn && !error){
         setInterval(()=>{
           time.value && time.value--;
         }, 1000)
