@@ -105,7 +105,7 @@ export default {
       sc: 'SmartCard/E-Signature',
       otp: 'Authenticator Application',
       sms: 'SMS',
-      title: 'Try another way to sign in'
+      title: 'Select one of following methods'
     },
     email: {
       title: 'Enter authorization code sent to: <strong>{email}</strong>'
