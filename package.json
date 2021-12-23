@@ -1,6 +1,6 @@
 {
   "name": "@plusauth/plusauth-widget",
-  "version": "0.17.0-beta.6",
+  "version": "0.17.0",
   "main": "dist/plusauth-widget.cjs.js",
   "module": "dist/plusauth-widget.esm.js",
   "browser": "dist/plusauth-widget.min.js",
@@ -22,7 +22,7 @@
     "dev": "cross-env NODE_ENV=development vite",
     "build": "rimraf dist && cross-env NODE_ENV=production rollup -c",
     "lint": "eslint . --ext .js,.ts,.vue --fix",
-    "prepublishOnly": "yarn lint && yarn build",
+    "prepublishOnly": "npm run lint && npm run build",
     "release": "cross-env GITHUB_TOKEN=$GITHUB_TOKEN release-it"
   },
   "dependencies": {
