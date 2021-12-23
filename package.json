@@ -118,6 +118,9 @@
       ]
     }
   },
+  "lint-staged": {
+    "*.js|*.vue|*.ts": "eslint --ext .js,.ts,.vue --fix"
+  },
   "engines": {
     "node": ">=16"
   },
