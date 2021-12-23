@@ -1,3 +1,10 @@
+# [0.17.0](https://github.com/PlusAuth/plusauth-widget/compare/v0.17.0-beta.6...v0.17.0) (2021-12-23)
+
+
+### Features
+
+* set default logo ([392389f](https://github.com/PlusAuth/plusauth-widget/commit/392389f860e48da0619b388c0ec6f7eb88ce8731))
+
 # [0.17.0-beta.6](https://github.com/PlusAuth/plusauth-widget/compare/v0.17.0-beta.5...v0.17.0-beta.6) (2021-08-05)
 
 # [0.17.0-beta.5](https://github.com/PlusAuth/plusauth-widget/compare/v0.17.0-beta.4...v0.17.0-beta.5) (2021-08-05)
