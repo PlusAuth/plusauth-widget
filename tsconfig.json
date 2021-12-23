@@ -17,6 +17,7 @@
     "strictPropertyInitialization": false,
     "suppressImplicitAnyIndexErrors": true,
     "target": "ESNext",
+    "useUnknownInCatchVariables": false,
     "baseUrl": ".",
     "types": ["vite/client"]
   },
