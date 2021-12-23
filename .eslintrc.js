@@ -109,6 +109,7 @@ module.exports = {
         "named": "never"
       }
     ],
+    "vue/multi-word-component-names": "off",
     "vue/no-mutating-props": "warn",
     'vue/valid-v-slot': ['error', {
       allowModifiers: true,

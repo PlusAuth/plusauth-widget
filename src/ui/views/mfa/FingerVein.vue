@@ -87,7 +87,6 @@ import { defineComponent, inject, onMounted, reactive, ref } from 'vue';
 import GenericForm from '../../components/GenericForm.vue';
 import Hand from '../../components/Hand.vue';
 import PLoading from '../../components/PLoading';
-import { AdditionalFields } from '../../interfaces';
 import { CustomizableFormProps } from '../../mixins/customizable_form';
 import form_generics from '../../utils/form_generics';
 import { H1FingerVeinService } from '../../utils/fv_helper';

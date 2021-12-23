@@ -72,7 +72,7 @@ export default defineComponent({
       this.isFocused = false
       this.$emit('blur', e)
     }
-    const onInput = (event: InputEvent) => {
+    const onInput = () => {
       this.isActivated = true
       this.$emit('update:modelValue', !this.modelValue)
     };

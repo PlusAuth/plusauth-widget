@@ -34,7 +34,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject, reactive, ref, watch } from 'vue';
+import { defineComponent, inject, reactive } from 'vue';
 
 import { translatorKey } from '../utils/translator';
 

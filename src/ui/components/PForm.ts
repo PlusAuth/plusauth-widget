@@ -19,7 +19,6 @@ export default defineComponent({
 
   data: () => ({
     inputs: [] as any,
-    watchers: [] as any,
     errorBag: {} as any,
   }),
 
@@ -37,39 +36,6 @@ export default defineComponent({
   },
 
   methods: {
-    watchInput(input: any) {
-      // @ts-ignore
-      const watcher = (input: any): (() => void) => {
-        // return input.$watch('hasError', (val: boolean) => {
-        //   this.errorBag[input._.uid] = val
-        // }, { immediate: true })
-      }
-
-      const watchers: any = {
-        '_.uid': input._.uid,
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        valid: () => {},
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        shouldValidate: () => {},
-      }
-
-      if (this.lazyValidation) {
-        // Only start watching inputs if we need to
-        watchers.shouldValidate = input.$watch('shouldValidate',
-          (val: boolean) => {
-            if (!val) return
-
-            // Only watch if we're not already doing it
-            if (this.errorBag.hasOwnProperty(input._.uid)) return
-
-            watchers.valid = watcher(input)
-          })
-      } else {
-        watchers.valid = watcher(input)
-      }
-
-      return watchers
-    },
     /** @dev */
     async validate(): Promise<boolean> {
       let invalid = 0;
@@ -105,20 +71,12 @@ export default defineComponent({
     },
     register(input: any) {
       this.inputs.push(input)
-      this.watchers.push(this.watchInput(input))
     },
     unregister(input: any) {
       const found = this.inputs.find( (i: any) => i._?.uid === input._.uid)
 
       if (!found) return
 
-      const unwatch = this.watchers.find((i: any) => i._?.uid === found._.uid)
-      if (unwatch) {
-        unwatch.valid()
-        unwatch.shouldValidate()
-      }
-
-      this.watchers = this.watchers.filter((i: any) => i._?.uid !== found._.uid)
       this.inputs = this.inputs.filter((i: any) => i._?.uid !== found._.uid)
       delete this.errorBag[found._.uid]
     },

@@ -88,7 +88,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, reactive, ref, toRefs } from 'vue';
+import { computed, defineComponent, reactive, ref } from 'vue';
 
 import { AdditionalFields } from '../interfaces';
 

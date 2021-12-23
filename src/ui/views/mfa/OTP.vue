@@ -86,7 +86,7 @@ import { PlusAuthWeb, MFACodeType } from '@plusauth/web';
 import { defineComponent, inject, ref } from 'vue';
 
 import GenericForm from '../../components/GenericForm.vue';
-import { AdditionalFields, FieldDefinition } from '../../interfaces';
+import { AdditionalFields } from '../../interfaces';
 import { CustomizableFormProps } from '../../mixins/customizable_form';
 import form_generics from '../../utils/form_generics';
 

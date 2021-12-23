@@ -27,7 +27,7 @@ export default defineComponent({
     modelValue: { type: null, default: null },
     hideMessages: { type: Boolean, default: false }
   },
-  setup(props){
+  setup(){
     const inputRef = ref<string>(null as any)
     const popoverRef = ref<HTMLElement>(null as any)
     const containerRef = ref<Element>(null as any)
