@@ -137,7 +137,7 @@ export function looseEqual(a: any, b: any): boolean {
 }
 
 export function resolveClientLogo(client: IClient) {
-  return client?.logoUri || ''
+  return client?.logoUri || 'https://api.plusauth.com/assets/images/logo.png'
 }
 
 export function keysToDotNotation(obj: Record<string, any>,
