@@ -47,7 +47,6 @@ export default defineComponent({
                   : 'width';
               const popperSize = state.rects.popper[widthOrHeight];
               const referenceSize = state.rects.reference[widthOrHeight];
-              console.log(popperSize, referenceSize)
               if (popperSize >= referenceSize) return;
 
               state.styles.popper[widthOrHeight] = `${referenceSize}px`;
