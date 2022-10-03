@@ -1,3 +1,13 @@
+
+
+# [0.18.0](https://github.com/PlusAuth/plusauth-widget/compare/v0.17.0...v0.18.0) (2022-10-03)
+
+
+### Features
+
+* hidden input for generic form ([594f881](https://github.com/PlusAuth/plusauth-widget/commit/594f8810c7c5416e50976f7f5aed76ac54e63eab))
+* webauthn support ([d139b86](https://github.com/PlusAuth/plusauth-widget/commit/d139b86ffaebec6a3559c7d73ffbbaa46071f090))
+
 # [0.17.0](https://github.com/PlusAuth/plusauth-widget/compare/v0.17.0-beta.6...v0.17.0) (2021-12-23)
 
 
@@ -402,4 +412,3 @@
 * **OTP:** otp page implemented ([33d8b16](https://github.com/PlusAuth/plusauth-widget/commit/33d8b163f3d07d6da0ae8857eabe0b987af45d53))
 * **SMSChallenge:** submit form ([b75ec7f](https://github.com/PlusAuth/plusauth-widget/commit/b75ec7fb089ea0105c4ad1a730c36299918bee6f))
 * if mfa challenges has only one challenge redirect to it ([fdfff01](https://github.com/PlusAuth/plusauth-widget/commit/fdfff01fa494efd21b497120bb93e4ff5aa7af75))
-
