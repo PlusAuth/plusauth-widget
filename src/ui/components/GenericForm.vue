@@ -8,69 +8,71 @@
       v-for="(options, field) in sortedFields"
       :key="field"
     >
-      <template v-if="options.type === 'code'">
-        <PCodeInput
-          v-model="options.value"
-          v-bind="options.attrs"
-          :size="options.length"
-          color="primary"
-        />
-        <p-message
-          :value="options.errors"
-          color="error"
-          class="pa__mb-4"
-        />
-      </template>
-      <template v-else-if="options.type === 'checkbox'">
-        <PCheckBox
-          v-model="options.value"
-          v-bind="options.attrs"
-          :name="field"
-          :error-messages="options.errors"
-          :type="options.type"
-          :label="options.label"
-          :rules="[ validate.bind( null, options, field) ]"
-        />
-      </template>
-      <p-text-field
-        v-else
-        v-model="options.value"
-        v-bind="options.attrs"
-        :error-messages="options.errors"
-        :name="field"
-        :type="options.type"
-        :label="options.label"
-        :rules="[ validate.bind( null, options, field) ] "
-      >
-        <template
-          v-if="field === 'password'"
-          #append
-        >
-          <p-btn
-            type="button"
-            flat
-            text-color="#000"
-            tabindex="0"
-            class="pa__pw-toggle-visibility"
-            @click="options.type === 'password' ? options.type = 'text' : options.type =
-              'password'"
-          >
-            <span
-              v-t="options.type === 'password' ? 'common.show' : 'common.hide'"
-            />
-          </p-btn>
-          <slot :name="field" />
-        </template>
-        <template
-          v-if="$slots[field+'.message']"
-          #message="message"
-        >
-          <slot
-            :name="field+'.message'"
-            v-bind="message"
+      <template v-if="options.visible !== 'hidden' && options.visible !== false">
+        <template v-if="options.type === 'code'">
+          <PCodeInput
+            v-model="options.value"
+            v-bind="options.attrs"
+            :size="options.length"
+            color="primary"
+          />
+          <p-message
+            :value="options.errors"
+            color="error"
+            class="pa__mb-4"
           />
         </template>
-      </p-text-field>
+        <template v-else-if="options.type === 'checkbox'">
+          <PCheckBox
+            v-model="options.value"
+            v-bind="options.attrs"
+            :name="field"
+            :error-messages="options.errors"
+            :type="options.type"
+            :label="options.label"
+            :rules="[ validate.bind( null, options, field) ]"
+          />
+        </template>
+        <p-text-field
+          v-else
+          v-model="options.value"
+          v-bind="options.attrs"
+          :error-messages="options.errors"
+          :name="field"
+          :type="options.type"
+          :label="options.label"
+          :rules="[ validate.bind( null, options, field) ] "
+        >
+          <template
+            v-if="field === 'password'"
+            #append
+          >
+            <p-btn
+              type="button"
+              flat
+              text-color="#000"
+              tabindex="0"
+              class="pa__pw-toggle-visibility"
+              @click="options.type === 'password' ? options.type = 'text' : options.type =
+                'password'"
+            >
+              <span
+                v-t="options.type === 'password' ? 'common.show' : 'common.hide'"
+              />
+            </p-btn>
+            <slot :name="field" />
+          </template>
+          <template
+            v-if="$slots[field+'.message']"
+            #message="message"
+          >
+            <slot
+              :name="field+'.message'"
+              v-bind="message"
+            />
+          </template>
+        </p-text-field>
+      </template>
     </template>
     <p-alert
       v-model="alert"
