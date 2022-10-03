@@ -39,7 +39,7 @@ import { defineComponent, inject, reactive } from 'vue';
 import { translatorKey } from '../utils/translator';
 
 export default defineComponent({
-  name: 'Footer',
+  name: 'PFooter',
   props: {
     termsOfService: {
       type: String as () => string,

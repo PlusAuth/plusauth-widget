@@ -43,7 +43,7 @@
   </div>
 </template>
 
-<script lang="ts" >
+<script lang="ts">
 import { PlusAuthWeb } from '@plusauth/web';
 import { defineComponent, inject } from 'vue';
 
@@ -76,8 +76,8 @@ export default defineComponent({
     }
   }
 })
-</script >
+</script>
 
-<style scoped >
+<style scoped>
 
-</style >
+</style>

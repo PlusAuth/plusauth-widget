@@ -3,7 +3,7 @@ import './styles/main.sass'
 
 import { RouterView, useRoute } from 'vue-router';
 
-import Footer from './components/Footer.vue';
+import PFooter from './components/Footer.vue';
 import { IWidgetSettings } from './interfaces';
 import { Theme } from './utils/theme';
 import Consent from './views/Consent.vue';
@@ -111,7 +111,7 @@ export default function (theme: Theme, settings: Partial<IWidgetSettings>): any 
                 )
               ]
             ),
-            settings.footer && settings.footer.enabled && h(Footer as any,
+            settings.footer && settings.footer.enabled && h(PFooter as any,
               { class: 'pa__widget-footer' })
           ] )
 

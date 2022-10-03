@@ -80,7 +80,7 @@
   </div>
 </template>
 
-<script lang="ts" >
+<script lang="ts">
 import { PlusAuthWeb, MFACodeType } from '@plusauth/web';
 import { defineComponent, inject, onMounted, reactive, ref } from 'vue';
 
@@ -209,7 +209,7 @@ export default defineComponent({
     }
   }
 })
-</script >
+</script>
 
 <style  lang="scss">
 .hands_container{
@@ -258,4 +258,4 @@ export default defineComponent({
     }
   }
 }
-</style >
+</style>

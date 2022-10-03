@@ -103,8 +103,8 @@ export default defineComponent({
     }
   },
 })
-</script >
+</script>
 
-<style scoped >
+<style scoped>
 
-</style >
+</style>

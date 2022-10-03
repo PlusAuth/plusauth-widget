@@ -124,7 +124,7 @@
   </svg>
 </template>
 
-<script >
+<script>
 export default {
   name: 'Hand',
   props: {
@@ -141,8 +141,8 @@ export default {
     }
   },
 }
-</script >
+</script>
 
-<style >
+<style>
 
-</style >
+</style>

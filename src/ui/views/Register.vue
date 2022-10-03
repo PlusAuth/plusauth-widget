@@ -76,7 +76,7 @@
   </div>
 </template>
 
-<script lang="ts" >
+<script lang="ts">
 import { PlusAuthWeb } from '@plusauth/web';
 import deepmerge from 'deepmerge';
 import { defineComponent, inject, reactive, ref } from 'vue';
@@ -189,8 +189,8 @@ export default defineComponent({
     }
   }
 })
-</script >
+</script>
 
-<style scoped >
+<style scoped>
 
-</style >
+</style>

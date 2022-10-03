@@ -11,10 +11,6 @@ import Message from './PMessage';
 export default defineComponent({
   name: 'PSelect',
   mixins: [Translatable, Validatable, Colorable, Themeable],
-  emits: [
-    'click','focus', 'keydown',
-    'change', 'input', 'update:modelValue', 'blur', 'update:error'
-  ],
   props: {
     ...Validatable.props,
     ...Colorable.props,
@@ -27,6 +23,10 @@ export default defineComponent({
     modelValue: { type: null, default: null },
     hideMessages: { type: Boolean, default: false }
   },
+  emits: [
+    'click','focus', 'keydown',
+    'change', 'input', 'update:modelValue', 'blur', 'update:error'
+  ],
   setup(){
     const inputRef = ref<string>(null as any)
     const popoverRef = ref<HTMLElement>(null as any)
