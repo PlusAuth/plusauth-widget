@@ -17,7 +17,7 @@ export interface ILocaleSettings {
 }
 
 export type WidgetModes = 'login' | 'recovery' | 'consent'
-| 'challenge' | 'sms' | 'email' | 'otp' | 'fv'
+| 'challenge' | 'sms' | 'email' | 'otp' | 'fv' | 'webauthn'
 | 'signup' | 'resetPassword' | 'fillMissing' | 'verifyEmail'
 
 export type SocialConnections = 'google' | 'facebook' | 'linkedin'
@@ -41,6 +41,7 @@ interface CommonFieldProps {
     hideMessages?: boolean
     [key: string]: string | boolean | number | undefined
   };
+  visible?: boolean | 'hidden'
   value?: unknown;
   type: string;
   format?: 'tel' | 'email';

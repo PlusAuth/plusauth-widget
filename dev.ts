@@ -38,6 +38,7 @@ window['PlusAuth'] = {
       'email',
       'otp',
       'sc',
+      'webauthn',
       'fv'
     ]
   }

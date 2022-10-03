@@ -58,8 +58,8 @@ export default function (
         return undefined
       }
     },
-    async submit($event: Event) {
-      $event.preventDefault()
+    async submit($event?: Event) {
+      $event?.preventDefault()
       loading.value = true
 
       // reset error messages

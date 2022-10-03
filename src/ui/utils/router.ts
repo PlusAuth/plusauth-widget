@@ -16,6 +16,7 @@ import Email from '../views/mfa/Email.vue';
 import FingerVein from '../views/mfa/FingerVein.vue';
 import OTP from '../views/mfa/OTP.vue';
 import SMS from '../views/mfa/SMS.vue';
+import WebAuthN from '../views/mfa/WebAuthN.vue';
 import Register from '../views/Register.vue';
 import ResetPassword from '../views/ResetPassword.vue';
 import VerifyEmail from '../views/VerifyEmail.vue';
@@ -81,6 +82,12 @@ export const router = (settings: Partial<IWidgetSettings>) => createRouter({
               name: 'fv',
               component: FingerVein,
               props: settings && settings.modeOptions && settings.modeOptions.fv
+            },
+            {
+              path: 'webauthn',
+              name: 'webauthn',
+              component: WebAuthN,
+              props: settings && settings.modeOptions && settings.modeOptions.webauthn
             }
           ]
         },

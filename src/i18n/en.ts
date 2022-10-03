@@ -64,6 +64,10 @@ export default {
       '0x0300000F': 'Finger identification no match found',
       '0x03000010': 'Finger identification multiple matches',
     },
+    webauthn: {
+      not_supported: 'Looks like your browser is not supporting WebAuthN API. Try upgrading your browser or use a supported one.',
+      operation_failed: 'Operation failed with error:'
+    },
     already_exists: 'User already exists',
     code_already_used: 'Code was already used',
     code_expired: 'Code has expired',
@@ -103,6 +107,7 @@ export default {
     challenge: {
       email: 'Email',
       fv: 'Finger Vein',
+      webauthn: 'Security Key or Device',
       sc: 'SmartCard/E-Signature',
       otp: 'Authenticator Application',
       sms: 'SMS',
@@ -125,6 +130,9 @@ export default {
     },
     sms: {
       title: 'Enter authorization code sent to: <strong>{phone_number}</strong>'
+    },
+    webauthn: {
+      verifying: 'Verifying your credentials...'
     },
     tryAnotherWay: 'Try another way'
   },
