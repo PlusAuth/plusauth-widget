@@ -42,7 +42,7 @@ window['PlusAuth'] = {
     ]
   }
 }
-const auth = new PlusAuthWidget('#app', {
+const auth = new PlusAuthWidget('#pa__app', {
   locale: {
     defaultLocale: 'en',
     dictionary: {

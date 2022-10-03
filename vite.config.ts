@@ -2,6 +2,9 @@ import vue from '@vitejs/plugin-vue'
 import { defineConfig } from 'vite'
 
 export default  defineConfig({
+  build: {
+    write: true
+  },
   plugins: [
     vue()
   ],
