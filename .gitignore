@@ -45,7 +45,6 @@
 .yarn-integrity
 cjs
 coverage
-dist
 esm
 jspm_packages/
 lerna-debug.log*
