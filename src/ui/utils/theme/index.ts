@@ -1,10 +1,5 @@
 /* eslint-disable no-multi-spaces */
-// Extensions
-// Utilities
-import { ref, Ref } from 'vue'
-
 import * as ThemeUtils from './theme_utils'
-
 
 export class Theme {
   static property = 'theme'

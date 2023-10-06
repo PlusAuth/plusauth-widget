@@ -15,6 +15,7 @@ export default {
     hide: 'Hide',
     reject: 'Reject',
     show: 'Show',
+    edit: 'Edit',
     verify: 'Verify',
     submit: 'Submit'
   },
@@ -102,6 +103,19 @@ export default {
     signIn: 'Sign In',
     signInWith: 'or Sign in with',
     signUp: 'Sign Up'
+  },
+  passwordless: {
+    email: {
+      title: 'Enter authorization code sent to: <strong>{email}</strong>',
+      checkText: "We\'ve sent an email to <strong>{email}</strong>, please click the link included" +
+        ' to sign in. Make sure to open link in the same device/browser you are trying to sign in.',
+    },
+    otp: {
+      title: 'Enter authorization code:'
+    },
+    sms: {
+      title: 'Enter authorization code sent to: <strong>{phone_number}</strong>'
+    },
   },
   mfa: {
     challenge: {

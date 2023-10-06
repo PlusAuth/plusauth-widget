@@ -2,16 +2,19 @@
   <div class="pa__logo-container">
     <img
       id="mainLogo"
-      style="max-height: 150px; margin-left: 40px;"
+      style="margin-left: 30px;"
       class="pa__logo"
       alt="Logo"
-      src="https://static.plusauth.com/images/icons/email_question.svg"
+      src="https://static.plusauth.com/images/icons/message-on-phone.svg"
     >
   </div>
   <div class="pa__widget-info-section">
-    <h2
-      v-t="{ path: 'mfa.email.title', args: { email: context.details.email } }"
+    <PTimer
+      v-if="timerEnabled"
+      class="pa__challenge-timer"
+      :duration="120"
     />
+    <h2 v-t="{ path: 'passwordless.sms.title', args: { phone_number: context.details.phone_number} }" />
   </div>
 
   <GenericForm
@@ -31,39 +34,53 @@
       <span v-t="'common.submit'" />
     </p-btn>
   </div>
-
-  <div
-    v-if="context.details.challenges.length > 1"
-    class="pa__widget-helpers-section"
-  >
-    <a
-      v-t="'mfa.tryAnotherWay'"
-      href="/signin/challenge"
-    />
-  </div>
 </template>
 
 <script lang="ts">
-import { PlusAuthWeb, MFACodeType } from '@plusauth/web';
+import { PlusAuthWeb } from '@plusauth/web';
 import { defineComponent, inject } from 'vue';
 
 import GenericForm from '../../components/GenericForm.vue';
+import PTimer from '../../components/PTimer';
 import { AdditionalFields } from '../../interfaces';
 import { CustomizableFormProps } from '../../mixins/customizable_form';
 import form_generics from '../../utils/form_generics';
-
+import { Translator, translatorKey } from '../../utils/translator';
 
 export default defineComponent({
-  name: 'Email',
-  components: { GenericForm },
+  name: 'SMS',
+  components: { PTimer, GenericForm },
   props: {
+    timerEnabled: {
+      type: Boolean as () => boolean,
+      default: true
+    },
     ...CustomizableFormProps
   },
   setup(props){
     const api = inject('api') as PlusAuthWeb
     const context = inject('context') as any
+    const translator = inject(translatorKey) as Translator
 
     const defaultFields: AdditionalFields = {
+      phone_number: {
+        type: 'text',
+        value: context.details.phone_number,
+        attrs: { readOnly: true },
+        slots: {
+          append: {
+            element: 'button',
+            props: {
+              class: 'pa__btn pa__btn--flat pa__pw-toggle-visibility',
+              onClick: (e) => {
+                e.preventDefault()
+                window.location.assign('/signin')
+              },
+              'innerHtml': translator.t('common.edit')
+            }
+          }
+        }
+      },
       code: {
         type: 'text',
         label: 'common.fields.code'
@@ -74,10 +91,7 @@ export default defineComponent({
       defaultFields,
       async (fieldWithValues) => {
         try{
-          await api.mfa.validateCode(
-            MFACodeType.EMAIL,
-            fieldWithValues.code,
-          )
+          await api.auth.signInPasswordless('sms', fieldWithValues)
         }catch (e) {
           if (e.error) {
             form.value.toggleAlert(`errors.${e.error}`, {
@@ -99,7 +113,3 @@ export default defineComponent({
   }
 })
 </script>
-
-<style scoped>
-
-</style>

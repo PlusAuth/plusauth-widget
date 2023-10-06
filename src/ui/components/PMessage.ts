@@ -35,7 +35,7 @@ function generateMessages(messages: any, name: string): VNode | VNode[] | undefi
   if (Array.isArray(messages)) {
     return messages.map(message => generateMessageVNode(message, name))
   } else if (messages instanceof Set) {
-    const nodes = []
+    const nodes = [] as any[]
     for (const value of messages.values()) {
       nodes.push(
         generateMessageVNode(value, name)

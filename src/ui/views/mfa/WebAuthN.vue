@@ -78,8 +78,8 @@ export default defineComponent({
       async (fieldWithValues) => {
         try {
           await api.mfa.validateCode(
-            fieldWithValues.code,
-            MFACodeType.WEBAUTHN
+            MFACodeType.WEBAUTHN,
+            fieldWithValues.code
           )
         } catch (e) {
           if (e.error) {

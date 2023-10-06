@@ -98,6 +98,7 @@ export default defineComponent({
           'pa__input': true,
           'pa__input-has-state': this.hasState,
           'pa__input-has-value': !!this.modelValue,
+          'pa__input-has-error': this.validationState === 'error',
           'pa__input-focused': this.isFocused
         },
       }),

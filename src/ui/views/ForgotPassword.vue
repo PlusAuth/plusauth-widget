@@ -39,7 +39,7 @@
       <div class="pa__column">
         <div class="pa__logo-container">
           <img
-            src="https://api.plusauth.com/assets/images/icons/plane.svg"
+            src="https://static.plusauth.com/images/icons/plane.svg"
             class="pa__logo"
             alt="Mail Confirmation"
           >

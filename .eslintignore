@@ -3,7 +3,7 @@ config/**
 dist/**
 *.lock
 *.log
-.eslintrc.js
+.eslintrc.cjs
 scripts
 *.config.js
 public

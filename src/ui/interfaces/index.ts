@@ -19,6 +19,7 @@ export interface ILocaleSettings {
 export type WidgetModes = 'login' | 'recovery' | 'consent'
 | 'challenge' | 'sms' | 'email' | 'otp' | 'fv' | 'webauthn'
 | 'signup' | 'resetPassword' | 'fillMissing' | 'verifyEmail'
+| 'passwordlessEmail' | 'passwordlessSms'
 
 export type SocialConnections = 'google' | 'facebook' | 'linkedin'
 
@@ -41,6 +42,7 @@ interface CommonFieldProps {
     hideMessages?: boolean
     [key: string]: string | boolean | number | undefined
   };
+  slots?: Record<string, { element: string, props: Record<string, any> }>,
   visible?: boolean | 'hidden'
   value?: unknown;
   type: string;

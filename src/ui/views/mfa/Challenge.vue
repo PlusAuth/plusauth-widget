@@ -3,7 +3,7 @@
     <img
       style="max-height: 150px"
       alt="Logo"
-      src="https://api.plusauth.com/assets/images/icons/select.svg"
+      src="https://static.plusauth.com/images/icons/select.svg"
     >
   </div>
   <div class="pa__widget-info-section">

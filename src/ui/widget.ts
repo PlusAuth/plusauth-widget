@@ -1,4 +1,4 @@
-import { defineComponent, h, ref,onBeforeUnmount, DefineComponent } from 'vue';
+import { defineComponent, h, ref, onBeforeUnmount, DefineComponent, inject } from 'vue';
 import './styles/main.sass'
 
 import { RouterView, useRoute } from 'vue-router';
@@ -6,15 +6,18 @@ import { RouterView, useRoute } from 'vue-router';
 import PFooter from './components/Footer.vue';
 import { IWidgetSettings } from './interfaces';
 import { Theme } from './utils/theme';
+import { Translator, translatorKey } from './utils/translator';
 import Consent from './views/Consent.vue';
 import FillMissing from './views/FillMissing.vue';
 import ForgotPassword from './views/ForgotPassword.vue';
 import Login from './views/Login.vue';
-import Challenge from './views/mfa/Challenge.vue';
-import Email from './views/mfa/Email.vue';
-import FingerVein from './views/mfa/FingerVein.vue';
-import OTP from './views/mfa/OTP.vue';
-import SMS from './views/mfa/SMS.vue';
+import MFAChallenge from './views/mfa/Challenge.vue';
+import MFAEmail from './views/mfa/Email.vue';
+import MFAFingerVein from './views/mfa/FingerVein.vue';
+import MFAOTP from './views/mfa/OTP.vue';
+import MFASMS from './views/mfa/SMS.vue';
+import PasswordlessEmail from './views/passwordless/Email.vue';
+import PasswordlessSMS from './views/passwordless/SMS.vue';
 import Register from './views/Register.vue';
 import ResetPassword from './views/ResetPassword.vue';
 import VerifyEmail from './views/VerifyEmail.vue';
@@ -25,7 +28,7 @@ DefineComponent<any, any, any, any, any, any, any, any, any, any>{
   if (route.matched.length > 0) {
     return RouterView
   }
-  switch (value.toLowerCase()){
+  switch (value.toLowerCase().replace('-', '').replace('_','')){
     case 'login':
     case 'signin':
       return Login;
@@ -34,20 +37,24 @@ DefineComponent<any, any, any, any, any, any, any, any, any, any>{
       return Register;
     case 'mfa':
     case 'challenge':
-    case 'mfa-challenge':
-      return Challenge;
+    case 'mfachallenge':
+      return MFAChallenge;
+    case 'passwordlessemail':
+      return PasswordlessEmail
+    case 'passwordlesssms':
+      return PasswordlessSMS
     case 'email':
-    case 'mfa-email':
-      return Email;
+    case 'mfaemail':
+      return MFAEmail;
     case 'sms':
-    case 'mfa-sms':
-      return SMS;
+    case 'mfasms':
+      return MFASMS;
     case 'otp':
-    case 'mfa-otp':
-      return OTP;
+    case 'mfaotp':
+      return MFAOTP;
     case 'fv':
-    case 'mfa-fv':
-      return FingerVein;
+    case 'mfafv':
+      return MFAFingerVein;
     case 'verifyemail':
       return VerifyEmail;
     case 'consent':
@@ -77,7 +84,7 @@ export default function (theme: Theme, settings: Partial<IWidgetSettings>): any 
       }
       onResize()
       window.addEventListener('resize', onResize, { passive: true })
-
+      const i18n = inject(translatorKey) as Translator
       onBeforeUnmount(() => {
         if (typeof window !== 'undefined') {
           window.removeEventListener('resize', onResize)
@@ -85,7 +92,8 @@ export default function (theme: Theme, settings: Partial<IWidgetSettings>): any 
       })
 
       return {
-        isMobile
+        isMobile,
+        locale: i18n.localeRef
       }
     },
     render(){
@@ -94,6 +102,7 @@ export default function (theme: Theme, settings: Partial<IWidgetSettings>): any 
         'div',
         {
           class: 'pa__widget',
+          key: this.locale
         },
         h('div', { class: 'pa__widget-content' },
           [

@@ -48,7 +48,7 @@ details?id=com.google.android.apps.authenticator2"
   </template>
   <template v-else>
     <div
-      v-t="{ path: 'mfa.otp.title'}"
+      v-t="{ path: 'passwordless.otp.title'}"
       class="pa__subtitle-2 pa__text-left"
     />
   </template>
@@ -69,26 +69,17 @@ details?id=com.google.android.apps.authenticator2"
       <span v-t="'common.submit'" />
     </p-btn>
   </div>
-
-  <div
-    v-if="context.details.challenges.length > 1"
-    class="pa__widget-helpers-section"
-  >
-    <a
-      v-t="'mfa.tryAnotherWay'"
-      href="/signin/challenge"
-    />
-  </div>
 </template>
 
 <script lang="ts">
-import { PlusAuthWeb, MFACodeType } from '@plusauth/web';
+import { PlusAuthWeb } from '@plusauth/web';
 import { defineComponent, inject, ref } from 'vue';
 
 import GenericForm from '../../components/GenericForm.vue';
 import { AdditionalFields } from '../../interfaces';
 import { CustomizableFormProps } from '../../mixins/customizable_form';
 import form_generics from '../../utils/form_generics';
+import { Translator, translatorKey } from '../../utils/translator';
 
 export default defineComponent({
   name: 'OTP',
@@ -99,10 +90,30 @@ export default defineComponent({
   setup(props){
     const api = inject('api') as PlusAuthWeb
     const context = inject('context') as any
+    const translator = inject(translatorKey) as Translator
+
     const code = ref<string>(null as any)
     const error = ref<string>(null as any)
 
     const defaultFields: AdditionalFields = {
+      email: {
+        type: 'text',
+        value: context.details.email,
+        attrs: { readOnly: true },
+        slots: {
+          append: {
+            element: 'button',
+            props: {
+              class: 'pa__btn pa__btn--flat pa__pw-toggle-visibility',
+              onClick: (e) => {
+                e.preventDefault()
+                window.location.assign('/signin')
+              },
+              'innerHtml': translator.t('common.edit')
+            }
+          }
+        }
+      },
       code: {
         type: 'code',
         value: null,
@@ -113,10 +124,7 @@ export default defineComponent({
       defaultFields,
       async (fieldWithValues) => {
         try{
-          await api.mfa.validateCode(
-            MFACodeType.OTP,
-            fieldWithValues.code,
-          )
+          await api.auth.signInPasswordless('otp', fieldWithValues)
         }catch (e) {
           if (e.error) {
             form.value.toggleAlert(`errors.${e.error}`, {

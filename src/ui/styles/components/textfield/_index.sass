@@ -94,8 +94,9 @@
       transform: translateY(-20px) scale(.75)
 
     &-focused, &-has-error, &-has-state
-      .input--wrap
-        border-color: currentColor
+      &:has(:not(:read-only))
+        .input--wrap
+          border-color: currentColor
 
     &-focused, &-has-error
       .input--label

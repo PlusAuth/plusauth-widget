@@ -2,7 +2,7 @@
   <template v-if="error">
     <div class="pa__logo-container">
       <img
-        src="https://api.plusauth.com/assets/images/icons/email_error.svg"
+        src="https://static.plusauth.com/images/icons/email_error.svg"
         class="pa__logo"
         alt="Mail Confirmation"
       >
@@ -14,7 +14,7 @@
   <template v-else-if="context.prompt?.mode === 'check' || !context.details.email_verified">
     <div class="pa__logo-container">
       <img
-        src="https://api.plusauth.com/assets/images/icons/plane.svg"
+        src="https://static.plusauth.com/images/icons/plane.svg"
         class="pa__logo"
         alt="Mail Confirmation"
       >
@@ -38,7 +38,7 @@
   <template v-else>
     <div class="pa__logo-container">
       <img
-        src="https://api.plusauth.com/assets/images/icons/mail_confirm.svg"
+        src="https://static.plusauth.com/images/icons/mail_confirm.svg"
         class="pa__logo"
         alt="Mail Confirmation"
       >

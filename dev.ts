@@ -9,10 +9,10 @@ window['PlusAuth'] = {
     clientName: 'TestApp',
     tosUri: 'https://sometosuri.com',
     policyUri: 'https://somepolicyuri.com',
-    logoUri: 'https://api.plusauth.com/assets/images/logo.png',
+    logoUri: 'https://static.plusauth.com/images/logo.png',
     social: [
-      'google',
-      'facebook',
+      {name: 'google-connection', provider: 'google'},
+      {name: 'facebook-connection', provider: 'facebook'},
     ]
   },
   features: {
@@ -48,6 +48,9 @@ const auth = new PlusAuthWidget('#pa__app', {
     defaultLocale: 'en',
     dictionary: {
       tr: {
+        common: {
+          edit: 'Degistir'
+        },
         login: {
           signIn: 'Giris yap'
         }

@@ -179,7 +179,7 @@ export const Validatable: ComponentOptions = {
       this.isResetting = true
     },
     async validate(force = false, value?: any): Promise<boolean> {
-      const errorBucket = []
+      const errorBucket = [] as any[]
       value = value || this.internalValue
 
       if (force) this.hasInput = this.hasFocused = true
