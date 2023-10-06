@@ -40,8 +40,8 @@
 import {
   PlusAuthWeb, MFACodeType,
   isWebAuthNSupported,
-  isPlatformAuthenticatorAvailable,
-  isWebAuthNAutofillSupported, registerDevice, verifyDevice
+  registerDevice,
+  verifyDevice
 } from '@plusauth/web';
 import { defineComponent, inject, onMounted, ref } from 'vue';
 
@@ -78,8 +78,8 @@ export default defineComponent({
       async (fieldWithValues) => {
         try {
           await api.mfa.validateCode(
-            fieldWithValues.code,
-            MFACodeType.WEBAUTHN
+            MFACodeType.WEBAUTHN,
+            fieldWithValues.code
           )
         } catch (e) {
           if (e.error) {

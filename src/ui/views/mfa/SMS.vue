@@ -5,7 +5,7 @@
       style="margin-left: 30px;"
       class="pa__logo"
       alt="Logo"
-      src="https://api.plusauth.com/assets/images/icons/message-on-phone.svg"
+      src="https://static.plusauth.com/images/icons/message-on-phone.svg"
     >
   </div>
   <div class="pa__widget-info-section">
@@ -82,8 +82,8 @@ export default defineComponent({
       async (fieldWithValues) => {
         try{
           await api.mfa.validateCode(
+            MFACodeType.SMS,
             fieldWithValues.code,
-            MFACodeType.SMS
           )
         }catch (e) {
           if (e.error) {

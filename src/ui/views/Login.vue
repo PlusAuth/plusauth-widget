@@ -39,9 +39,9 @@
     <div class="pa__widget-social-icons">
       <SocialConnectionButton
         v-for="connection in context.client.social"
-        :key="connection"
-        :type="connection"
-        :href="'/social?provider=' + connection"
+        :key="connection.name || connection"
+        :type="connection.provider || connection"
+        :href="'/social?provider=' + connection.name || connection"
       />
     </div>
   </div>
@@ -60,7 +60,7 @@
         @click.stop
       />
     </div>
-    <div v-if="features.forgotPassword">
+    <div v-if="!isPasswordless && features.forgotPassword">
       <a
         v-t="'login.forgotPassword'"
         tabindex="0"
@@ -93,10 +93,6 @@ export default defineComponent({
         forgotPassword: true
       })
     },
-    socialConnections: {
-      type: Array as () => any[],
-      default: () => []
-    },
     ...CustomizableFormProps
   },
   setup(props) {
@@ -104,20 +100,26 @@ export default defineComponent({
     const context = inject('context') as any
     const passwordVisible = ref(false)
 
+    const connection = context.connection || {}
+    const isPasswordless = !['social','enterprise', 'plusauth'].includes(connection.type)
+    let identifierField = connection.type === 'sms' ? 'phone_number': 'email';
+
     const defaultFields: AdditionalFields = {
-      username: {
+      [identifierField]: {
         order: 0,
         attrs: {
-          autocomplete: 'username'
+          autocomplete: identifierField
         },
         type: 'text',
-        label: 'common.fields.username'
+        label: `common.fields.${  identifierField}`
       },
-      password: {
-        order: 1,
-        type: 'password',
-        label: 'common.fields.password',
-        errors: []
+      ...isPasswordless ? {} : {
+        password: {
+          order: 1,
+          type: 'password',
+          label: 'common.fields.password',
+          errors: []
+        }
       },
     }
 
@@ -171,6 +173,7 @@ export default defineComponent({
       loading,
       passwordVisible,
       validate,
+      isPasswordless,
       submit,
       resolveClientLogo
     }

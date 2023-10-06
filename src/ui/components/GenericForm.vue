@@ -44,6 +44,18 @@
           :rules="[ validate.bind( null, options, field) ] "
         >
           <template
+            v-for="(opts, name) in options.slots || {}"
+            :key="name"
+            #[name]
+          >
+            <component
+              :is="opts.element"
+              v-bind="{...opts.props, innerHtml: undefined}"
+              v-html="opts.props.innerHtml"
+            />
+          </template>
+
+          <template
             v-if="field === 'password'"
             #append
           >

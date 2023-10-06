@@ -12,11 +12,13 @@ import FillMissing from '../views/FillMissing.vue';
 import ForgotPassword from '../views/ForgotPassword.vue';
 import Login from '../views/Login.vue';
 import Challenge from '../views/mfa/Challenge.vue';
-import Email from '../views/mfa/Email.vue';
-import FingerVein from '../views/mfa/FingerVein.vue';
-import OTP from '../views/mfa/OTP.vue';
-import SMS from '../views/mfa/SMS.vue';
-import WebAuthN from '../views/mfa/WebAuthN.vue';
+import MFAEmail from '../views/mfa/Email.vue';
+import MFAFingerVein from '../views/mfa/FingerVein.vue';
+import MFAOTP from '../views/mfa/OTP.vue';
+import MFASMS from '../views/mfa/SMS.vue';
+import MFAWebAuthN from '../views/mfa/WebAuthN.vue';
+import PasswordlessEmail from '../views/passwordless/Email.vue';
+import PasswordlessSMS from '../views/passwordless/SMS.vue';
 import Register from '../views/Register.vue';
 import ResetPassword from '../views/ResetPassword.vue';
 import VerifyEmail from '../views/VerifyEmail.vue';
@@ -51,6 +53,16 @@ export const router = (settings: Partial<IWidgetSettings>) => createRouter({
           props: settings && settings.modeOptions && settings.modeOptions.recovery
         },
         {
+          path: 'passwordless-challenge/email',
+          component: PasswordlessEmail,
+          props: settings && settings.modeOptions && settings.modeOptions.passwordlessEmail
+        },
+        {
+          path: 'passwordless-challenge/sms',
+          component: PasswordlessSMS,
+          props: settings && settings.modeOptions && settings.modeOptions.passwordlessSms
+        },
+        {
           path: 'challenge',
           component: PlainRouterView,
           children: [
@@ -62,31 +74,31 @@ export const router = (settings: Partial<IWidgetSettings>) => createRouter({
             {
               path: 'sms',
               name: 'sms',
-              component: SMS,
+              component: MFASMS,
               props: settings && settings.modeOptions && settings.modeOptions.sms
             },
             {
               path: 'email',
               name: 'email',
-              component: Email,
+              component: MFAEmail,
               props: settings && settings.modeOptions && settings.modeOptions.email
             },
             {
               path: 'otp',
               name: 'otp',
-              component: OTP,
+              component: MFAOTP,
               props: settings && settings.modeOptions && settings.modeOptions.otp
             },
             {
               path: 'fv',
               name: 'fv',
-              component: FingerVein,
+              component: MFAFingerVein,
               props: settings && settings.modeOptions && settings.modeOptions.fv
             },
             {
               path: 'webauthn',
               name: 'webauthn',
-              component: WebAuthN,
+              component: MFAWebAuthN,
               props: settings && settings.modeOptions && settings.modeOptions.webauthn
             }
           ]

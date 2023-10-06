@@ -2,33 +2,36 @@
   "compilerOptions": {
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "rootDir": ".",
     "declaration": true,
-    "declarationDir": "dist/types/",
+    "declarationDir": "dist/types",
     "esModuleInterop": true,
     "experimentalDecorators": true,
-    "lib": ["esnext", "dom"],
+    "lib": [
+      "esnext",
+      "dom"
+    ],
     "module": "ESNext",
     "moduleResolution": "node",
-    "noImplicitAny": true,
+    "noImplicitAny": false,
     "noImplicitThis": true,
     "noLib": false,
     "sourceMap": true,
     "strict": true,
     "strictPropertyInitialization": false,
-    "suppressImplicitAnyIndexErrors": true,
     "target": "ESNext",
-    "useUnknownInCatchVariables": false,
-    "baseUrl": ".",
-    "types": ["vite/client"]
+    "types": [
+      "src/shims-vue.d.ts",
+      "vite/client"
+    ],
+    "useUnknownInCatchVariables": false
   },
   "exclude": [
     "./node_modules"
   ],
   "include": [
-    "./dev/**/*.ts",
     "./src/**/*.ts",
-    "./src/**/*.js",
-    "./src/**/*.vue",
-    "*.vue"
+    "./src/**/*.vue"
   ]
 }

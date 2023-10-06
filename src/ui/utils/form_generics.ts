@@ -16,8 +16,22 @@ export default function (
   const form = ref<typeof GenericForm>(null as any)
   const loading = ref<boolean>(false)
   const translator = inject(translatorKey) as Translator
+  const context = inject('context') as any
+
   const { fields, responseErrorHandler } = this
-  const mergedFields = reactive( deepmerge(defaultFields || {}, fields || {}, { clone: false }))
+  const mergedFields = reactive<AdditionalFields>(
+    deepmerge(
+      Object.assign(context.params?.state ? {
+        state: {
+          type: 'text',
+          visible: 'hidden',
+          value: context.params.state
+        },
+      }: {}, defaultFields || {}),
+      fields || {},
+      { clone: false }
+    )
+  )
 
   for (const field in mergedFields) {
     if(!mergedFields[field]){

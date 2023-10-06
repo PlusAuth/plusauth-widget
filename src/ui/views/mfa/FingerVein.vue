@@ -189,7 +189,7 @@ export default defineComponent({
           }else {
             loadingMsg.value = 'mfa.fv.verifyInProgress'
             const resp = await fv.verify(1, context.details.fv_template)
-            await api.mfa.validateCode(resp, MFACodeType.FINGER_VEIN)
+            await api.mfa.validateCode(MFACodeType.FINGER_VEIN, resp )
           }
         }catch (e) {
           if(e.retCode){

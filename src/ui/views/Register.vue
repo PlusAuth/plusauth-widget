@@ -51,9 +51,9 @@
     <div class="pa__widget-social-icons">
       <SocialConnectionButton
         v-for="connection in context.client.social"
-        :key="connection"
-        :type="connection"
-        :href="'/social?provider=' + connection"
+        :key="connection.name || connection"
+        :type="connection.provider || connection"
+        :href="'/social?provider=' + connection.name || connection"
       />
     </div>
   </div>
@@ -67,7 +67,7 @@
       href="/signin"
       @click.stop
     />
-    <div v-if="features.forgotPassword">
+    <div v-if="!isPasswordless && features.forgotPassword">
       <a
         v-t="'login.forgotPassword'"
         href="/signin/recovery"
@@ -78,16 +78,12 @@
 
 <script lang="ts">
 import { PlusAuthWeb } from '@plusauth/web';
-import deepmerge from 'deepmerge';
-import { defineComponent, inject, reactive, ref } from 'vue';
+import { defineComponent, inject } from 'vue';
 
-import { useRouter } from 'vue-router';
-
-import { PForm, PasswordStrength } from '../components';
+import {  PasswordStrength } from '../components';
 import GenericForm from '../components/GenericForm.vue';
-import PBtn from '../components/PBtn';
 import SocialConnectionButton from '../components/SocialConnectionButton';
-import { AdditionalFields, SocialConnections } from '../interfaces';
+import { AdditionalFields } from '../interfaces';
 import { CustomizableFormProps } from '../mixins/customizable_form';
 import { resolveClientLogo } from '../utils';
 import form_generics from '../utils/form_generics';
@@ -103,50 +99,51 @@ export default defineComponent({
         forgotPassword: true,
       })
     },
-    socialConnections: {
-      type: Array as () => SocialConnections[],
-      default: (): SocialConnections[] => ['google', 'facebook']
-    },
     ...CustomizableFormProps
   },
   setup(props){
     const api = inject('api') as PlusAuthWeb
     const context = inject('context') as any
-    const router = useRouter()
+    const connection = context.connection || {}
+    const isPasswordless = !['social','enterprise', 'plusauth'].includes(connection.type)
+    let identifierField= connection.type === 'sms' ? 'phone_number': 'email';
+
     const defaultFields: AdditionalFields = {
-      username: {
+      [identifierField]: {
         order: 0,
         attrs: {
-          autocomplete: 'username'
+          autocomplete: identifierField
         },
         type: 'text',
-        label: 'common.fields.username'
+        label: `common.fields.${  identifierField}`
       },
-      password: {
-        order: 1,
-        type: 'password',
-        label: 'common.fields.password',
-        attrs: {
-          autocomplete: 'new-password'
-        },
-        async validator(fields, value){
-          return api.auth.checkPasswordStrength(value, context.settings?.passwordPolicy || {})
-        }
-      },
-      rePassword: {
-        order: 2,
-        type: 'password',
-        label: 'common.fields.rePassword',
-        attrs: {
-          autocomplete: 'new-password'
-        },
-        validator(fields, value){
-          if(fields.password.value !== value){
-            return this.$t('errors.passwords_not_match')
+      ...isPasswordless ? {} : {
+        password: {
+          order: 1,
+          type: 'password',
+          label: 'common.fields.password',
+          attrs: {
+            autocomplete: 'new-password'
+          },
+          async validator(fields, value){
+            return api.auth.checkPasswordStrength(value, context.settings?.passwordPolicy || {})
           }
-          return true
+        },
+        rePassword: {
+          order: 2,
+          type: 'password',
+          label: 'common.fields.rePassword',
+          attrs: {
+            autocomplete: 'new-password'
+          },
+          validator(fields, value){
+            if(fields.password.value !== value){
+              return this.$t('errors.passwords_not_match')
+            }
+            return true
+          }
         }
-      }
+      },
     }
 
     const { form, loading, submit, validate, fields: finalFields } = form_generics.call(
@@ -183,6 +180,7 @@ export default defineComponent({
       context,
       finalFields,
       loading,
+      isPasswordless,
       resolveClientLogo,
       validate,
       submit

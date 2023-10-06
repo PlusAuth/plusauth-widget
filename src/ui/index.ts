@@ -1,4 +1,4 @@
-import { createApp, reactive, watch } from 'vue';
+import { createApp, watch } from 'vue';
 
 import { installComponents } from './components';
 import { i18n } from './directives/i18n';
@@ -8,8 +8,6 @@ import { router } from './utils/router';
 import { Theme } from './utils/theme';
 import { Translator, translatorKey } from './utils/translator';
 import App from './widget';
-
-import set = Reflect.set;
 
 export function createWidget(container: Element | string,
                              settings: IWidgetSettings,

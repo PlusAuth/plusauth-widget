@@ -7,7 +7,7 @@ export default defineComponent({
   name: 'SocialConnectionButton',
   props: {
     type: {
-      type: String as () => string,
+      type: [String as () => string, Object as () => ({ name: string, provider: string})],
       required: true
     }
   },
@@ -16,7 +16,7 @@ export default defineComponent({
       'a',
       {
         style: {
-          backgroundImage: `url(${getIconLink(this.type)})`
+          backgroundImage: `url(${getIconLink(this.type.provider || this.type)})`
         },
         class: ['pa__btn', 'pa__widget-social-icon', 'pa__btn--fab'],
       },

@@ -14,6 +14,9 @@ export class Translator {
     this.fallBackLocale = fallbackLocale || 'en'
     this.selectedLocale = ref<string | undefined>(selectedLocale || this.fallBackLocale)
   }
+  get localeRef() {
+    return this.selectedLocale
+  }
   set locale(locale: string){
     this.selectedLocale.value = locale
   }

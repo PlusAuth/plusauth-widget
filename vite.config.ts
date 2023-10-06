@@ -1,12 +1,30 @@
 import vue from '@vitejs/plugin-vue'
 import { defineConfig } from 'vite'
+import { resolve } from 'path'
+import pkg from './package.json' ;
+import dts from 'vite-plugin-dts';
+import { libInjectCss } from 'vite-plugin-lib-inject-css'
+
+const name = 'PlusAuthWidget';
 
 export default  defineConfig({
   build: {
-    write: true
+    target: [
+      "chrome109", "edge114", "firefox114", "ios14.5", "safari11"
+    ],
+    lib: {
+      formats: ['es', 'iife'],
+      // Could also be a dictionary or array of multiple entry points
+      entry: resolve(__dirname, 'src/index.ts'),
+      name,
+      // the proper extensions will be added
+      fileName: (format) => (format === 'es' ? pkg.module : pkg.main).split('/').at(1),
+    },
   },
   plugins: [
-    vue()
+    vue(),
+    libInjectCss(),
+    dts({ outDir: 'dist/types' }),
   ],
   resolve: {
     dedupe: ["vue"],
