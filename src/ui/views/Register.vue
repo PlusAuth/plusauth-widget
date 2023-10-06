@@ -83,7 +83,7 @@ import { defineComponent, inject } from 'vue';
 import {  PasswordStrength } from '../components';
 import GenericForm from '../components/GenericForm.vue';
 import SocialConnectionButton from '../components/SocialConnectionButton';
-import { AdditionalFields, SocialConnections } from '../interfaces';
+import { AdditionalFields } from '../interfaces';
 import { CustomizableFormProps } from '../mixins/customizable_form';
 import { resolveClientLogo } from '../utils';
 import form_generics from '../utils/form_generics';

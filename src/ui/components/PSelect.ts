@@ -39,7 +39,7 @@ export default defineComponent({
           {
             name: 'matchReferenceSize',
             enabled: true,
-            fn: ({ state, instance }) => {
+            fn: ({ state }) => {
               const widthOrHeight =
                 state.placement.startsWith('left') ||
                 state.placement.startsWith('right')

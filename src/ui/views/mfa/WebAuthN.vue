@@ -40,8 +40,8 @@
 import {
   PlusAuthWeb, MFACodeType,
   isWebAuthNSupported,
-  isPlatformAuthenticatorAvailable,
-  isWebAuthNAutofillSupported, registerDevice, verifyDevice
+  registerDevice,
+  verifyDevice
 } from '@plusauth/web';
 import { defineComponent, inject, onMounted, ref } from 'vue';
 

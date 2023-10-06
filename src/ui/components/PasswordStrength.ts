@@ -12,7 +12,6 @@ export default defineComponent({
   },
   setup(props){
     const translator = inject(translatorKey) as Translator
-    const context = inject('context') as any
     return {
       generatePolicyElements(result: any) {
         if(!props.rules || typeof result === 'string'){

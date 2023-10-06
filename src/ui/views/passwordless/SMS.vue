@@ -14,7 +14,12 @@
       class="pa__challenge-timer"
       :duration="120"
     />
-    <h2 v-t="{ path: 'passwordless.sms.title', args: { phone_number: context.details.phone_number} }" />
+    <h2
+      v-t="{
+        path: 'passwordless.sms.title',
+        args: { phone_number: context.details.phone_number}
+      }"
+    />
   </div>
 
   <GenericForm
