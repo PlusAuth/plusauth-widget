@@ -1,16 +1,21 @@
-import { defineComponent, h, computed, ref } from 'vue';
+import { defineComponent, h, computed, ref, Ref } from 'vue';
 
 import { PTextField } from '.';
 
 
-function generateDigitInput(index: any, ref: any, model: any, onUpdate: any,
-                            onInput: any){
+function generateDigitInput(index: any,
+                            ref: any,
+                            model: any,
+                            onInput: any,
+                            onKeyDown: any
+){
   return  h(PTextField, {
     modelValue: model.value,
     key: index,
     type: 'tel',
     ref,
     hideMessages: true,
+    pattern: '[0-9.]+',
     rules: [
       (v: any) => !!v
     ],
@@ -19,17 +24,18 @@ function generateDigitInput(index: any, ref: any, model: any, onUpdate: any,
     },
     onFocus($event: FocusEvent){
       const el = $event.target as HTMLInputElement
-      if(el.setSelectionRange){
-        el.setSelectionRange(el.value.length,el.value.length)
-      }
-
+      setTimeout(() => {
+        if(el.setSelectionRange){
+          el.setSelectionRange(0,el.value.length)
+        }
+      })
     },
     'onUpdate:modelValue': (val: any) => {
       onInput(index, val)
     },
-    onKeypress($event: KeyboardEvent){
-      onUpdate(index, $event)
-    },
+    onKeydownCapture($event: KeyboardEvent){
+      onKeyDown(index, $event)
+    }
   })
 }
 
@@ -41,7 +47,7 @@ function initializeDigitsModel(size: number) {
   return digits
 }
 function initializeInputRefs(size: number) {
-  const inputRefs = []
+  const inputRefs = [] as Ref<typeof PTextField>[]
   for (let i = 0; i < size ; i++) {
     inputRefs.push(ref<typeof PTextField>(null as any))
   }
@@ -73,27 +79,52 @@ export default defineComponent({
       digits,
       inputRefs,
       onDigitInput(index: number, val: any){
-        if (!val) {
+        if (!val || isNaN(Number(val)) ) {
           digits[index].value = null
         }
         ctx.emit('update:modelValue', innerModelValue.value)
       },
-      onDigitUpdate(index: number, event: KeyboardEvent){
+      onKeydown(index: number, event: KeyboardEvent){
         const value = event.key
-        const pressedKey = Number(value)
-        if ( event.code.startsWith('Digit')
-          || /Numpad\d/gm.test(event.code)) {
-          // 0-9 only
+        if(value === 'Tab'){
+          return
+        }
+        if(value === 'Backspace') {
+          if(index !== 0){
+            setTimeout(() => {
+              digits[index-1].value = null
+              inputRefs[index - 1].value.focus()
+            })
+          }
+        } else if(value === 'Delete') {
+          if(index !== props.size){
+            setTimeout(() => {
+              digits[index+1].value = null
+              inputRefs[index + 1].value.focus()
+            })
+          }
+        } else if(value.startsWith('Arrow')) {
+          const direction = value.replace('Arrow', '').toLowerCase()
+          if(direction === 'left' || direction === 'up' ){
+            if(index !== 0){
+              inputRefs[index - 1].value.focus()
+            }
+          } else if(direction === 'right'  || direction === 'down' ){
+            if( index + 1 !== props.size){
+              inputRefs[index + 1].value.focus()
+            }
+          }
+        } else if ( /[0-9]/.test(value) ) {
           event.preventDefault()
+          const pressedKey = Number(value)
           digits[index].value = String(pressedKey)
           if(index + 1 < props.size){
             inputRefs[index + 1].value.focus()
           }
-        }else{
+        } else {
           event.preventDefault()
         }
         ctx.emit('update:modelValue', innerModelValue.value)
-
       }
     }
   },
@@ -103,7 +134,13 @@ export default defineComponent({
         'pa__code-input': true
       }
     }, Array(this.size).fill(0).map((v, i) =>
-      generateDigitInput.call(this, i, this.inputRefs[i], this.digits[i], this.onDigitUpdate,
-        this.onDigitInput)))
+      generateDigitInput.call(
+        this, i,
+        this.inputRefs[i],
+        this.digits[i],
+        this.onDigitInput,
+        this.onKeydown,
+      )
+    ))
   }
 })
