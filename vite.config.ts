@@ -7,13 +7,16 @@ import { libInjectCss } from 'vite-plugin-lib-inject-css'
 
 const name = 'PlusAuthWidget';
 
-export default  defineConfig({
+export default defineConfig(({ command, mode, ssrBuild }) => ({
+  define: command === 'build' ? {
+    'process.env': { NODE_ENV: 'production'}
+  }: {},
   build: {
     target: [
       "chrome109", "edge114", "firefox114", "ios14.5", "safari11"
     ],
     lib: {
-      formats: ['es', 'iife'],
+      formats: ['es', 'umd'],
       // Could also be a dictionary or array of multiple entry points
       entry: resolve(__dirname, 'src/index.ts'),
       name,
@@ -37,4 +40,4 @@ export default  defineConfig({
       "@popperjs/core/lib/popper-lite"
     ]
   }
-})
+}))
