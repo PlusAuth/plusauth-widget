@@ -3,12 +3,14 @@ import deepmerge from 'deepmerge';
 import { App, reactive } from 'vue';
 
 import defaultDictionary from './i18n'
-import { createWidget } from './ui';
+import { createTranslator, createWidget } from './ui';
 import { IPlusAuthContext, IWidgetSettings } from './ui/interfaces';
+import { Translator } from './ui/utils/translator';
 
 export default class PlusAuthWidget {
   private _view: App<Element>;
-  private api: PlusAuthWeb;
+  public api: PlusAuthWeb;
+  public i18n: Translator;
 
   constructor(container: Element | string,
     settings: Partial<IWidgetSettings> = {},
@@ -17,13 +19,15 @@ export default class PlusAuthWidget {
     this.api = new PlusAuthWeb(settings.apiUrl ||
     location.origin !== 'null' ? window.location.origin : '/')
 
-    this._view = createWidget(container || document.body, reactive(deepmerge( {
+    const reactiveSettings = reactive(deepmerge( {
       locale: {
         defaultLocale: 'en',
         dictionary: defaultDictionary
       }
-    }, settings, { clone: true })), context)
+    }, settings, { clone: true }))
 
+    this.i18n = createTranslator(reactiveSettings.locale)
+    this._view = createWidget(container || document.body, reactiveSettings, context, this.i18n)
     this._view.provide('api', this.api)
   }
   get view(): IWidgetSettings {
