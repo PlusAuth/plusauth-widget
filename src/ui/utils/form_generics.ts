@@ -1,5 +1,5 @@
 import deepmerge from 'deepmerge';
-import {  reactive, ref, inject } from 'vue';
+import { ref, inject, computed, unref, MaybeRef } from 'vue';
 
 import GenericForm from '../components/GenericForm.vue';
 import { AdditionalFields, FieldDefinition } from '../interfaces';
@@ -10,7 +10,7 @@ import { isEmail, isPhone } from '.';
 
 export default function (
   this: Record<string, any>,
-  defaultFields?: AdditionalFields | null,
+  defaultFields?: MaybeRef<AdditionalFields | null>,
   action?: (fields: Record<string, any>) => Promise<any>,
 ) {
   const form = ref<typeof GenericForm>(null as any)
@@ -19,25 +19,26 @@ export default function (
   const context = inject('context') as any
 
   const { fields, responseErrorHandler } = this
-  const mergedFields = reactive<AdditionalFields>(
-    deepmerge(
+  const mergedFields = computed<AdditionalFields>(() =>{
+    const merged = deepmerge(
       Object.assign(context.params?.state ? {
         state: {
           type: 'text',
           visible: 'hidden',
           value: context.params.state
         },
-      }: {}, defaultFields || {}),
+      }: {}, unref(defaultFields || {})),
       fields || {},
       { clone: false }
     )
-  )
-
-  for (const field in mergedFields) {
-    if(!mergedFields[field]){
-      delete mergedFields[field]
+    for (const field in merged) {
+      if(!merged[field]){
+        delete merged[field]
+      }
     }
-  }
+    return merged
+  })
+
 
   return {
     form,
@@ -65,7 +66,7 @@ export default function (
       if (options.validator) {
         return options.validator.call(
           { $t: translator.t.bind(translator) },
-          mergedFields,
+          mergedFields.value,
           value
         )
       } else {
@@ -77,7 +78,7 @@ export default function (
       loading.value = true
 
       // reset error messages
-      Object.values(mergedFields).forEach(field => {
+      Object.values(mergedFields.value).forEach(field => {
         field.errors = null
       })
 
@@ -90,10 +91,11 @@ export default function (
       if (valid) {
         formRef.resetValidation()
 
-        const fieldsWithValues = Object.keys(mergedFields).reduce((prev: any, curr: string) => {
-          prev[curr] = mergedFields[curr].value
-          return prev
-        }, {})
+        const fieldsWithValues = Object.keys(mergedFields.value)
+          .reduce((prev: any, curr: string) => {
+            prev[curr] = mergedFields.value[curr].value
+            return prev
+          }, {})
 
         try{
           await action?.(fieldsWithValues)
