@@ -15,15 +15,20 @@ function generateDigitInput(index: any,
     type: 'tel',
     ref,
     hideMessages: true,
-    pattern: '[0-9.]+',
     rules: [
       (v: any) => !!v
     ],
     class: {
       'pa__code-input--digit-box': true
     },
-    onFocus($event: FocusEvent){
-      const el = $event.target as HTMLInputElement
+    onPaste(e){
+      e.preventDefault()
+    },
+    onKeypress(e){
+      e.preventDefault()
+    },
+    onFocus(e: FocusEvent){
+      const el = e.target as HTMLInputElement
       setTimeout(() => {
         if(el.setSelectionRange){
           el.setSelectionRange(0,el.value.length)
@@ -33,8 +38,8 @@ function generateDigitInput(index: any,
     'onUpdate:modelValue': (val: any) => {
       onInput(index, val)
     },
-    onKeydownCapture($event: KeyboardEvent){
-      onKeyDown(index, $event)
+    onKeydownCapture(e: KeyboardEvent){
+      onKeyDown(index, e)
     }
   })
 }
@@ -121,26 +126,27 @@ export default defineComponent({
           if(index + 1 < props.size){
             inputRefs[index + 1].value.focus()
           }
-        } else {
-          event.preventDefault()
         }
         ctx.emit('update:modelValue', innerModelValue.value)
       }
     }
   },
   render(){
-    return h('div', {
-      class: {
-        'pa__code-input': true
-      }
-    }, Array(this.size).fill(0).map((v, i) =>
-      generateDigitInput.call(
-        this, i,
-        this.inputRefs[i],
-        this.digits[i],
-        this.onDigitInput,
-        this.onKeydown,
+    return h('div',
+      {
+        class: {
+          'pa__code-input': true
+        }
+      },
+      Array(this.size).fill(0).map((v, i) =>
+        generateDigitInput.call(
+          this, i,
+          this.inputRefs[i],
+          this.digits[i],
+          this.onDigitInput,
+          this.onKeydown,
+        )
       )
-    ))
+    )
   }
 })
