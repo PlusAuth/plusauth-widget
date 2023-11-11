@@ -75,6 +75,7 @@
   >
     <a
       v-t="'mfa.tryAnotherWay'"
+      class="pa__primary--text"
       href="/signin/challenge"
     />
   </div>

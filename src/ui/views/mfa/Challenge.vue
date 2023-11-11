@@ -16,7 +16,7 @@
       v-for="challenge in context.details.challenges"
       :key="challenge"
       :href="'/signin/challenge/'+ challenge"
-      class="pa__btn pa__btn--flat pa__btn--block pa__signin-challenge"
+      class="pa__btn pa__btn--flat pa__btn--block pa__signin-challenge pa__primary--text"
       @click.stop=""
     >
       <span v-t="'mfa.challenge.'+ challenge" />

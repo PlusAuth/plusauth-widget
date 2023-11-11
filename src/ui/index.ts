@@ -9,16 +9,17 @@ import { Theme } from './utils/theme';
 import { Translator, translatorKey } from './utils/translator';
 import App from './widget';
 
+export function createTranslator(settings: IWidgetSettings['locale']){
+  return  new Translator(
+    settings.dictionary,
+    settings.defaultLocale,
+    settings.selectedLocale
+  )
+}
 export function createWidget(container: Element | string,
                              settings: IWidgetSettings,
-                             context: Partial<IPlusAuthContext>){
-
-  const translator = new Translator(
-    settings.locale.dictionary,
-    settings.locale.defaultLocale,
-    settings.locale.selectedLocale
-  )
-
+                             context: Partial<IPlusAuthContext>,
+                             translator = createTranslator(settings.locale)){
   const theme = new Theme({
     theme: settings.theme
   });

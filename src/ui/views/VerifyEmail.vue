@@ -30,6 +30,7 @@
           style="padding-right: 4px"
         /><a
           v-t="'verifyEmail.resendAction'"
+          class="pa__primary--text"
           :href="resendLink"
         />
       </p>

@@ -4,6 +4,7 @@
       1. Download Google Authenticator
       <a
         target="_blank"
+        class="pa__primary--text"
         href="https://play.google.com/store/apps/
 details?id=com.google.android.apps.authenticator2"
       >
@@ -11,6 +12,7 @@ details?id=com.google.android.apps.authenticator2"
       </a>
       /
       <a
+        class="pa__primary--text"
         href="https://apps.apple.com/us/app/google-authenticator/id388497605"
         target="_blank"
       >iOS</a>

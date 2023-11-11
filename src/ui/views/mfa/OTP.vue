@@ -4,6 +4,7 @@
       1. Download Google Authenticator
       <a
         target="_blank"
+        class="pa__primary--text"
         href="https://play.google.com/store/apps/
 details?id=com.google.android.apps.authenticator2"
       >
@@ -12,6 +13,7 @@ details?id=com.google.android.apps.authenticator2"
       /
       <a
         href="https://apps.apple.com/us/app/google-authenticator/id388497605"
+        class="pa__primary--text"
         target="_blank"
       >iOS</a>
     </h4>
@@ -76,6 +78,7 @@ details?id=com.google.android.apps.authenticator2"
   >
     <a
       v-t="'mfa.tryAnotherWay'"
+      class="pa__primary--text"
       href="/signin/challenge"
     />
   </div>

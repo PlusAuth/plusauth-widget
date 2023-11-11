@@ -55,6 +55,7 @@
       />
       <a
         v-t="'login.signUp'"
+        class="pa__primary--text"
         tabindex="0"
         href="/signup"
         @click.stop
@@ -63,6 +64,7 @@
     <div v-if="!isPasswordless && features.forgotPassword">
       <a
         v-t="'login.forgotPassword'"
+        class="pa__primary--text"
         tabindex="0"
         href="/signin/recovery"
       />

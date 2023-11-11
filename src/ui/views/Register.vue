@@ -64,12 +64,14 @@
     />
     <a
       v-t="'login.signIn'"
+      class="pa__primary--text"
       href="/signin"
       @click.stop
     />
     <div v-if="!isPasswordless && features.forgotPassword">
       <a
         v-t="'login.forgotPassword'"
+        class="pa__primary--text"
         href="/signin/recovery"
       />
     </div>
