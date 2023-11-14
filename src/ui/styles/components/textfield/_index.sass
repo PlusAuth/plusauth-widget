@@ -93,6 +93,10 @@
     input:-webkit-autofill + .input--label
       transform: translateY(-20px) scale(.75)
 
+    &-has-error
+      .input--wrap
+        box-shadow: 0 0 1px 1px currentColor
+
     &-focused, &-has-error, &-has-state
       &:has(:not(:read-only))
         .input--wrap
@@ -101,11 +105,11 @@
     &-focused, &-has-error
       .input--label
         color: currentColor !important
-        transform: translateY(-20px) scale(.75)
+        transform: translateY(-22px) scale(.75)
 
     &-has-value
       .input--label
-        transform: translateY(-20px) scale(.75)
+        transform: translateY(-22px) scale(.75)
 
 .pw-toggle-visibility
   display: flex

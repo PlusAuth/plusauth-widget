@@ -1,4 +1,4 @@
-import { defineComponent, h, withDirectives, reactive, toRefs, ref } from 'vue';
+import { defineComponent, h, withDirectives, reactive, toRefs, ref, unref } from 'vue';
 
 import { i18n } from '../directives/i18n';
 import { Colorable , Themeable , Translatable , Validatable } from '../mixins';
@@ -17,12 +17,11 @@ export default defineComponent({
     hideMessages: { type: Boolean, default: false }
   },
   emits: ['focus', 'keydown', 'change', 'input', 'update:modelValue', 'blur', 'update:error'],
-  setup(props){
+  setup(){
     const inputRef = ref<string>(null as any)
     const state = reactive({
       isFocused: false,
       isActivated: false,
-      lazyValue: props.modelValue
     })
     return {
       ...toRefs(state),
@@ -85,7 +84,8 @@ export default defineComponent({
     }
     const onInput = (event: InputEvent) => {
       this.isActivated = true
-      this.$emit('update:modelValue', (event.currentTarget as HTMLInputElement)?.value)
+      this.lazyValue = (event.currentTarget as HTMLInputElement)?.value
+      this.$emit('update:modelValue', this.lazyValue)
     };
     const onKeyDown =  (e: KeyboardEvent) => {
       if (e.code === '13') this.$emit('change', this.internalValue)
@@ -97,7 +97,7 @@ export default defineComponent({
         class: {
           'pa__input': true,
           'pa__input-has-state': this.hasState,
-          'pa__input-has-value': !!this.modelValue,
+          'pa__input-has-value': !!this.lazyValue,
           'pa__input-has-error': this.validationState === 'error',
           'pa__input-focused': this.isFocused
         },
@@ -107,7 +107,7 @@ export default defineComponent({
           class: { 'pa__input--wrap': true }
         }, [
           h('input', Object.assign({},this.$attrs,{
-            value: this.internalValue,
+            value: this.lazyValue,
             ref: 'inputRef',
             name: this.$attrs.name,
             type: this.type || 'text',

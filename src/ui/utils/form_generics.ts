@@ -21,13 +21,16 @@ export default function (
   const { fields, responseErrorHandler } = this
   const mergedFields = computed<AdditionalFields>(() =>{
     const merged = deepmerge(
-      Object.assign(context.params?.state ? {
-        state: {
-          type: 'text',
-          visible: 'hidden',
-          value: context.params.state
-        },
-      }: {}, unref(defaultFields || {})),
+      Object.assign(
+        context.params?.state ? {
+          state: {
+            type: 'text',
+            visible: 'hidden',
+            value: context.params.state
+          },
+        }: {},
+        unref(defaultFields || {})
+      ),
       fields || {},
       { clone: false }
     )
