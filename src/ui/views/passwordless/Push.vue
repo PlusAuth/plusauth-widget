@@ -47,6 +47,7 @@
       <template v-if="!manualMode">
         <div
           v-for="device in context.details.devices"
+          :key="device.model"
           style="border: 1px solid; padding: 12px; display: flex; align-items: center"
         >
           <PLoading
@@ -99,7 +100,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, inject, ref, watch } from 'vue';
+import { computed, defineComponent, inject, nextTick, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
 import GenericForm from '../../components/GenericForm.vue';

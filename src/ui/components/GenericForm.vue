@@ -88,8 +88,8 @@
     </template>
     <slot />
     <p-alert
-        style="margin-top: 12px"
       v-model="alert"
+      style="margin-top: 12px"
       :color="alertOptions.type || 'error'"
       v-bind="alertOptions.value"
     >

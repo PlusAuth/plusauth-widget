@@ -1,6 +1,9 @@
 export type FetchWrapper = Record<
 'get' | 'post' | 'patch' | 'delete',
-(endpoint: string, options?: RequestInit) => Promise<any>
+(
+  endpoint: string,
+  options?: Omit<RequestInit, 'body'> & { body?: Record<string, any>, query?: Record<string, any> }
+) => Promise<any>
 >;
 
 const toQueryString = params => !params ? '' : `?${Object.entries(params)
