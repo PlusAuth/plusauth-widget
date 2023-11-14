@@ -2,6 +2,9 @@
 export default {
   common: {
     allow: 'Allow',
+    continue: 'Continue',
+    edit: 'Edit',
+    field: 'Field',
     fields: {
       code: 'Code',
       email: 'Email',
@@ -11,13 +14,11 @@ export default {
       rePassword: 'Password confirmation',
       username: 'Username'
     },
-    field: 'Field',
     hide: 'Hide',
     reject: 'Reject',
     show: 'Show',
-    edit: 'Edit',
-    verify: 'Verify',
-    submit: 'Submit'
+    submit: 'Submit',
+    verify: 'Verify'
   },
   verifyEmail: {
     checkText: "We\'ve sent an email to <strong>{email}</strong>, please click the link included" +
@@ -116,6 +117,14 @@ export default {
     sms: {
       title: 'Enter authorization code sent to: <strong>{phone_number}</strong>'
     },
+    push: {
+      title: 'Check your device',
+      description: 'Click on notification in your device to allow access',
+      enrollTitle: 'Register your device',
+      enrollDescription: 'Scan the QR Code below with your Authenticator application',
+      tryCodeText: 'Didn\'t receive notification?',
+      tryCodeAction: 'Try entering code manually',
+    }
   },
   mfa: {
     challenge: {

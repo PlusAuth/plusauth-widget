@@ -86,7 +86,9 @@
         </p-text-field>
       </template>
     </template>
+    <slot />
     <p-alert
+        style="margin-top: 12px"
       v-model="alert"
       :color="alertOptions.type || 'error'"
       v-bind="alertOptions.value"
