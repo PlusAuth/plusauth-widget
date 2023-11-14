@@ -18,6 +18,8 @@ import MFAOTP from '../views/mfa/OTP.vue';
 import MFASMS from '../views/mfa/SMS.vue';
 import MFAWebAuthN from '../views/mfa/WebAuthN.vue';
 import PasswordlessEmail from '../views/passwordless/Email.vue';
+import PasswordlessOTP from '../views/passwordless/OTP.vue';
+import PasswordlessPush from '../views/passwordless/Push.vue';
 import PasswordlessSMS from '../views/passwordless/SMS.vue';
 import Register from '../views/Register.vue';
 import ResetPassword from '../views/ResetPassword.vue';
@@ -53,14 +55,24 @@ export const router = (settings: Partial<IWidgetSettings>) => createRouter({
           props: settings && settings.modeOptions && settings.modeOptions.recovery
         },
         {
-          path: 'passwordless-challenge/email',
+          path: 'passwordless/email',
           component: PasswordlessEmail,
           props: settings && settings.modeOptions && settings.modeOptions.passwordlessEmail
         },
         {
-          path: 'passwordless-challenge/sms',
+          path: 'passwordless/sms',
           component: PasswordlessSMS,
           props: settings && settings.modeOptions && settings.modeOptions.passwordlessSms
+        },
+        {
+          path: 'passwordless/otp',
+          component: PasswordlessOTP,
+          props: settings && settings.modeOptions && settings.modeOptions.passwordlessOtp
+        },
+        {
+          path: 'passwordless/push',
+          component: PasswordlessPush,
+          props: settings && settings.modeOptions && settings.modeOptions.passwordlessPush
         },
         {
           path: 'challenge',

@@ -19,7 +19,7 @@ export interface ILocaleSettings {
 export type WidgetModes = 'login' | 'recovery' | 'consent'
 | 'challenge' | 'sms' | 'email' | 'otp' | 'fv' | 'webauthn'
 | 'signup' | 'resetPassword' | 'fillMissing' | 'verifyEmail'
-| 'passwordlessEmail' | 'passwordlessSms'
+| 'passwordlessEmail' | 'passwordlessSms' | 'passwordlessPush' | 'passwordlessOtp'
 
 export type SocialConnections = 'google' | 'facebook' | 'linkedin'
 
