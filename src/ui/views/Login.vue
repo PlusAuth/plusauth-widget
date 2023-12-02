@@ -103,7 +103,11 @@ export default defineComponent({
     const passwordVisible = ref(false)
 
     const connection = context.connection || {}
-    const isPasswordless = !['social','enterprise', 'plusauth'].includes(connection.type)
+    const isPasswordless = connection.type && ![
+      'social',
+      'enterprise',
+      'plusauth'
+    ].includes(connection.type)
     let identifierField = connection.type === 'sms' ? 'phone_number': 'email';
 
     const defaultFields: AdditionalFields = {
@@ -120,7 +124,6 @@ export default defineComponent({
           order: 1,
           type: 'password',
           label: 'common.fields.password',
-          errors: []
         }
       },
     }

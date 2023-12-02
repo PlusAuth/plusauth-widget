@@ -49,10 +49,13 @@ details?id=com.google.android.apps.authenticator2"
     <h4>3. Enable Google Two Factor Authentication</h4>
   </template>
   <template v-else>
-    <div
-      v-t="{ path: 'mfa.otp.title'}"
-      class="pa__subtitle-2 pa__text-left"
-    />
+    <div class="pa__widget-info-section">
+      <p
+        v-t="{ path: 'mfa.otp.title'}"
+        class="pa__subtitle-2 pa__text-left"
+        style="margin: 0 0 12px 0"
+      />
+    </div>
   </template>
   <GenericForm
     ref="form"

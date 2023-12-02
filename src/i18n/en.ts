@@ -149,7 +149,7 @@ export default {
       verify: 'Click to <strong>VERIFY</strong> when you are ready to scan your finger.'
     },
     otp: {
-      title: 'Enter authorization code:'
+      title: 'Please enter authorization code'
     },
     sms: {
       title: 'Enter authorization code sent to: <strong>{phone_number}</strong>'

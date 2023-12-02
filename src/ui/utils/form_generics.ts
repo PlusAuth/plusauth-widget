@@ -1,5 +1,5 @@
 import deepmerge from 'deepmerge';
-import { ref, inject, computed, unref, MaybeRef } from 'vue';
+import { ref, inject, unref, MaybeRef, reactive } from 'vue';
 
 import GenericForm from '../components/GenericForm.vue';
 import { AdditionalFields, FieldDefinition } from '../interfaces';
@@ -19,30 +19,33 @@ export default function (
   const context = inject('context') as any
 
   const { fields, responseErrorHandler } = this
-  const mergedFields = computed<AdditionalFields>(() =>{
-    const merged = deepmerge(
-      Object.assign(
-        context.params?.state ? {
-          state: {
-            type: 'text',
-            visible: 'hidden',
-            value: context.params.state
-          },
-        }: {},
-        unref(defaultFields || {})
-      ),
-      fields || {},
-      { clone: false }
-    )
-    for (const field in merged) {
-      if(!merged[field]){
-        delete merged[field]
-      }
+  const merged = deepmerge(
+    Object.assign(
+      context.params?.state ? {
+        state: {
+          type: 'text',
+          visible: 'hidden',
+          value: context.params.state
+        },
+      }: {},
+      unref(defaultFields || {})
+    ),
+    fields || {},
+    { clone: false }
+  )
+  for (const field in merged) {
+    if(!merged[field]){
+      delete merged[field]
     }
-    return merged
-  })
+  }
+  for (const field in fields) {
+    if(!fields[field]){
+      delete fields[field]
+    }
+  }
 
-
+  const mergedFields = reactive<AdditionalFields>(merged)
+  this.fields = Object.assign(this.fields || {}, mergedFields)
   return {
     form,
     loading,
@@ -69,7 +72,7 @@ export default function (
       if (options.validator) {
         return options.validator.call(
           { $t: translator.t.bind(translator) },
-          mergedFields.value,
+          mergedFields,
           value
         )
       } else {
@@ -81,7 +84,7 @@ export default function (
       loading.value = true
 
       // reset error messages
-      Object.values(mergedFields.value).forEach(field => {
+      Object.values(mergedFields).forEach(field => {
         field.errors = null
       })
 
@@ -94,9 +97,9 @@ export default function (
       if (valid) {
         formRef.resetValidation()
 
-        const fieldsWithValues = Object.keys(mergedFields.value)
+        const fieldsWithValues = Object.keys(mergedFields)
           .reduce((prev: any, curr: string) => {
-            prev[curr] = mergedFields.value[curr].value
+            prev[curr] = mergedFields[curr].value
             return prev
           }, {})
 
