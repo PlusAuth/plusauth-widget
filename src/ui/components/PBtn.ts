@@ -1,4 +1,5 @@
-import { ComponentPublicInstance , defineComponent, h } from 'vue';
+import type { ComponentPublicInstance } from 'vue';
+import { defineComponent, h } from 'vue';
 
 
 import { Colorable, Themeable } from '../mixins';

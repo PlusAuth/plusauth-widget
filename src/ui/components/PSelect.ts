@@ -1,7 +1,8 @@
 import flip from '@popperjs/core/lib/modifiers/flip';
 import offset from '@popperjs/core/lib/modifiers/offset';
 import preventOverflow from '@popperjs/core/lib/modifiers/preventOverflow';
-import { createPopper, Instance } from '@popperjs/core/lib/popper-lite';
+import type { Instance } from '@popperjs/core/lib/popper-lite';
+import { createPopper } from '@popperjs/core/lib/popper-lite';
 import { defineComponent, h, withDirectives, reactive, toRefs, ref, onMounted } from 'vue';
 
 import { i18n } from '../directives/i18n';

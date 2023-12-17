@@ -1,4 +1,4 @@
-import { AdditionalFields } from '../interfaces';
+import type { AdditionalFields } from '../interfaces';
 export const CustomizableFormProps = {
   fields: {
     type: Object as () => AdditionalFields,

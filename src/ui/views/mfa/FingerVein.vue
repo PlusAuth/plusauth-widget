@@ -82,13 +82,13 @@
 </template>
 
 <script lang="ts">
-import { PlusAuthWeb, MFACodeType } from '@plusauth/web';
 import { defineComponent, inject, onMounted, reactive, ref } from 'vue';
 
 import GenericForm from '../../components/GenericForm.vue';
 import Hand from '../../components/Hand.vue';
 import PLoading from '../../components/PLoading';
 import { CustomizableFormProps } from '../../mixins/customizable_form';
+import type { FetchWrapper } from '../../utils/fetch';
 import form_generics from '../../utils/form_generics';
 import { H1FingerVeinService } from '../../utils/fv_helper';
 
@@ -99,7 +99,7 @@ export default defineComponent({
     ...CustomizableFormProps
   },
   setup(props){
-    const api = inject('api') as PlusAuthWeb
+    const http = inject('http') as FetchWrapper
     const context = inject('context') as any
     const loadingMsg = ref<string | null>(null as any)
     const deviceOk = ref<boolean>(false)
@@ -183,14 +183,17 @@ export default defineComponent({
               })
             } else {
               loadingMsg.value = 'mfa.fv.saving'
-              await api.auth.updateMissingInformation({
-                templates
+              await http.post({
+                body: { templates }
               })
             }
           }else {
             loadingMsg.value = 'mfa.fv.verifyInProgress'
             const resp = await fv.verify(1, context.details.fv_template)
-            await api.mfa.validateCode(MFACodeType.FINGER_VEIN, resp )
+
+            await http.post({
+              body: resp
+            })
           }
         }catch (e) {
           if(e.retCode){

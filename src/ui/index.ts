@@ -2,7 +2,7 @@ import { createApp, watch } from 'vue';
 
 import { installComponents } from './components';
 import { i18n } from './directives/i18n';
-import { IPlusAuthContext, IWidgetSettings } from './interfaces';
+import type { IPlusAuthContext, IWidgetSettings } from './interfaces';
 import { Translatable } from './mixins';
 import { router } from './utils/router';
 import { Theme } from './utils/theme';

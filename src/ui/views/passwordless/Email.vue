@@ -62,14 +62,15 @@
 </template>
 
 <script lang="ts">
-import { PlusAuthWeb } from '@plusauth/web';
 import { defineComponent, inject } from 'vue';
 
 import GenericForm from '../../components/GenericForm.vue';
-import { AdditionalFields } from '../../interfaces';
+import type { AdditionalFields } from '../../interfaces';
 import { CustomizableFormProps } from '../../mixins/customizable_form';
+import type { FetchWrapper } from '../../utils/fetch';
 import form_generics from '../../utils/form_generics';
-import { Translator, translatorKey } from '../../utils/translator';
+import type { Translator } from '../../utils/translator';
+import { translatorKey } from '../../utils/translator';
 
 
 export default defineComponent({
@@ -79,7 +80,7 @@ export default defineComponent({
     ...CustomizableFormProps
   },
   setup(props){
-    const api = inject('api') as PlusAuthWeb
+    const http = inject('http') as FetchWrapper
     const context = inject('context') as any
     const translator = inject(translatorKey) as Translator
 
@@ -112,9 +113,9 @@ export default defineComponent({
     const { form, loading, submit, validate, fields: finalFields } = form_generics.call(
       props,
       defaultFields,
-      async (fieldWithValues) => {
+      async (values) => {
         try{
-          await api.auth.signInPasswordless('email', fieldWithValues)
+          await http.post({ body: values })
         }catch (e) {
           if (e.error) {
             if(e.error === 'invalid_code'){

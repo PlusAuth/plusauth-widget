@@ -73,14 +73,14 @@
 </template>
 
 <script lang="ts">
-import { PlusAuthWeb } from '@plusauth/web';
 import { defineComponent, ref, inject } from 'vue';
 
 import GenericForm from '../components/GenericForm.vue';
 import SocialConnectionButton from '../components/SocialConnectionButton';
-import { AdditionalFields } from '../interfaces';
+import type { AdditionalFields } from '../interfaces';
 import { CustomizableFormProps } from '../mixins/customizable_form';
 import { resolveClientLogo } from '../utils';
+import type { FetchWrapper } from '../utils/fetch';
 import form_generics from '../utils/form_generics';
 
 export default defineComponent({
@@ -98,9 +98,9 @@ export default defineComponent({
     ...CustomizableFormProps
   },
   setup(props) {
-    const api = inject('api') as PlusAuthWeb
     const context = inject('context') as any
     const passwordVisible = ref(false)
+    const http = inject('http') as FetchWrapper
 
     const connection = context.connection || {}
     const isPasswordless = connection.type && ![
@@ -131,10 +131,10 @@ export default defineComponent({
     const { form, loading, submit, validate, fields: finalFields } = form_generics.call(
       props,
       defaultFields,
-      async (fieldWithValues) => {
+      async (values) => {
         form.value.toggleAlert(null)
         try {
-          await api.auth.signIn(fieldWithValues)
+          await http.post({ body: values })
         } catch (e) {
           if (e.error) {
             switch (e.error) {

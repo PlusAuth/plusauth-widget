@@ -1,4 +1,5 @@
-import { Ref, ref } from 'vue';
+import type { Ref } from 'vue';
+import { ref } from 'vue';
 
 import { escapeRegExp, isObject, keysToDotNotation, parseArgs, propertyAccessor } from '.';
 

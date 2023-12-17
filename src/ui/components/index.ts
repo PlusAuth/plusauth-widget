@@ -1,4 +1,4 @@
-import { App } from 'vue';
+import type { App } from 'vue';
 
 import PAlert from './PAlert';
 import PasswordStrength from './PasswordStrength';

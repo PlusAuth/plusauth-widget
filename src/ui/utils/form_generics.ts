@@ -1,10 +1,12 @@
 import deepmerge from 'deepmerge';
-import { ref, inject, unref, MaybeRef, reactive } from 'vue';
+import type { MaybeRef } from 'vue';
+import { ref, inject, unref, reactive } from 'vue';
 
-import GenericForm from '../components/GenericForm.vue';
-import { AdditionalFields, FieldDefinition } from '../interfaces';
+import type GenericForm from '../components/GenericForm.vue';
+import type { AdditionalFields, FieldDefinition } from '../interfaces';
 
-import { Translator, translatorKey } from './translator';
+import type { Translator } from './translator';
+import { translatorKey } from './translator';
 
 import { isEmail, isPhone } from '.';
 

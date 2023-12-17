@@ -1,4 +1,5 @@
-import { defineComponent, h, computed, ref, Ref } from 'vue';
+import type { Ref } from 'vue';
+import { defineComponent, h, computed, ref } from 'vue';
 
 import { PTextField } from '.';
 

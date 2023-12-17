@@ -1,16 +1,16 @@
-import { PlusAuthWeb } from '@plusauth/web';
 import deepmerge from 'deepmerge';
-import { App, reactive } from 'vue';
+import type { App } from 'vue';
+import { reactive } from 'vue';
 
 import defaultDictionary from './i18n'
 import { createTranslator, createWidget } from './ui';
-import { IPlusAuthContext, IWidgetSettings } from './ui/interfaces';
-import { createFetchWrapper, FetchWrapper } from './ui/utils/fetch';
-import { Translator } from './ui/utils/translator';
+import type { IPlusAuthContext, IWidgetSettings } from './ui/interfaces';
+import type { FetchWrapper } from './ui/utils/fetch';
+import { createFetchWrapper } from './ui/utils/fetch';
+import type { Translator } from './ui/utils/translator';
 
 export default class PlusAuthWidget {
   private _view: App<Element>;
-  public api: PlusAuthWeb;
   public i18n: Translator;
   public http: FetchWrapper;
 
@@ -18,9 +18,7 @@ export default class PlusAuthWidget {
     settings: Partial<IWidgetSettings> = {},
     context: Partial<IPlusAuthContext>) {
 
-    this.http = createFetchWrapper()
-    this.api = new PlusAuthWeb(settings.apiUrl ||
-    location.origin !== 'null' ? window.location.origin : '/')
+    this.http = createFetchWrapper(settings.apiUrl)
 
     const reactiveSettings = reactive(deepmerge( {
       locale: {

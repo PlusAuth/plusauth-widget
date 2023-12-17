@@ -106,9 +106,9 @@
 <script lang="ts">
 import { computed, defineComponent, reactive, ref } from 'vue';
 
-import { AdditionalFields } from '../interfaces';
+import type { AdditionalFields } from '../interfaces';
 
-import { PAlertProps } from './PAlert';
+import type { PAlertProps } from './PAlert';
 import PCheckBox from './PCheckBox';
 import PCodeInput from './PCodeInput';
 

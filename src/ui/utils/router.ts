@@ -6,7 +6,7 @@ import {
   RouterView
 } from 'vue-router';
 
-import { IWidgetSettings } from '../interfaces';
+import type { IWidgetSettings } from '../interfaces';
 import Consent from '../views/Consent.vue';
 import FillMissing from '../views/FillMissing.vue';
 import ForgotPassword from '../views/ForgotPassword.vue';

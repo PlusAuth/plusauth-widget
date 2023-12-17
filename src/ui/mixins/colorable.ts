@@ -1,4 +1,4 @@
-import { ComponentOptions, PropType } from 'vue';
+import type { ComponentOptions, PropType } from 'vue';
 
 function isCssColor(color?: string | false): boolean {
   return !!color && !!color.match(/^(#|var\(--|(rgb|hsl)a?\()/)

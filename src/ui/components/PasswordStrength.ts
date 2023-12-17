@@ -1,6 +1,7 @@
 import { defineComponent, h, inject } from 'vue';
 
-import { Translator, translatorKey } from '../utils/translator';
+import type { Translator } from '../utils/translator';
+import { translatorKey } from '../utils/translator';
 
 import PMessage from './PMessage';
 

@@ -79,15 +79,16 @@
 </template>
 
 <script lang="ts">
-import { PlusAuthWeb } from '@plusauth/web';
 import { defineComponent, inject } from 'vue';
 
 import {  PasswordStrength } from '../components';
 import GenericForm from '../components/GenericForm.vue';
 import SocialConnectionButton from '../components/SocialConnectionButton';
-import { AdditionalFields } from '../interfaces';
+import type { AdditionalFields } from '../interfaces';
 import { CustomizableFormProps } from '../mixins/customizable_form';
 import { resolveClientLogo } from '../utils';
+import { checkPasswordStrength } from '../utils/check_passsword_strength';
+import type { FetchWrapper } from '../utils/fetch';
 import form_generics from '../utils/form_generics';
 
 export default defineComponent({
@@ -104,7 +105,7 @@ export default defineComponent({
     ...CustomizableFormProps
   },
   setup(props){
-    const api = inject('api') as PlusAuthWeb
+    const http = inject('http') as FetchWrapper
     const context = inject('context') as any
     const connection = context.connection || {}
     const isPasswordless = !['social','enterprise', 'plusauth'].includes(connection.type)
@@ -128,7 +129,7 @@ export default defineComponent({
             autocomplete: 'new-password'
           },
           async validator(fields, value){
-            return api.auth.checkPasswordStrength(value, context.settings?.passwordPolicy || {})
+            return checkPasswordStrength(value, context.settings?.passwordPolicy || {})
           }
         },
         rePassword: {
@@ -151,9 +152,9 @@ export default defineComponent({
     const { form, loading, submit, validate, fields: finalFields } = form_generics.call(
       props,
       defaultFields,
-      async (fieldWithValues) => {
+      async (values) => {
         try{
-          const result = await api.auth.signUp(fieldWithValues)
+          const result = await http.post({ body: values })
           if(result && result.message === 'verification_email_sent'){
             context.details.email = finalFields.email?.value
             context.details.email_verified = false

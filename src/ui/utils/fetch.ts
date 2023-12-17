@@ -1,7 +1,8 @@
+type RequestOptions = RequestInit & { body?: object, query?: object }
 export type FetchWrapper = Record<
 'get' | 'post' | 'patch' | 'delete',
 (
-  endpoint: string,
+  endpointOrOptions: string | RequestOptions,
   options?: Omit<RequestInit, 'body'> & { body?: Record<string, any>, query?: Record<string, any> }
 ) => Promise<any>
 >;
@@ -13,15 +14,18 @@ const toQueryString = params => !params ? '' : `?${Object.entries(params)
   )
   .join('&')}`;
 
-export function createFetchWrapper() {
-  const baseUrl = window.location.origin;
+export function createFetchWrapper(baseUrl?: string) {
+  baseUrl = baseUrl || window.location.origin;
   const http: FetchWrapper = {} as any
 
   ['get', 'post', 'patch', 'delete'].forEach(method => {
     http[method] = function (
-      endpoint: string,
-      options: RequestInit & { body?: object, query?: object }
+      endpointOrOptions: string | RequestOptions,
+      options: RequestOptions
     ) {
+      const url = typeof endpointOrOptions === 'string' ? endpointOrOptions
+        : window.location.pathname;
+      options = options || endpointOrOptions
       const fetchOptions: RequestInit = Object.assign({}, options || {}, {
         method,
         credentials: 'include',
@@ -37,9 +41,8 @@ export function createFetchWrapper() {
         fetchOptions.body = JSON.stringify(fetchOptions.body)
       }
 
-      const url = `${baseUrl}${endpoint}${toQueryString(options.query)}`
       return new Promise(function (resolve, reject) {
-        fetch(url, fetchOptions).then(rawResponse => {
+        fetch(`${baseUrl}${url}${toQueryString(options.query)}`, fetchOptions).then(rawResponse => {
           const contentType = rawResponse.headers.get('content-type')
           if (rawResponse.redirected && contentType && contentType.includes('html')) {
             window.location.assign(rawResponse.url)

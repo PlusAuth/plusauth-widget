@@ -1,4 +1,4 @@
-import { ComponentOptions } from 'vue';
+import type { ComponentOptions } from 'vue';
 
 export const Validatable: ComponentOptions = {
   inject: ['form'],

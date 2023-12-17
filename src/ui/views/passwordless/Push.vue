@@ -105,11 +105,12 @@ import { useRoute } from 'vue-router';
 
 import GenericForm from '../../components/GenericForm.vue';
 import PLoading from '../../components/PLoading';
-import { AdditionalFields } from '../../interfaces';
+import type { AdditionalFields } from '../../interfaces';
 import { CustomizableFormProps } from '../../mixins/customizable_form';
-import { FetchWrapper } from '../../utils/fetch';
+import type { FetchWrapper } from '../../utils/fetch';
 import form_generics from '../../utils/form_generics';
-import { Translator, translatorKey } from '../../utils/translator';
+import type { Translator } from '../../utils/translator';
+import { translatorKey } from '../../utils/translator';
 
 export default defineComponent({
   name: 'Push',
@@ -158,7 +159,7 @@ export default defineComponent({
     }))
     async function pollPushValidation(resolve, reject){
       try{
-        resolve(await http.post(window.location.pathname, {
+        resolve(await http.post({
           body: {}
         }))
       }catch (e) {
@@ -173,9 +174,9 @@ export default defineComponent({
     const { form, loading, submit, fields: finalFields, validate } = form_generics.call(
       props,
       defaultFields,
-      async (fieldWithValues) => {
+      async (values) => {
         try{
-          await http.post(window.location.pathname, fieldWithValues)
+          await http.post({ body: values })
         }catch (e) {
           form.value.toggleAlert(e.error ? `errors.${e.error}` : e.message, {
             dismissible: false
@@ -204,7 +205,7 @@ export default defineComponent({
         }
       })
 
-    }, { flush: 'post' } )
+    }, { immediate: true, flush: 'post' } )
     return {
       finalFields,
       resendLink,

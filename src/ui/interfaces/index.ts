@@ -1,4 +1,4 @@
-import defaultDictionary from '../../i18n/en';
+import type defaultDictionary from '../../i18n/en';
 
 export interface IClient {
   logoUri?: string;

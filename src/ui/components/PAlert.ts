@@ -1,4 +1,5 @@
-import { defineComponent, h, PropType, Transition, watchEffect } from 'vue';
+import type { PropType } from 'vue';
+import { defineComponent, h, Transition, watchEffect } from 'vue';
 
 import { Colorable, Themeable } from '../mixins';
 

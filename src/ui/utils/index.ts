@@ -1,6 +1,6 @@
-import { ComponentPublicInstance } from 'vue';
+import type { ComponentPublicInstance } from 'vue';
 
-import { IClient } from '../interfaces';
+import type { IClient } from '../interfaces';
 
 export function convertToUnit(str: string | number | null | undefined,
                               unit = 'px'): string | undefined {

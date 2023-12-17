@@ -1,7 +1,8 @@
-import { defineComponent, h, withDirectives, VNode, Transition } from 'vue';
+import type { VNode } from 'vue';
+import { defineComponent, h, withDirectives, Transition } from 'vue';
 
 import { i18n } from '../directives/i18n';
-import { ITranslatePath } from '../interfaces';
+import type { ITranslatePath } from '../interfaces';
 import { Colorable } from '../mixins';
 
 function generateMessageVNode(message: ITranslatePath, name: string): VNode {

@@ -20,4 +20,5 @@ After that all we need to initialize the widget like following:
 ```
 
 # Configuration
-TODO
+
+[//]: # (TODO)
