@@ -2,8 +2,8 @@ import PlusAuthWidget from './src';
 
 window['PlusAuth'] = {
   ui_locales: [
-    { name: 'Turkce', value: 'tr' },
-    { name: 'English', value: 'en' },
+    {name: 'Turkce', value: 'tr'},
+    {name: 'English', value: 'en'},
   ],
   client: {
     clientName: 'TestApp',
@@ -48,7 +48,11 @@ const auth = new PlusAuthWidget('#pa__app', {
     defaultLocale: 'en',
     dictionary: {
       tr: {
+        errors: {
+          field_required: 'Alan zorunlu'
+        },
         common: {
+
           edit: 'Degistir'
         },
         login: {
@@ -91,8 +95,7 @@ const auth = new PlusAuthWidget('#pa__app', {
   }
 }, window['PlusAuth'])
 
-setTimeout(()=>{
-  console.log('changesettings')
+setTimeout(() => {
   auth.view.modeOptions.login.fields.email.value ='test@test.com'
-},100)
+}, 100)
 auth.view.mode = 'login'

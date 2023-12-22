@@ -4,6 +4,8 @@
       <PSelect
         v-model="translator.locale"
         flat
+        label="Language"
+        style="width: auto; margin: 0"
         dense
         hide-messages
         :items="languages"

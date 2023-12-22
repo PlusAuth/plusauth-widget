@@ -41,7 +41,6 @@
   >
     <a
       v-t="'mfa.tryAnotherWay'"
-      class="pa__primary--text"
       href="/signin/challenge"
     />
   </div>
@@ -51,9 +50,9 @@
 import { defineComponent, inject } from 'vue';
 
 import GenericForm from '../../components/GenericForm.vue';
-import PTimer from '../../components/PTimer';
+import PTimer from '../../components/PTimer/PTimer';
 import type { AdditionalFields } from '../../interfaces';
-import { CustomizableFormProps } from '../../mixins/customizable_form';
+import { CustomizableFormProps } from '../../utils/customizable_form';
 import type { FetchWrapper } from '../../utils/fetch';
 import form_generics from '../../utils/form_generics';
 

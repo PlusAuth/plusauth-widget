@@ -4,7 +4,6 @@
       1. Download Google Authenticator
       <a
         target="_blank"
-        class="pa__primary--text"
         href="https://play.google.com/store/apps/
 details?id=com.google.android.apps.authenticator2"
       >
@@ -12,7 +11,6 @@ details?id=com.google.android.apps.authenticator2"
       </a>
       /
       <a
-        class="pa__primary--text"
         href="https://apps.apple.com/us/app/google-authenticator/id388497605"
         target="_blank"
       >iOS</a>
@@ -65,6 +63,7 @@ details?id=com.google.android.apps.authenticator2"
     <p-btn
       block
       color="primary"
+      type="submit"
       :loading="loading"
       @click="submit"
     >
@@ -78,7 +77,7 @@ import { defineComponent, inject, ref } from 'vue';
 
 import GenericForm from '../../components/GenericForm.vue';
 import type { AdditionalFields } from '../../interfaces';
-import { CustomizableFormProps } from '../../mixins/customizable_form';
+import { CustomizableFormProps } from '../../utils/customizable_form';
 import type { FetchWrapper } from '../../utils/fetch';
 import form_generics from '../../utils/form_generics';
 import type { Translator } from '../../utils/translator';
@@ -107,6 +106,7 @@ export default defineComponent({
           append: {
             element: 'button',
             props: {
+              type: 'button',
               class: 'pa__btn pa__btn--flat pa__pw-toggle-visibility',
               onClick: (e) => {
                 e.preventDefault()

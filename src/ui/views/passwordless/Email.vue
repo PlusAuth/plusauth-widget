@@ -16,7 +16,6 @@
     <div class="pa__logo-container">
       <img
         id="mainLogo"
-        style="max-height: 150px; margin-left: 40px;"
         class="pa__logo"
         alt="Logo"
         src="https://static.plusauth.com/images/icons/email_question.svg"
@@ -54,7 +53,6 @@
         style="padding-right: 4px"
       /><a
         v-t="'verifyEmail.resendAction'"
-        class="pa__primary--text"
         :href="resendLink"
       />
     </p>
@@ -66,7 +64,7 @@ import { defineComponent, inject } from 'vue';
 
 import GenericForm from '../../components/GenericForm.vue';
 import type { AdditionalFields } from '../../interfaces';
-import { CustomizableFormProps } from '../../mixins/customizable_form';
+import { CustomizableFormProps } from '../../utils/customizable_form';
 import type { FetchWrapper } from '../../utils/fetch';
 import form_generics from '../../utils/form_generics';
 import type { Translator } from '../../utils/translator';
@@ -95,6 +93,7 @@ export default defineComponent({
           append: {
             element: 'button',
             props: {
+              type: 'button',
               class: 'pa__btn pa__btn--flat pa__pw-toggle-visibility',
               onClick: (e) => {
                 e.preventDefault()

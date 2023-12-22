@@ -108,13 +108,14 @@ import { computed, defineComponent, reactive, ref } from 'vue';
 
 import type { AdditionalFields } from '../interfaces';
 
-import type { PAlertProps } from './PAlert';
-import PCheckBox from './PCheckBox';
-import PCodeInput from './PCodeInput';
+import type { PAlertProps } from './PAlert/PAlert';
+import PCheckBox from './PCheckBox/PCheckBox.vue';
+import PCodeInput from './PCodeInput/PCodeInput';
+import PForm from './PForm.vue';
 
 export default defineComponent( {
   name: 'GenericForm',
-  components: { PCheckBox, PCodeInput },
+  components: { PCheckBox, PCodeInput, PForm },
   props: {
     submit: {
       type: Function as () => any,

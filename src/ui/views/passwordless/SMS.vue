@@ -45,9 +45,9 @@
 import { defineComponent, inject } from 'vue';
 
 import GenericForm from '../../components/GenericForm.vue';
-import PTimer from '../../components/PTimer';
+import PTimer from '../../components/PTimer/PTimer';
 import type { AdditionalFields } from '../../interfaces';
-import { CustomizableFormProps } from '../../mixins/customizable_form';
+import { CustomizableFormProps } from '../../utils/customizable_form';
 import type { FetchWrapper } from '../../utils/fetch';
 import form_generics from '../../utils/form_generics';
 import type { Translator } from '../../utils/translator';
@@ -77,6 +77,7 @@ export default defineComponent({
           append: {
             element: 'button',
             props: {
+              type: 'button',
               class: 'pa__btn pa__btn--flat pa__pw-toggle-visibility',
               onClick: (e) => {
                 e.preventDefault()

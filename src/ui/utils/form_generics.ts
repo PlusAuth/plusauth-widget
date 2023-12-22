@@ -29,19 +29,19 @@ export default function (
           visible: 'hidden',
           value: context.params.state
         },
-      }: {},
+      } : {},
       unref(defaultFields || {})
     ),
     fields || {},
     { clone: false }
   )
   for (const field in merged) {
-    if(!merged[field]){
+    if (!merged[field]) {
       delete merged[field]
     }
   }
   for (const field in fields) {
-    if(!fields[field]){
+    if (!fields[field]) {
       delete fields[field]
     }
   }
@@ -54,20 +54,20 @@ export default function (
     fields: mergedFields,
     validate(options: FieldDefinition, field: string, value: any): any {
       if(options.required !== false && !value){
-        return translator.t('errors.field_required', [
-          translator.t(`common.fields.${field}`)
-        ])
+        return translator.t('errors.field_required', {
+          field: translator.t(`common.fields.${field}`)
+        })
       }
-      if(value){
-        if(options.format === 'email' && !isEmail(value)){
-          return translator.t('errors.invalid_entity', [
-            translator.t(`common.fields.${field}`)
-          ])
+      if (value) {
+        if (options.format === 'email' && !isEmail(value)) {
+          return translator.t('errors.invalid_entity', {
+            field: translator.t(`common.fields.${field}`)
+          })
         }
-        if(options.format === 'tel' && !isPhone(value)){
-          return translator.t('errors.invalid_entity', [
-            translator.t(`common.fields.${field}`)
-          ])
+        if (options.format === 'tel' && !isPhone(value)) {
+          return translator.t('errors.invalid_entity', {
+            field: translator.t(`common.fields.${field}`)
+          })
         }
       }
 
@@ -95,8 +95,8 @@ export default function (
         throw new Error('Form ref not found')
         return
       }
-      const valid = await formRef.validate()
-      if (valid) {
+      const validationResult = await formRef.validate()
+      if (validationResult.valid) {
         formRef.resetValidation()
 
         const fieldsWithValues = Object.keys(mergedFields)
@@ -105,10 +105,10 @@ export default function (
             return prev
           }, {})
 
-        try{
+        try {
           await action?.(fieldsWithValues)
-        }catch (e) {
-          if(responseErrorHandler){
+        } catch (e) {
+          if (responseErrorHandler) {
             responseErrorHandler.call(undefined, e)
           }
           loading.value = false

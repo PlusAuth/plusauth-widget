@@ -1,0 +1,26 @@
+.code-input {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  &--digit-box {
+    &.input {
+      flex: unset;
+      .input--wrap {
+        margin: 0 auto;
+        max-width: 40px;
+        padding: 1px;
+      }
+      &.input-focused {
+        .input--wrap {
+          padding: 0;
+          border-width: 2px;
+        }
+      }
+      input {
+        max-width: 40px;
+        text-align: center;
+        padding: 0;
+      }
+    }
+  }
+}

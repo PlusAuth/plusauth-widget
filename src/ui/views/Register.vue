@@ -64,14 +64,12 @@
     />
     <a
       v-t="'login.signIn'"
-      class="pa__primary--text"
       href="/signin"
       @click.stop
     />
     <div v-if="!isPasswordless && features.forgotPassword">
       <a
         v-t="'login.forgotPassword'"
-        class="pa__primary--text"
         href="/signin/recovery"
       />
     </div>
@@ -85,9 +83,9 @@ import {  PasswordStrength } from '../components';
 import GenericForm from '../components/GenericForm.vue';
 import SocialConnectionButton from '../components/SocialConnectionButton';
 import type { AdditionalFields } from '../interfaces';
-import { CustomizableFormProps } from '../mixins/customizable_form';
 import { resolveClientLogo } from '../utils';
 import { checkPasswordStrength } from '../utils/check_passsword_strength';
+import { CustomizableFormProps } from '../utils/customizable_form';
 import type { FetchWrapper } from '../utils/fetch';
 import form_generics from '../utils/form_generics';
 

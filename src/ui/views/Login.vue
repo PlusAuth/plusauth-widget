@@ -55,7 +55,6 @@
       />
       <a
         v-t="'login.signUp'"
-        class="pa__primary--text"
         tabindex="0"
         href="/signup"
         @click.stop
@@ -64,7 +63,6 @@
     <div v-if="!isPasswordless && features.forgotPassword">
       <a
         v-t="'login.forgotPassword'"
-        class="pa__primary--text"
         tabindex="0"
         href="/signin/recovery"
       />
@@ -78,8 +76,8 @@ import { defineComponent, ref, inject } from 'vue';
 import GenericForm from '../components/GenericForm.vue';
 import SocialConnectionButton from '../components/SocialConnectionButton';
 import type { AdditionalFields } from '../interfaces';
-import { CustomizableFormProps } from '../mixins/customizable_form';
 import { resolveClientLogo } from '../utils';
+import { CustomizableFormProps } from '../utils/customizable_form';
 import type { FetchWrapper } from '../utils/fetch';
 import form_generics from '../utils/form_generics';
 
@@ -117,7 +115,8 @@ export default defineComponent({
           autocomplete: identifierField
         },
         type: 'text',
-        label: `common.fields.${  identifierField}`
+        label: `common.fields.${  identifierField}`,
+        format: identifierField === 'email' ? 'email' : undefined
       },
       ...isPasswordless ? {} : {
         password: {

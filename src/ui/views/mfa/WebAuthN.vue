@@ -7,7 +7,7 @@
        align-items: center; flex-direction: column; left: 0; justify-content: center;
         background: white; opacity: 1;"
       >
-        <p-loading
+        <p-spinner
           color="primary"
           indeterminate
         />
@@ -30,7 +30,6 @@
     >
       <a
         v-t="'mfa.tryAnotherWay'"
-        class="pa__primary--text"
         href="/signin/challenge"
       />
     </div>
@@ -48,7 +47,7 @@ import { defineComponent, inject, onMounted, ref } from 'vue';
 
 import GenericForm from '../../components/GenericForm.vue';
 import type { AdditionalFields } from '../../interfaces';
-import { CustomizableFormProps } from '../../mixins/customizable_form';
+import { CustomizableFormProps } from '../../utils/customizable_form';
 import type { FetchWrapper } from '../../utils/fetch';
 import form_generics from '../../utils/form_generics';
 import type { Translator } from '../../utils/translator';

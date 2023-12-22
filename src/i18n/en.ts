@@ -74,7 +74,7 @@ export default {
     code_already_used: 'Code was already used',
     code_expired: 'Code has expired',
     email_not_verified: 'Email is not verified. Please verify your email by clicking the link that has been sent to your email account.',
-    field_required: '{0} is required.',
+    field_required: '{field} is required.',
     incorrect_code: 'Verification code is invalid',
     invalid_code: 'Code is invalid',
     invalid_entity: 'Invalid {field}',

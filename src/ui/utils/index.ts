@@ -1,5 +1,3 @@
-import type { ComponentPublicInstance } from 'vue';
-
 import type { IClient } from '../interfaces';
 
 export function convertToUnit(str: string | number | null | undefined,
@@ -13,51 +11,16 @@ export function convertToUnit(str: string | number | null | undefined,
   }
 }
 
-
-function isCssColor(color?: string | false): boolean {
-  return !!color && !!color.match(/^(#|var\(--|(rgb|hsl)a?\()/)
-}
-
-export function setBackgroundColor(this: ComponentPublicInstance,
-                                   color?: string | false, data: any = {}) {
-  if (typeof data.style === 'string') {
-    // istanbul ignore next
-    console.error('style must be an object', this)
-    // istanbul ignore next
-    return data
-  }
-  if (typeof data.class === 'string') {
-    // istanbul ignore next
-    console.error('class must be an object', this)
-    // istanbul ignore next
-    return data
-  }
-  if (isCssColor(color)) {
-    data.style = {
-      ...data.style as Record<string, unknown>,
-      'background-color': `${color}`,
-      'border-color': `${color}`,
-    }
-  } else if (color) {
-    data.class = {
-      ...data.class,
-      [color]: true,
-    }
-  }
-
-  return data
-}
-
 export function propertyAccessor(object: Record<string, any>,
                                  keys: string | null,
-                                 array?: any[] | any): string | undefined {
+                                 array?: any[] | any): string | null | undefined {
   if(!object){
     return undefined
   }
   array = array || keys?.toString().split('.')
 
   if (array.length > 1) {
-    return propertyAccessor(object[array.shift()], null, array)
+    return propertyAccessor(object[array.shift()], null, array) || keys
   } else {
     return object[array]
   }
@@ -168,4 +131,17 @@ export function isEmail(value: string): boolean {
 
 export function isPhone(value: string): boolean {
   return /^(\+)?([ 0-9]){10,16}$/.test(value)
+}
+
+const isHexColor = (str: string) => str.startsWith('#')
+const resolveColor = (color: string) => {
+  return isHexColor(color) ? color :`rgb(var(--pa-color-${color}-DEFAULT))`
+}
+export function setColorStyle(props: { color?: string, textColor?: string } ){
+  return {
+    ...props.color ? {
+      background: resolveColor(props.color)
+    } : {},
+    ...props.textColor ? { color: resolveColor(props.textColor) } : {},
+  }
 }

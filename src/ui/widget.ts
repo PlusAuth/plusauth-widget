@@ -1,6 +1,6 @@
 import type { DefineComponent } from 'vue';
 import { defineComponent, h, ref, onBeforeUnmount, inject } from 'vue';
-import './styles/main.sass'
+import './styles/main.css'
 
 import { RouterView, useRoute } from 'vue-router';
 

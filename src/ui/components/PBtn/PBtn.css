@@ -1,0 +1,53 @@
+.btn {
+  @apply relative inline-flex justify-center items-center
+  cursor-pointer
+  rounded-sm
+  bg-primary text-white
+  text-sm font-medium uppercase select-none whitespace-nowrap decoration-0
+  px-4 h-8
+  hover:opacity-80
+  focus:ring-2 ring-primary/30 focus:outline-none;
+
+  transition-property: box-shadow, transform, opacity;
+
+  &--block {
+    @apply w-full;
+  }
+  &--flat {
+    @apply bg-transparent text-primary;
+  }
+}
+
+.btn__loader {
+  align-items: center;
+  display: flex;
+  height: 100%;
+  background: inherit;
+  justify-content: center;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
+.btn--block {
+  display: flex;
+  flex: 1 0 auto;
+  min-width: 100% !important;
+}
+
+.btn--disabled {
+  box-shadow: none;
+  pointer-events: none;
+}
+
+.btn--loading {
+  pointer-events: none;
+  transition: none;
+
+  .btn__content {
+    opacity: 0;
+  }
+}
+.btn--flat {
+  background-color: transparent;
+}

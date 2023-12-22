@@ -50,7 +50,7 @@
           :key="device.model"
           style="border: 1px solid; padding: 12px; display: flex; align-items: center"
         >
-          <PLoading
+          <PSpinner
             v-if="loading"
             indeterminate
           />
@@ -79,7 +79,6 @@
       <p align="center">
         <a
           v-t="'passwordless.push.tryCodeAction'"
-          class="pa__primary--text"
           @click="$router.push({ query: { useCode: 'true' } })"
         />
       </p>
@@ -91,7 +90,6 @@
 
         <a
           v-t="'verifyEmail.resendAction'"
-          class="pa__primary--text"
           :href="resendLink"
         />
       </p>
@@ -104,9 +102,9 @@ import { computed, defineComponent, inject, nextTick, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 
 import GenericForm from '../../components/GenericForm.vue';
-import PLoading from '../../components/PLoading';
+import PSpinner from '../../components/PSpinner/PSpinner';
 import type { AdditionalFields } from '../../interfaces';
-import { CustomizableFormProps } from '../../mixins/customizable_form';
+import { CustomizableFormProps } from '../../utils/customizable_form';
 import type { FetchWrapper } from '../../utils/fetch';
 import form_generics from '../../utils/form_generics';
 import type { Translator } from '../../utils/translator';
@@ -114,7 +112,7 @@ import { translatorKey } from '../../utils/translator';
 
 export default defineComponent({
   name: 'Push',
-  components: { PLoading,  GenericForm },
+  components: { PSpinner,  GenericForm },
   props: {
     ...CustomizableFormProps
   },
@@ -140,6 +138,7 @@ export default defineComponent({
           append: {
             element: 'button',
             props: {
+              type: 'button',
               class: 'pa__btn pa__btn--flat pa__pw-toggle-visibility',
               onClick: (e) => {
                 e.preventDefault()

@@ -4,7 +4,6 @@
       1. Download Google Authenticator
       <a
         target="_blank"
-        class="pa__primary--text"
         href="https://play.google.com/store/apps/
 details?id=com.google.android.apps.authenticator2"
       >
@@ -13,7 +12,6 @@ details?id=com.google.android.apps.authenticator2"
       /
       <a
         href="https://apps.apple.com/us/app/google-authenticator/id388497605"
-        class="pa__primary--text"
         target="_blank"
       >iOS</a>
     </h4>
@@ -66,13 +64,12 @@ details?id=com.google.android.apps.authenticator2"
 
   <div class="pa__widget-content-actions">
     <p-btn
+      v-t="'common.submit'"
       block
       color="primary"
       :loading="loading"
       @click="submit"
-    >
-      <span v-t="'common.submit'" />
-    </p-btn>
+    />
   </div>
 
   <div
@@ -81,7 +78,6 @@ details?id=com.google.android.apps.authenticator2"
   >
     <a
       v-t="'mfa.tryAnotherWay'"
-      class="pa__primary--text"
       href="/signin/challenge"
     />
   </div>
@@ -92,7 +88,7 @@ import { defineComponent, inject, ref } from 'vue';
 
 import GenericForm from '../../components/GenericForm.vue';
 import type { AdditionalFields } from '../../interfaces';
-import { CustomizableFormProps } from '../../mixins/customizable_form';
+import { CustomizableFormProps } from '../../utils/customizable_form';
 import type { FetchWrapper } from '../../utils/fetch';
 import form_generics from '../../utils/form_generics';
 

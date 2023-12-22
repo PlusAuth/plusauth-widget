@@ -35,8 +35,8 @@
 import { defineComponent, inject } from 'vue';
 
 import GenericForm from '../components/GenericForm.vue';
-import { CustomizableFormProps } from '../mixins/customizable_form';
 import { resolveClientLogo } from '../utils';
+import { CustomizableFormProps } from '../utils/customizable_form';
 import type { FetchWrapper } from '../utils/fetch';
 import form_generics from '../utils/form_generics';
 

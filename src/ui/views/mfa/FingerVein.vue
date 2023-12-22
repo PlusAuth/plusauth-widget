@@ -57,7 +57,7 @@
       v-if="loading"
       style="position:absolute; top: 0; bottom: 0; right: 0; display: flex; align-items: center; flex-direction: column; left: 0; justify-content: center; background: white; opacity: 1;"
     >
-      <p-loading
+      <p-spinner
         color="primary"
         indeterminate
       />
@@ -75,7 +75,6 @@
   >
     <a
       v-t="'mfa.tryAnotherWay'"
-      class="pa__primary--text"
       href="/signin/challenge"
     />
   </div>
@@ -86,15 +85,15 @@ import { defineComponent, inject, onMounted, reactive, ref } from 'vue';
 
 import GenericForm from '../../components/GenericForm.vue';
 import Hand from '../../components/Hand.vue';
-import PLoading from '../../components/PLoading';
-import { CustomizableFormProps } from '../../mixins/customizable_form';
+import PSpinner from '../../components/PSpinner/PSpinner';
+import { CustomizableFormProps } from '../../utils/customizable_form';
 import type { FetchWrapper } from '../../utils/fetch';
 import form_generics from '../../utils/form_generics';
 import { H1FingerVeinService } from '../../utils/fv_helper';
 
 export default defineComponent({
   name: 'FingerVein',
-  components: { PLoading, Hand, GenericForm },
+  components: { PSpinner, Hand, GenericForm },
   props: {
     ...CustomizableFormProps
   },
@@ -215,7 +214,7 @@ export default defineComponent({
 })
 </script>
 
-<style  lang="scss">
+<style  lang="postcss">
 .hands_container{
   padding: 12px 0;
   display: flex;

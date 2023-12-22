@@ -30,7 +30,6 @@
           style="padding-right: 4px"
         /><a
           v-t="'verifyEmail.resendAction'"
-          class="pa__primary--text"
           :href="resendLink"
         />
       </p>
@@ -58,7 +57,6 @@ import { defineComponent,
   inject, ref, onMounted } from 'vue';
 
 import { resolveClientLogo } from '../utils';
-import { parseQueryUrl } from '../utils/url';
 
 export default defineComponent({
   name: 'VerifyEmail',
@@ -78,7 +76,6 @@ export default defineComponent({
     const error  = context.error?.error
     let loginUrl = context.autoSignIn && context.details?.tenantLoginUrl
     let time = ref<number>(5);
-    const queryParams = parseQueryUrl(window.location.search)
     const resendLink = `${window.location.pathname  }/resend`
     onMounted(() => {
       if(context.prompt?.mode && context.prompt.mode !== 'check' && context.autoSignIn && !error){
@@ -99,8 +96,7 @@ export default defineComponent({
       error,
       loginUrl,
       resendLink,
-      resolveClientLogo,
-      queryParams
+      resolveClientLogo
     }
   },
 })
