@@ -6,7 +6,7 @@ import {
   RouterView
 } from 'vue-router';
 
-import type { IWidgetSettings } from '../interfaces';
+import type { IPlusAuthContext, IWidgetSettings } from '../interfaces';
 import Consent from '../views/Consent.vue';
 import FillMissing from '../views/FillMissing.vue';
 import ForgotPassword from '../views/ForgotPassword.vue';
@@ -25,14 +25,17 @@ import Register from '../views/Register.vue';
 import ResetPassword from '../views/ResetPassword.vue';
 import VerifyEmail from '../views/VerifyEmail.vue';
 
-const PlainRouterView = defineComponent( {
-  render(){
+const PlainRouterView = defineComponent({
+  render() {
     return h(RouterView)
   }
 })
 
 
-export const router = (settings: Partial<IWidgetSettings>) => createRouter({
+export const router = (
+  settings: Partial<IWidgetSettings>,
+  context: Partial<IPlusAuthContext>
+) => createRouter({
   history: location.origin !== 'null' ? createWebHistory() : createMemoryHistory('/'),
   routes: [
     {
@@ -49,11 +52,11 @@ export const router = (settings: Partial<IWidgetSettings>) => createRouter({
           component: Consent,
           props: settings && settings.modeOptions && settings.modeOptions.consent
         },
-        {
+        ...context.settings?.forgot_password_enabled ? [{
           path: 'recovery',
           component: ForgotPassword,
           props: settings && settings.modeOptions && settings.modeOptions.recovery
-        },
+        }] : [],
         {
           path: 'passwordless/email',
           component: PasswordlessEmail,
@@ -117,11 +120,11 @@ export const router = (settings: Partial<IWidgetSettings>) => createRouter({
         },
       ]
     },
-    {
+    ...context.settings?.register_enabled ? [{
       path: '/signup',
       component: Register,
       props: settings && settings.modeOptions && settings.modeOptions.signup
-    },
+    }] : [],
     {
       path: '/account/verifyEmail',
       component: VerifyEmail,

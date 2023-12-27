@@ -3,7 +3,7 @@ import type { MaybeRef } from 'vue';
 import { ref, inject, unref, reactive } from 'vue';
 
 import type GenericForm from '../components/GenericForm.vue';
-import type { AdditionalFields, FieldDefinition } from '../interfaces';
+import type { AdditionalFields, FieldDefinition, IPlusAuthContext } from '../interfaces';
 
 import type { Translator } from './translator';
 import { translatorKey } from './translator';
@@ -18,7 +18,7 @@ export default function (
   const form = ref<typeof GenericForm>(null as any)
   const loading = ref<boolean>(false)
   const translator = inject(translatorKey) as Translator
-  const context = inject('context') as any
+  const context = inject('context') as IPlusAuthContext
 
   const { fields, responseErrorHandler } = this
   const merged = deepmerge(
@@ -93,7 +93,6 @@ export default function (
       const formRef = form.value?.formRef || form.value
       if(!formRef){
         throw new Error('Form ref not found')
-        return
       }
       const validationResult = await formRef.validate()
       if (validationResult.valid) {

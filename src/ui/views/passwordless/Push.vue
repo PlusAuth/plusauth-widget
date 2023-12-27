@@ -103,7 +103,7 @@ import { useRoute } from 'vue-router';
 
 import GenericForm from '../../components/GenericForm.vue';
 import PSpinner from '../../components/PSpinner/PSpinner';
-import type { AdditionalFields } from '../../interfaces';
+import type { AdditionalFields, IPlusAuthContext } from '../../interfaces';
 import { CustomizableFormProps } from '../../utils/customizable_form';
 import type { FetchWrapper } from '../../utils/fetch';
 import form_generics from '../../utils/form_generics';
@@ -120,7 +120,7 @@ export default defineComponent({
     const route = useRoute()
 
     const http = inject('http') as FetchWrapper
-    const context = inject('context') as any
+    const context = inject('context') as IPlusAuthContext
     const translator = inject(translatorKey) as Translator
 
     const manualMode = computed(() => route.query.useCode === 'true' )

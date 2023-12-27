@@ -1,5 +1,4 @@
 import type defaultDictionary from '../../i18n/en';
-import type { Theme } from '../utils/theme';
 
 export interface IClient {
   logoUri?: string;
@@ -79,7 +78,20 @@ export interface IWidgetSettings {
 }
 
 export interface ITenantSettings {
-  password_policy: any;
+  auto_sign_in: boolean,
+  forgot_password_enabled: boolean,
+  password_policy: {
+    min?: (number | null)
+    max?: (number | null)
+    custom_chars?: (string | null)
+    history?: (number | null)
+    upper_case?: (number | null)
+    lower_case?: (number | null)
+    number?: (number | null)
+  };
+  register_enabled: boolean,
+  welcome_emails_enabled: boolean,
+  tenant_login_url: boolean
 }
 
 export interface IPlusAuthContext {

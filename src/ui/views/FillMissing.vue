@@ -35,6 +35,7 @@
 import { defineComponent, inject } from 'vue';
 
 import GenericForm from '../components/GenericForm.vue';
+import type { IPlusAuthContext } from '../interfaces';
 import { resolveClientLogo } from '../utils';
 import { CustomizableFormProps } from '../utils/customizable_form';
 import type { FetchWrapper } from '../utils/fetch';
@@ -49,7 +50,7 @@ export default defineComponent({
   },
   setup(props){
     const http = inject('http') as FetchWrapper
-    const context = inject('context') as any
+    const context = inject('context') as IPlusAuthContext
 
     const contextFields = context?.details?.fields
 

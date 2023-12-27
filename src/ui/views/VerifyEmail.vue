@@ -58,6 +58,7 @@ import {
   inject, ref, onMounted
 } from 'vue';
 
+import type { IPlusAuthContext } from '../interfaces';
 import { resolveClientLogo } from '../utils';
 
 export default defineComponent({
@@ -73,7 +74,7 @@ export default defineComponent({
     },
   },
   setup() {
-    const context = inject('context') as any
+    const context = inject('context') as IPlusAuthContext
     const actionCompleted = ref(false)
     const error = context.error?.error
     let loginUrl = context.settings.auto_sign_in && context.settings.tenant_login_url

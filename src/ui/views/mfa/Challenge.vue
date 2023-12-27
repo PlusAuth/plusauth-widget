@@ -28,11 +28,13 @@
 import { defineComponent, inject } from 'vue';
 import { useRouter } from 'vue-router';
 
+import type { IPlusAuthContext } from '../../interfaces';
+
 export default defineComponent( {
   name: 'Challenge',
   props: {},
   setup() {
-    const context = inject('context') as any
+    const context = inject('context') as IPlusAuthContext
     const challenges = context.details.challenges
     const router = useRouter()
     if(challenges?.length === 1){

@@ -87,7 +87,7 @@ details?id=com.google.android.apps.authenticator2"
 import { defineComponent, inject, ref } from 'vue';
 
 import GenericForm from '../../components/GenericForm.vue';
-import type { AdditionalFields } from '../../interfaces';
+import type { AdditionalFields, IPlusAuthContext } from '../../interfaces';
 import { CustomizableFormProps } from '../../utils/customizable_form';
 import type { FetchWrapper } from '../../utils/fetch';
 import form_generics from '../../utils/form_generics';
@@ -100,7 +100,7 @@ export default defineComponent({
   },
   setup(props){
     const http = inject('http') as FetchWrapper
-    const context = inject('context') as any
+    const context = inject('context') as IPlusAuthContext
     const code = ref<string>(null as any)
     const error = ref<string>(null as any)
 

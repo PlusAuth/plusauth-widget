@@ -15,10 +15,13 @@ window['PlusAuth'] = {
       {name: 'facebook-connection', provider: 'facebook'},
     ]
   },
-  features: {
-    socialConnections: true
+  settings: {
+    password_policy: {
+      min: 4 ,
+      max: 16,
+      lower_case: 4
+    }
   },
-  autoSignIn: false,
   details: {
     phone_number: '+90********23',
     scopes: {

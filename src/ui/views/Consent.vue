@@ -46,6 +46,7 @@
 <script lang="ts">
 import { defineComponent, inject } from 'vue';
 
+import type { IPlusAuthContext } from '../interfaces';
 import { resolveClientLogo } from '../utils';
 import type { FetchWrapper } from '../utils/fetch';
 
@@ -59,7 +60,7 @@ export default defineComponent({
   },
   setup(props){
     const http = inject('http') as FetchWrapper
-    const context = inject('context') as any
+    const context = inject('context') as IPlusAuthContext
 
     const _scopes = [...props.scopes, ...context.details.scopes?.new || []]
     return {

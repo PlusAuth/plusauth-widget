@@ -30,7 +30,7 @@
   </div>
 
   <div
-    v-if="features.socialConnections && context.client
+    v-if="context.client
       && context.client.social
       && context.client.social.length"
     class="pa__widget-social-section"
@@ -48,7 +48,7 @@
 
   <div class="pa__widget-helpers-section">
     <div
-      v-if="features.signUp"
+      v-if="context.settings.register_enabled"
     >
       <span
         v-t="'login.noAccount'"
@@ -60,7 +60,7 @@
         @click.stop
       />
     </div>
-    <div v-if="!isPasswordless && features.forgotPassword">
+    <div v-if="!isPasswordless && context.settings.forgot_password_enabled">
       <a
         v-t="'login.forgotPassword'"
         tabindex="0"
@@ -75,7 +75,7 @@ import { defineComponent, ref, inject } from 'vue';
 
 import GenericForm from '../components/GenericForm.vue';
 import SocialConnectionButton from '../components/SocialConnectionButton';
-import type { AdditionalFields } from '../interfaces';
+import type { AdditionalFields, IPlusAuthContext } from '../interfaces';
 import { resolveClientLogo } from '../utils';
 import { CustomizableFormProps } from '../utils/customizable_form';
 import type { FetchWrapper } from '../utils/fetch';
@@ -85,18 +85,10 @@ export default defineComponent({
   name: 'Login',
   components: { GenericForm, SocialConnectionButton },
   props: {
-    features: {
-      type: Object,
-      default: () => ({
-        socialConnections: true,
-        signUp: true,
-        forgotPassword: true
-      })
-    },
     ...CustomizableFormProps
   },
   setup(props) {
-    const context = inject('context') as any
+    const context = inject('context') as IPlusAuthContext
     const passwordVisible = ref(false)
     const http = inject('http') as FetchWrapper
 

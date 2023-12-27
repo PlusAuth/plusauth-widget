@@ -14,9 +14,11 @@ export default class PlusAuthWidget {
   public i18n: Translator;
   public http: FetchWrapper;
 
-  constructor(container: Element | string,
+  constructor(
+    container: Element | string,
     settings: Partial<IWidgetSettings> = {},
-    context: Partial<IPlusAuthContext>) {
+    context: Partial<IPlusAuthContext>
+  ) {
 
     this.http = createFetchWrapper(settings.apiUrl)
 

@@ -86,6 +86,7 @@ import { defineComponent, inject, onMounted, reactive, ref } from 'vue';
 import GenericForm from '../../components/GenericForm.vue';
 import Hand from '../../components/Hand.vue';
 import PSpinner from '../../components/PSpinner/PSpinner';
+import type { IPlusAuthContext } from '../../interfaces';
 import { CustomizableFormProps } from '../../utils/customizable_form';
 import type { FetchWrapper } from '../../utils/fetch';
 import form_generics from '../../utils/form_generics';
@@ -99,7 +100,7 @@ export default defineComponent({
   },
   setup(props){
     const http = inject('http') as FetchWrapper
-    const context = inject('context') as any
+    const context = inject('context') as IPlusAuthContext
     const loadingMsg = ref<string | null>(null as any)
     const deviceOk = ref<boolean>(false)
     const selectedFinger = ref<number>(1 as any)

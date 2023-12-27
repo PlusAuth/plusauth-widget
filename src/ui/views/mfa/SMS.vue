@@ -51,7 +51,7 @@ import { defineComponent, inject } from 'vue';
 
 import GenericForm from '../../components/GenericForm.vue';
 import PTimer from '../../components/PTimer/PTimer';
-import type { AdditionalFields } from '../../interfaces';
+import type { AdditionalFields, IPlusAuthContext } from '../../interfaces';
 import { CustomizableFormProps } from '../../utils/customizable_form';
 import type { FetchWrapper } from '../../utils/fetch';
 import form_generics from '../../utils/form_generics';
@@ -68,7 +68,7 @@ export default defineComponent({
   },
   setup(props){
     const http = inject('http') as FetchWrapper
-    const context = inject('context') as any
+    const context = inject('context') as IPlusAuthContext
 
     const defaultFields: AdditionalFields = {
       code: {

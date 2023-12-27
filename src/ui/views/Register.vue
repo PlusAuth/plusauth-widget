@@ -37,7 +37,7 @@
   </div>
 
   <div
-    v-if="features.socialConnections && context.client
+    v-if="context.client
       && context.client.social
       && context.client.social.length"
     class="pa__widget-social-section"
@@ -62,7 +62,7 @@
       href="/signin"
       @click.stop
     />
-    <div v-if="!isPasswordless && features.forgotPassword">
+    <div v-if="!isPasswordless && context.settings.forgot_password_enabled">
       <a
         v-t="'login.forgotPassword'"
         href="/signin/recovery"
@@ -74,10 +74,10 @@
 <script lang="ts">
 import { defineComponent, inject } from 'vue';
 
-import {  PasswordStrength } from '../components';
+import { PasswordStrength } from '../components';
 import GenericForm from '../components/GenericForm.vue';
 import SocialConnectionButton from '../components/SocialConnectionButton';
-import type { AdditionalFields } from '../interfaces';
+import type { AdditionalFields, IPlusAuthContext } from '../interfaces';
 import { resolveClientLogo } from '../utils';
 import { checkPasswordStrength } from '../utils/check_passsword_strength';
 import { CustomizableFormProps } from '../utils/customizable_form';
@@ -88,21 +88,16 @@ export default defineComponent({
   name: 'Register',
   components: { GenericForm, SocialConnectionButton, PasswordStrength },
   props: {
-    features: {
-      type: Object,
-      default: () => ({
-        socialConnections: true,
-        forgotPassword: true,
-      })
-    },
     ...CustomizableFormProps
   },
-  setup(props){
+  setup(props) {
     const http = inject('http') as FetchWrapper
-    const context = inject('context') as any
+    const context = inject('context') as IPlusAuthContext
     const connection = context.connection || {}
-    const isPasswordless = connection.type && !['social','enterprise', 'plusauth'].includes(connection.type)
-    let identifierField= connection.type === 'sms' ? 'phone_number': 'email';
+    const isPasswordless = connection.type && ![
+      'social', 'enterprise', 'plusauth'
+    ].includes(connection.type)
+    let identifierField = connection.type === 'sms' ? 'phone_number' : 'email';
 
     const defaultFields: AdditionalFields = {
       [identifierField]: {
@@ -111,7 +106,7 @@ export default defineComponent({
           autocomplete: identifierField
         },
         type: 'text',
-        label: `common.fields.${  identifierField}`
+        label: `common.fields.${identifierField}`
       },
       ...isPasswordless ? {} : {
         password: {
@@ -121,7 +116,7 @@ export default defineComponent({
           attrs: {
             autocomplete: 'new-password'
           },
-          async validator(fields, value){
+          async validator(fields, value) {
             return checkPasswordStrength(value, context.settings?.password_policy || {})
           }
         },
@@ -132,8 +127,8 @@ export default defineComponent({
           attrs: {
             autocomplete: 'new-password'
           },
-          validator(fields, value){
-            if(fields.password.value !== value){
+          validator(fields, value) {
+            if (fields.password.value !== value) {
               return this.$t('errors.passwords_not_match')
             }
             return true
@@ -146,24 +141,24 @@ export default defineComponent({
       props,
       defaultFields,
       async (values) => {
-        try{
+        try {
           const result = await http.post({ body: values })
-          if(result && result.message === 'verification_email_sent'){
+          if (result && result.message === 'verification_email_sent') {
             context.details.email = finalFields.email?.value
             context.details.email_verified = false
             window.location.assign('/account/verifyEmail')
           }
-        }catch (e) {
+        } catch (e) {
           switch (e.error) {
             case 'already_exists':
               finalFields.email ? finalFields.email.errors = `errors.${e.error}` :
-                finalFields.username ? finalFields.username.errors  = `errors.${e.error}`: null;
+                finalFields.username ? finalFields.username.errors = `errors.${e.error}` : null;
               break;
             case 'email_not_verified':
               window.location.assign('/account/verifyEmail')
               break;
             default:
-              if(finalFields.password){
+              if (finalFields.password) {
                 finalFields.password['errors'] = `errors.${e.error || e.message || e.name || e}`
               }
           }

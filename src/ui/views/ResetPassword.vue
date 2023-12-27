@@ -50,7 +50,7 @@ import { defineComponent, inject, ref } from 'vue';
 
 import { PasswordStrength } from '../components';
 import GenericForm from '../components/GenericForm.vue';
-import type { AdditionalFields } from '../interfaces';
+import type { AdditionalFields, IPlusAuthContext } from '../interfaces';
 import { resolveClientLogo } from '../utils';
 import { checkPasswordStrength } from '../utils/check_passsword_strength';
 import { CustomizableFormProps } from '../utils/customizable_form';
@@ -73,7 +73,7 @@ export default defineComponent({
   },
   setup(props){
     const http = inject('http') as FetchWrapper
-    const context = inject('context') as any
+    const context = inject('context') as IPlusAuthContext
     const actionCompleted = ref(false)
 
     const defaultFields: AdditionalFields = {
