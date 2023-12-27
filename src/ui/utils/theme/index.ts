@@ -6,7 +6,7 @@ export class Theme {
 
   public styleEl?: HTMLStyleElement
   public theme = {
-    primary: '#19960c',
+    primary: '#e37006',
     secondary: '#424242',
     accent: '#82B1FF',
     error: '#FF5252',

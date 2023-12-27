@@ -2,6 +2,7 @@
   @apply relative inline-flex justify-center items-center
   cursor-pointer
   rounded-sm
+  tracking-wider
   bg-primary text-white
   text-sm font-medium uppercase select-none whitespace-nowrap decoration-0
   px-4 h-8
@@ -13,6 +14,7 @@
   &--block {
     @apply w-full;
   }
+
   &--flat {
     @apply bg-transparent text-primary;
   }
@@ -29,6 +31,7 @@
   top: 0;
   width: 100%;
 }
+
 .btn--block {
   display: flex;
   flex: 1 0 auto;
@@ -48,6 +51,7 @@
     opacity: 0;
   }
 }
+
 .btn--flat {
   background-color: transparent;
 }
