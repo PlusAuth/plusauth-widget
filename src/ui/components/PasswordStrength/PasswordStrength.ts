@@ -1,54 +1,58 @@
-import { defineComponent, h, inject } from 'vue';
+import { camelize, defineComponent, h, inject } from 'vue';
 
+import { setColorStyle } from '../../utils';
 import type { Translator } from '../../utils/translator';
 import { translatorKey } from '../../utils/translator';
-
 import PMessage from '../PMessage/PMessage';
 import './PasswordStrength.css'
+
 export default defineComponent({
   name: 'PasswordStrengthTooltip',
   props: {
     message: { type: null, default: null },
     rules: null
   },
-  setup(props){
+  setup(props) {
     const translator = inject(translatorKey) as Translator
     return {
       generatePolicyElements(result: any) {
-        if(!props.rules || typeof result === 'string'){
+        if (!props.rules || typeof result === 'string') {
           return h(PMessage, {
-            class: 'pa__input-details',
             value: result
           })
         }
-        return h('div', {
-          class: {
-            'pa__pw-strength': true
-          }
-        }, Object.keys(props.rules).map(( policy ) => {
-          const elemText = translator.t(
-            `passwordPolicy.${ policy }`,
-            [props.rules[policy]]
-          )
-          return h('div', {
+        return h(
+          'div',
+          {
             class: {
-              'pa__pw-policy': true,
-              'pa__success--text': !result || !result[policy]
-            },
-            key: policy, ref: 'policy'
+              'pa__messages': true,
+              'pa__pw-strength': true
+            }
           },
-          [
-            h('span', {
-            },result && result[policy] ? '✕' : '✓'),
-            elemText
-          ])
-        })
+          Object.keys(props.rules).map((policy) => {
+            const elemText = translator.t(
+              `passwordPolicy.${camelize(policy.replace('_', '-'))}`,
+              [props.rules[policy]]
+            )
+            return h('div', {
+              style: setColorStyle({ textColor: !result || !result[policy] ? 'success' : 'error' }),
+              class: {
+                'pa__messages__message': true,
+                'pa__pw-policy': true,
+              },
+              key: policy, ref: 'policy'
+            },
+            [
+              h('div', {}, result && result[policy] ? '✕' : '✓'),
+              elemText
+            ])
+          })
         )
 
       }
     }
   },
-  render(){
+  render() {
     return this.generatePolicyElements(this.message)
   }
 })

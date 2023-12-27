@@ -27,10 +27,17 @@
     </div>
 
     <div class="pa__input-details">
-      <PMessage
-        :field="name"
-        :value="messages"
-      />
+      <slot
+        name="message"
+        :message="messages"
+        :is-focused="isFocused"
+        :is-pristine="isPristine"
+      >
+        <PMessage
+          :field="name"
+          :value="messages"
+        />
+      </slot>
     </div>
   </div>
 </template>
@@ -117,11 +124,11 @@ export default defineComponent({
 
     const messages = computed(() => {
       if (props.errorMessages?.length || !isPristine.value && errorMessages.value.length) {
-        return errorMessages.value
+        return errorMessages.value || []
       } else if (props.hint && (props.persistentHint || props.focused)) {
-        return props.hint
+        return props.hint || []
       } else {
-        return props.messages
+        return props.messages || []
       }
     })
     return {
@@ -131,6 +138,8 @@ export default defineComponent({
       onInput,
       i18n,
       inputRef,
+      isFocused,
+      isPristine,
       messages,
       classes
     }

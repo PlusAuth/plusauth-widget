@@ -200,6 +200,8 @@
 
     .logo {
       max-height: 96px;
+      object-fit: contain;
+      max-width: 100%;
     }
   }
 

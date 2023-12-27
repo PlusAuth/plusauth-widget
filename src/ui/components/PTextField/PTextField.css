@@ -59,7 +59,7 @@
   }
 
   &-details {
-    @apply mt-1 pl-0.5;
+    @apply mt-1 ps-0.5;
   }
 
   input:-webkit-autofill + .input--label {
@@ -73,9 +73,11 @@
   }
 
   &--error {
-    @apply text-red-600 !important;
+    color: rgb(var(--pa-color-error-DEFAULT)) !important;
     .input--wrap {
-      @apply text-red-600 ring-red-600 !important;
+      color: rgb(var(--pa-color-error-DEFAULT)) !important;
+      --input-ring-color: var(--pa-color-error-DEFAULT);
+      --pa-ring-color: rgb(var(--pa-color-error-DEFAULT)) !important;
     }
   }
 

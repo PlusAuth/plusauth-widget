@@ -17,16 +17,11 @@
     :validate="validate"
     :submit="submit"
   >
-    <template #password.message="{ message: [ message ], focus, hasState }">
+    <template #password.message="{ message: [ message ], isFocused, isPristine }">
       <PasswordStrength
-        v-if="focus || hasState"
-        :rules="context.settings?.passwordPolicy"
-        class="pa__input-details"
+        v-if="isFocused || !isPristine"
+        :rules="context.settings?.password_policy"
         :message="message"
-      />
-      <div
-        v-else
-        class="pa__messages pa__input-details"
       />
     </template>
   </GenericForm>
@@ -106,7 +101,7 @@ export default defineComponent({
     const http = inject('http') as FetchWrapper
     const context = inject('context') as any
     const connection = context.connection || {}
-    const isPasswordless = !['social','enterprise', 'plusauth'].includes(connection.type)
+    const isPasswordless = connection.type && !['social','enterprise', 'plusauth'].includes(connection.type)
     let identifierField= connection.type === 'sms' ? 'phone_number': 'email';
 
     const defaultFields: AdditionalFields = {
@@ -127,7 +122,7 @@ export default defineComponent({
             autocomplete: 'new-password'
           },
           async validator(fields, value){
-            return checkPasswordStrength(value, context.settings?.passwordPolicy || {})
+            return checkPasswordStrength(value, context.settings?.password_policy || {})
           }
         },
         rePassword: {

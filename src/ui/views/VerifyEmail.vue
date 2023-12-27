@@ -53,8 +53,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent,
-  inject, ref, onMounted } from 'vue';
+import {
+  defineComponent,
+  inject, ref, onMounted
+} from 'vue';
 
 import { resolveClientLogo } from '../utils';
 
@@ -70,24 +72,31 @@ export default defineComponent({
       })
     },
   },
-  setup(){
+  setup() {
     const context = inject('context') as any
     const actionCompleted = ref(false)
-    const error  = context.error?.error
-    let loginUrl = context.autoSignIn && context.details?.tenantLoginUrl
+    const error = context.error?.error
+    let loginUrl = context.settings.auto_sign_in && context.settings.tenant_login_url
     let time = ref<number>(5);
-    const resendLink = `${window.location.pathname  }/resend`
+
+    const resendLink = `${window.location.pathname}/resend`
+
     onMounted(() => {
-      if(context.prompt?.mode && context.prompt.mode !== 'check' && context.autoSignIn && !error){
-        setInterval(()=>{
+      if (
+        context.prompt?.mode
+        && context.prompt.mode !== 'check'
+        && context.settings?.auto_sign_in && !error
+      ) {
+        setInterval(() => {
           time.value && time.value--;
         }, 1000)
-        setTimeout(()=>{
-          if(loginUrl){
-            window.location.replace(loginUrl)
+        setTimeout(() => {
+          if (context.settings?.tenant_login_url) {
+            window.location.replace(context.settings?.tenant_login_url)
           }
         }, 5000)
       }
+
     })
     return {
       time,

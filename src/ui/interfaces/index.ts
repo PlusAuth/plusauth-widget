@@ -79,8 +79,7 @@ export interface IWidgetSettings {
 }
 
 export interface ITenantSettings {
-  passwordPolicy: any;
-  passwordResetFlow: 'code' | 'legacy' | 'newPassword';
+  password_policy: any;
 }
 
 export interface IPlusAuthContext {

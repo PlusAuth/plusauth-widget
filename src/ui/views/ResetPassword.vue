@@ -21,16 +21,12 @@
       :validate="validate"
       :submit="submit"
     >
-      <template #password.message="{ message: [ message ], focus, hasState }">
+      <template #password.message="{ message: [ message ], isFocused, isPristine }">
         <PasswordStrength
-          v-if="focus || hasState"
-          :rules="context.settings?.passwordPolicy"
+          v-if="isFocused || !isPristine"
+          :rules="context.settings?.password_policy"
           class="pa__input-details"
           :message="message"
-        />
-        <div
-          v-else
-          class="pa__messages pa__input-details"
         />
       </template>
     </GenericForm>
@@ -88,7 +84,7 @@ export default defineComponent({
           autocomplete: 'new-password'
         },
         async validator(fields, value){
-          return checkPasswordStrength(value,context.settings?.passwordPolicy || {})
+          return checkPasswordStrength(value,context.settings?.password_policy || {})
         }
       },
       rePassword: {

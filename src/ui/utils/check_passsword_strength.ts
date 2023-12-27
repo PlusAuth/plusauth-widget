@@ -2,24 +2,24 @@ export function checkPasswordStrength( value: string, passwordRules: any = {} ):
   value = value ?? '';
   const errors: any = {};
   // eslint-disable-next-line prefer-const
-  let { min, max, number, lowerCase, upperCase, customChars, customRegexp } = passwordRules;
+  let { min, max, number, lower_case, upper_case, custom_chars, custom_regexp } = passwordRules;
 
-  lowerCase = Number( lowerCase );
-  upperCase = Number( upperCase );
+  lower_case = Number( lower_case );
+  upper_case = Number( upper_case );
   number = Number( number );
   if (
-    lowerCase &&
-    !new RegExp( `(?=(.*[a-z])${ lowerCase > 0 ? `{${ lowerCase },}` : '' })` ).test( value )
+    lower_case &&
+    !new RegExp( `(?=(.*[a-z])${ lower_case > 0 ? `{${ lower_case },}` : '' })` ).test( value )
   ) {
-    errors.lowerCase = true;
+    errors.lower_case = true;
   }
   if (
-    upperCase &&
+    upper_case &&
     !new RegExp(
-      `(?=(.*[A-Z])${ upperCase > 0 ? `{${ upperCase },}` : '' })`
+      `(?=(.*[A-Z])${ upper_case > 0 ? `{${ upper_case },}` : '' })`
     ).test( value )
   ) {
-    errors.upperCase = true;
+    errors.upper_case = true;
   }
   if (
     number &&
@@ -35,15 +35,15 @@ export function checkPasswordStrength( value: string, passwordRules: any = {} ):
   if ( max != null && value.length > max ) {
     errors.max = true;
   }
-  if ( customChars &&
-    !customChars.split( '' ).some( ( char: string ) => value.indexOf( char ) > -1 )
+  if ( custom_chars &&
+    !custom_chars.split( '' ).some( ( char: string ) => value.indexOf( char ) > -1 )
   ) {
-    errors.customChars = true;
+    errors.custom_chars = true;
   }
 
-  if ( customRegexp && customRegexp.value ) {
-    if ( !new RegExp( customRegexp ).test( customRegexp.value ) ) {
-      return customRegexp.message || ' ';
+  if ( custom_regexp && custom_regexp.value ) {
+    if ( !new RegExp( custom_regexp ).test( custom_regexp.value ) ) {
+      return custom_regexp.message || ' ';
     }
   }
 
