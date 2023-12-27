@@ -32,12 +32,15 @@ export function useProxiedModel<
       void props[prop]
       return !!(
         (vm.vnode.props?.hasOwnProperty(prop) || vm.vnode.props?.hasOwnProperty(kebabProp)) &&
-        (vm.vnode.props?.hasOwnProperty(`onUpdate:${prop}`) || vm.vnode.props?.hasOwnProperty(`onUpdate:${kebabProp}`))
+        (vm.vnode.props?.hasOwnProperty(`onUpdate:${prop}`)
+          || vm.vnode.props?.hasOwnProperty(`onUpdate:${kebabProp}`)
+        )
       )
     })
     : computed(() => {
       void props[prop]
-      return !!(vm.vnode.props?.hasOwnProperty(prop) && vm.vnode.props?.hasOwnProperty(`onUpdate:${prop}`))
+      return !!(vm.vnode.props?.hasOwnProperty(prop)
+        && vm.vnode.props?.hasOwnProperty(`onUpdate:${prop}`))
     })
 
   useToggleScope(() => !isControlled.value, () => {

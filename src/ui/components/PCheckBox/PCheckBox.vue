@@ -50,8 +50,10 @@ export default defineComponent({
     ...makeValidationProps()
   },
   emits: {
+    /* eslint-disable @typescript-eslint/no-unused-vars */
     'update:focused': (focused: boolean) => true,
     'update:modelValue': (val: string) => true,
+    /* eslint-enable @typescript-eslint/no-unused-vars */
   },
   setup(props, { emit, expose }) {
     const itemId = `${props.name || 'checkbox'}-${getUid()}`

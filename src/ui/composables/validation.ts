@@ -10,8 +10,10 @@ import {
   watch
 } from 'vue'
 
-import type { PropType ,
-  MaybeRef } from 'vue'
+import type {
+  PropType,
+  MaybeRef
+} from 'vue'
 
 import { getCurrentInstanceName, getUid } from '../utils/current_instance';
 import type { EventProp } from '../utils/helpers';
@@ -22,7 +24,6 @@ import { makeFocusProps } from './focus';
 import { useForm } from './form'
 import { useProxiedModel } from './proxied_model'
 import { useToggleScope } from './toggle_scope'
-
 
 
 export type ValidationResult = string | boolean
@@ -87,7 +88,10 @@ export function useValidation(
   id: MaybeRef<string | number> = getUid(),
 ) {
   const model = useProxiedModel(props, 'modelValue')
-  const validationModel = computed(() => props.validationValue === undefined ? model.value : props.validationValue)
+  const validationModel = computed(() => props.validationValue === undefined
+    ? model.value
+    : props.validationValue
+  )
   const form = useForm()
   const internalErrorMessages = ref<string[]>([])
   const isPristine = shallowRef(true)
@@ -99,7 +103,9 @@ export function useValidation(
   const isReadonly = computed(() => !!(props.readonly ?? form?.isReadonly.value))
   const errorMessages = computed(() => {
     return props.errorMessages?.length
-      ? wrapInArray(props.errorMessages).concat(internalErrorMessages.value).slice(0, Math.max(0, +props.maxErrors))
+      ? wrapInArray(props.errorMessages)
+        .concat(internalErrorMessages.value)
+        .slice(0, Math.max(0, +props.maxErrors))
       : internalErrorMessages.value
   })
   const validateOn = computed(() => {
@@ -206,7 +212,7 @@ export function useValidation(
       const result = await handler(validationModel.value)
 
       if (result === true || result === undefined) continue
-      results.push(result )
+      results.push(result)
     }
 
     internalErrorMessages.value = results

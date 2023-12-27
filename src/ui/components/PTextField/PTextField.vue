@@ -64,10 +64,12 @@ export default defineComponent({
     ...makeFocusProps()
   },
   emits: {
+    /* eslint-disable @typescript-eslint/no-unused-vars */
     'click:control': (e: MouseEvent) => true,
     'mousedown:control': (e: MouseEvent) => true,
     'update:focused': (focused: boolean) => true,
     'update:modelValue': (val: string) => true,
+    /* eslint-enable @typescript-eslint/no-unused-vars */
   },
   setup(props, { emit, expose }) {
     const inputRef = ref<HTMLInputElement>()

@@ -79,7 +79,9 @@ export default defineComponent({
     ...makeFocusProps(),
   },
   emits: {
+    /* eslint-disable @typescript-eslint/no-unused-vars */
     'update:modelValue': (val: any) => true,
+    /* eslint-enable @typescript-eslint/no-unused-vars */
   },
   setup(props, { emit }) {
     const inputRef = ref<string>(null as any)

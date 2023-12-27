@@ -3,7 +3,6 @@ import { defineComponent, h, withDirectives, Transition } from 'vue';
 
 import { i18n } from '../../directives/i18n';
 import type { ITranslatePath } from '../../interfaces';
-import { Colorable } from '../../mixins';
 import './PMessage.css'
 
 function generateMessageVNode(message: ITranslatePath, name: string): VNode {

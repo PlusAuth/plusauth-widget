@@ -19,8 +19,10 @@ import { createForm , makeFormProps } from '../composables/form';
 export default defineComponent({
   props: makeFormProps(),
   emits: {
+    /* eslint-disable @typescript-eslint/no-unused-vars */
     'update:modelValue': (val: boolean | null) => true,
     submit: (e: SubmitEventPromise) => true,
+    /* eslint-enable @typescript-eslint/no-unused-vars */
   },
   setup(props, { emit, expose }) {
     const form = createForm(props)
