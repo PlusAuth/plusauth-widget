@@ -1,12 +1,14 @@
-import { defineComponent, h, ref, onBeforeUnmount, DefineComponent, inject } from 'vue';
-import './styles/main.sass'
+import type { DefineComponent } from 'vue';
+import { defineComponent, h, ref, onBeforeUnmount, inject } from 'vue';
+import './styles/main.css'
 
 import { RouterView, useRoute } from 'vue-router';
 
 import PFooter from './components/Footer.vue';
-import { IWidgetSettings } from './interfaces';
-import { Theme } from './utils/theme';
-import { Translator, translatorKey } from './utils/translator';
+import type { IWidgetSettings } from './interfaces';
+import type { Theme } from './utils/theme';
+import type { Translator } from './utils/translator';
+import { translatorKey } from './utils/translator';
 import Consent from './views/Consent.vue';
 import FillMissing from './views/FillMissing.vue';
 import ForgotPassword from './views/ForgotPassword.vue';

@@ -30,7 +30,7 @@
   </div>
 
   <div
-    v-if="features.socialConnections && context.client
+    v-if="context.client
       && context.client.social
       && context.client.social.length"
     class="pa__widget-social-section"
@@ -48,7 +48,7 @@
 
   <div class="pa__widget-helpers-section">
     <div
-      v-if="features.signUp"
+      v-if="context.settings.register_enabled"
     >
       <span
         v-t="'login.noAccount'"
@@ -60,7 +60,7 @@
         @click.stop
       />
     </div>
-    <div v-if="!isPasswordless && features.forgotPassword">
+    <div v-if="!isPasswordless && context.settings.forgot_password_enabled">
       <a
         v-t="'login.forgotPassword'"
         tabindex="0"
@@ -71,37 +71,33 @@
 </template>
 
 <script lang="ts">
-import { PlusAuthWeb } from '@plusauth/web';
 import { defineComponent, ref, inject } from 'vue';
 
 import GenericForm from '../components/GenericForm.vue';
 import SocialConnectionButton from '../components/SocialConnectionButton';
-import { AdditionalFields } from '../interfaces';
-import { CustomizableFormProps } from '../mixins/customizable_form';
+import type { AdditionalFields, IPlusAuthContext } from '../interfaces';
 import { resolveClientLogo } from '../utils';
+import { CustomizableFormProps } from '../utils/customizable_form';
+import type { FetchWrapper } from '../utils/fetch';
 import form_generics from '../utils/form_generics';
 
 export default defineComponent({
   name: 'Login',
   components: { GenericForm, SocialConnectionButton },
   props: {
-    features: {
-      type: Object,
-      default: () => ({
-        socialConnections: true,
-        signUp: true,
-        forgotPassword: true
-      })
-    },
     ...CustomizableFormProps
   },
   setup(props) {
-    const api = inject('api') as PlusAuthWeb
-    const context = inject('context') as any
+    const context = inject('context') as IPlusAuthContext
     const passwordVisible = ref(false)
+    const http = inject('http') as FetchWrapper
 
     const connection = context.connection || {}
-    const isPasswordless = !['social','enterprise', 'plusauth'].includes(connection.type)
+    const isPasswordless = connection.type && ![
+      'social',
+      'enterprise',
+      'plusauth'
+    ].includes(connection.type)
     let identifierField = connection.type === 'sms' ? 'phone_number': 'email';
 
     const defaultFields: AdditionalFields = {
@@ -111,14 +107,14 @@ export default defineComponent({
           autocomplete: identifierField
         },
         type: 'text',
-        label: `common.fields.${  identifierField}`
+        label: `common.fields.${  identifierField}`,
+        format: identifierField === 'email' ? 'email' : undefined
       },
       ...isPasswordless ? {} : {
         password: {
           order: 1,
           type: 'password',
           label: 'common.fields.password',
-          errors: []
         }
       },
     }
@@ -126,10 +122,10 @@ export default defineComponent({
     const { form, loading, submit, validate, fields: finalFields } = form_generics.call(
       props,
       defaultFields,
-      async (fieldWithValues) => {
+      async (values) => {
         form.value.toggleAlert(null)
         try {
-          await api.auth.signIn(fieldWithValues)
+          await http.post({ body: values })
         } catch (e) {
           if (e.error) {
             switch (e.error) {

@@ -5,46 +5,46 @@
     @submit="submit"
   >
     <template
-      v-for="(options, field) in sortedFields"
+      v-for="(field) in sortedFields"
       :key="field"
     >
-      <template v-if="options.visible !== 'hidden' && options.visible !== false">
-        <template v-if="options.type === 'code'">
+      <template v-if="fields[field].visible !== 'hidden' && fields[field].visible !== false">
+        <template v-if="fields[field].type === 'code'">
           <PCodeInput
-            v-model="options.value"
-            v-bind="options.attrs"
-            :size="options.length"
+            v-model="fields[field].value"
+            v-bind="fields[field].attrs"
+            :size="fields[field].length"
             color="primary"
           />
           <p-message
-            :value="options.errors"
+            :value="fields[field].errors"
             color="error"
             class="pa__mb-4"
           />
         </template>
-        <template v-else-if="options.type === 'checkbox'">
+        <template v-else-if="fields[field].type === 'checkbox'">
           <PCheckBox
-            v-model="options.value"
-            v-bind="options.attrs"
+            v-model="fields[field].value"
+            v-bind="fields[field].attrs"
             :name="field"
-            :error-messages="options.errors"
-            :type="options.type"
-            :label="options.label"
-            :rules="[ validate.bind( null, options, field) ]"
+            :error-messages="fields[field].errors"
+            :type="fields[field].type"
+            :label="fields[field].label"
+            :rules="[ validate.bind( null, fields[field], field) ]"
           />
         </template>
         <p-text-field
           v-else
-          v-model="options.value"
-          v-bind="options.attrs"
-          :error-messages="options.errors"
+          v-model="fields[field].value"
+          v-bind="fields[field].attrs"
+          :error-messages="fields[field].errors"
           :name="field"
-          :type="options.type"
-          :label="options.label"
-          :rules="[ validate.bind( null, options, field) ] "
+          :type="fields[field].type"
+          :label="fields[field].label"
+          :rules="[ validate.bind( null, fields[field], field) ] "
         >
           <template
-            v-for="(opts, name) in options.slots || {}"
+            v-for="(opts, name) in fields[field].slots || {}"
             :key="name"
             #[name]
           >
@@ -65,11 +65,11 @@
               text-color="#000"
               tabindex="0"
               class="pa__pw-toggle-visibility"
-              @click="options.type === 'password' ? options.type = 'text' : options.type =
-                'password'"
+              @click="fields[field].type === 'password' ?
+                fields[field].type = 'text' : fields[field].type = 'password'"
             >
               <span
-                v-t="options.type === 'password' ? 'common.show' : 'common.hide'"
+                v-t="fields[field].type === 'password' ? 'common.show' : 'common.hide'"
               />
             </p-btn>
             <slot :name="field" />
@@ -86,8 +86,10 @@
         </p-text-field>
       </template>
     </template>
+    <slot />
     <p-alert
       v-model="alert"
+      style="margin-top: 12px"
       :color="alertOptions.type || 'error'"
       v-bind="alertOptions.value"
     >
@@ -104,15 +106,16 @@
 <script lang="ts">
 import { computed, defineComponent, reactive, ref } from 'vue';
 
-import { AdditionalFields } from '../interfaces';
+import type { AdditionalFields } from '../interfaces';
 
-import { PAlertProps } from './PAlert';
-import PCheckBox from './PCheckBox';
-import PCodeInput from './PCodeInput';
+import type { PAlertProps } from './PAlert/PAlert';
+import PCheckBox from './PCheckBox/PCheckBox.vue';
+import PCodeInput from './PCodeInput/PCodeInput';
+import PForm from './PForm.vue';
 
 export default defineComponent( {
   name: 'GenericForm',
-  components: { PCheckBox, PCodeInput },
+  components: { PCheckBox, PCodeInput, PForm },
   props: {
     submit: {
       type: Function as () => any,
@@ -136,10 +139,6 @@ export default defineComponent( {
     const sortedFields = computed(()=> {
       return Object.keys(props.fields)
         .sort((a, b) => (props.fields[a]?.order || 0) - (props.fields[b]?.order || 0))
-        .reduce(function (result, key) {
-          result[key] = props.fields[key];
-          return result;
-        }, {});
     } )
 
     return {

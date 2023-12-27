@@ -47,10 +47,13 @@ details?id=com.google.android.apps.authenticator2"
     <h4>3. Enable Google Two Factor Authentication</h4>
   </template>
   <template v-else>
-    <div
-      v-t="{ path: 'mfa.otp.title'}"
-      class="pa__subtitle-2 pa__text-left"
-    />
+    <div class="pa__widget-info-section">
+      <p
+        v-t="{ path: 'mfa.otp.title'}"
+        class="pa__subtitle-2 pa__text-left"
+        style="margin: 0 0 12px 0"
+      />
+    </div>
   </template>
   <GenericForm
     ref="form"
@@ -61,13 +64,12 @@ details?id=com.google.android.apps.authenticator2"
 
   <div class="pa__widget-content-actions">
     <p-btn
+      v-t="'common.submit'"
       block
       color="primary"
       :loading="loading"
       @click="submit"
-    >
-      <span v-t="'common.submit'" />
-    </p-btn>
+    />
   </div>
 
   <div
@@ -82,12 +84,12 @@ details?id=com.google.android.apps.authenticator2"
 </template>
 
 <script lang="ts">
-import { PlusAuthWeb, MFACodeType } from '@plusauth/web';
 import { defineComponent, inject, ref } from 'vue';
 
 import GenericForm from '../../components/GenericForm.vue';
-import { AdditionalFields } from '../../interfaces';
-import { CustomizableFormProps } from '../../mixins/customizable_form';
+import type { AdditionalFields, IPlusAuthContext } from '../../interfaces';
+import { CustomizableFormProps } from '../../utils/customizable_form';
+import type { FetchWrapper } from '../../utils/fetch';
 import form_generics from '../../utils/form_generics';
 
 export default defineComponent({
@@ -97,8 +99,8 @@ export default defineComponent({
     ...CustomizableFormProps
   },
   setup(props){
-    const api = inject('api') as PlusAuthWeb
-    const context = inject('context') as any
+    const http = inject('http') as FetchWrapper
+    const context = inject('context') as IPlusAuthContext
     const code = ref<string>(null as any)
     const error = ref<string>(null as any)
 
@@ -111,12 +113,11 @@ export default defineComponent({
     const { form, loading, submit, fields: finalFields, validate } = form_generics.call(
       props,
       defaultFields,
-      async (fieldWithValues) => {
+      async (values) => {
         try{
-          await api.mfa.validateCode(
-            MFACodeType.OTP,
-            fieldWithValues.code,
-          )
+          await http.post({
+            body: values
+          })
         }catch (e) {
           if (e.error) {
             form.value.toggleAlert(`errors.${e.error}`, {

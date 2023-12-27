@@ -1,36 +1,41 @@
-import { App } from 'vue';
+import type { App } from 'vue';
 
-import PAlert from './PAlert';
-import PasswordStrength from './PasswordStrength';
-import PButton from './PBtn';
-import PCheckBox from './PCheckBox';
-import PForm from './PForm';
-import PIcon from './PIcon';
-import PLoading from './PLoading';
-import PMessage from './PMessage';
-import PSelect from './PSelect';
-import PTextField from './PTextField';
+import PAlert from './PAlert/PAlert';
+import PasswordStrength from './PasswordStrength/PasswordStrength';
+import PButton from './PBtn/PBtn.vue';
+import PCheckBox from './PCheckBox/PCheckBox.vue';
+import PCodeInput from './PCodeInput/PCodeInput';
+import PForm from './PForm.vue';
+import PMessage from './PMessage/PMessage';
+import PSelect from './PSelect/PSelect.vue';
+import PSpinner from './PSpinner/PSpinner';
+import PTextField from './PTextField/PTextField.vue';
+import PTimer from './PTimer/PTimer';
 
 export {
   PAlert,
+  PasswordStrength,
   PButton,
   PCheckBox,
+  PCodeInput,
   PForm,
-  PIcon,
-  PLoading,
   PMessage,
-  PTextField,
   PSelect,
-  PasswordStrength
+  PSpinner,
+  PTextField,
+  PTimer
 }
 
 export function installComponents(Vue: App<Element>): void{
-  Vue.component(PAlert.name, PAlert)
-    .component(PButton.name, PButton)
-    .component(PForm.name, PForm)
-    .component(PIcon.name, PIcon)
-    .component(PLoading.name, PLoading)
-    .component(PMessage.name, PMessage)
-    .component(PSelect.name, PSelect)
-    .component(PTextField.name, PTextField)
+  Vue.component('PAlert', PAlert)
+    .component('PasswordStrength', PasswordStrength)
+    .component('PBtn', PButton)
+    .component('PCheckBox', PCheckBox)
+    .component('PCodeInput', PCodeInput)
+    .component('PForm', PForm)
+    .component('PMessage', PMessage)
+    .component('PSelect', PSelect)
+    .component('PSpinner', PSpinner)
+    .component('PTextField', PTextField)
+    .component('PTimer', PTimer)
 }

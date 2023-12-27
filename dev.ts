@@ -2,8 +2,8 @@ import PlusAuthWidget from './src';
 
 window['PlusAuth'] = {
   ui_locales: [
-    { name: 'Turkce', value: 'tr' },
-    { name: 'English', value: 'en' },
+    {name: 'Turkce', value: 'tr'},
+    {name: 'English', value: 'en'},
   ],
   client: {
     clientName: 'TestApp',
@@ -15,10 +15,13 @@ window['PlusAuth'] = {
       {name: 'facebook-connection', provider: 'facebook'},
     ]
   },
-  features: {
-    socialConnections: true
+  settings: {
+    password_policy: {
+      min: 4 ,
+      max: 16,
+      lower_case: 4
+    }
   },
-  autoSignIn: false,
   details: {
     phone_number: '+90********23',
     scopes: {
@@ -48,7 +51,11 @@ const auth = new PlusAuthWidget('#pa__app', {
     defaultLocale: 'en',
     dictionary: {
       tr: {
+        errors: {
+          field_required: 'Alan zorunlu'
+        },
         common: {
+
           edit: 'Degistir'
         },
         login: {
@@ -91,8 +98,7 @@ const auth = new PlusAuthWidget('#pa__app', {
   }
 }, window['PlusAuth'])
 
-setTimeout(()=>{
-  console.log('changesettings')
+setTimeout(() => {
   auth.view.modeOptions.login.fields.email.value ='test@test.com'
-},100)
+}, 100)
 auth.view.mode = 'login'

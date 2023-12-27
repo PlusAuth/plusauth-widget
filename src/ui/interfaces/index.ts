@@ -1,4 +1,4 @@
-import defaultDictionary from '../../i18n/en';
+import type defaultDictionary from '../../i18n/en';
 
 export interface IClient {
   logoUri?: string;
@@ -19,9 +19,7 @@ export interface ILocaleSettings {
 export type WidgetModes = 'login' | 'recovery' | 'consent'
 | 'challenge' | 'sms' | 'email' | 'otp' | 'fv' | 'webauthn'
 | 'signup' | 'resetPassword' | 'fillMissing' | 'verifyEmail'
-| 'passwordlessEmail' | 'passwordlessSms'
-
-export type SocialConnections = 'google' | 'facebook' | 'linkedin'
+| 'passwordlessEmail' | 'passwordlessSms' | 'passwordlessPush' | 'passwordlessOtp' | 'userProfile'
 
 export type FieldValidator<T extends (string | number)> = (
   this: { $t: (key: string, ...args: any) => string },
@@ -68,20 +66,32 @@ export interface IWidgetSettings {
   footer?: {
     enabled?: boolean
   },
-  theme: {
-    primary?: string;
-    secondary?: string;
-    accent?: string;
-    error?: string;
-    info?: string;
-    success?: string;
-    warning?: string;
-  }
+  theme: Partial<{
+    primary: string;
+    secondary: string;
+    accent: string;
+    error: string;
+    info: string;
+    success: string;
+    warning: string;
+  }>
 }
 
 export interface ITenantSettings {
-  passwordPolicy: any;
-  passwordResetFlow: 'code' | 'legacy' | 'newPassword';
+  auto_sign_in: boolean,
+  forgot_password_enabled: boolean,
+  password_policy: {
+    min?: (number | null)
+    max?: (number | null)
+    custom_chars?: (string | null)
+    history?: (number | null)
+    upper_case?: (number | null)
+    lower_case?: (number | null)
+    number?: (number | null)
+  };
+  register_enabled: boolean,
+  welcome_emails_enabled: boolean,
+  tenant_login_url: boolean
 }
 
 export interface IPlusAuthContext {

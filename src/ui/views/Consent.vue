@@ -28,7 +28,7 @@
   <div class="pa__widget-content-actions">
     <p-btn
       color="success"
-      @click="allow"
+      @click="resolve(true)"
     >
       <span v-t="'common.allow'" />
     </p-btn>
@@ -36,7 +36,7 @@
     <p-btn
       class="pa__ml-2"
       color="error"
-      @click="reject"
+      @click="resolve(false)"
     >
       <span v-t="'common.reject'" />
     </p-btn>
@@ -44,11 +44,11 @@
 </template>
 
 <script lang="ts">
-import { PlusAuthWeb } from '@plusauth/web';
 import { defineComponent, inject } from 'vue';
 
+import type { IPlusAuthContext } from '../interfaces';
 import { resolveClientLogo } from '../utils';
-
+import type { FetchWrapper } from '../utils/fetch';
 
 export default defineComponent({
   name: 'Consent',
@@ -59,19 +59,16 @@ export default defineComponent({
     }
   },
   setup(props){
-    const api = inject('api') as PlusAuthWeb
-    const context = inject('context') as any
+    const http = inject('http') as FetchWrapper
+    const context = inject('context') as IPlusAuthContext
 
     const _scopes = [...props.scopes, ...context.details.scopes?.new || []]
     return {
       _scopes,
       context,
-      allow(){
-        return api.auth.acceptConsent()
+      resolve(response){
+        return http.post({ body: { accepted: response } })
       },
-      reject(){
-        return api.auth.rejectConsent()
-      } ,
       resolveClientLogo,
     }
   }

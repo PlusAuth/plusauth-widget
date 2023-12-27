@@ -58,3 +58,4 @@ typings/
 umd
 yarn-debug.log*
 yarn-error.log*
+/dist

@@ -21,16 +21,12 @@
       :validate="validate"
       :submit="submit"
     >
-      <template #password.message="{ message: [ message ], focus, hasState }">
+      <template #password.message="{ message: [ message ], isFocused, isPristine }">
         <PasswordStrength
-          v-if="focus || hasState"
-          :rules="context.settings?.passwordPolicy"
+          v-if="isFocused || !isPristine"
+          :rules="context.settings?.password_policy"
           class="pa__input-details"
           :message="message"
-        />
-        <div
-          v-else
-          class="pa__messages pa__input-details"
         />
       </template>
     </GenericForm>
@@ -50,16 +46,15 @@
 </template>
 
 <script lang="ts">
-import { PlusAuthWeb } from '@plusauth/web';
 import { defineComponent, inject, ref } from 'vue';
-
-import { useRoute } from 'vue-router';
 
 import { PasswordStrength } from '../components';
 import GenericForm from '../components/GenericForm.vue';
-import { AdditionalFields } from '../interfaces';
-import { CustomizableFormProps } from '../mixins/customizable_form';
+import type { AdditionalFields, IPlusAuthContext } from '../interfaces';
 import { resolveClientLogo } from '../utils';
+import { checkPasswordStrength } from '../utils/check_passsword_strength';
+import { CustomizableFormProps } from '../utils/customizable_form';
+import type { FetchWrapper } from '../utils/fetch';
 import form_generics from '../utils/form_generics';
 
 export default defineComponent({
@@ -77,10 +72,9 @@ export default defineComponent({
     ...CustomizableFormProps
   },
   setup(props){
-    const api = inject('api') as PlusAuthWeb
-    const context = inject('context') as any
+    const http = inject('http') as FetchWrapper
+    const context = inject('context') as IPlusAuthContext
     const actionCompleted = ref(false)
-    const route = useRoute()
 
     const defaultFields: AdditionalFields = {
       password: {
@@ -90,7 +84,7 @@ export default defineComponent({
           autocomplete: 'new-password'
         },
         async validator(fields, value){
-          return api.auth.checkPasswordStrength(value,context.settings?.passwordPolicy || {})
+          return checkPasswordStrength(value,context.settings?.password_policy || {})
         }
       },
       rePassword: {
@@ -107,12 +101,9 @@ export default defineComponent({
     const { form, loading, submit, validate, fields: finalFields } = form_generics.call(
       props,
       defaultFields,
-      async (fieldWithValues) => {
+      async (values) => {
         try{
-          await api.auth.resetPassword(
-            fieldWithValues.password as string,
-            route.params.token as string
-          )
+          await http.post({ body: values })
           actionCompleted.value= true
         }catch (e) {
           if(finalFields.password){

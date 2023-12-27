@@ -6,7 +6,7 @@ import {
   RouterView
 } from 'vue-router';
 
-import { IWidgetSettings } from '../interfaces';
+import type { IPlusAuthContext, IWidgetSettings } from '../interfaces';
 import Consent from '../views/Consent.vue';
 import FillMissing from '../views/FillMissing.vue';
 import ForgotPassword from '../views/ForgotPassword.vue';
@@ -18,19 +18,24 @@ import MFAOTP from '../views/mfa/OTP.vue';
 import MFASMS from '../views/mfa/SMS.vue';
 import MFAWebAuthN from '../views/mfa/WebAuthN.vue';
 import PasswordlessEmail from '../views/passwordless/Email.vue';
+import PasswordlessOTP from '../views/passwordless/OTP.vue';
+import PasswordlessPush from '../views/passwordless/Push.vue';
 import PasswordlessSMS from '../views/passwordless/SMS.vue';
 import Register from '../views/Register.vue';
 import ResetPassword from '../views/ResetPassword.vue';
 import VerifyEmail from '../views/VerifyEmail.vue';
 
-const PlainRouterView = defineComponent( {
-  render(){
+const PlainRouterView = defineComponent({
+  render() {
     return h(RouterView)
   }
 })
 
 
-export const router = (settings: Partial<IWidgetSettings>) => createRouter({
+export const router = (
+  settings: Partial<IWidgetSettings>,
+  context: Partial<IPlusAuthContext>
+) => createRouter({
   history: location.origin !== 'null' ? createWebHistory() : createMemoryHistory('/'),
   routes: [
     {
@@ -47,20 +52,30 @@ export const router = (settings: Partial<IWidgetSettings>) => createRouter({
           component: Consent,
           props: settings && settings.modeOptions && settings.modeOptions.consent
         },
-        {
+        ...context.settings?.forgot_password_enabled ? [{
           path: 'recovery',
           component: ForgotPassword,
           props: settings && settings.modeOptions && settings.modeOptions.recovery
-        },
+        }] : [],
         {
-          path: 'passwordless-challenge/email',
+          path: 'passwordless/email',
           component: PasswordlessEmail,
           props: settings && settings.modeOptions && settings.modeOptions.passwordlessEmail
         },
         {
-          path: 'passwordless-challenge/sms',
+          path: 'passwordless/sms',
           component: PasswordlessSMS,
           props: settings && settings.modeOptions && settings.modeOptions.passwordlessSms
+        },
+        {
+          path: 'passwordless/otp',
+          component: PasswordlessOTP,
+          props: settings && settings.modeOptions && settings.modeOptions.passwordlessOtp
+        },
+        {
+          path: 'passwordless/push',
+          component: PasswordlessPush,
+          props: settings && settings.modeOptions && settings.modeOptions.passwordlessPush
         },
         {
           path: 'challenge',
@@ -105,11 +120,11 @@ export const router = (settings: Partial<IWidgetSettings>) => createRouter({
         },
       ]
     },
-    {
+    ...context.settings?.register_enabled ? [{
       path: '/signup',
       component: Register,
       props: settings && settings.modeOptions && settings.modeOptions.signup
-    },
+    }] : [],
     {
       path: '/account/verifyEmail',
       component: VerifyEmail,

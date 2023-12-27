@@ -1,4 +1,5 @@
-import { Ref, ref } from 'vue';
+import type { Ref } from 'vue';
+import { ref } from 'vue';
 
 import { escapeRegExp, isObject, keysToDotNotation, parseArgs, propertyAccessor } from '.';
 
@@ -27,10 +28,13 @@ export class Translator {
   t(key: string, ...values: any){
     const parsedArgs = parseArgs(values)
     const locale = parsedArgs.locale || this.locale
-    return this._interpolate(propertyAccessor(this.dictionary[locale], key)
+    return this._interpolate(
+      propertyAccessor(this.dictionary[locale], key)
           || propertyAccessor(this.dictionary[this.fallBackLocale], key)
-          || key,
-    parsedArgs.params, locale)
+          || key?.split('.').at(-1) as string,
+      parsedArgs.params,
+      locale
+    )
   }
   _interpolate(str: string, args: any, locale: string){
     if(!str){

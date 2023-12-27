@@ -57,7 +57,7 @@
       v-if="loading"
       style="position:absolute; top: 0; bottom: 0; right: 0; display: flex; align-items: center; flex-direction: column; left: 0; justify-content: center; background: white; opacity: 1;"
     >
-      <p-loading
+      <p-spinner
         color="primary"
         indeterminate
       />
@@ -81,25 +81,26 @@
 </template>
 
 <script lang="ts">
-import { PlusAuthWeb, MFACodeType } from '@plusauth/web';
 import { defineComponent, inject, onMounted, reactive, ref } from 'vue';
 
 import GenericForm from '../../components/GenericForm.vue';
 import Hand from '../../components/Hand.vue';
-import PLoading from '../../components/PLoading';
-import { CustomizableFormProps } from '../../mixins/customizable_form';
+import PSpinner from '../../components/PSpinner/PSpinner';
+import type { IPlusAuthContext } from '../../interfaces';
+import { CustomizableFormProps } from '../../utils/customizable_form';
+import type { FetchWrapper } from '../../utils/fetch';
 import form_generics from '../../utils/form_generics';
 import { H1FingerVeinService } from '../../utils/fv_helper';
 
 export default defineComponent({
   name: 'FingerVein',
-  components: { PLoading, Hand, GenericForm },
+  components: { PSpinner, Hand, GenericForm },
   props: {
     ...CustomizableFormProps
   },
   setup(props){
-    const api = inject('api') as PlusAuthWeb
-    const context = inject('context') as any
+    const http = inject('http') as FetchWrapper
+    const context = inject('context') as IPlusAuthContext
     const loadingMsg = ref<string | null>(null as any)
     const deviceOk = ref<boolean>(false)
     const selectedFinger = ref<number>(1 as any)
@@ -182,14 +183,17 @@ export default defineComponent({
               })
             } else {
               loadingMsg.value = 'mfa.fv.saving'
-              await api.auth.updateMissingInformation({
-                templates
+              await http.post({
+                body: { templates }
               })
             }
           }else {
             loadingMsg.value = 'mfa.fv.verifyInProgress'
             const resp = await fv.verify(1, context.details.fv_template)
-            await api.mfa.validateCode(MFACodeType.FINGER_VEIN, resp )
+
+            await http.post({
+              body: resp
+            })
           }
         }catch (e) {
           if(e.retCode){
@@ -211,7 +215,7 @@ export default defineComponent({
 })
 </script>
 
-<style  lang="scss">
+<style  lang="postcss">
 .hands_container{
   padding: 12px 0;
   display: flex;

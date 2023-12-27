@@ -16,7 +16,6 @@
     <div class="pa__logo-container">
       <img
         id="mainLogo"
-        style="max-height: 150px; margin-left: 40px;"
         class="pa__logo"
         alt="Logo"
         src="https://static.plusauth.com/images/icons/email_question.svg"
@@ -61,14 +60,15 @@
 </template>
 
 <script lang="ts">
-import { PlusAuthWeb } from '@plusauth/web';
 import { defineComponent, inject } from 'vue';
 
 import GenericForm from '../../components/GenericForm.vue';
-import { AdditionalFields } from '../../interfaces';
-import { CustomizableFormProps } from '../../mixins/customizable_form';
+import type { AdditionalFields, IPlusAuthContext } from '../../interfaces';
+import { CustomizableFormProps } from '../../utils/customizable_form';
+import type { FetchWrapper } from '../../utils/fetch';
 import form_generics from '../../utils/form_generics';
-import { Translator, translatorKey } from '../../utils/translator';
+import type { Translator } from '../../utils/translator';
+import { translatorKey } from '../../utils/translator';
 
 
 export default defineComponent({
@@ -78,8 +78,8 @@ export default defineComponent({
     ...CustomizableFormProps
   },
   setup(props){
-    const api = inject('api') as PlusAuthWeb
-    const context = inject('context') as any
+    const http = inject('http') as FetchWrapper
+    const context = inject('context') as IPlusAuthContext
     const translator = inject(translatorKey) as Translator
 
     const resendLink = `${window.location.pathname  }/resend`
@@ -93,6 +93,7 @@ export default defineComponent({
           append: {
             element: 'button',
             props: {
+              type: 'button',
               class: 'pa__btn pa__btn--flat pa__pw-toggle-visibility',
               onClick: (e) => {
                 e.preventDefault()
@@ -111,9 +112,9 @@ export default defineComponent({
     const { form, loading, submit, validate, fields: finalFields } = form_generics.call(
       props,
       defaultFields,
-      async (fieldWithValues) => {
+      async (values) => {
         try{
-          await api.auth.signInPasswordless('email', fieldWithValues)
+          await http.post({ body: values })
         }catch (e) {
           if (e.error) {
             if(e.error === 'invalid_code'){

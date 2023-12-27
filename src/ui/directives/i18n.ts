@@ -1,6 +1,6 @@
-import {  DirectiveBinding, ObjectDirective } from 'vue';
+import type {  DirectiveBinding, ObjectDirective } from 'vue';
 
-import { ITranslatePath } from '../interfaces';
+import type { ITranslatePath } from '../interfaces';
 import { isPlainObject } from '../utils';
 
 function makeParams(locale: string, args: any): Array<any> {

@@ -63,6 +63,7 @@ details?id=com.google.android.apps.authenticator2"
     <p-btn
       block
       color="primary"
+      type="submit"
       :loading="loading"
       @click="submit"
     >
@@ -72,14 +73,15 @@ details?id=com.google.android.apps.authenticator2"
 </template>
 
 <script lang="ts">
-import { PlusAuthWeb } from '@plusauth/web';
 import { defineComponent, inject, ref } from 'vue';
 
 import GenericForm from '../../components/GenericForm.vue';
-import { AdditionalFields } from '../../interfaces';
-import { CustomizableFormProps } from '../../mixins/customizable_form';
+import type { AdditionalFields, IPlusAuthContext } from '../../interfaces';
+import { CustomizableFormProps } from '../../utils/customizable_form';
+import type { FetchWrapper } from '../../utils/fetch';
 import form_generics from '../../utils/form_generics';
-import { Translator, translatorKey } from '../../utils/translator';
+import type { Translator } from '../../utils/translator';
+import { translatorKey } from '../../utils/translator';
 
 export default defineComponent({
   name: 'OTP',
@@ -88,8 +90,8 @@ export default defineComponent({
     ...CustomizableFormProps
   },
   setup(props){
-    const api = inject('api') as PlusAuthWeb
-    const context = inject('context') as any
+    const http = inject('http') as FetchWrapper
+    const context = inject('context') as IPlusAuthContext
     const translator = inject(translatorKey) as Translator
 
     const code = ref<string>(null as any)
@@ -104,6 +106,7 @@ export default defineComponent({
           append: {
             element: 'button',
             props: {
+              type: 'button',
               class: 'pa__btn pa__btn--flat pa__pw-toggle-visibility',
               onClick: (e) => {
                 e.preventDefault()
@@ -122,9 +125,9 @@ export default defineComponent({
     const { form, loading, submit, fields: finalFields, validate } = form_generics.call(
       props,
       defaultFields,
-      async (fieldWithValues) => {
+      async (values) => {
         try{
-          await api.auth.signInPasswordless('otp', fieldWithValues)
+          await http.post({ body: values })
         }catch (e) {
           if (e.error) {
             form.value.toggleAlert(`errors.${e.error}`, {

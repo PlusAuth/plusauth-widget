@@ -1,64 +1,73 @@
 import deepmerge from 'deepmerge';
-import {  reactive, ref, inject } from 'vue';
+import type { MaybeRef } from 'vue';
+import { ref, inject, unref, reactive } from 'vue';
 
-import GenericForm from '../components/GenericForm.vue';
-import { AdditionalFields, FieldDefinition } from '../interfaces';
+import type GenericForm from '../components/GenericForm.vue';
+import type { AdditionalFields, FieldDefinition, IPlusAuthContext } from '../interfaces';
 
-import { Translator, translatorKey } from './translator';
+import type { Translator } from './translator';
+import { translatorKey } from './translator';
 
 import { isEmail, isPhone } from '.';
 
 export default function (
   this: Record<string, any>,
-  defaultFields?: AdditionalFields | null,
+  defaultFields?: MaybeRef<AdditionalFields | null>,
   action?: (fields: Record<string, any>) => Promise<any>,
 ) {
   const form = ref<typeof GenericForm>(null as any)
   const loading = ref<boolean>(false)
   const translator = inject(translatorKey) as Translator
-  const context = inject('context') as any
+  const context = inject('context') as IPlusAuthContext
 
   const { fields, responseErrorHandler } = this
-  const mergedFields = reactive<AdditionalFields>(
-    deepmerge(
-      Object.assign(context.params?.state ? {
+  const merged = deepmerge(
+    Object.assign(
+      context.params?.state ? {
         state: {
           type: 'text',
           visible: 'hidden',
           value: context.params.state
         },
-      }: {}, defaultFields || {}),
-      fields || {},
-      { clone: false }
-    )
+      } : {},
+      unref(defaultFields || {})
+    ),
+    fields || {},
+    { clone: false }
   )
-
-  for (const field in mergedFields) {
-    if(!mergedFields[field]){
-      delete mergedFields[field]
+  for (const field in merged) {
+    if (!merged[field]) {
+      delete merged[field]
+    }
+  }
+  for (const field in fields) {
+    if (!fields[field]) {
+      delete fields[field]
     }
   }
 
+  const mergedFields = reactive<AdditionalFields>(merged)
+  this.fields = Object.assign(this.fields || {}, mergedFields)
   return {
     form,
     loading,
     fields: mergedFields,
     validate(options: FieldDefinition, field: string, value: any): any {
       if(options.required !== false && !value){
-        return translator.t('errors.field_required', [
-          translator.t(`common.fields.${field}`)
-        ])
+        return translator.t('errors.field_required', {
+          field: translator.t(`common.fields.${field}`)
+        })
       }
-      if(value){
-        if(options.format === 'email' && !isEmail(value)){
-          return translator.t('errors.invalid_entity', [
-            translator.t(`common.fields.${field}`)
-          ])
+      if (value) {
+        if (options.format === 'email' && !isEmail(value)) {
+          return translator.t('errors.invalid_entity', {
+            field: translator.t(`common.fields.${field}`)
+          })
         }
-        if(options.format === 'tel' && !isPhone(value)){
-          return translator.t('errors.invalid_entity', [
-            translator.t(`common.fields.${field}`)
-          ])
+        if (options.format === 'tel' && !isPhone(value)) {
+          return translator.t('errors.invalid_entity', {
+            field: translator.t(`common.fields.${field}`)
+          })
         }
       }
 
@@ -84,21 +93,21 @@ export default function (
       const formRef = form.value?.formRef || form.value
       if(!formRef){
         throw new Error('Form ref not found')
-        return
       }
-      const valid = await formRef.validate()
-      if (valid) {
+      const validationResult = await formRef.validate()
+      if (validationResult.valid) {
         formRef.resetValidation()
 
-        const fieldsWithValues = Object.keys(mergedFields).reduce((prev: any, curr: string) => {
-          prev[curr] = mergedFields[curr].value
-          return prev
-        }, {})
+        const fieldsWithValues = Object.keys(mergedFields)
+          .reduce((prev: any, curr: string) => {
+            prev[curr] = mergedFields[curr].value
+            return prev
+          }, {})
 
-        try{
+        try {
           await action?.(fieldsWithValues)
-        }catch (e) {
-          if(responseErrorHandler){
+        } catch (e) {
+          if (responseErrorHandler) {
             responseErrorHandler.call(undefined, e)
           }
           loading.value = false

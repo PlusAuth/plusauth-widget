@@ -1,0 +1,30 @@
+.messages {
+  flex: 1 1 auto;
+  font-size: 12px;
+  min-height: 16px;
+  min-width: 1px;
+  position: relative;
+
+  &__message {
+    line-height: 16px;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  }
+}
+.message-transition {
+  &-enter-active {
+    transition: all .3s ease-out;
+  }
+  &-leave-active {
+    transition: all .1s ease-out;
+  }
+  &-enter-from {
+    transform: translateX(20px);
+    opacity: 0;
+  }
+  &-leave-to {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+}
