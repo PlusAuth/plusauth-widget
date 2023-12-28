@@ -81,25 +81,25 @@ export default function (theme: Theme, settings: Partial<IWidgetSettings>): any 
     },
     setup(){
       const isMobile = ref(false)
+      const i18n = inject(translatorKey) as Translator
       function onResize() {
         isMobile.value = window.innerWidth < 600
       }
-      onResize()
       window.addEventListener('resize', onResize, { passive: true })
-      const i18n = inject(translatorKey) as Translator
+      onResize()
+
       onBeforeUnmount(() => {
         if (typeof window !== 'undefined') {
           window.removeEventListener('resize', onResize)
         }
       })
-
       return {
+        resolvedView: resolveViewFromValue(settings.mode),
         isMobile,
         locale: i18n.localeRef
       }
     },
     render(){
-      const resolvedView = resolveViewFromValue(settings.mode)
       return h(
         'div',
         {
@@ -115,8 +115,8 @@ export default function (theme: Theme, settings: Partial<IWidgetSettings>): any 
               },
               [
                 h(
-                  resolvedView,
-                  resolvedView === RouterView ? {} :
+                  this.resolvedView,
+                  this.resolvedView === RouterView ? {} :
                     settings.mode && settings.modeOptions
                     && settings.modeOptions[settings.mode.toLowerCase()]
                 )
