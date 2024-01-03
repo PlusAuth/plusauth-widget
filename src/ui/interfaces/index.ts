@@ -17,7 +17,7 @@ export interface ILocaleSettings {
 }
 
 export type WidgetModes = 'login' | 'recovery' | 'consent'
-| 'challenge' | 'sms' | 'email' | 'otp' | 'fv' | 'webauthn'
+| 'challenge' | 'sms' | 'email' | 'otp' | 'fv' | 'webauthn' | 'push'
 | 'signup' | 'resetPassword' | 'fillMissing' | 'verifyEmail'
 | 'passwordlessEmail' | 'passwordlessSms' | 'passwordlessPush' | 'passwordlessOtp' | 'userProfile'
 

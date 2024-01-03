@@ -16,6 +16,8 @@ window['PlusAuth'] = {
     ]
   },
   settings: {
+    register_enabled: true,
+    forgot_password_enabled: true,
     password_policy: {
       min: 4 ,
       max: 16,

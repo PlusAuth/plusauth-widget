@@ -36,7 +36,6 @@
 
   &-helpers-section {
     @apply text-center;
-    padding: 12px 0 0;
     line-height: 24px;
 
     a {
@@ -108,7 +107,7 @@
     &-footer {
       border: none;
       font-size: 14px;
-      margin: 24px -40px -36px;
+      margin: 24px -40px 0px;
       padding: 12px 0;
       @media (min-width: 601px) {
         border-top: 1px solid #dadce0;

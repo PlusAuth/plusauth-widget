@@ -17,8 +17,8 @@ import MFAChallenge from './views/mfa/Challenge.vue';
 import MFAEmail from './views/mfa/Email.vue';
 import MFAFingerVein from './views/mfa/FingerVein.vue';
 import MFAOTP from './views/mfa/OTP.vue';
-import MFASMS from './views/mfa/SMS.vue';
 import PasswordlessEmail from './views/passwordless/Email.vue';
+import PasswordlessPush from './views/passwordless/Push.vue';
 import PasswordlessSMS from './views/passwordless/SMS.vue';
 import Register from './views/Register.vue';
 import ResetPassword from './views/ResetPassword.vue';
@@ -43,6 +43,8 @@ DefineComponent<any, any, any, any, any, any, any, any, any, any>{
       return MFAChallenge;
     case 'passwordlessemail':
       return PasswordlessEmail
+    case 'passwordlesspush':
+      return PasswordlessPush
     case 'passwordlesssms':
       return PasswordlessSMS
     case 'email':
@@ -50,6 +52,9 @@ DefineComponent<any, any, any, any, any, any, any, any, any, any>{
       return MFAEmail;
     case 'sms':
     case 'mfasms':
+      return MFASMS;
+    case 'push':
+    case 'mfapush':
       return MFASMS;
     case 'otp':
     case 'mfaotp':

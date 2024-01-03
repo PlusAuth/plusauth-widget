@@ -16,6 +16,7 @@ import MFAEmail from '../views/mfa/Email.vue';
 import MFAFingerVein from '../views/mfa/FingerVein.vue';
 import MFAOTP from '../views/mfa/OTP.vue';
 import MFASMS from '../views/mfa/SMS.vue';
+import MFAPush from '../views/mfa/Push.vue';
 import MFAWebAuthN from '../views/mfa/WebAuthN.vue';
 import PasswordlessEmail from '../views/passwordless/Email.vue';
 import PasswordlessOTP from '../views/passwordless/OTP.vue';
@@ -109,6 +110,12 @@ export const router = (
               name: 'fv',
               component: MFAFingerVein,
               props: settings && settings.modeOptions && settings.modeOptions.fv
+            },
+            {
+              path: 'push',
+              name: 'push',
+              component: MFAPush,
+              props: settings && settings.modeOptions && settings.modeOptions.push
             },
             {
               path: 'webauthn',
