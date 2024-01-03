@@ -1,7 +1,7 @@
 <template>
   <template v-if="isRegistration">
     <div class="pa__widget-info-section">
-      <h1 v-t="'passwordless.push.enrollTitle'" />
+      <h1 v-t="'mfa.push.enrollTitle'" />
       <p
         v-t="{ path: 'passwordless.push.enrollDescription'}"
         class="pa__subtitle-2 pa__text-left"
@@ -30,9 +30,12 @@
   </template>
   <template v-else>
     <div class="pa__widget-info-section">
-      <h1 v-t="'passwordless.push.title'" />
+      <h1 v-t="'mfa.push.title'" />
       <p
-        v-t="{ path: 'passwordless.push.description'}"
+        v-t="{
+          path: !manualMode && context.details.push_code ?
+            'mfa.push.selectCode': 'mfa.push.description'
+        }"
         class="pa__subtitle-2 pa__text-left"
         style="margin: 12px 0"
       />
@@ -45,6 +48,14 @@
       :submit="submit"
     >
       <template v-if="!manualMode">
+        <div
+          v-if="context.details.push_code"
+          class="pa__timer pa__timer--circle"
+        >
+          <span class="pa__timer--seconds">
+            {{ context.details.push_code }}
+          </span>
+        </div>
         <div
           v-for="device in context.details.devices"
           :key="device.model"
@@ -81,13 +92,13 @@
         align="center"
       >
         <a
-          v-t="'passwordless.push.tryCodeAction'"
+          v-t="'mfa.push.tryCodeAction'"
           @click="$router.push({ query: { useCode: 'true' } })"
         />
       </p>
       <p align="center">
         <span
-          v-t="'passwordless.push.tryCodeText'"
+          v-t="'mfa.push.tryCodeText'"
           style="padding-right: 4px"
         />
 

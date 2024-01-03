@@ -32,12 +32,22 @@
     <div class="pa__widget-info-section">
       <h1 v-t="'passwordless.push.title'" />
       <p
-        v-t="{ path: 'passwordless.push.description'}"
+        v-t="{
+          path: !manualMode && context.details.push_code ?
+            'passwordless.push.selectCode': 'passwordless.push.description'
+        }"
         class="pa__subtitle-2 pa__text-left"
         style="margin: 12px 0"
       />
     </div>
-
+    <div
+      v-if="context.details.push_code"
+      class="pa__timer pa__timer--circle"
+    >
+      <span class="pa__timer--seconds">
+        {{ context.details.push_code }}
+      </span>
+    </div>
     <GenericForm
       ref="form"
       :fields="finalFields"

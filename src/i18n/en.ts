@@ -118,6 +118,7 @@ export default {
       title: 'Enter authorization code sent to: <strong>{phone_number}</strong>'
     },
     push: {
+      selectCode: 'Select number below from your device',
       title: 'Check your device',
       description: 'Click on notification in your device to allow access',
       enrollTitle: 'Register your device',
@@ -150,6 +151,15 @@ export default {
     },
     otp: {
       title: 'Please enter authorization code'
+    },
+    push: {
+      selectCode: 'Select number below from your device',
+      title: 'Check your device',
+      description: 'Click on notification in your device to allow access',
+      enrollTitle: 'Register your device',
+      enrollDescription: 'Scan the QR Code below with your Authenticator application',
+      tryCodeText: 'Didn\'t receive notification?',
+      tryCodeAction: 'Try entering code manually',
     },
     sms: {
       title: 'Enter authorization code sent to: <strong>{phone_number}</strong>'
