@@ -119,8 +119,6 @@ import type { AdditionalFields, IPlusAuthContext } from '../../interfaces';
 import { CustomizableFormProps } from '../../utils/customizable_form';
 import type { FetchWrapper } from '../../utils/fetch';
 import form_generics from '../../utils/form_generics';
-import type { Translator } from '../../utils/translator';
-import { translatorKey } from '../../utils/translator';
 
 export default defineComponent({
   name: 'Push',
@@ -133,7 +131,6 @@ export default defineComponent({
 
     const http = inject('http') as FetchWrapper
     const context = inject('context') as IPlusAuthContext
-    const translator = inject(translatorKey) as Translator
 
     const manualMode = computed(() => route.query.useCode === 'true')
     const isRegistration = ref(!!context.details.dataUrl)
