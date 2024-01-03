@@ -22,7 +22,7 @@
         block
         color="primary"
         :loading="loading"
-        @click="isRegistration = false"
+        @click="reload"
       >
         <span v-t="'common.continue'" />
       </p-btn>
@@ -73,10 +73,13 @@
       </p-btn>
     </div>
     <div
-      v-else
+      v-if="!manualMode"
       class="pa__widget-content-footer"
     >
-      <p align="center">
+      <p
+        v-if="!isRegistration"
+        align="center"
+      >
         <a
           v-t="'passwordless.push.tryCodeAction'"
           @click="$router.push({ query: { useCode: 'true' } })"
@@ -87,7 +90,6 @@
           v-t="'passwordless.push.tryCodeText'"
           style="padding-right: 4px"
         />
-
         <a
           v-t="'verifyEmail.resendAction'"
           :href="resendLink"
@@ -216,7 +218,10 @@ export default defineComponent({
       error,
       form,
       loading,
-      submit
+      submit,
+      reload(){
+        window.location.reload()
+      }
     }
   }
 })

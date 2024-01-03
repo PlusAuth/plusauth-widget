@@ -22,7 +22,7 @@
         block
         color="primary"
         :loading="loading"
-        @click="isRegistration = false"
+        @click="reload"
       >
         <span v-t="'common.continue'" />
       </p-btn>
@@ -210,7 +210,10 @@ export default defineComponent({
       error,
       form,
       loading,
-      submit
+      submit,
+      reload(){
+        window.location.reload()
+      }
     }
   }
 })

@@ -25,6 +25,7 @@ window['PlusAuth'] = {
     }
   },
   details: {
+    dataUrl: 'asdasd',
     phone_number: '+90********23',
     scopes: {
       new: ['read:a', 'write:subscription', 'write:user', 'read:user']

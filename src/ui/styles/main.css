@@ -35,7 +35,7 @@
   }
 
   &-helpers-section {
-    @apply text-center;
+    @apply text-center py-4;
     line-height: 24px;
 
     a {
@@ -81,6 +81,10 @@
       overflow: hidden;
       padding: 24px 24px 36px;
 
+      &:has(.widget-content-footer), &:has(.widget-helpers-section){
+        padding-bottom: 0;
+      }
+
       @media (min-width: 450px) {
         padding: 36px 40px 36px;
         display: flex;
@@ -111,6 +115,10 @@
       padding: 12px 0;
       @media (min-width: 601px) {
         border-top: 1px solid #dadce0;
+      }
+
+      + .widget-helpers-section {
+        @apply pt-0;
       }
     }
   }
