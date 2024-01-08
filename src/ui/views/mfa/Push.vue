@@ -158,20 +158,6 @@ export default defineComponent({
       } : undefined
     }))
 
-    async function pollPushValidation(resolve, reject) {
-      try {
-        resolve(await http.post({
-          body: {}
-        }))
-      } catch (e) {
-        if (e.error === 'authorization_pending') {
-          setTimeout(() => pollPushValidation(resolve, reject), 3000)
-        } else {
-          reject(e)
-        }
-      }
-    }
-
     const { form, loading, submit, fields: finalFields, validate } = form_generics.call(
       props,
       defaultFields,
@@ -186,6 +172,25 @@ export default defineComponent({
         }
       }
     )
+
+    async function pollPushValidation(resolve, reject) {
+      try {
+        resolve(await http.post({
+          body: {}
+        }))
+      } catch (e) {
+        if (e.error === 'authorization_pending') {
+          setTimeout(() => pollPushValidation(resolve, reject), 3000)
+        } else if(e.error === 'invalid_code') {
+          form.value.toggleAlert(e.error ? `errors.${e.error}` : e.message, {
+            dismissible: false
+          })
+          loading.value = false;
+        } else {
+          reject(e)
+        }
+      }
+    }
 
     watch([isRegistration, manualMode], async ([newValue, manual]) => {
       nextTick(async () => {
