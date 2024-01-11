@@ -107,3 +107,4 @@ const auth = new PlusAuthWidget('#pa__app', {
 setTimeout(() => {
   auth.view.modeOptions.login.fields.email.value = 'test@test.com'
 }, 100)
+// auth.view.mode = 'mfapush'

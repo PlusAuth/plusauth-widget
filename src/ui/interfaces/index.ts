@@ -61,6 +61,7 @@ export type FieldDefinition = CommonFieldProps & ({
 export interface IWidgetSettings {
   apiUrl: string;
   locale: ILocaleSettings;
+  mode?: string
   modeOptions: Partial<Record<WidgetModes, any>>,
   socialLogin?: {
     buttonVariant?: 'circle' | 'block'
