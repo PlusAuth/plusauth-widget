@@ -1,4 +1,4 @@
-import { defineComponent, h, ref, onBeforeUnmount, inject, watch, computed } from 'vue';
+import { defineComponent, h, ref, onBeforeUnmount, inject, computed } from 'vue';
 import './styles/main.css'
 
 import PFooter from './components/Footer.vue';
