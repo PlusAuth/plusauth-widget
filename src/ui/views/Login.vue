@@ -35,13 +35,13 @@
       && context.client.social.length"
     class="pa__widget-social-section"
   >
-    <h4 v-t="'login.signInWith'" />
+    <hr v-t="'login.socialLoginHelper'">
     <div class="pa__widget-social-icons">
       <SocialConnectionButton
         v-for="connection in context.client.social"
         :key="connection.name || connection"
-        :type="connection.provider || connection"
-        :href="'/social?provider=' + connection.name || connection"
+        lang-key="login.signInWith"
+        :connection="connection"
       />
     </div>
   </div>
@@ -74,23 +74,21 @@
 import { defineComponent, ref, inject } from 'vue';
 
 import GenericForm from '../components/GenericForm.vue';
-import SocialConnectionButton from '../components/SocialConnectionButton';
-import type { AdditionalFields, IPlusAuthContext } from '../interfaces';
+import SocialConnectionButton from '../components/SocialConnectionButton.vue';
+import type { AdditionalFields, IPlusAuthContext, IWidgetSettings } from '../interfaces';
 import { resolveClientLogo } from '../utils';
-import { CustomizableFormProps } from '../utils/customizable_form';
 import type { FetchWrapper } from '../utils/fetch';
 import form_generics from '../utils/form_generics';
 
 export default defineComponent({
   name: 'Login',
   components: { GenericForm, SocialConnectionButton },
-  props: {
-    ...CustomizableFormProps
-  },
-  setup(props) {
+  setup() {
     const context = inject('context') as IPlusAuthContext
-    const passwordVisible = ref(false)
     const http = inject('http') as FetchWrapper
+    const settings = inject('settings') as Partial<IWidgetSettings>
+
+    const passwordVisible = ref(false)
 
     const connection = context.connection || {}
     const isPasswordless = connection.type && ![
@@ -120,7 +118,7 @@ export default defineComponent({
     }
 
     const { form, loading, submit, validate, fields: finalFields } = form_generics.call(
-      props,
+      (settings.modeOptions || {}).login,
       defaultFields,
       async (values) => {
         form.value.toggleAlert(null)

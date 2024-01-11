@@ -30,9 +30,10 @@ export default class PlusAuthWidget {
     }, settings, { clone: true }))
 
     this.i18n = createTranslator(reactiveSettings.locale)
-    this._view = createWidget(container || document.body, reactiveSettings, context, this.i18n)
-    this._view.provide('api', this.api)
-    this._view.provide('http', this.http)
+    this._view = createWidget(container || document.body, reactiveSettings, context, {
+      i18n: this.i18n,
+      http: this.http,
+    })
   }
   get view(): IWidgetSettings {
     // expose settings rather than vue app

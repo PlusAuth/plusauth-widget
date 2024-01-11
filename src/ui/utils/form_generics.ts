@@ -20,7 +20,7 @@ export default function (
   const translator = inject(translatorKey) as Translator
   const context = inject('context') as IPlusAuthContext
 
-  const { fields, responseErrorHandler } = this
+  const { fields, responseErrorHandler } = this || {}
   const merged = deepmerge(
     Object.assign(
       context.params?.state ? {
@@ -45,9 +45,7 @@ export default function (
       delete fields[field]
     }
   }
-
   const mergedFields = reactive<AdditionalFields>(merged)
-  this.fields = Object.assign(this.fields || {}, mergedFields)
   return {
     form,
     loading,

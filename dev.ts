@@ -19,7 +19,7 @@ window['PlusAuth'] = {
     register_enabled: true,
     forgot_password_enabled: true,
     password_policy: {
-      min: 4 ,
+      min: 4,
       max: 16,
       lower_case: 4
     }
@@ -70,6 +70,9 @@ const auth = new PlusAuthWidget('#pa__app', {
   footer: {
     enabled: true
   },
+  // socialLogin: {
+  //   buttonVariant: 'circle' // 'block' by default
+  // },
   modeOptions: {
     login: {
       fields: {
@@ -102,6 +105,5 @@ const auth = new PlusAuthWidget('#pa__app', {
 }, window['PlusAuth'])
 
 setTimeout(() => {
-  auth.view.modeOptions.login.fields.email.value ='test@test.com'
+  auth.view.modeOptions.login.fields.email.value = 'test@test.com'
 }, 100)
-auth.view.mode = 'login'

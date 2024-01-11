@@ -46,8 +46,7 @@ import {
 import { defineComponent, inject, onMounted, ref } from 'vue';
 
 import GenericForm from '../../components/GenericForm.vue';
-import type { AdditionalFields, IPlusAuthContext } from '../../interfaces';
-import { CustomizableFormProps } from '../../utils/customizable_form';
+import type { AdditionalFields, IPlusAuthContext, IWidgetSettings } from '../../interfaces';
 import type { FetchWrapper } from '../../utils/fetch';
 import form_generics from '../../utils/form_generics';
 import type { Translator } from '../../utils/translator';
@@ -56,13 +55,12 @@ import { translatorKey } from '../../utils/translator';
 export default defineComponent({
   name: 'WebAuthN',
   components: { GenericForm },
-  props: {
-    ...CustomizableFormProps
-  },
-  setup(props) {
+  setup() {
     const http = inject('http') as FetchWrapper
     const context = inject('context') as IPlusAuthContext
     const translator = inject(translatorKey) as Translator
+    const settings = inject('settings') as Partial<IWidgetSettings>
+
     const code = ref<string>(null as any)
     const error = ref<string>(null as any)
     const loadingMsg = ref<string | null>(null as any)
@@ -75,7 +73,7 @@ export default defineComponent({
       }
     }
     const { form, loading, submit, fields: finalFields, validate } = form_generics.call(
-      props,
+      (settings.modeOptions || {}).webauthnMfa,
       defaultFields,
       async (values) => {
         try {

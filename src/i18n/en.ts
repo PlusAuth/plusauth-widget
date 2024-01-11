@@ -102,7 +102,8 @@ export default {
     noAccount: "Don't have an account?",
     title: 'Sign In',
     signIn: 'Sign In',
-    signInWith: 'or Sign in with',
+    signInWith: 'Sign in with {0}',
+    socialLoginHelper: 'or',
     signUp: 'Sign Up'
   },
   passwordless: {
@@ -183,7 +184,7 @@ export default {
     title: 'Sign Up',
     signIn: 'Sign In',
     signUp: 'Sign Up',
-    signUpWith: 'or Sign Up with'
+    signUpWith: 'Sign Up with {0}'
   },
   resetPassword: {
     successfullyReset: 'Your password has been successfully reset.',

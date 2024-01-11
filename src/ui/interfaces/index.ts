@@ -17,7 +17,7 @@ export interface ILocaleSettings {
 }
 
 export type WidgetModes = 'login' | 'recovery' | 'consent'
-| 'challenge' | 'sms' | 'email' | 'otp' | 'fv' | 'webauthn' | 'push'
+| 'challenge' | 'smsMfa' | 'emailMfa' | 'otpMfa' | 'fvMfa' | 'webauthnMfa' | 'pushMfa'
 | 'signup' | 'resetPassword' | 'fillMissing' | 'verifyEmail'
 | 'passwordlessEmail' | 'passwordlessSms' | 'passwordlessPush' | 'passwordlessOtp' | 'userProfile'
 
@@ -61,8 +61,10 @@ export type FieldDefinition = CommonFieldProps & ({
 export interface IWidgetSettings {
   apiUrl: string;
   locale: ILocaleSettings;
-  mode?: WidgetModes;
   modeOptions: Partial<Record<WidgetModes, any>>,
+  socialLogin?: {
+    buttonVariant?: 'circle' | 'block'
+  },
   footer?: {
     enabled?: boolean
   },

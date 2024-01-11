@@ -52,17 +52,11 @@ import type { FetchWrapper } from '../utils/fetch';
 
 export default defineComponent({
   name: 'Consent',
-  props: {
-    scopes: {
-      type: Array,
-      default: () => []
-    }
-  },
-  setup(props){
+  setup(){
     const http = inject('http') as FetchWrapper
     const context = inject('context') as IPlusAuthContext
 
-    const _scopes = [...props.scopes, ...context.details.scopes?.new || []]
+    const _scopes = [...context.details.scopes?.new || []]
     return {
       _scopes,
       context,

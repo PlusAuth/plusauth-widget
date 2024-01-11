@@ -93,7 +93,7 @@
       >
         <a
           v-t="'mfa.push.tryCodeAction'"
-          @click="$router.push({ query: { useCode: 'true' } })"
+          @click="switchToCode"
         />
       </p>
       <p align="center">
@@ -122,32 +122,30 @@
 
 <script lang="ts">
 import { computed, defineComponent, inject, nextTick, ref, watch } from 'vue';
-import { useRoute } from 'vue-router';
 
 import GenericForm from '../../components/GenericForm.vue';
 import PSpinner from '../../components/PSpinner/PSpinner';
-import type { AdditionalFields, IPlusAuthContext } from '../../interfaces';
-import { CustomizableFormProps } from '../../utils/customizable_form';
+import type { AdditionalFields, IPlusAuthContext, IWidgetSettings } from '../../interfaces';
 import type { FetchWrapper } from '../../utils/fetch';
 import form_generics from '../../utils/form_generics';
 
 export default defineComponent({
   name: 'Push',
   components: { PSpinner, GenericForm },
-  props: {
-    ...CustomizableFormProps
-  },
-  setup(props) {
-    const route = useRoute()
-
+  setup() {
     const http = inject('http') as FetchWrapper
     const context = inject('context') as IPlusAuthContext
+    const settings = inject('settings') as Partial<IWidgetSettings>
 
-    const manualMode = computed(() => route.query.useCode === 'true')
+    const resendLink = `${window.location.pathname}/resend`
+
+    const urlParams = new URLSearchParams(window.location.search)
+    const manualMode = computed(() => urlParams.get('useQuery') === 'true')
+
     const isRegistration = ref(!!context.details.dataUrl)
+
     const code = ref<string>(null as any)
     const error = ref<string>(null as any)
-    const resendLink = `${window.location.pathname}/resend`
 
     const defaultFields = computed<AdditionalFields>(() => ({
       ...manualMode.value ? {
@@ -159,7 +157,7 @@ export default defineComponent({
     }))
 
     const { form, loading, submit, fields: finalFields, validate } = form_generics.call(
-      props,
+      (settings.modeOptions || {}).pushMfa,
       defaultFields,
       async (values) => {
         try {
@@ -224,6 +222,10 @@ export default defineComponent({
       form,
       loading,
       submit,
+      switchToCode(){
+        urlParams.set('useQuery', true)
+        window.location.search = urlParams.toString();
+      },
       reload(){
         window.location.reload()
       }

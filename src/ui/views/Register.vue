@@ -42,13 +42,13 @@
       && context.client.social.length"
     class="pa__widget-social-section"
   >
-    <h4 v-t="'login.signInWith'" />
+    <hr v-t="'login.socialLoginHelper'">
     <div class="pa__widget-social-icons">
       <SocialConnectionButton
         v-for="connection in context.client.social"
         :key="connection.name || connection"
-        :type="connection.provider || connection"
-        :href="'/social?provider=' + connection.name || connection"
+        lang-key="register.signUpWith"
+        :connection="connection"
       />
     </div>
   </div>
@@ -76,27 +76,26 @@ import { defineComponent, inject } from 'vue';
 
 import { PasswordStrength } from '../components';
 import GenericForm from '../components/GenericForm.vue';
-import SocialConnectionButton from '../components/SocialConnectionButton';
-import type { AdditionalFields, IPlusAuthContext } from '../interfaces';
+import SocialConnectionButton from '../components/SocialConnectionButton.vue';
+import type { AdditionalFields, IPlusAuthContext, IWidgetSettings } from '../interfaces';
 import { resolveClientLogo } from '../utils';
 import { checkPasswordStrength } from '../utils/check_passsword_strength';
-import { CustomizableFormProps } from '../utils/customizable_form';
 import type { FetchWrapper } from '../utils/fetch';
 import form_generics from '../utils/form_generics';
 
 export default defineComponent({
   name: 'Register',
   components: { GenericForm, SocialConnectionButton, PasswordStrength },
-  props: {
-    ...CustomizableFormProps
-  },
-  setup(props) {
+  setup() {
     const http = inject('http') as FetchWrapper
     const context = inject('context') as IPlusAuthContext
+    const settings = inject('settings') as Partial<IWidgetSettings>
+
     const connection = context.connection || {}
     const isPasswordless = connection.type && ![
       'social', 'enterprise', 'plusauth'
     ].includes(connection.type)
+
     let identifierField = connection.type === 'sms' ? 'phone_number' : 'email';
 
     const defaultFields: AdditionalFields = {
@@ -138,7 +137,7 @@ export default defineComponent({
     }
 
     const { form, loading, submit, validate, fields: finalFields } = form_generics.call(
-      props,
+      (settings.modeOptions || {}).signup,
       defaultFields,
       async (values) => {
         try {

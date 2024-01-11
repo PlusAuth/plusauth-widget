@@ -10,7 +10,6 @@
   </div>
   <div class="pa__widget-info-section">
     <PTimer
-      v-if="timerEnabled"
       class="pa__challenge-timer"
       :duration="120"
     />
@@ -51,24 +50,17 @@ import { defineComponent, inject } from 'vue';
 
 import GenericForm from '../../components/GenericForm.vue';
 import PTimer from '../../components/PTimer/PTimer';
-import type { AdditionalFields, IPlusAuthContext } from '../../interfaces';
-import { CustomizableFormProps } from '../../utils/customizable_form';
+import type { AdditionalFields, IPlusAuthContext, IWidgetSettings } from '../../interfaces';
 import type { FetchWrapper } from '../../utils/fetch';
 import form_generics from '../../utils/form_generics';
 
 export default defineComponent({
   name: 'SMS',
   components: { PTimer, GenericForm },
-  props: {
-    timerEnabled: {
-      type: Boolean as () => boolean,
-      default: true
-    },
-    ...CustomizableFormProps
-  },
-  setup(props){
+  setup(){
     const http = inject('http') as FetchWrapper
     const context = inject('context') as IPlusAuthContext
+    const settings = inject('settings') as Partial<IWidgetSettings>
 
     const defaultFields: AdditionalFields = {
       code: {
@@ -77,7 +69,7 @@ export default defineComponent({
       }
     }
     const { form, loading, submit, validate, fields: finalFields } = form_generics.call(
-      props,
+      (settings.modeOptions || {}).smsMfa,
       defaultFields,
       async (values) => {
         try{

@@ -35,9 +35,8 @@
 import { defineComponent, inject } from 'vue';
 
 import GenericForm from '../components/GenericForm.vue';
-import type { IPlusAuthContext } from '../interfaces';
+import type { IPlusAuthContext, IWidgetSettings } from '../interfaces';
 import { resolveClientLogo } from '../utils';
-import { CustomizableFormProps } from '../utils/customizable_form';
 import type { FetchWrapper } from '../utils/fetch';
 import form_generics from '../utils/form_generics';
 
@@ -45,17 +44,15 @@ import form_generics from '../utils/form_generics';
 export default defineComponent({
   name: 'FillMissing',
   components: { GenericForm },
-  props: {
-    ...CustomizableFormProps
-  },
-  setup(props){
+  setup(){
     const http = inject('http') as FetchWrapper
     const context = inject('context') as IPlusAuthContext
+    const settings = inject('settings') as Partial<IWidgetSettings>
 
     const contextFields = context?.details?.fields
 
     const { form, loading, submit, validate, fields: finalFields } = form_generics.call(
-      props,
+      (settings.modeOptions || {}).fillMissing,
       null,
       async (values) => {
         try{

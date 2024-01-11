@@ -2,8 +2,6 @@ import type { DefineComponent } from 'vue';
 import { defineComponent, h, ref, onBeforeUnmount, inject } from 'vue';
 import './styles/main.css'
 
-import { RouterView, useRoute } from 'vue-router';
-
 import PFooter from './components/Footer.vue';
 import type { IWidgetSettings } from './interfaces';
 import type { Theme } from './utils/theme';
@@ -17,66 +15,83 @@ import MFAChallenge from './views/mfa/Challenge.vue';
 import MFAEmail from './views/mfa/Email.vue';
 import MFAFingerVein from './views/mfa/FingerVein.vue';
 import MFAOTP from './views/mfa/OTP.vue';
+import MFAPush from './views/mfa/Push.vue';
+import MFASMS from './views/mfa/SMS.vue';
+import MFAWebauthN from './views/mfa/WebAuthN.vue';
 import PasswordlessEmail from './views/passwordless/Email.vue';
+import PasswordlessOTP from './views/passwordless/OTP.vue';
 import PasswordlessPush from './views/passwordless/Push.vue';
 import PasswordlessSMS from './views/passwordless/SMS.vue';
 import Register from './views/Register.vue';
 import ResetPassword from './views/ResetPassword.vue';
 import VerifyEmail from './views/VerifyEmail.vue';
 
-function resolveViewFromValue(value = ''):
+function resolveView():
 DefineComponent<any, any, any, any, any, any, any, any, any, any>{
-  const route = useRoute()
-  if (route.matched.length > 0) {
-    return RouterView
+  const parts = window.location.pathname.split('/').slice(1)
+  if (parts[0] === 'signin'){
+    if (!parts[1]){
+      return Login
+    }
+    if (parts[1] === 'consent'){
+      return Consent
+    }
+    if (parts[1] === 'recovery'){
+      return ForgotPassword
+    }
+    if (parts[1] === 'passwordless'){
+      if (parts[2] === 'email'){
+        return PasswordlessEmail
+      }
+      if (parts[2] === 'sms'){
+        return PasswordlessSMS
+      }
+      if (parts[2] === 'otp'){
+        return PasswordlessOTP
+      }
+      if (parts[2] === 'push'){
+        return PasswordlessPush
+      }
+      return undefined
+    }
+    if (parts[1] === 'challenge'){
+      if (!parts[2]){
+        return MFAChallenge
+      }
+      if (parts[2] === 'email'){
+        return MFAEmail
+      }
+      if (parts[2] === 'fv'){
+        return MFAFingerVein
+      }
+      if (parts[2] === 'sms'){
+        return MFASMS
+      }
+      if (parts[2] === 'otp'){
+        return MFAOTP
+      }
+      if (parts[2] === 'push'){
+        return MFAPush
+      }
+      if (parts[2] === 'webauthn'){
+        return MFAWebauthN
+      }
+      return undefined
+    }
   }
-  switch (value.toLowerCase().replace('-', '').replace('_','')){
-    case 'login':
-    case 'signin':
-      return Login;
-    case 'register':
-    case 'signup':
-      return Register;
-    case 'mfa':
-    case 'challenge':
-    case 'mfachallenge':
-      return MFAChallenge;
-    case 'passwordlessemail':
-      return PasswordlessEmail
-    case 'passwordlesspush':
-      return PasswordlessPush
-    case 'passwordlesssms':
-      return PasswordlessSMS
-    case 'email':
-    case 'mfaemail':
-      return MFAEmail;
-    case 'sms':
-    case 'mfasms':
-      return MFASMS;
-    case 'push':
-    case 'mfapush':
-      return MFASMS;
-    case 'otp':
-    case 'mfaotp':
-      return MFAOTP;
-    case 'fv':
-    case 'mfafv':
-      return MFAFingerVein;
-    case 'verifyemail':
-      return VerifyEmail;
-    case 'consent':
-      return Consent;
-    case 'recovery':
-    case 'forgotpassword':
-    case 'passwordrecovery':
-      return ForgotPassword;
-    case 'resetpassword':
-      return ResetPassword;
-    case 'fillmissing':
-    case 'updatemissinginformation':
-      return FillMissing;
-    default:
-      return RouterView
+  if (parts[0] === 'signup'){
+    return Register
+  }
+  if (parts[0] === 'account'){
+    if (parts[1] === 'verifyEmail'){
+      return VerifyEmail
+    }
+    if (parts[1] === 'updateMissingInformation'){
+      return FillMissing
+    }
+    if (parts[1] === 'resetPassword'){
+      return ResetPassword
+    }
   }
 }
 export default function (theme: Theme, settings: Partial<IWidgetSettings>): any {
@@ -99,7 +114,7 @@ export default function (theme: Theme, settings: Partial<IWidgetSettings>): any 
         }
       })
       return {
-        resolvedView: resolveViewFromValue(settings.mode),
+        resolvedView: resolveView(),
         isMobile,
         locale: i18n.localeRef
       }
@@ -120,10 +135,7 @@ export default function (theme: Theme, settings: Partial<IWidgetSettings>): any 
               },
               [
                 h(
-                  this.resolvedView,
-                  this.resolvedView === RouterView ? {} :
-                    settings.mode && settings.modeOptions
-                    && settings.modeOptions[settings.mode.toLowerCase()]
+                  this.resolvedView
                 )
               ]
             ),

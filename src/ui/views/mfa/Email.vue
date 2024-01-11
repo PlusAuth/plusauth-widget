@@ -46,8 +46,7 @@
 import { defineComponent, inject } from 'vue';
 
 import GenericForm from '../../components/GenericForm.vue';
-import type { AdditionalFields, IPlusAuthContext } from '../../interfaces';
-import { CustomizableFormProps } from '../../utils/customizable_form';
+import type { AdditionalFields, IPlusAuthContext, IWidgetSettings } from '../../interfaces';
 import type { FetchWrapper } from '../../utils/fetch';
 import form_generics from '../../utils/form_generics';
 
@@ -55,12 +54,10 @@ import form_generics from '../../utils/form_generics';
 export default defineComponent({
   name: 'Email',
   components: { GenericForm },
-  props: {
-    ...CustomizableFormProps
-  },
-  setup(props){
+  setup(){
     const http = inject('http') as FetchWrapper
     const context = inject('context') as IPlusAuthContext
+    const settings = inject('settings') as Partial<IWidgetSettings>
 
     const defaultFields: AdditionalFields = {
       code: {
@@ -69,7 +66,7 @@ export default defineComponent({
       }
     }
     const { form, loading, submit, validate, fields: finalFields } = form_generics.call(
-      props,
+      (settings.modeOptions || {}).emailMfa,
       defaultFields,
       async (values) => {
         try{

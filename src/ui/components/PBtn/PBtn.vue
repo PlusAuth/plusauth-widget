@@ -1,5 +1,6 @@
 <template>
-  <button
+  <component
+    :is="$attrs.href ? 'a' : 'button'"
     :class="classes"
     :style="styles"
     :type="$attrs.type || 'button'"
@@ -16,7 +17,7 @@
       />
     </div>
     <slot />
-  </button>
+  </component>
 </template>
 <script setup lang="ts">
 import { computed } from 'vue';

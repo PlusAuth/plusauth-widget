@@ -63,22 +63,15 @@ import { resolveClientLogo } from '../utils';
 
 export default defineComponent({
   name: 'VerifyEmail',
-  props: {
-    features: {
-      type: Object,
-      default: () => ({
-        socialConnections: true,
-        signUp: true,
-        resetPassword: true
-      })
-    },
-  },
+
   setup() {
     const context = inject('context') as IPlusAuthContext
+
     const actionCompleted = ref(false)
+    let time = ref<number>(5);
+
     const error = context.error?.error
     let loginUrl = context.settings.auto_sign_in && context.settings.tenant_login_url
-    let time = ref<number>(5);
 
     const resendLink = `${window.location.pathname}/resend`
 
