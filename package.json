@@ -32,7 +32,7 @@
     "@popperjs/core": "2.11.8",
     "@simplewebauthn/browser": "^8.3.4",
     "deepmerge": "4.3.1",
-    "vue": "3.3.13"
+    "vue": "3.4.11"
   },
   "devDependencies": {
     "@commitlint/cli": "^18.4.4",
@@ -42,9 +42,9 @@
     "@typescript-eslint/eslint-plugin": "^6.18.1",
     "@typescript-eslint/parser": "^6.18.1",
     "@vitejs/plugin-vue": "^5.0.3",
-    "@vue/compiler-sfc": "^3.4.8",
+    "@vue/compiler-sfc": "^3.4.11",
     "@vue/language-service": "^1.8.27",
-    "@vue/shared": "^3.4.8",
+    "@vue/shared": "^3.4.11",
     "@vue/test-utils": "^2.4.3",
     "@vue/vue3-jest": "^29.2.6",
     "@vuedx/typecheck": "^0.7.6",
