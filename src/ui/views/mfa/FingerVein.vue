@@ -193,7 +193,7 @@ export default defineComponent({
             const resp = await fv.verify(1, context.details.fv_template)
 
             await http.post({
-              body: resp
+              body: { response: resp }
             })
           }
         }catch (e) {

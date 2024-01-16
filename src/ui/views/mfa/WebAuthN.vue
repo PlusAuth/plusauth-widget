@@ -66,8 +66,8 @@ export default defineComponent({
     const loadingMsg = ref<string | null>(null as any)
 
     const defaultFields: AdditionalFields = {
-      code: {
-        type: 'code',
+      response: {
+        type: 'text',
         visible: false,
         value: null,
       }
@@ -100,10 +100,10 @@ export default defineComponent({
         try {
           if (context.details.authentication_options) {
             loadingMsg.value = 'Select one of your security key/devices'
-            finalFields.code.value = await verifyDevice(context.details.authentication_options)
+            finalFields.response.value = await verifyDevice(context.details.authentication_options)
           } else if (context.details.registration_options) {
             loadingMsg.value = 'Registration a security key/device'
-            finalFields.code.value = await registerDevice(context.details.registration_options)
+            finalFields.response.value = await registerDevice(context.details.registration_options)
           } else {
             throw new Error('WebAuthN options not found')
           }
