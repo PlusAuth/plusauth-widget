@@ -20,11 +20,11 @@ export function createWidget(container: Element | string,
                              context: Partial<IPlusAuthContext>,
                              inject) {
   const theme = new Theme(settings.theme);
-
+  const translator = inject.i18n || createTranslator(settings.locale)
   const widget = createApp(App(theme, settings));
 
   widget.directive('t', i18n)
-  widget.provide(translatorKey, inject.i18n || createTranslator(settings.locale))
+  widget.provide(translatorKey,translator )
   widget.provide('http', inject.http)
   widget.provide('context', context)
   widget.provide('settings', settings)
