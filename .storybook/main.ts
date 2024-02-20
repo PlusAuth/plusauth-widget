@@ -11,6 +11,12 @@ const config: StorybookConfig = {
   core: {
     builder: '@storybook/builder-vite'
   },
+  previewHead: (head, {configType}) => {
+    if (configType === 'PRODUCTION') {
+      return head?.replace(`<base target="_parent" />`, `<base href="${process.env.BASE_PATH || '/'}">`)
+    }
+    return head
+  },
   managerHead: (head, { configType }) => {
     if (configType === 'PRODUCTION') {
       return (`
