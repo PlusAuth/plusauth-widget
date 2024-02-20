@@ -14,16 +14,20 @@ const config: StorybookConfig = {
   managerHead: (head, { configType }) => {
     if (configType === 'PRODUCTION') {
       return (`
-        ${head}
-        <base href="${process.env.BASE_PATH || '/'}">
+<base href="${process.env.BASE_PATH || '/'}">
+ ${head}
       `);
     }
   },
   async viteFinal(config, {configType}) {
-    config.base = process.env.BASE_PATH || config.base;
+    if (configType === 'PRODUCTION') {
+      config.base = process.env.BASE_PATH || config.base;
+    }
+
     config.plugins = config.plugins?.filter(s => {
       return !['vite:lib-inject-css', 'vite:dts'].includes(s!["name"])
     }) || []
+
     return config
   },
   framework: {
