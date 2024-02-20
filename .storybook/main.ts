@@ -2,7 +2,7 @@ import type {StorybookConfig} from "@storybook/vue3-vite";
 
 const config: StorybookConfig = {
   stories: ["../stories/**/*.@(md|mdx)", "../**/*.stories.@(js|jsx|mjs|ts|tsx)"],
-  staticDirs: [{ from: '../stories/assets', to: '/assets' }],
+  staticDirs: [{ from: '../stories/public', to: '/' }],
   addons: [
     "@storybook/addon-essentials",
     "@storybook/addon-links"
@@ -10,6 +10,14 @@ const config: StorybookConfig = {
 
   core: {
     builder: '@storybook/builder-vite'
+  },
+  managerHead: (head, { configType }) => {
+    if (configType === 'PRODUCTION') {
+      return (`
+        ${head}
+        <base href="${process.env.BASE_PATH || '/'}">
+      `);
+    }
   },
   async viteFinal(config, {configType}) {
     config.base = process.env.BASE_PATH || config.base;
