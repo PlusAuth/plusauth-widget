@@ -12,6 +12,7 @@ const config: StorybookConfig = {
     builder: '@storybook/builder-vite'
   },
   async viteFinal(config, {configType}) {
+    config.base = process.env.BASE_PATH || config.base;
     config.plugins = config.plugins?.filter(s => {
       return !['vite:lib-inject-css', 'vite:dts'].includes(s!["name"])
     }) || []
