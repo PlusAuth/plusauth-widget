@@ -14,7 +14,7 @@
 
   <GenericForm
     ref="form"
-    :fields="finalFields"
+    :fields="fields"
     :validate="validate"
     :submit="submit"
   />
@@ -35,10 +35,10 @@
 import { defineComponent, inject } from 'vue';
 
 import GenericForm from '../components/GenericForm.vue';
-import type { IPlusAuthContext, IWidgetSettings } from '../interfaces';
+import type { FieldDefinition, IPlusAuthContext, IWidgetSettings } from '../interfaces';
 import { resolveClientLogo } from '../utils';
 import type { FetchWrapper } from '../utils/fetch';
-import form_generics from '../utils/form_generics';
+import form_generics, { useGenericForm } from '../utils/form_generics';
 
 
 export default defineComponent({
@@ -51,10 +51,10 @@ export default defineComponent({
 
     const contextFields = context?.details?.fields
 
-    const { form, loading, submit, validate, fields: finalFields } = form_generics.call(
+    const { form, loading, submit, validate, fields } = useGenericForm(
       (settings.modeOptions || {}).fillMissing,
       null,
-      async (values) => {
+      async (values, finalFields) => {
         try{
           await http.post({ body: values })
         }catch (e) {
@@ -94,11 +94,11 @@ export default defineComponent({
             fieldName = field.name
             fieldType= field.type
           }
-          finalFields[fieldName] = {
+          fields[fieldName] = {
             value: null,
             type: fieldType,
             label: `common.fields.${fieldName}`,
-            validator(fields: any, value: any){
+            validator: function (fields: any, value: any){
               if(!value){
                 return this.$t('errors.field_required', [
                   this.$t(`common.fields.${fieldName}`)
@@ -106,13 +106,13 @@ export default defineComponent({
               }
               return true
             }
-          }
+          } as FieldDefinition
         })
       }
     }
 
     return {
-      finalFields,
+      fields,
       context,
       resolveClientLogo,
       form,

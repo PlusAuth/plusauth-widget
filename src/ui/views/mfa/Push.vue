@@ -43,7 +43,7 @@
 
     <GenericForm
       ref="form"
-      :fields="finalFields"
+      :fields="fields"
       :validate="validate"
       :submit="submit"
     >
@@ -127,7 +127,7 @@ import GenericForm from '../../components/GenericForm.vue';
 import PSpinner from '../../components/PSpinner/PSpinner';
 import type { AdditionalFields, IPlusAuthContext, IWidgetSettings } from '../../interfaces';
 import type { FetchWrapper } from '../../utils/fetch';
-import form_generics from '../../utils/form_generics';
+import { useGenericForm } from '../../utils/form_generics';
 
 export default defineComponent({
   name: 'Push',
@@ -156,10 +156,10 @@ export default defineComponent({
       } : undefined
     }))
 
-    const { form, loading, submit, fields: finalFields, validate } = form_generics.call(
+    const { form, loading, submit, fields, validate } = useGenericForm(
       (settings.modeOptions || {}).pushMfa,
       defaultFields,
-      async (values) => {
+      async (values, finalFields) => {
         try {
           await http.post({ body: values })
         } catch (e) {
@@ -211,7 +211,7 @@ export default defineComponent({
 
     }, { immediate: true, flush: 'post' })
     return {
-      finalFields,
+      fields,
       resendLink,
       validate,
       isRegistration,

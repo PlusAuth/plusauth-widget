@@ -76,14 +76,12 @@ const auth = new PlusAuthWidget('#pa__app', {
   modeOptions: {
     login: {
       fields: {
-        username: undefined,
-        email: {
+        email: null,
+        username: {
           type: 'text',
-          errors: [],
-          format: 'email',
-          label: 'Email',
+          label: 'Username',
           attrs: {
-            autocomplete: 'username'
+            autocomplete: 'email'
           },
         },
       }
@@ -105,6 +103,17 @@ const auth = new PlusAuthWidget('#pa__app', {
 }, window['PlusAuth'])
 
 setTimeout(() => {
-  auth.view.modeOptions.login.fields.email.value = 'test@test.com'
-}, 100)
+  auth.view.modeOptions.login.fields.username.value = 'test@test.com'
+  auth.view.modeOptions.login.fields = {
+    username: null,
+    email: {
+      type: 'text',
+      label: 'Email',
+      attrs: {
+        autocomplete: 'email'
+      },
+    },
+  }
+
+}, 200)
 // auth.view.mode = 'mfapush'

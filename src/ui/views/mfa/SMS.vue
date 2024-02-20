@@ -18,7 +18,7 @@
 
   <GenericForm
     ref="form"
-    :fields="finalFields"
+    :fields="fields"
     :validate="validate"
     :submit="submit"
   />
@@ -52,7 +52,7 @@ import GenericForm from '../../components/GenericForm.vue';
 import PTimer from '../../components/PTimer/PTimer';
 import type { AdditionalFields, IPlusAuthContext, IWidgetSettings } from '../../interfaces';
 import type { FetchWrapper } from '../../utils/fetch';
-import form_generics from '../../utils/form_generics';
+import { useGenericForm } from '../../utils/form_generics';
 
 export default defineComponent({
   name: 'SMS',
@@ -68,10 +68,10 @@ export default defineComponent({
         label: 'common.fields.code'
       }
     }
-    const { form, loading, submit, validate, fields: finalFields } = form_generics.call(
+    const { form, loading, submit, validate, fields } = useGenericForm(
       (settings.modeOptions || {}).smsMfa,
       defaultFields,
-      async (values) => {
+      async (values, finalFields) => {
         try{
           await http.post({ body: values })
         }catch (e) {
@@ -86,7 +86,7 @@ export default defineComponent({
     )
     return {
       loading,
-      finalFields,
+      fields,
       form,
       context,
       validate,

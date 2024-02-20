@@ -15,7 +15,7 @@
 
   <GenericForm
     ref="form"
-    :fields="finalFields"
+    :fields="fields"
     :validate="validate"
     :submit="submit"
   />
@@ -48,7 +48,7 @@ import { defineComponent, inject } from 'vue';
 import GenericForm from '../../components/GenericForm.vue';
 import type { AdditionalFields, IPlusAuthContext, IWidgetSettings } from '../../interfaces';
 import type { FetchWrapper } from '../../utils/fetch';
-import form_generics from '../../utils/form_generics';
+import { useGenericForm } from '../../utils/form_generics';
 
 
 export default defineComponent({
@@ -65,10 +65,10 @@ export default defineComponent({
         label: 'common.fields.code'
       }
     }
-    const { form, loading, submit, validate, fields: finalFields } = form_generics.call(
+    const { form, loading, submit, validate, fields } = useGenericForm(
       (settings.modeOptions || {}).emailMfa,
       defaultFields,
-      async (values) => {
+      async (values, finalFields) => {
         try{
           await http.post({
             body: values
@@ -85,7 +85,7 @@ export default defineComponent({
     )
     return {
       loading,
-      finalFields,
+      fields,
       form,
       context,
       validate,

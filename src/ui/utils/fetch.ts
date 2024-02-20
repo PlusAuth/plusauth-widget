@@ -1,9 +1,13 @@
-type RequestOptions = RequestInit & { body?: object, query?: object }
+type RequestOptions = Omit<RequestInit, 'body'> & {
+  body?: Record<string, any>,
+  query?: Record<string, any>
+}
+
 export type FetchWrapper = Record<
 'get' | 'post' | 'patch' | 'delete',
 (
   endpointOrOptions: string | RequestOptions,
-  options?: Omit<RequestInit, 'body'> & { body?: Record<string, any>, query?: Record<string, any> }
+  options?: RequestOptions
 ) => Promise<any>
 >;
 
@@ -26,7 +30,7 @@ export function createFetchWrapper(baseUrl?: string) {
       const url = typeof endpointOrOptions === 'string' ? endpointOrOptions
         : window.location.pathname;
       options = options || endpointOrOptions
-      const fetchOptions: RequestInit = Object.assign({}, options || {}, {
+      const fetchOptions: RequestInit = Object.assign({}, options as any || {} , {
         method,
         credentials: 'include',
       })

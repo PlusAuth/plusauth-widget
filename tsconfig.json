@@ -6,16 +6,21 @@
     "rootDir": ".",
     "declaration": true,
     "declarationDir": "dist/types",
-    "esModuleInterop": true,
     "experimentalDecorators": true,
+    "resolveJsonModule": true,
     "lib": [
       "esnext",
       "dom"
     ],
+    "allowImportingTsExtensions": true,
+    "moduleResolution": "bundler",
     "module": "ESNext",
-    "moduleResolution": "node",
+    "useDefineForClassFields": true,
+    "isolatedModules": true,
+    "noEmit": true,
     "noImplicitAny": false,
     "noImplicitThis": true,
+    "skipLibCheck": true,
     "noLib": false,
     "sourceMap": true,
     "strict": true,
@@ -32,6 +37,7 @@
   ],
   "include": [
     "./*.ts",
+    "./stories/**/*.ts",
     "./src/**/*.ts",
     "./src/**/*.vue"
   ]

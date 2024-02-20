@@ -104,18 +104,22 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, reactive, ref } from 'vue';
+import { computed, defineComponent, provide, reactive, ref } from 'vue';
 
 import type { AdditionalFields } from '../interfaces';
 
+
 import type { PAlertProps } from './PAlert/PAlert';
+import PBtn from './PBtn/PBtn.vue';
 import PCheckBox from './PCheckBox/PCheckBox.vue';
 import PCodeInput from './PCodeInput/PCodeInput';
 import PForm from './PForm.vue';
+import PMessage from './PMessage/PMessage.ts';
+import PTextField from './PTextField/PTextField.vue';
 
 export default defineComponent( {
   name: 'GenericForm',
-  components: { PCheckBox, PCodeInput, PForm },
+  components: { PCheckBox, PCodeInput, PForm, PTextField, PMessage, PBtn },
   props: {
     submit: {
       type: Function as () => any,

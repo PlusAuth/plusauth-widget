@@ -8,8 +8,8 @@ import type { Theme } from './utils/theme';
 import type { Translator } from './utils/translator';
 import { translatorKey } from './utils/translator';
 
-export default function (theme: Theme, settings: Partial<IWidgetSettings>): any {
-  return defineComponent({
+export function App(theme: Theme, settings: Partial<IWidgetSettings>): any {
+  return {
     provide: {
       theme
     },
@@ -49,7 +49,7 @@ export default function (theme: Theme, settings: Partial<IWidgetSettings>): any 
                 class: ['pa__widget-content-main']
               },
               [
-                h(
+                this.resolvedView && h(
                   this.resolvedView
                 )
               ]
@@ -60,6 +60,6 @@ export default function (theme: Theme, settings: Partial<IWidgetSettings>): any 
 
       )
     }
-  });
+  };
 }
 

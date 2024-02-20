@@ -19,7 +19,7 @@
       </div>
       <GenericForm
         ref="form"
-        :fields="finalFields"
+        :fields="fields"
         :validate="validate"
         :submit="submit"
       />
@@ -48,7 +48,7 @@ import { defineComponent, inject, onMounted, ref } from 'vue';
 import GenericForm from '../../components/GenericForm.vue';
 import type { AdditionalFields, IPlusAuthContext, IWidgetSettings } from '../../interfaces';
 import type { FetchWrapper } from '../../utils/fetch';
-import form_generics from '../../utils/form_generics';
+import { useGenericForm } from '../../utils/form_generics';
 import type { Translator } from '../../utils/translator';
 import { translatorKey } from '../../utils/translator';
 
@@ -72,10 +72,10 @@ export default defineComponent({
         value: null,
       }
     }
-    const { form, loading, submit, fields: finalFields, validate } = form_generics.call(
+    const { form, loading, submit, fields, validate } = useGenericForm(
       (settings.modeOptions || {}).webauthnMfa,
       defaultFields,
-      async (values) => {
+      async (values, finalFields) => {
         try {
           await http.post({ body: values })
         } catch (e) {
@@ -123,7 +123,7 @@ export default defineComponent({
 
     })
     return {
-      finalFields,
+      fields,
       validate,
       code,
       context,

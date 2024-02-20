@@ -5,7 +5,7 @@ import { i18n } from './directives/i18n';
 import type { IPlusAuthContext, IWidgetSettings } from './interfaces';
 import { Theme } from './utils/theme';
 import { Translator, translatorKey } from './utils/translator';
-import App from './widget';
+import { App } from './widget';
 
 export function createTranslator(settings: IWidgetSettings['locale']) {
   return new Translator(

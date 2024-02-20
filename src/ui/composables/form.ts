@@ -73,8 +73,8 @@ export const makeFormProps = propsFactory({
 export function createForm(props: FormProps) {
   const model = useProxiedModel(props, 'modelValue')
 
-  const isDisabled = computed(() => props.disabled)
-  const isReadonly = computed(() => props.readonly)
+  const isDisabled = computed(() => props.disabled || false)
+  const isReadonly = computed(() => props.readonly || false)
   const isValidating = shallowRef(false)
   const items = ref<FormField[]>([])
   const errors = ref<FieldValidationResult[]>([])

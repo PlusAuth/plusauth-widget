@@ -17,7 +17,7 @@
 
     <GenericForm
       ref="form"
-      :fields="finalFields"
+      :fields="fields"
       :validate="validate"
       :submit="submit"
     >
@@ -50,18 +50,17 @@ import { defineComponent, inject, ref } from 'vue';
 
 import { PasswordStrength } from '../components';
 import GenericForm from '../components/GenericForm.vue';
-import type { AdditionalFields, IPlusAuthContext, IWidgetSettings } from '../interfaces';
+import type { AdditionalFields, FieldDefinition, IPlusAuthContext } from '../interfaces';
 import { resolveClientLogo } from '../utils';
 import { checkPasswordStrength } from '../utils/check_passsword_strength';
 import type { FetchWrapper } from '../utils/fetch';
-import form_generics from '../utils/form_generics';
+import { useGenericForm } from '../utils/form_generics';
 
 export default defineComponent({
   name: 'ResetPassword',
   components: { GenericForm, PasswordStrength },
   setup(){
     const http = inject('http') as FetchWrapper
-    const settings = inject('settings') as Partial<IWidgetSettings>
     const context = inject('context') as IPlusAuthContext
     const actionCompleted = ref(false)
 
@@ -79,18 +78,18 @@ export default defineComponent({
       rePassword: {
         type: 'password',
         label: 'common.fields.rePassword',
-        validator(fields, value){
+        validator: function (fields, value){
           if(fields.password.value !== value){
             return this.$t('errors.passwords_not_match')
           }
           return true
         }
-      }
+      } as FieldDefinition
     }
-    const { form, loading, submit, validate, fields: finalFields } = form_generics.call(
-      (settings.modeOptions || {}).resetPassword,
+    const { form, loading, submit, validate, fields } = useGenericForm(
+      'resetPassword',
       defaultFields,
-      async (values) => {
+      async (values, finalFields) => {
         try{
           await http.post({ body: values })
           actionCompleted.value= true
@@ -102,7 +101,7 @@ export default defineComponent({
         }
       })
     return {
-      finalFields,
+      fields,
       form,
       context,
       actionCompleted,

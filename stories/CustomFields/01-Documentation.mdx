@@ -1,0 +1,33 @@
+import { Meta, Primary, Controls, Story } from '@storybook/blocks';
+import * as FieldStories from '../fields.stories';
+import '../hide-control.css';
+
+<Meta of={FieldStories} />
+
+
+## Custom Fields
+You can provide custom fields or override default ones with using `modeOptions.[pageIdentifier].fields`
+setting where `[pageIdentifier]` is the page which you would like to modify the fields.
+
+Each key in `fields` will be included in generated request's body as it is.
+
+To remove a default field provide its name with a [falsy](https://developer.mozilla.org/en-US/docs/Glossary/Falsy) value.
+For example `email` field is a default value for Login page. We can remove it like this:
+
+```js
+{
+  modeOptions: {
+    login: {
+      fields: {
+        email: undefined // or null, false, 0 etc.
+      }
+    }
+  }
+}
+```
+## Field Properties
+
+<div className="hide-controls-column">
+
+<Controls class="test"  />
+</div>

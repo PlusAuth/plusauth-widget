@@ -1,4 +1,4 @@
-import type { DefineComponent } from 'vue';
+import type { Component, ComponentOptions } from 'vue';
 
 import Consent from '../views/Consent.vue';
 import FillMissing from '../views/FillMissing.vue';
@@ -19,7 +19,7 @@ import Register from '../views/Register.vue';
 import ResetPassword from '../views/ResetPassword.vue';
 import VerifyEmail from '../views/VerifyEmail.vue';
 
-export function resolveView(mode?: string): DefineComponent<any, any, any, any, any> {
+export function resolveView(mode?: string): Component<any, any, any, any, any> | undefined {
   const m = mode ? mode.toLowerCase().replaceAll('-', '').replaceAll('_', '') : ''
   const parts = window.location.pathname.split('/').slice(1)
 

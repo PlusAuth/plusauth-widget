@@ -1,0 +1,23 @@
+.sb-preparing-docs, .sb-nopreview {
+  @apply hidden
+}
+.sbdocs{
+  &.sbdocs-wrapper {
+    @apply pt-12
+  }
+
+  .hide-controls-column {
+    @apply bg-gray-600
+  }
+
+  .hide-controls-column > div > table > thead > tr > th:last-child,
+  .hide-controls-column > div > table > tbody > tr > td:last-child {
+    display: none!important;
+  }
+
+  .hide-controls-column > div > table > thead > tr th:nth-child(1),
+  .hide-controls-column > div > table > tbody > tr td:nth-child(1) {
+    width: 15%;
+  }
+
+}

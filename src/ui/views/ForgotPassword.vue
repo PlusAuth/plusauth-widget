@@ -19,7 +19,7 @@
 
       <GenericForm
         ref="form"
-        :fields="finalFields"
+        :fields="fields"
         :validate="validate"
         :submit="submit"
       />
@@ -45,7 +45,7 @@
           >
         </div>
         <div class="pa__widget-info-section">
-          <h2 v-t="{ path: 'forgotPassword.emailSent', args: {email: finalFields.email.value } }" />
+          <h2 v-t="{ path: 'forgotPassword.emailSent', args: {email: fields.email.value } }" />
         </div>
       </div>
     </template>
@@ -56,10 +56,10 @@
 import { defineComponent, inject, ref } from 'vue';
 
 import GenericForm from '../components/GenericForm.vue';
-import type { AdditionalFields, IPlusAuthContext, IWidgetSettings } from '../interfaces';
+import type { AdditionalFields, IPlusAuthContext } from '../interfaces';
 import { resolveClientLogo } from '../utils';
 import type { FetchWrapper } from '../utils/fetch';
-import form_generics from '../utils/form_generics';
+import { useGenericForm } from '../utils/form_generics';
 
 export default defineComponent({
   name: 'ForgotPassword',
@@ -67,7 +67,6 @@ export default defineComponent({
   setup(){
     const http = inject('http') as FetchWrapper
     const context = inject('context') as IPlusAuthContext
-    const settings = inject('settings') as Partial<IWidgetSettings>
 
     const actionCompleted = ref(false)
 
@@ -79,10 +78,10 @@ export default defineComponent({
       }
     }
 
-    const { form, loading, submit, validate, fields: finalFields } = form_generics.call(
-      (settings.modeOptions || {}).recovery,
+    const { form, loading, submit, validate, fields } = useGenericForm(
+      'recovery',
       defaultFields,
-      async (values) => {
+      async (values, finalFields) => {
         try{
           await http.post({ body: values })
           actionCompleted.value= true
@@ -109,7 +108,7 @@ export default defineComponent({
       })
 
     return {
-      finalFields,
+      fields,
       context,
       form,
       actionCompleted,

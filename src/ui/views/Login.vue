@@ -1,5 +1,8 @@
 <template>
-  <div class="pa__logo-container">
+  <div
+    v-if="context.client?.logoUri !== false"
+    class="pa__logo-container"
+  >
     <img
       class="pa__logo"
       alt="Logo"
@@ -13,7 +16,7 @@
 
   <GenericForm
     ref="form"
-    :fields="finalFields"
+    :fields="fields"
     :validate="validate"
     :submit="submit"
   />
@@ -39,13 +42,12 @@
     <div class="pa__widget-social-icons">
       <SocialConnectionButton
         v-for="connection in context.client.social"
-        :key="connection.name || connection"
+        :key="typeof connection === 'string' ? connection : connection.name"
         lang-key="login.signInWith"
         :connection="connection"
       />
     </div>
   </div>
-
   <div class="pa__widget-helpers-section">
     <div
       v-if="context.settings.register_enabled"
@@ -75,10 +77,10 @@ import { defineComponent, ref, inject } from 'vue';
 
 import GenericForm from '../components/GenericForm.vue';
 import SocialConnectionButton from '../components/SocialConnectionButton.vue';
-import type { AdditionalFields, IPlusAuthContext, IWidgetSettings } from '../interfaces';
+import type { AdditionalFields, IPlusAuthContext } from '../interfaces';
 import { resolveClientLogo } from '../utils';
 import type { FetchWrapper } from '../utils/fetch';
-import form_generics from '../utils/form_generics';
+import { useGenericForm } from '../utils/form_generics';
 
 export default defineComponent({
   name: 'Login',
@@ -86,11 +88,10 @@ export default defineComponent({
   setup() {
     const context = inject('context') as IPlusAuthContext
     const http = inject('http') as FetchWrapper
-    const settings = inject('settings') as Partial<IWidgetSettings>
 
     const passwordVisible = ref(false)
 
-    const connection = context.connection || {}
+    const connection = context.connection || {} as typeof context.connection
     const isPasswordless = connection.type && ![
       'social',
       'enterprise',
@@ -117,10 +118,10 @@ export default defineComponent({
       },
     }
 
-    const { form, loading, submit, validate, fields: finalFields } = form_generics.call(
-      (settings.modeOptions || {}).login,
+    const { form, loading, submit, validate, fields } = useGenericForm(
+      'login',
       defaultFields,
-      async (values) => {
+      async (values, finalFields) => {
         form.value.toggleAlert(null)
         try {
           await http.post({ body: values })
@@ -135,7 +136,7 @@ export default defineComponent({
                 window.location.assign('/account/verifyEmail')
                 break;
               case 'invalid_password':
-                if(finalFields.password) {
+                if (finalFields.password) {
                   finalFields.password.errors = `errors.${e.error}`;
                 }
                 break;
@@ -158,10 +159,11 @@ export default defineComponent({
           }
           throw e
         }
-      })
+      }
+    )
 
     return {
-      finalFields,
+      fields,
       context,
       form,
       loading,

@@ -7,7 +7,7 @@ import { libInjectCss } from 'vite-plugin-lib-inject-css'
 
 const name = 'PlusAuthWidget';
 
-export default defineConfig(({ command, mode, ssrBuild }) => ({
+export default defineConfig(({ command, mode }) => ({
   define: command === 'build' ? {
     'process.env': { NODE_ENV: 'production'}
   }: {},
@@ -21,7 +21,7 @@ export default defineConfig(({ command, mode, ssrBuild }) => ({
       entry: resolve(__dirname, 'src/index.ts'),
       name,
       // the proper extensions will be added
-      fileName: (format) => (format === 'es' ? pkg.module : pkg.main).split('/').at(1),
+      fileName: (format) => (format === 'es' ? pkg.module : pkg.main).split('/').at(1) as string,
     },
   },
   plugins: [

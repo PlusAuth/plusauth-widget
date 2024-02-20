@@ -20,6 +20,8 @@ module.exports = {
     "plugin:import/errors",
     "plugin:import/warnings",
     "plugin:import/typescript",
+    "plugin:storybook/recommended",
+    "plugin:storybook/recommended"
   ],
   plugins: [
     "@typescript-eslint",
@@ -48,6 +50,7 @@ module.exports = {
     "@typescript-eslint/interface-name-prefix": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-extra-parens": ["error"],
+    "@typescript-eslint/no-unused-vars": ["warn"],
     "@typescript-eslint/prefer-string-starts-ends-with": "error",
     "@typescript-eslint/type-annotation-spacing": "error",
     "array-bracket-spacing": "error",

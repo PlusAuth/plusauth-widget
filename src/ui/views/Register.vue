@@ -13,7 +13,7 @@
 
   <GenericForm
     ref="form"
-    :fields="finalFields"
+    :fields="fields"
     :validate="validate"
     :submit="submit"
   >
@@ -46,7 +46,7 @@
     <div class="pa__widget-social-icons">
       <SocialConnectionButton
         v-for="connection in context.client.social"
-        :key="connection.name || connection"
+        :key="typeof connection === 'string' ? connection : connection.name"
         lang-key="register.signUpWith"
         :connection="connection"
       />
@@ -77,11 +77,11 @@ import { defineComponent, inject } from 'vue';
 import { PasswordStrength } from '../components';
 import GenericForm from '../components/GenericForm.vue';
 import SocialConnectionButton from '../components/SocialConnectionButton.vue';
-import type { AdditionalFields, IPlusAuthContext, IWidgetSettings } from '../interfaces';
+import type { AdditionalFields, FieldDefinition, IPlusAuthContext } from '../interfaces';
 import { resolveClientLogo } from '../utils';
 import { checkPasswordStrength } from '../utils/check_passsword_strength';
 import type { FetchWrapper } from '../utils/fetch';
-import form_generics from '../utils/form_generics';
+import { useGenericForm } from '../utils/form_generics';
 
 export default defineComponent({
   name: 'Register',
@@ -89,9 +89,8 @@ export default defineComponent({
   setup() {
     const http = inject('http') as FetchWrapper
     const context = inject('context') as IPlusAuthContext
-    const settings = inject('settings') as Partial<IWidgetSettings>
 
-    const connection = context.connection || {}
+    const connection = context.connection || {} as typeof context.connection
     const isPasswordless = connection.type && ![
       'social', 'enterprise', 'plusauth'
     ].includes(connection.type)
@@ -126,20 +125,20 @@ export default defineComponent({
           attrs: {
             autocomplete: 'new-password'
           },
-          validator(fields, value) {
+          validator: function (fields, value) {
             if (fields.password.value !== value) {
               return this.$t('errors.passwords_not_match')
             }
             return true
           }
-        }
+        } as FieldDefinition
       },
     }
 
-    const { form, loading, submit, validate, fields: finalFields } = form_generics.call(
-      (settings.modeOptions || {}).signup,
+    const { form, loading, submit, validate, fields } = useGenericForm(
+      'signup',
       defaultFields,
-      async (values) => {
+      async (values, finalFields) => {
         try {
           const result = await http.post({ body: values })
           if (result && result.message === 'verification_email_sent') {
@@ -168,7 +167,7 @@ export default defineComponent({
     return {
       form,
       context,
-      finalFields,
+      fields,
       loading,
       isPasswordless,
       resolveClientLogo,

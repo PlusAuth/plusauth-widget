@@ -37,7 +37,7 @@
     <GenericForm
       ref="form"
       style="padding-top: 24px"
-      :fields="finalFields"
+      :fields="fields"
       :validate="validate"
       :submit="submit"
     />
@@ -88,7 +88,7 @@ import Hand from '../../components/Hand.vue';
 import PSpinner from '../../components/PSpinner/PSpinner';
 import type { IPlusAuthContext, IWidgetSettings } from '../../interfaces';
 import type { FetchWrapper } from '../../utils/fetch';
-import form_generics from '../../utils/form_generics';
+import { useGenericForm } from '../../utils/form_generics';
 import { H1FingerVeinService } from '../../utils/fv_helper';
 
 export default defineComponent({
@@ -111,7 +111,7 @@ export default defineComponent({
     })
     const fv = new H1FingerVeinService()
 
-    const { form, loading, fields: finalFields, validate } = form_generics.call(
+    const { form, loading, fields, validate } = useGenericForm(
       (settings.modeOptions || {}).fvMfa
     )
 
@@ -135,7 +135,7 @@ export default defineComponent({
       }
     })
     return {
-      finalFields,
+      fields,
       validate,
       loadingMsg,
       selectedFinger,
