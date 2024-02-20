@@ -31,7 +31,7 @@ jobs:
       #👇 Add Storybook build and deploy to GitHub Pages as a step in the workflow
       - uses: bitovi/github-actions-storybook-to-github-pages@v1.0.2
         env:
-          BASE_PATH: /plusauth-widget
+          BASE_PATH: /plusauth-widget/
         with:
           install_command: pnpm install # default: npm ci
           build_command: pnpm run build-storybook # default: npm run build-storybook
