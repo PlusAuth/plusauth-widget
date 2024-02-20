@@ -26,9 +26,6 @@ const config: StorybookConfig = {
     }
   },
   async viteFinal(config, {configType}) {
-    if (configType === 'PRODUCTION') {
-      config.base = process.env.BASE_PATH || config.base;
-    }
     config.publicDir = false
     config.plugins = config.plugins?.filter(s => {
       return !['vite:lib-inject-css', 'vite:dts'].includes(s!["name"])
