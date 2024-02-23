@@ -16,7 +16,13 @@ export class Theme {
   }
 
   constructor(theme: IWidgetSettings['theme']) {
-    this.theme = Object.assign({},this.theme, theme )
+    const newTheme = Object.assign({}, this.theme)
+    Object.keys(newTheme).forEach((key) =>{
+      if(theme[key]){
+        newTheme[key] = theme[key]
+      }
+    })
+    this.theme = newTheme
     this.css = this.generatedStyles
   }
 
