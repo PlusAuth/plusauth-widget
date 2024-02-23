@@ -1,0 +1,48 @@
+# PlusAuth Context
+
+PlusAuth views provides a context object to be used in views. You can access
+it from global `PlusAuth` object or `window.PlusAuth`.
+
+Here is the type definition of context object.
+
+```typescript
+type PlusAuthContext = {
+  details: Record<string, any>,
+  params: Record<string, any>,
+  prompt: {
+    name: string,
+    mode?: string
+  },
+  client: {
+    logoUri?: string,
+    clientName?: string,
+    jwksUri: string,
+    applicationType: 'native' | 'web' | 'server-to-server' | 'single-page-application' | 'financial',
+    social: {
+      name: string,
+      provider: string,
+      branding: {
+        show_in_login?: boolean,
+        logo_url?: string,
+        display_name?: string
+      }
+    }[],
+  },
+  settings: {
+    auto_sign_in?: boolean,
+    forgot_password_enabled?: boolean,
+    password_policy?: {
+      min?: number,
+      max?: number,
+      lower_case?: number,
+      upper_case?: number,
+      number?: number,
+      custom_chars?: string,
+      history?: number
+    },
+    register_enabled?: boolean,
+    welcome_emails_enabled?: boolean,
+    tenant_login_url?: string
+  },
+}
+```

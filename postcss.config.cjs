@@ -6,7 +6,7 @@ module.exports = () => ({
       prefix: 'pa__',
       ignore: [/sb-?/],
       ignoreFiles: [
-        'hide-control'
+        /\.storybook/
       ]
     }),
     require('postcss-import')(),

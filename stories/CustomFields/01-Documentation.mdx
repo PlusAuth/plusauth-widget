@@ -1,6 +1,5 @@
-import { Meta, Primary, Controls, Story } from '@storybook/blocks';
-import * as FieldStories from '../fields.stories';
-import '../hide-control.css';
+import {Meta, Primary, Controls, Story, ArgTypes} from '@storybook/blocks';
+import * as FieldStories from './fields.stories';
 
 <Meta of={FieldStories} />
 
@@ -25,9 +24,16 @@ For example `email` field is a default value for Login page. We can remove it li
   }
 }
 ```
+
+## Available Fields
+To use a custom field pass the `type` parameter for the field properties.
+
+CheckBox with `type: 'checkbox'`
+Code with `type: 'code'`
+Every other property or `type: 'text'` renders a TextField
+
 ## Field Properties
 
 <div className="hide-controls-column">
-
-<Controls class="test"  />
+  <ArgTypes sort="requiredFirst" of={FieldStories.default} />
 </div>

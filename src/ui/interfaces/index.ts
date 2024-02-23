@@ -13,7 +13,6 @@ export interface IClient {
       show_in_login?: boolean
       logo_url?: string
       display_name?: string
-      [k: string]: any
     }
   } [];
 }
@@ -152,7 +151,7 @@ export interface IPlusAuthContext {
     type: string
   },
   settings: Partial<ITenantSettings>;
-  details: any;
+  details: Record<string, any>;
   params: any;
   prompt?: {
     name: string,

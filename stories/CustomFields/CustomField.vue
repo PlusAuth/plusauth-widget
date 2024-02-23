@@ -4,7 +4,6 @@ import type { FieldDefinition } from '../../src/ui/interfaces';
 import WidgetWrapper from '../WidgetWrapper.vue';
 
 const props = withDefaults(defineProps<FieldDefinition>(), {
-  type: 'text',
   visible: true
 })
 

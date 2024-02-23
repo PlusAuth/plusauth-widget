@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import type { AdditionalFields } from '../src/ui/interfaces';
+import type { AdditionalFields } from '../../../src/ui/interfaces';
 
-import WidgetWrapper from './WidgetWrapper.vue';
+import WidgetWrapper from '../../WidgetWrapper.vue';
 
 const props = defineProps<{
   /**
-   * See {@link "/?path=/docs/custom-fields--documentation"}
+   * See [Custom Fields](/?path=/docs/custom-fields--01-documentation)
    */
   fields: AdditionalFields
 }>()

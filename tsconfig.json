@@ -38,6 +38,9 @@
   "include": [
     "./*.ts",
     "./stories/**/*.ts",
+    "./stories/**/*.vue",
+    "./stories/**/*.tsx",
+    "./stories/**/*.jsx",
     "./src/**/*.ts",
     "./src/**/*.vue"
   ]
