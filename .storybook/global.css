@@ -1,22 +1,3 @@
-.sb-preparing-docs, .sb-nopreview {
-  @apply hidden
-}
-.sbdocs{
-  &.sbdocs-wrapper {
-    @apply pt-12
-  }
-
-  .hide-controls-column > div > table  {
-    & > thead > tr > th:last-child,
-    & > tbody > tr:not(:first-child) > td:last-child {
-      display: none !important;
-    }
-
-    & > thead > tr th:nth-child(1),
-    & > tbody > tr td:nth-child(1) {
-      width: 15%;
-    }
-
-  }
-
+input[placeholder="Choose color..."] + svg {
+  display: none;
 }
