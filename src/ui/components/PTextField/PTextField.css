@@ -43,7 +43,8 @@
 
     & + .btn {
       @apply flex h-auto self-stretch flex-1 active:ring-0 focus:ring-0 focus:bg-black/5 rounded-l-none
-      border-s border-s-[var(--input-ring-color)];
+      border-s;
+      border-inline-start-color: rgb(var(--input-ring-color));
     }
   }
 
