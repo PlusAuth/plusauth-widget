@@ -34,6 +34,7 @@
         :is-pristine="isPristine"
       >
         <PMessage
+          v-if="!hideMessages"
           :field="name"
           :value="messages"
         />
@@ -59,6 +60,7 @@ export default defineComponent({
     label: String,
     modelValue: null,
     disabled: Boolean,
+    hideMessages: Boolean,
     loading: Boolean,
     ...makeValidationProps(),
     ...makeFocusProps()
