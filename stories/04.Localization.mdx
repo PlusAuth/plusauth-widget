@@ -1,0 +1,117 @@
+# Localization
+
+PlusAuth widget supports localization by providing each locale. In order to keep the size of
+the library as small as possible we include English locale only.
+
+Default locale can be seen from [i18n/en.ts](https://github.com/PlusAuth/plusauth-widget/blob/main/src/i18n/en.ts).
+If your custom locale definition missing a key, it will fallback to `en` locale.
+
+You can provide custom locales by using `locale` setting. Here is an example:
+
+```javascript
+new PlusAuthWidget(document.body, {
+  locale: {
+    defaultLocale: 'tr',
+    dictionary: {
+      en: {
+
+      },
+      // Another locale
+      tr: {
+        // define keys here
+      }
+    }
+  }
+})
+```
+
+## Usage
+All components support localization; For example you can provide `label` or `errors` as a key in your dictionary,
+and it will be displayed as localized value. If you need to use it somewhere else you can access the translator
+method in widget instance with `i18n.t`.
+
+Usage example is as follows:
+```javascript
+const widget = new PlusAuthWidget(document.body, {
+  locale: {
+    dictionary: {
+      en: {
+        customKey: 'Hi there!'
+      }
+    }
+  }
+})
+
+console.log( widget.i18n.t('customKey') )
+```
+
+## Default Locale
+Default locale is set to `en` (English) but you can override it with by providing `locale.defaultLocale`
+
+## Multiple Locales
+To support multiple locales, define each locale at `locale.dictionary`.
+
+In order to change selected locale in runtime, you can use `i18n.locale` from widget instance.
+
+Here is an example:
+
+```javascript
+
+const widget = new PlusAuthWidget(document.body, /* redacted for simplicity */)
+
+// change locale at runtime
+widget.i18n.locale = 'tr' // make sure you have defined it in `locale.dictionary`
+```
+## Nested JSON Support
+For better organization support, nested json definitions are supported. You can access to nested json keys by using dot notation.
+
+For example let's assume this is our dictionary:
+```json
+{
+  "top": "Top",
+  "nested": {
+    "key": "Nested Key",
+    "sub": {
+      "key": "Deep nested key"
+    }
+  },
+  "inlined.key": "Inline key"
+}
+```
+
+You can use them easily like this:
+```javascript
+widget.i18n.t('top')
+widget.i18n.t('nested.key')
+widget.i18n.t('nested.sub.key')
+widget.i18n.t('inlined.key')
+```
+
+## Interpolation
+
+In some cases you may need to interpolate the localized value. To interpolate make
+sure you have defined a placeholder for the dynamic value and provide it while using the translator function.
+
+Placeholders must be defined between curly braces, `{}`
+You can use index number or a name for a placeholder such as `{0}`, `{1}`, `{name}`, `{value}` etc.
+
+Here is an example:
+
+```javascript
+const widget = new PlusAuthWidget(document.body, {
+  locale: {
+    dictionary: {
+      en: {
+        myCustomValue: 'This is the value: {0}',
+        namedValue: 'This is the value: {value}',
+        multiple: 'The list is as like this: {0}, {1}'
+      }
+    }
+  }
+})
+
+console.log( widget.i18n.t('myCustomValue', [ "Example" ]) ) // This is the value: Example
+console.log( widget.i18n.t('namedValue', { value: "Example" }) ) // This is the value: Example
+console.log( widget.i18n.t('multiple', ['First', 'Second']) )  // The list is as like this: First, Second
+```
+

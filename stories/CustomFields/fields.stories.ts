@@ -44,6 +44,7 @@ export const Code: Story = {
   },
   args: {
     type: 'code',
+    label: 'Enter Code',
     visible: true,
   },
   argTypes: {
@@ -67,6 +68,7 @@ export const CheckBox: Story = {
   },
   args: {
     type: 'checkbox',
+    label: 'My custom checkbox',
     visible: true,
   },
   argTypes: {
@@ -87,12 +89,7 @@ export const CheckBox: Story = {
 const meta: Meta<typeof CustomField> = {
   component: CustomField,
   title: 'Custom Fields',
-  tags: [],
-  argTypes: FieldArgTypes,
-  parameters: {
-    controls: {
-    }
-  }
+
 }
 
 

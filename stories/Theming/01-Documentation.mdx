@@ -1,0 +1,51 @@
+## Theme
+PlusAuthWidget currently supports only providing colors and it generates a color palette based on those colors.
+
+Color variants are as following:
+```
+primary
+secondary
+accent
+error
+info
+success
+warning
+```
+You can define a color for each variant by using `theme` setting. The color values must be **hex** codes.
+For example:
+
+```javascript
+new PlusAuthWidget(document.body, {
+  theme: {
+    primary: '#e37006',
+    secondary: '#424242',
+    accent: '#82B1FF',
+    error: '#FF5252',
+    info: '#2196F3',
+    success: '#4CAF50',
+    warning: '#FB8C00'
+  }
+})
+```
+
+## Color Palette
+The widget generates a color palette for each variant and each palette contains 11 levels.
+
+Levels are: `50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950`
+
+`500` level is your provided color and lower levels are lighter shades and bigger levels are darker shades.
+
+You can use those colors in your css by accessing them with the css variable name formatted as `pa-color-{variant}-{level}`.
+The variable contains keys of rgb. To use them you must wrap them with `rgb()`.
+
+For example:
+```css
+.bacground-1 {
+  background-color: rgb( var(--pa-color-primary-500) );
+}
+
+// Transparent variant
+.background-2 {
+  background-color: rgb( var(--pa-color-primary-500) / 0.7 );
+}
+```

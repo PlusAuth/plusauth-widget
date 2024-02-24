@@ -22,15 +22,22 @@ export default class PlusAuthWidget {
 
     this.http = createFetchWrapper(settings.apiUrl)
 
-    const reactiveSettings = reactive(deepmerge( {
-      locale: {
-        defaultLocale: 'en',
-        dictionary: defaultDictionary
-      }
-    }, settings, { clone: true }))
+    const { locale: localeSettings, ...otherSettings } = settings
+
+    const reactiveSettings = reactive(
+      deepmerge({
+        locale: {
+          defaultLocale: localeSettings?.defaultLocale || 'en',
+          selectedLocale: localeSettings?.selectedLocale || context.params?.ui_locale,
+          dictionary: deepmerge(defaultDictionary, localeSettings?.dictionary || {})
+        }
+      },
+      otherSettings,
+      { clone: true })
+    )
 
     this.i18n = createTranslator(reactiveSettings.locale)
-    this._view = createWidget(container || document.body, reactiveSettings, context, {
+    this._view = createWidget(container || document.body, reactiveSettings as any, context, {
       i18n: this.i18n,
       http: this.http,
     })

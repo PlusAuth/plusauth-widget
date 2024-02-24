@@ -10,8 +10,6 @@ const props = defineProps<{
   settings: Partial<IWidgetSettings>,
   context?: Partial<IPlusAuthContext>
 }>()
-
-
 const config = ref(useConfig(props.settings, props.context))
 const key = ref()
 const widget = ref<PlusAuthWidget>()
