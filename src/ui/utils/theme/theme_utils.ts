@@ -14,7 +14,9 @@ export function genStyles(theme: any): string {
     if(value && typeof value==='string'){
       const swatch = createSwatches(value)
       swatch.forEach(({ stop, plainRgb }) => {
-        variablesCss += `  ${genColorVariableName(`${name}-${stop}`)}: ${plainRgb};\n`
+        if (stop !== 0 && stop !== 1000){
+          variablesCss += `  ${genColorVariableName(`${name}-${stop}`)}: ${plainRgb};\n`
+        }
       })
       const defColor = swatch.find(s => s.stop === 500)
       variablesCss += `  ${genColorVariableName(`${name}-DEFAULT`)}: ${defColor!.plainRgb};\n`
