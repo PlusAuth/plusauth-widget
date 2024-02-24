@@ -13,6 +13,7 @@
           <PCodeInput
             v-model="fields[field].value"
             v-bind="fields[field].attrs"
+            :label="fields[field].label"
             :size="fields[field].length"
             color="primary"
           />
