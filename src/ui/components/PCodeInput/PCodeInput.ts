@@ -1,8 +1,9 @@
 import type { Ref } from 'vue';
-import { defineComponent, h, computed, ref } from 'vue';
+import { inject , defineComponent, h, computed, ref } from 'vue';
 
 import { PTextField } from '..';
 import './PCodeInput.css'
+import { type Translator, translatorKey } from '../../utils/translator';
 
 function generateDigitInput(index: any,
                             ref: any,
@@ -66,6 +67,9 @@ function initializeInputRefs(size: number) {
 export default defineComponent({
   name: 'PCodeInput',
   props: {
+    label: {
+      type: String
+    },
     size: {
       type: Number as () => number,
       default: 6
@@ -73,6 +77,7 @@ export default defineComponent({
   },
   emits: ['update:modelValue'],
   setup(props, ctx){
+    const i18n = inject(translatorKey) as Translator
     const digits = initializeDigitsModel(props.size)
     const inputRefs = initializeInputRefs(props.size)
     const innerModelValue = computed(() => {
@@ -85,6 +90,7 @@ export default defineComponent({
       }, '')
     })
     return {
+      i18n,
       digits,
       inputRefs,
       onDigitInput(index: number, val: any){
@@ -137,21 +143,26 @@ export default defineComponent({
     }
   },
   render(){
-    return h('div',
-      {
-        class: {
-          'pa__code-input': true
-        }
-      },
-      Array(this.size).fill(0).map((v, i) =>
-        generateDigitInput.call(
-          this, i,
-          this.inputRefs[i],
-          this.digits[i],
-          this.onDigitInput,
-          this.onKeydown,
+    return h('div', { class: 'pa__input pa__code-input' }, [
+      this.label ? h('label', { class: 'pa__input--label' }, [
+        this.i18n.t(this.label)
+      ]) : undefined,
+      h('div',
+        {
+          class: {
+            'pa__input--wrap': true
+          }
+        },
+        Array(this.size).fill(0).map((v, i) =>
+          generateDigitInput.call(
+            this, i,
+            this.inputRefs[i],
+            this.digits[i],
+            this.onDigitInput,
+            this.onKeydown,
+          )
         )
       )
-    )
+    ])
   }
 })
