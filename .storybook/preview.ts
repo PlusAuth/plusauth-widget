@@ -3,6 +3,31 @@ import './preview.css'
 
 const preview: Preview = {
   parameters: {
+    viewport: {
+      viewports: {
+        mobile: {
+          name: 'Mobile',
+          styles: {
+            width: '400px',
+            height: '900px',
+          },
+        },
+        laptop: {
+          name: 'Laptop',
+          styles: {
+            width: '1366px',
+            height: '768px',
+          },
+        },
+        desktop: {
+          name: 'Desktop',
+          styles: {
+            width: '1920px',
+            height: '1080px',
+          },
+        },
+      }
+    },
     options: {
       // The `a` and `b` arguments in this function have a type of `import('@storybook/types').IndexEntry`. Remember that the function is executed in a JavaScript environment, so use JSDoc for IntelliSense to introspect it.
       storySort: (a, b) => {

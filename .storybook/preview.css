@@ -1,3 +1,9 @@
+html, body, #storybook-root, #wrapper {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 .sb-preparing-docs, .sb-nopreview {
   @apply hidden
 }
