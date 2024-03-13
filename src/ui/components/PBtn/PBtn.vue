@@ -43,7 +43,7 @@ const classes = computed(() => ({
 }))
 const styles = computed(() => ({
   ...setColorStyle(props),
-  '--pa-ring-color': `rgb(var(--pa-color-${props.color}-DEFAULT) / 0.3)`
+  '--pa-ring-color': `rgb(var(--pa-color-${props.color || 'primary'}-DEFAULT) / 0.3)`
 }))
 </script>
 <style src="./PBtn.css"></style>
