@@ -72,7 +72,7 @@ export default defineComponent({
       isDirty
     } = useValidation(props, 'pa__input')
     const classes = computed(() => ({
-      ...props.color ? {  [`text-${props.color}`]: true } : {},
+      [props.color ? `text-${props.color}` : 'text-primary']: true,
       ...focusClasses.value,
       ...validationClasses.value
     }))
