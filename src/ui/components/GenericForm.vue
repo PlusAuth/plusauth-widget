@@ -94,7 +94,10 @@
       :color="alertOptions.type || 'error'"
       v-bind="alertOptions.value"
     >
-      <p-message :value="alertMsg" />
+      <p-message
+        v-if="alertMsg"
+        :value="alertMsg"
+      />
     </p-alert>
     <input
       type="submit"

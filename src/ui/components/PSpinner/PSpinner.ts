@@ -50,6 +50,9 @@ export default defineComponent({
       type: [Number, String],
       default: 0,
     },
+    color: {
+      type: String
+    },
     size: {
       type: [Number, String],
       default: 32,
@@ -95,15 +98,16 @@ export default defineComponent({
     })
 
     const normalizedValue = computed(() => {
-      if (props.modelValue < 0) {
+      const val = Number(props.modelValue)
+      if (isNaN(val) || val < 0) {
         return 0
       }
 
-      if (props.modelValue > 100) {
+      if (val > 100) {
         return 100
       }
 
-      return parseFloat(props.modelValue as string)
+      return val
     })
     const classes = computed(() => {
       return {

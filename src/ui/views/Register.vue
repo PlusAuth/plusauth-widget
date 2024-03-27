@@ -90,7 +90,7 @@ export default defineComponent({
     const http = inject('http') as FetchWrapper
     const context = inject('context') as IPlusAuthContext
 
-    const connection = context.connection || {} as typeof context.connection
+    const connection = context.connection || {} as Exclude<typeof context.connection, undefined>
     const isPasswordless = connection.type && ![
       'social', 'enterprise', 'plusauth'
     ].includes(connection.type)

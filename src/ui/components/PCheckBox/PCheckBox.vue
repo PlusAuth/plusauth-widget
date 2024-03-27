@@ -46,15 +46,9 @@ export default defineComponent({
     falseValue: { type: Boolean, default: false },
     modelValue: null,
     type: String,
-    rules: null,
     ...makeValidationProps()
   },
-  emits: {
-    /* eslint-disable @typescript-eslint/no-unused-vars */
-    'update:focused': (focused: boolean) => true,
-    'update:modelValue': (val: string) => true,
-    /* eslint-enable @typescript-eslint/no-unused-vars */
-  },
+  emits: ['update:focused', 'update:modelValue'],
   setup(props, { emit, expose }) {
     const itemId = `${props.name || 'checkbox'}-${getUid()}`
     const { blur, focus, focusClasses, isFocused } = useFocus(props, 'pa__input')
@@ -76,7 +70,7 @@ export default defineComponent({
       ...focusClasses.value,
       ...validationClasses.value
     }))
-    const onInput = (event: InputEvent) => {
+    const onInput = (event: Event) => {
       const isChecked = (event.currentTarget as HTMLInputElement)?.checked
       emit('update:modelValue', isChecked ? props.trueValue : props.falseValue)
     };

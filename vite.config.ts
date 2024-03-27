@@ -4,6 +4,7 @@ import { resolve } from 'path'
 import pkg from './package.json' ;
 import dts from 'vite-plugin-dts';
 import { libInjectCss } from 'vite-plugin-lib-inject-css'
+import checker from "vite-plugin-checker";
 
 const name = 'PlusAuthWidget';
 
@@ -28,6 +29,9 @@ export default defineConfig(({ command, mode }) => ({
     vue(),
     libInjectCss(),
     dts({ outDir: 'dist/types' }),
+    checker({
+      vueTsc: true
+    })
   ],
   resolve: {
     dedupe: ["vue"],

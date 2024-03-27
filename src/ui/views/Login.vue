@@ -1,6 +1,6 @@
 <template>
   <div
-    v-if="context.client?.logoUri !== false"
+    v-if="context.client?.logoUri"
     class="pa__logo-container"
   >
     <img
@@ -91,7 +91,7 @@ export default defineComponent({
 
     const passwordVisible = ref(false)
 
-    const connection = context.connection || {} as typeof context.connection
+    const connection = context.connection || {} as Exclude<typeof context.connection, undefined>
     const isPasswordless = connection.type && ![
       'social',
       'enterprise',

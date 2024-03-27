@@ -86,7 +86,7 @@ export default defineComponent({
         }, 1000)
         setTimeout(() => {
           if (context.settings?.tenant_login_url) {
-            window.location.replace(context.settings?.tenant_login_url)
+            window.location.replace(context.settings.tenant_login_url)
           }
         }, 5000)
       }

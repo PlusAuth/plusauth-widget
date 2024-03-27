@@ -27,7 +27,6 @@
     "strictPropertyInitialization": false,
     "target": "ESNext",
     "types": [
-      "src/shims-vue.d.ts",
       "vite/client"
     ],
     "useUnknownInCatchVariables": false
@@ -37,10 +36,6 @@
   ],
   "include": [
     "./*.ts",
-    "./stories/**/*.ts",
-    "./stories/**/*.vue",
-    "./stories/**/*.tsx",
-    "./stories/**/*.jsx",
     "./src/**/*.ts",
     "./src/**/*.vue"
   ]

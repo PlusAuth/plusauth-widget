@@ -2,6 +2,8 @@ import type defaultDictionary from '../../i18n/en';
 
 export interface IClient {
   logoUri?: string;
+  policyUri?: string;
+  tosUri?: string;
   clientName?: string;
   jwksUri: string;
   applicationType: 'native' | 'web' | 'server-to-server' |
@@ -53,7 +55,8 @@ export type FieldDefinition =  {
   };
   slots?: Record<string, { element: string, props: Record<string, any> }>,
   /**
-   * If set `true` or string `hidden` the field will not be visible. This could be used for sending static or generic values.
+   * If set `true` or string `hidden` the field will not be visible.
+   * This could be used for sending static or generic values.
    */
   visible?: boolean | 'hidden'
   /**
@@ -78,7 +81,7 @@ export type FieldDefinition =  {
    * The set value will be looked up from the locale dictionary
    * or it can be set as object to provide arguments for the interpolation.
    */
-  errors?: string | string[] | ITranslatePath | null ;
+  errors?: null | string | string[] | ITranslatePath[] ;
   /**
    * Whether the field is required or not.
    */
@@ -141,7 +144,7 @@ export interface ITenantSettings {
   };
   register_enabled: boolean,
   welcome_emails_enabled: boolean,
-  tenant_login_url: boolean
+  tenant_login_url: string
 }
 
 export interface IPlusAuthContext {
@@ -150,13 +153,18 @@ export interface IPlusAuthContext {
     name: string
     type: string
   },
+  error?: {
+    error: string,
+    error_description: string,
+  },
   settings: Partial<ITenantSettings>;
   details: Record<string, any>;
   params: any;
   prompt?: {
     name: string,
     mode?: string
-  }
+  },
+  ui_locales: string[]
 }
 
 export type ITranslatePath = string | {

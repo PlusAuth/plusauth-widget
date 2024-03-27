@@ -1,4 +1,4 @@
-import type { VNode } from 'vue';
+import type { PropType, VNode } from 'vue';
 import { defineComponent, h, withDirectives, Transition } from 'vue';
 
 import { i18n } from '../../directives/i18n';
@@ -51,7 +51,10 @@ function generateMessages(messages: any, name: string): VNode | VNode[] | undefi
 export default defineComponent({
   name: 'PMessage',
   props: {
-    value: { type: [String, Array], default: null },
+    value: {
+      type: [String, Array, Object] as PropType<any>,
+      default: null
+    },
     field: { type: String, default: null }
   },
   render() {

@@ -15,6 +15,7 @@ import type {
   MaybeRef
 } from 'vue'
 
+import type { ITranslatePath } from '../interfaces';
 import { getCurrentInstanceName, getUid } from '../utils/current_instance';
 import type { EventProp } from '../utils/helpers';
 import { wrapInArray } from '../utils/helpers';
@@ -38,7 +39,7 @@ type ValidateOnValue = 'blur' | 'input' | 'submit'
 export interface ValidationProps {
   disabled: boolean | null
   error: boolean
-  errorMessages: string | readonly string[] | null
+  errorMessages?: string | string[] | ITranslatePath[] | null
   focused: boolean
   maxErrors: string | number
   name: string | undefined
@@ -57,16 +58,17 @@ export const makeValidationProps = propsFactory({
     default: null,
   },
   error: Boolean,
+  hint: String,
+  persistentHint: Boolean,
+  messages: Array,
   errorMessages: {
-    type: [Array, String] as PropType<string | readonly string[] | null>,
+    type: [Array, String, Object] as PropType<null | string | ITranslatePath[] | string[]>,
     default: () => [],
   },
   maxErrors: {
     type: [Number, String],
     default: 1,
   },
-  name: String,
-  label: String,
   readonly: {
     type: Boolean as PropType<boolean | null>,
     default: null,
@@ -75,7 +77,6 @@ export const makeValidationProps = propsFactory({
     type: Array as PropType<readonly ValidationRule[]>,
     default: () => [],
   },
-  modelValue: null,
   validateOn: String as PropType<ValidationProps['validateOn']>,
   validationValue: null,
 

@@ -223,7 +223,7 @@ export default defineComponent({
       loading,
       submit,
       switchToCode(){
-        urlParams.set('useQuery', true)
+        urlParams.set('useQuery', 'true')
         window.location.search = urlParams.toString();
       },
       reload(){

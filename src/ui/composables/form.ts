@@ -1,6 +1,7 @@
 import { computed, inject, provide, ref, shallowRef, toRef, watch } from 'vue'
 import type { ComputedRef, InjectionKey, PropType, Ref } from 'vue'
 
+import type { ITranslatePath } from '../interfaces';
 import type { EventProp } from '../utils/helpers';
 import {  propsFactory } from '../utils/props_factory'
 
@@ -15,7 +16,7 @@ export interface FormProvide {
     resetValidation: () => void
   }) => void
   unregister: (id: number | string) => void
-  update: (id: number | string, isValid: boolean | null, errorMessages: string[]) => void
+  update: (id: number | string, isValid: boolean | null, errorMessages: string[] | ITranslatePath[]) => void
   items: Ref<FormField[]>
   isDisabled: ComputedRef<boolean>
   isReadonly: ComputedRef<boolean>
@@ -30,7 +31,7 @@ export interface FormField {
   reset: () => void
   resetValidation: () => void
   isValid: boolean | null
-  errorMessages: string[]
+  errorMessages: string[] | ITranslatePath[]
 }
 
 export interface FieldValidationResult {

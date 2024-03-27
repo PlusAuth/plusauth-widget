@@ -3,7 +3,7 @@
     class="pa__widget-social-button"
     :block="mode === 'block'"
     :class="{ 'pa__widget-social-button-circle': mode === 'circle' }"
-    :href="'/social?provider=' + connection.name || connection"
+    :href="'/social?provider=' + (typeof connection === 'string' ? connection : connection.name )"
   >
     <span
       class="pa__widget-social-icon"
@@ -18,7 +18,11 @@
       <span
         v-t="{
           path: langKey,
-          args: [connection.branding?.display_name || connection.provider]
+          args: [
+            typeof connection === 'string'
+              ? connection
+              : connection.branding?.display_name || connection.provider
+          ]
         }"
       />
     </div>
@@ -48,13 +52,13 @@ const props = defineProps<{
 const settings = inject('settings') as Partial<IWidgetSettings>
 
 const mode = settings.socialLogin?.buttonVariant || 'block'
+function iconUrl(provider: string){
+  return `https://raw.githubusercontent.com/edent/SuperTinyIcons/master/images/svg/${provider}.svg`
+}
 
-const iconLink = computed(() => {
-  return props.connection.branding?.logo_url
-    ||
-    // eslint-disable-next-line max-len
-    `https://raw.githubusercontent.com/edent/SuperTinyIcons/master/images/svg/${props.connection.provider}.svg`
-})
+const iconLink = typeof props.connection === 'string'
+  ? iconUrl(props.connection)
+  : props.connection.branding?.logo_url || iconUrl(props.connection.provider)
 </script>
 
 <style scoped>

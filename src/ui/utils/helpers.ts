@@ -18,7 +18,7 @@ toKebabCase.cache = new Map<string, string>()
 type IfAny<T, Y, N> = 0 extends (1 & T) ? Y : N;
 export function wrapInArray<T>(
   v: T | null | undefined
-): T extends readonly any[]
+): T extends any[]
     ? IfAny<T, T[], T>
     : NonNullable<T>[] {
   return v == null

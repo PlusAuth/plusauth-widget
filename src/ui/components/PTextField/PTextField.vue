@@ -59,7 +59,6 @@ export default defineComponent({
     color: String,
     label: String,
     modelValue: null,
-    disabled: Boolean,
     hideMessages: Boolean,
     loading: Boolean,
     ...makeValidationProps(),
@@ -92,7 +91,7 @@ export default defineComponent({
       isDirty
     } = useValidation(props, 'pa__input')
 
-    const onInput = (event: InputEvent) => {
+    const onInput = (event: Event) => {
       emit('update:modelValue', (event.currentTarget as HTMLInputElement)?.value)
     };
 
@@ -127,7 +126,10 @@ export default defineComponent({
     })
 
     const messages = computed(() => {
-      if (props.errorMessages?.length || !isPristine.value && errorMessages.value.length) {
+      if (
+        props.errorMessages && (props.errorMessages as any[]).length
+        || !isPristine.value && errorMessages.value.length
+      ) {
         return errorMessages.value || []
       } else if (props.hint && (props.persistentHint || props.focused)) {
         return props.hint || []

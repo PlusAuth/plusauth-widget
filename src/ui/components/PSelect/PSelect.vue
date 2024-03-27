@@ -10,8 +10,7 @@
     <div
       ref="containerRef"
       class="pa__input--wrap"
-      @focus="onFocus"
-      @blur="blur"
+      tabindex="0"
     >
       <label
         v-if="label"
@@ -67,7 +66,7 @@ import { type Translator, translatorKey } from '../../utils/translator';
 
 export default defineComponent({
   props: {
-    modelValue: { type: null as PropType<any> },
+    modelValue: null,
     label: { type: String  as PropType<string> },
     name: { type: String  as PropType<string> },
     returnObject: { type: Boolean  as PropType<boolean> },
@@ -78,15 +77,11 @@ export default defineComponent({
     items: { type: Array as PropType<any[]>, default: () => [] },
     ...makeFocusProps(),
   },
-  emits: {
-    /* eslint-disable @typescript-eslint/no-unused-vars */
-    'update:modelValue': (val: any) => true,
-    /* eslint-enable @typescript-eslint/no-unused-vars */
-  },
+  emits: ['update:modelValue', 'keydown', 'change', 'click'],
   setup(props, { emit }) {
-    const inputRef = ref<string>(null as any)
+    const inputRef = ref<HTMLElement>(null as any)
     const popoverRef = ref<HTMLElement>(null as any)
-    const containerRef = ref<Element>(null as any)
+    const containerRef = ref<HTMLElement>(null as any)
     const popperInstance = ref<Instance>(null as any);
     const i18n = inject(translatorKey) as Translator
 
@@ -96,6 +91,9 @@ export default defineComponent({
       open: false
     })
     onMounted(()=>{
+      containerRef.value.addEventListener('blur', blur)
+      containerRef.value.addEventListener('focus', onFocus)
+
       popperInstance.value = createPopper(containerRef.value, popoverRef.value, {
         strategy: 'fixed',
         modifiers: [
