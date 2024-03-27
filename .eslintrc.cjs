@@ -10,7 +10,7 @@ module.exports = {
   parser: "vue-eslint-parser",
   parserOptions: {
     parser: "@typescript-eslint/parser",
-    project: path.resolve(__dirname, "tsconfig.json"),
+    project: path.resolve(__dirname, "tsconfig.storybook.json"),
     sourceType: "module",
     extraFileExtensions: [".vue"]
   },

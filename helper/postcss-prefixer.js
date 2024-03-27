@@ -1,6 +1,6 @@
-import Tokenizer from "css-selector-tokenizer";
+import Tokenizer from 'css-selector-tokenizer';
 
-import {attrStringify, itMatchesOne, parseAttrSelector} from "./util.js";
+import { attrStringify, itMatchesOne, parseAttrSelector } from './util.js';
 
 
 const prefixNode = (node, prefix) => {

@@ -16,7 +16,10 @@ export interface FormProvide {
     resetValidation: () => void
   }) => void
   unregister: (id: number | string) => void
-  update: (id: number | string, isValid: boolean | null, errorMessages: string[] | ITranslatePath[]) => void
+  update: (
+    id: number | string,
+    isValid: boolean | null, errorMessages: string[] | ITranslatePath[]
+  ) => void
   items: Ref<FormField[]>
   isDisabled: ComputedRef<boolean>
   isReadonly: ComputedRef<boolean>

@@ -21,11 +21,11 @@
     "dist"
   ],
   "scripts": {
-    "type-check": "tsc --noEmit",
+    "type-check": "vue-tsc --noEmit",
     "type-check:watch": "npm run type-check -- --watch",
     "dev": "cross-env NODE_ENV=development vite",
     "build": "rimraf dist && cross-env NODE_ENV=production vite build",
-    "lint": "eslint . --ext .js,.ts,.vue --fix",
+    "lint": "eslint . --quiet --ext .js,.ts,.vue --fix",
     "release": "cross-env GITHUB_TOKEN=$GITHUB_TOKEN release-it",
     "storybook": "storybook dev --no-open -p 6006",
     "build-storybook": "storybook build"
@@ -131,7 +131,7 @@
     }
   },
   "lint-staged": {
-    "*.js|*.vue|*.ts": "eslint --ext .js,.ts,.vue --fix"
+    "*.js|*.vue|*.ts": "eslint --ext .js,.ts,.tsx,.vue --fix"
   },
   "engines": {
     "node": ">=16"
