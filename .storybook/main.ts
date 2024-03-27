@@ -27,6 +27,10 @@ const config: StorybookConfig = {
   },
   async viteFinal(config, {configType}) {
     config.publicDir = false
+    // TODO: https://github.com/vuejs/language-tools/issues/3969
+    config.plugins = config.plugins?.filter((p: any) => {
+      return !['vite-plugin-checker'].includes(p.name);
+    })
     return config
   },
   framework: {
