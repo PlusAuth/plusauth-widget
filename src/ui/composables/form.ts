@@ -83,7 +83,7 @@ export function createForm(props: FormProps) {
   const items = ref<FormField[]>([])
   const errors = ref<FieldValidationResult[]>([])
 
-  async function validate() {
+  async function validate(): Promise<{ valid: boolean, errors: any[] }> {
     const results = [] as any[]
     let valid = true
 

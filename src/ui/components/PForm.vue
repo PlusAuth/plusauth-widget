@@ -25,7 +25,7 @@ export default defineComponent({
     /* eslint-enable @typescript-eslint/no-unused-vars */
   },
   setup(props, { emit, expose }) {
-    const form = createForm(props)
+    const form = createForm(props as any)
     const formElRef = ref<HTMLFormElement>()
 
     function onReset(e: Event) {

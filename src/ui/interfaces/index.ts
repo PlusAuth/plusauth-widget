@@ -1,4 +1,6 @@
 import type defaultDictionary from '../../i18n/en';
+import type { PAlertProps } from '../components/PAlert/PAlert';
+import type { createForm } from '../composables/form';
 
 export interface IClient {
   logoUri?: string;
@@ -112,7 +114,16 @@ export interface IWidgetSettings {
   apiUrl: string;
   locale: ILocaleSettings;
   mode?: string
-  modeOptions: Partial<Record<WidgetModes, any>>,
+  modeOptions: Partial<Record<WidgetModes, {
+    fields: AdditionalFields,
+    responseErrorHandler: (
+      err: Error,
+      form: ReturnType<typeof createForm> & {
+        toggleAlert(message?: string | null, options?: Partial<PAlertProps>): void
+      },
+      fields: AdditionalFields
+    ) => void
+  }>>,
   socialLogin?: {
     buttonVariant?: 'circle' | 'block'
   },

@@ -1,6 +1,6 @@
 import deepmerge from 'deepmerge';
 import type { MaybeRef } from 'vue';
-import { toRaw , computed , ref, inject, unref } from 'vue';
+import { computed, ref, inject } from 'vue';
 
 import type GenericForm from '../components/GenericForm.vue';
 import type {
@@ -20,7 +20,7 @@ export function useGenericForm(
   name: WidgetModes,
   defaultFields?: MaybeRef<AdditionalFields | null>,
   action?: (fields: Record<string, any>, formFields: AdditionalFields) => Promise<any>
-){
+) {
   const settings = inject('settings') as Partial<IWidgetSettings> || {}
   const form = ref<typeof GenericForm>(null as any)
   const loading = ref<boolean>(false)
@@ -60,7 +60,7 @@ export function useGenericForm(
     loading,
     fields: mergedFields,
     validate(options: FieldDefinition, field: string, value: any): any {
-      if(options.required !== false && !value){
+      if (options.required !== false && !value) {
         return translator.t('errors.field_required', {
           field: translator.t(`common.fields.${field}`)
         })
@@ -98,8 +98,11 @@ export function useGenericForm(
       })
 
       const formRef = form.value?.formRef || form.value
-      if(!formRef){
+      if (!formRef) {
         throw new Error('Form ref not found')
+      }
+      if (!formRef.toggleAlert) {
+        formRef.toggleAlert = form.value.toggleAlert
       }
       const validationResult = await formRef.validate()
       if (validationResult.valid) {
@@ -115,12 +118,18 @@ export function useGenericForm(
           await action?.(fieldsWithValues, mergedFields)
         } catch (e) {
           if (settings.modeOptions?.[name]?.responseErrorHandler) {
-            settings.modeOptions[name].responseErrorHandler.call(undefined, e)
+            settings.modeOptions[name]!.responseErrorHandler.call(
+              undefined,
+              e,
+              formRef,
+              mergedFields
+            )
+          } else {
+            throw e
           }
+        } finally {
           loading.value = false
-          throw e
         }
-        loading.value = false
       } else {
         loading.value = false
       }
@@ -128,4 +137,5 @@ export function useGenericForm(
   }
 }
 
-export default () => {}
+export default () => {
+}
