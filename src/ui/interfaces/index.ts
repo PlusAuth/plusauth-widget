@@ -44,7 +44,7 @@ export type FieldValidator<T extends (string | number)> = (
 
 
 export interface AdditionalFields {
-  [key: string]: FieldDefinition;
+  [key: string]: FieldDefinition | null | undefined;
 }
 
 export type FieldDefinition =  {
@@ -115,8 +115,8 @@ export interface IWidgetSettings {
   locale: ILocaleSettings;
   mode?: string
   modeOptions: Partial<Record<WidgetModes, {
-    fields: AdditionalFields,
-    responseErrorHandler: (
+    fields?: AdditionalFields,
+    responseErrorHandler?: (
       err: Error,
       form: ReturnType<typeof createForm> & {
         toggleAlert(message?: string | null, options?: Partial<PAlertProps>): void

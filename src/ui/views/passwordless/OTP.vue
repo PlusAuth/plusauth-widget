@@ -120,7 +120,7 @@ export default defineComponent({
       }
     }
     const { form, loading, submit, fields, validate } = useGenericForm(
-      (settings.modeOptions || {}).passwordlessOtp,
+      'passwordlessOtp',
       defaultFields,
       async (values, finalFields) => {
         try{

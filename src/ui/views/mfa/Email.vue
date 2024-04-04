@@ -66,7 +66,7 @@ export default defineComponent({
       }
     }
     const { form, loading, submit, validate, fields } = useGenericForm(
-      (settings.modeOptions || {}).emailMfa,
+      'emailMfa',
       defaultFields,
       async (values, finalFields) => {
         try{

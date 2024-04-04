@@ -86,7 +86,7 @@ export default defineComponent({
       }
     }
     const { form, loading, submit, validate, fields } = useGenericForm(
-      (settings.modeOptions || {}).passwordlessSms,
+      'passwordlessSms',
       defaultFields,
       async (values, finalFields) => {
         try{

@@ -168,7 +168,7 @@ export default defineComponent({
     }))
 
     const { form, loading, submit, fields, validate } = useGenericForm(
-      (settings.modeOptions || {}).passwordlessPush,
+      'passwordlessPush',
       defaultFields,
       async (values, finalFields) => {
         try{

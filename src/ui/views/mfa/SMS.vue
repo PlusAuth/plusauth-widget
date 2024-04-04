@@ -69,7 +69,7 @@ export default defineComponent({
       }
     }
     const { form, loading, submit, validate, fields } = useGenericForm(
-      (settings.modeOptions || {}).smsMfa,
+      'smsMfa',
       defaultFields,
       async (values, finalFields) => {
         try{

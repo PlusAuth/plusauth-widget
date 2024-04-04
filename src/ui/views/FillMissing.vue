@@ -52,7 +52,7 @@ export default defineComponent({
     const contextFields = context?.details?.fields
 
     const { form, loading, submit, validate, fields } = useGenericForm(
-      (settings.modeOptions || {}).fillMissing,
+      'fillMissing',
       null,
       async (values, finalFields) => {
         try{

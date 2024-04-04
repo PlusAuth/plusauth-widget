@@ -112,7 +112,7 @@ export default defineComponent({
     const fv = new H1FingerVeinService()
 
     const { form, loading, fields, validate } = useGenericForm(
-      (settings.modeOptions || {}).fvMfa
+      'fvMfa'
     )
 
     loading.value= true

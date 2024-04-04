@@ -109,7 +109,7 @@ export default defineComponent({
       }
     }
     const { form, loading, submit, fields, validate } = useGenericForm(
-      (settings.modeOptions || {}).otpMfa,
+      'otpMfa',
       defaultFields,
       async (values, finalFields) => {
         try{
