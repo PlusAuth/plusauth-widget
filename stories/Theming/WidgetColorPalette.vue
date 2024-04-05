@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, reactive, watch } from 'vue';
+import { computed } from 'vue';
 
 import type { IWidgetSettings } from '../../src/ui/interfaces';
 import { createSwatches } from '../../src/ui/utils/theme/theme_utils.ts';

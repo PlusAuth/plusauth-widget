@@ -73,21 +73,21 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, inject } from 'vue';
+import { defineComponent, ref } from 'vue';
 
 import GenericForm from '../components/GenericForm.vue';
 import SocialConnectionButton from '../components/SocialConnectionButton.vue';
-import type { AdditionalFields, IPlusAuthContext } from '../interfaces';
+import { useContext, useHttp } from '../composables';
+import type { AdditionalFields } from '../interfaces';
 import { resolveClientLogo } from '../utils';
-import type { FetchWrapper } from '../utils/fetch';
 import { useGenericForm } from '../utils/form_generics';
 
 export default defineComponent({
   name: 'Login',
   components: { GenericForm, SocialConnectionButton },
   setup() {
-    const context = inject('context') as IPlusAuthContext
-    const http = inject('http') as FetchWrapper
+    const http = useHttp()
+    const context = useContext()
 
     const passwordVisible = ref(false)
 
@@ -126,38 +126,31 @@ export default defineComponent({
         try {
           await http.post({ body: values })
         } catch (e) {
-          if (e.error) {
-            switch (e.error) {
-              case 'user_not_found':
-                finalFields.email ? finalFields.email.errors = `errors.${e.error}` :
-                  finalFields.username ? finalFields.username.errors = `errors.${e.error}` : null;
-                break;
-              case 'email_not_verified':
-                window.location.assign('/account/verifyEmail')
-                break;
-              case 'invalid_password':
-                if (finalFields.password) {
-                  finalFields.password.errors = `errors.${e.error}`;
+          switch (e.error) {
+            case 'user_not_found':
+              finalFields.email ? finalFields.email.errors = `errors.${e.error}` :
+                finalFields.username ? finalFields.username.errors = `errors.${e.error}` : null;
+              break;
+            case 'email_not_verified':
+              window.location.assign('/account/verifyEmail')
+              break;
+            case 'invalid_password':
+              if (finalFields.password) {
+                finalFields.password.errors = `errors.${e.error}`;
+              }
+              break;
+            case 'too_many_requests':
+              const retryAfter = e._raw.headers.get('retry-after')
+              form.value.toggleAlert({
+                path: `errors.${e.error}`,
+                args: {
+                  retry: retryAfter
                 }
-                break;
-              case 'too_many_requests':
-                const retryAfter = e._raw.headers.get('retry-after')
-                form.value.toggleAlert({
-                  path: `errors.${e.error}`,
-                  args: {
-                    retry: retryAfter
-                  }
-                }, {
-                  dismissible: false
-                })
-                break;
-              default:
-                form.value.toggleAlert(`errors.${e.error}`, {
-                  dismissible: false
-                })
-            }
+              })
+              break;
+            default:
+              throw e
           }
-          throw e
         }
       }
     )

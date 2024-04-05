@@ -25,15 +25,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject } from 'vue';
+import { defineComponent } from 'vue';
 
-import type { IPlusAuthContext } from '../../interfaces';
+import { useContext } from '../../composables';
 
 export default defineComponent( {
   name: 'Challenge',
   props: {},
   setup() {
-    const context = inject('context') as IPlusAuthContext
+    const context = useContext()
     return {
       context
     }

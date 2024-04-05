@@ -46,22 +46,24 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject, ref } from 'vue';
+import { defineComponent, ref } from 'vue';
 
 import { PasswordStrength } from '../components';
 import GenericForm from '../components/GenericForm.vue';
-import type { AdditionalFields, FieldDefinition, IPlusAuthContext } from '../interfaces';
+import { useContext, useHttp } from '../composables';
+import type { AdditionalFields, FieldDefinition } from '../interfaces';
 import { resolveClientLogo } from '../utils';
 import { checkPasswordStrength } from '../utils/check_passsword_strength';
-import type { FetchWrapper } from '../utils/fetch';
 import { useGenericForm } from '../utils/form_generics';
 
 export default defineComponent({
   name: 'ResetPassword',
   components: { GenericForm, PasswordStrength },
   setup(){
-    const http = inject('http') as FetchWrapper
-    const context = inject('context') as IPlusAuthContext
+
+    const http = useHttp()
+    const context = useContext()
+
     const actionCompleted = ref(false)
 
     const defaultFields: AdditionalFields = {
@@ -89,16 +91,9 @@ export default defineComponent({
     const { form, loading, submit, validate, fields } = useGenericForm(
       'resetPassword',
       defaultFields,
-      async (values, finalFields) => {
-        try{
-          await http.post({ body: values })
-          actionCompleted.value= true
-        }catch (e) {
-          if(finalFields.password){
-            finalFields.password['errors'] = `errors.${e.error}`;
-          }
-          throw e
-        }
+      async (values) => {
+        await http.post({ body: values })
+        actionCompleted.value= true
       })
     return {
       fields,

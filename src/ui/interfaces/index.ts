@@ -83,7 +83,7 @@ export type FieldDefinition =  {
    * The set value will be looked up from the locale dictionary
    * or it can be set as object to provide arguments for the interpolation.
    */
-  errors?: null | string | string[] | ITranslatePath[] ;
+  errors?: null | string | string[] | ITranslatePath | ITranslatePath[] ;
   /**
    * Whether the field is required or not.
    */

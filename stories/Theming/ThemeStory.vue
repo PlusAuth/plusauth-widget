@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { AdditionalFields, IWidgetSettings } from '../../src/ui/interfaces';
+import type { IWidgetSettings } from '../../src/ui/interfaces';
 
 import WidgetWrapper from '../WidgetWrapper.vue';
 

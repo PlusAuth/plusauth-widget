@@ -103,8 +103,8 @@ const auth = new PlusAuthWidget('#pa__app', {
 }, window['PlusAuth'])
 
 setTimeout(() => {
-  auth.view.modeOptions.login.fields.username.value = 'test@test.com'
-  auth.view.modeOptions.login.fields = {
+  auth.view.modeOptions.login!.fields!.username!.value = 'test@test.com'
+  auth.view.modeOptions.login!.fields = {
     username: null,
     email: {
       type: 'text',

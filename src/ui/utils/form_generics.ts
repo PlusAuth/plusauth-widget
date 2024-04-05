@@ -19,7 +19,10 @@ import { isEmail, isPhone } from '.';
 export function useGenericForm(
   name: WidgetModes,
   defaultFields?: MaybeRef<AdditionalFields | null>,
-  action?: (fields: Record<string, any>, formFields: AdditionalFields) => Promise<any>
+  action?: (
+    fields: Record<string, any>,
+    formFields: Record<string, FieldDefinition>
+  ) => Promise<any>
 ) {
   const settings = inject('settings') as Partial<IWidgetSettings> || {}
   const form = ref<typeof GenericForm>(null as any)
@@ -37,7 +40,7 @@ export function useGenericForm(
     } : {} as any,
     defaultFields || {}
   )
-  const merged = computed<AdditionalFields>(() => {
+  const merged = computed<Record<string, FieldDefinition>>(() => {
     const { fields } = settings.modeOptions?.[name] || {}
     const merged = deepToRaw(deepmerge( defuFields, fields || {}, { clone: true }))
     for (const field in merged) {
@@ -45,15 +48,10 @@ export function useGenericForm(
         delete merged[field]
       }
     }
-    // for (const field in fields) {
-    //   if (!fields[field]) {
-    //     delete fields[field]
-    //   }
-    // }
-    return merged
+    return merged as any
   })
 
-  const mergedFields = toReactive<AdditionalFields>(merged)
+  const mergedFields = toReactive<Record<string, FieldDefinition>>(merged)
 
   return {
     form,
@@ -118,14 +116,25 @@ export function useGenericForm(
           await action?.(fieldsWithValues, mergedFields)
         } catch (e) {
           if (settings.modeOptions?.[name]?.responseErrorHandler) {
-            settings.modeOptions[name]!.responseErrorHandler.call(
+            settings.modeOptions[name]!.responseErrorHandler!.call(
               undefined,
               e,
               formRef,
               mergedFields
             )
           } else {
-            throw e
+            if (e.field && mergedFields[e.field]) {
+              mergedFields[e.field].errors = {
+                path: `errors.${e.error}`,
+                args: e,
+              }
+            } else {
+              form.value.toggleAlert({
+                path: `errors.${e.error}`,
+                args: e,
+                fallback: e.error_description || e.message || e.name || e
+              })
+            }
           }
         } finally {
           loading.value = false

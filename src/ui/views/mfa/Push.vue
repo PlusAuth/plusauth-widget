@@ -121,21 +121,21 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, inject, nextTick, ref, watch } from 'vue';
+import { computed, defineComponent, nextTick, ref, watch } from 'vue';
 
 import GenericForm from '../../components/GenericForm.vue';
 import PSpinner from '../../components/PSpinner/PSpinner';
-import type { AdditionalFields, IPlusAuthContext, IWidgetSettings } from '../../interfaces';
-import type { FetchWrapper } from '../../utils/fetch';
+import { useContext, useHttp } from '../../composables';
+import type { AdditionalFields } from '../../interfaces';
 import { useGenericForm } from '../../utils/form_generics';
 
 export default defineComponent({
   name: 'Push',
   components: { PSpinner, GenericForm },
   setup() {
-    const http = inject('http') as FetchWrapper
-    const context = inject('context') as IPlusAuthContext
-    const settings = inject('settings') as Partial<IWidgetSettings>
+
+    const http = useHttp()
+    const context = useContext()
 
     const resendLink = `${window.location.pathname}/resend`
 
@@ -159,15 +159,8 @@ export default defineComponent({
     const { form, loading, submit, fields, validate } = useGenericForm(
       'pushMfa',
       defaultFields,
-      async (values, finalFields) => {
-        try {
-          await http.post({ body: values })
-        } catch (e) {
-          form.value.toggleAlert(e.error ? `errors.${e.error}` : e.message, {
-            dismissible: false
-          })
-          throw e
-        }
+      async (values) => {
+        await http.post({ body: values })
       }
     )
 
@@ -180,8 +173,9 @@ export default defineComponent({
         if (e.error === 'authorization_pending') {
           setTimeout(() => pollPushValidation(resolve, reject), 3000)
         } else if(e.error === 'invalid_code') {
-          form.value.toggleAlert(e.error ? `errors.${e.error}` : e.message, {
-            dismissible: false
+          form.value.toggleAlert({
+            path: `errors.${e.error}`,
+            args: e
           })
           loading.value = false;
         } else {
@@ -200,8 +194,9 @@ export default defineComponent({
               pollPushValidation(resolve, reject)
             })
           } catch (e) {
-            form.value.toggleAlert(e.error ? `errors.${e.error}` : e.message || e, {
-              dismissible: false
+            form.value.toggleAlert({
+              path: `errors.${e.error}`,
+              args: e
             })
           } finally {
             loading.value = false

@@ -1,4 +1,4 @@
-import type { Component, ComponentOptions } from 'vue';
+import type { Component } from 'vue';
 
 import Consent from '../views/Consent.vue';
 import FillMissing from '../views/FillMissing.vue';

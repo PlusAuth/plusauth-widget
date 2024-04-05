@@ -54,18 +54,17 @@
 
 <script lang="ts">
 import {
-  defineComponent,
-  inject, ref, onMounted
+  defineComponent, ref, onMounted
 } from 'vue';
 
-import type { IPlusAuthContext } from '../interfaces';
+import { useContext } from '../composables';
 import { resolveClientLogo } from '../utils';
 
 export default defineComponent({
   name: 'VerifyEmail',
 
   setup() {
-    const context = inject('context') as IPlusAuthContext
+    const context = useContext()
 
     const actionCompleted = ref(false)
     let time = ref<number>(5);

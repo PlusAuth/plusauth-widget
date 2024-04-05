@@ -43,11 +43,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject } from 'vue';
+import { defineComponent } from 'vue';
 
 import GenericForm from '../../components/GenericForm.vue';
-import type { AdditionalFields, IPlusAuthContext, IWidgetSettings } from '../../interfaces';
-import type { FetchWrapper } from '../../utils/fetch';
+import { useContext, useHttp } from '../../composables';
+import type { AdditionalFields } from '../../interfaces';
 import { useGenericForm } from '../../utils/form_generics';
 
 
@@ -55,9 +55,8 @@ export default defineComponent({
   name: 'Email',
   components: { GenericForm },
   setup(){
-    const http = inject('http') as FetchWrapper
-    const context = inject('context') as IPlusAuthContext
-    const settings = inject('settings') as Partial<IWidgetSettings>
+    const http = useHttp()
+    const context = useContext()
 
     const defaultFields: AdditionalFields = {
       code: {
@@ -68,19 +67,10 @@ export default defineComponent({
     const { form, loading, submit, validate, fields } = useGenericForm(
       'emailMfa',
       defaultFields,
-      async (values, finalFields) => {
-        try{
-          await http.post({
-            body: values
-          })
-        }catch (e) {
-          if (e.error) {
-            form.value.toggleAlert(`errors.${e.error}`, {
-              dismissible: false
-            })
-          }
-          throw e
-        }
+      async (values) => {
+        await http.post({
+          body: values
+        })
       }
     )
     return {

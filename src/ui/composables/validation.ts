@@ -18,7 +18,7 @@ import type {
 import type { ITranslatePath } from '../interfaces';
 import { getCurrentInstanceName, getUid } from '../utils/current_instance';
 import type { EventProp } from '../utils/helpers';
-import { wrapInArray } from '../utils/helpers';
+import { isEmpty , wrapInArray } from '../utils/helpers';
 import { propsFactory } from '../utils/props_factory';
 
 import { makeFocusProps } from './focus';
@@ -39,7 +39,7 @@ type ValidateOnValue = 'blur' | 'input' | 'submit'
 export interface ValidationProps {
   disabled: boolean | null
   error: boolean
-  errorMessages?: string | string[] | ITranslatePath[] | null
+  errorMessages?: string | string[] | ITranslatePath | ITranslatePath[] | null
   focused: boolean
   maxErrors: string | number
   name: string | undefined
@@ -62,7 +62,11 @@ export const makeValidationProps = propsFactory({
   persistentHint: Boolean,
   messages: Array,
   errorMessages: {
-    type: [Array, String, Object] as PropType<null | string | ITranslatePath[] | string[]>,
+    type: [
+      Array,
+      String,
+      Object
+    ] as PropType<ValidationProps['errorMessages']>,
     default: () => [],
   },
   maxErrors: {
@@ -103,7 +107,7 @@ export function useValidation(
   const isDisabled = computed(() => !!(props.disabled ?? form?.isDisabled.value))
   const isReadonly = computed(() => !!(props.readonly ?? form?.isReadonly.value))
   const errorMessages = computed(() => {
-    return props.errorMessages?.length
+    return !isEmpty(props.errorMessages)
       ? wrapInArray(props.errorMessages)
         .concat(internalErrorMessages.value)
         .slice(0, Math.max(0, +props.maxErrors))
@@ -122,7 +126,7 @@ export function useValidation(
     }
   })
   const isValid = computed(() => {
-    if (props.error || props.errorMessages?.length) return false
+    if (props.error || !isEmpty(props.errorMessages)) return false
     if (!props.rules.length) return true
     if (isPristine.value) {
       return internalErrorMessages.value.length || validateOn.value.lazy ? null : true

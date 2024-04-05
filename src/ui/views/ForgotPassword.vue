@@ -53,20 +53,20 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject, ref } from 'vue';
+import { defineComponent, ref } from 'vue';
 
 import GenericForm from '../components/GenericForm.vue';
-import type { AdditionalFields, IPlusAuthContext } from '../interfaces';
+import { useContext, useHttp } from '../composables';
+import type { AdditionalFields } from '../interfaces';
 import { resolveClientLogo } from '../utils';
-import type { FetchWrapper } from '../utils/fetch';
 import { useGenericForm } from '../utils/form_generics';
 
 export default defineComponent({
   name: 'ForgotPassword',
   components: { GenericForm },
   setup(){
-    const http = inject('http') as FetchWrapper
-    const context = inject('context') as IPlusAuthContext
+    const http = useHttp()
+    const context = useContext()
 
     const actionCompleted = ref(false)
 
@@ -86,24 +86,26 @@ export default defineComponent({
           await http.post({ body: values })
           actionCompleted.value= true
         }catch (e) {
-          if(finalFields.email){
-            switch (e.error) {
-              case 'user_not_found':
-                finalFields.email ? finalFields.email.errors = `errors.${e.error}` :
-                  finalFields.username ? finalFields.username.errors  = `errors.${e.error}`: null;
-                break;
-              case 'invalid_credentials':
-                finalFields.email['errors'] = `errors.${e.error}`;
-                break;
-              case 'email_not_verified':
-                // TODO: email not verified
-                break;
-              default:
-                finalFields.email['errors'] = `errors.${e.error}`
-            }
+          if(finalFields.email && e.error === 'user_not_found') {
+            finalFields.email.errors = `errors.${e.error}`
+          } else {
+            throw e
+          }
+          switch (e.error) {
+            case 'user_not_found':
+              if(finalFields.email){
+                finalFields.email.errors = `errors.${e.error}`
+              } else {
+                throw e
+              }
+              break;
+            // TODO: email not verified
+            // case 'email_not_verified':
+              // break;
+            default:
+              throw e
           }
 
-          throw e
         }
       })
 

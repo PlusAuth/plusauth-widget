@@ -108,9 +108,9 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, provide, reactive, ref } from 'vue';
+import { computed, defineComponent, reactive, ref } from 'vue';
 
-import type { AdditionalFields } from '../interfaces';
+import type { FieldDefinition, ITranslatePath } from '../interfaces';
 
 
 import type { PAlertProps } from './PAlert/PAlert';
@@ -135,14 +135,14 @@ export default defineComponent( {
       default: () => false
     },
     fields: {
-      type: Object as () => AdditionalFields,
+      type: Object as () => Record<string, FieldDefinition>,
       default: () => ({})
     }
   },
   setup(props){
     const formRef = ref<any>(null)
     const alert = ref<boolean>(false)
-    const alertMsg = ref<string | null>(null)
+    const alertMsg = ref<ITranslatePath | null>(null)
     const alertOptions = reactive<Record<string, any>>({})
     const sortedFields = computed(()=> {
       return Object.keys(props.fields)
@@ -159,7 +159,7 @@ export default defineComponent( {
        * @param message Message to display in alert. Pass null or undefined to hide alert.
        * @param options PAlert properties
        */
-      toggleAlert(message?: string | null, options?: Partial<PAlertProps>): void {
+      toggleAlert(message?: ITranslatePath, options?: Partial<PAlertProps>): void {
         alert.value = false
         if(!message){
           alertMsg.value = null

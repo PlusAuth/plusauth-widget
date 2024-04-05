@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, onUpdated, ref, watch } from 'vue';
+import { onMounted, ref, watch } from 'vue';
 
 import PlusAuthWidget from '../src';
 import type { IPlusAuthContext, IWidgetSettings } from '../src/ui/interfaces';

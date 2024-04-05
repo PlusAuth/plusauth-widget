@@ -26,3 +26,14 @@ export function wrapInArray<T>(
     : Array.isArray(v)
       ? v as any : [v]
 }
+
+
+export function isEmpty(obj: any){
+  if(Array.isArray(obj) || typeof obj === 'string'){
+    return obj.length === 0
+  } else if( obj && typeof obj === 'object') {
+    return Object.keys(obj).length === 0
+  } else {
+    return true
+  }
+}

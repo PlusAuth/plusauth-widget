@@ -10,17 +10,21 @@ export class Translator {
   private fallBackLocale: string;
   private dictionary: any;
   private selectedLocale: Ref
+
   constructor(dictionary: any, fallbackLocale?: string, selectedLocale?: string) {
     this.dictionary = dictionary;
     this.fallBackLocale = fallbackLocale || 'en'
     this.selectedLocale = ref<string | undefined>(selectedLocale || this.fallBackLocale)
   }
+
   get localeRef() {
     return this.selectedLocale
   }
-  set locale(locale: string){
+
+  set locale(locale: string) {
     this.selectedLocale.value = locale
   }
+
   get locale(): string {
     return this.selectedLocale.value
   }
@@ -32,17 +36,24 @@ export class Translator {
       fallback?: string,
       locale?: string
     } = {}
-  ){
+  ) {
+    if (!opts.fallback && (params instanceof Error || typeof params === 'string')) {
+      opts.fallback = params['error_description']
+        || params['error_details']
+        || params.message
+        || params.name
+        || params
+    }
     const locale = opts.locale || this.locale
-    const value =  propertyAccessor(this.dictionary[locale], key)
+    const value = propertyAccessor(this.dictionary[locale], key)
       || propertyAccessor(this.dictionary[this.fallBackLocale], key);
-    if(value) {
+    if (value) {
       return this._interpolate(
         value,
         params,
         locale
       )
-    } else if(opts.fallback){
+    } else if (opts.fallback) {
       return this._interpolate(
         propertyAccessor(this.dictionary[locale], opts.fallback)
         || propertyAccessor(this.dictionary[this.fallBackLocale], opts.fallback)
@@ -54,12 +65,13 @@ export class Translator {
       return key
     }
   }
-  _interpolate(str: string, args: any, locale: string){
-    if(!str || !args){
+
+  _interpolate(str: string, args: any, locale: string) {
+    if (!str || !args) {
       return str
     }
     const replace = (arg: any) => {
-      if(isObject(arg)){
+      if (isObject(arg)) {
         const normalizedArg = keysToDotNotation(arg)
         Object.keys(normalizedArg).forEach(key => {
           const searchRegexp = new RegExp(`\\{\\s*${escapeRegExp(key)}\\s*\\}`, 'gm')
@@ -73,7 +85,7 @@ export class Translator {
         })
       }
     }
-    if(Array.isArray(args)){
+    if (Array.isArray(args)) {
       args.forEach(replace)
     } else {
       replace(args)

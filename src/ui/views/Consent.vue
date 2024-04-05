@@ -44,17 +44,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject } from 'vue';
+import { defineComponent } from 'vue';
 
-import type { IPlusAuthContext } from '../interfaces';
+import { useContext, useHttp } from '../composables';
 import { resolveClientLogo } from '../utils';
-import type { FetchWrapper } from '../utils/fetch';
 
 export default defineComponent({
   name: 'Consent',
   setup(){
-    const http = inject('http') as FetchWrapper
-    const context = inject('context') as IPlusAuthContext
+    const http = useHttp()
+    const context = useContext()
 
     const _scopes = [...context.details.scopes?.new || []]
     return {

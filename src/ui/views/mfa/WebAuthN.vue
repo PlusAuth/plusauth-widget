@@ -43,23 +43,20 @@ import {
   browserSupportsWebAuthn as isWebAuthNSupported
 } from '@simplewebauthn/browser';
 
-import { defineComponent, inject, onMounted, ref } from 'vue';
+import { defineComponent, onMounted, ref } from 'vue';
 
 import GenericForm from '../../components/GenericForm.vue';
-import type { AdditionalFields, IPlusAuthContext, IWidgetSettings } from '../../interfaces';
-import type { FetchWrapper } from '../../utils/fetch';
+import { useContext, useHttp, useLocale } from '../../composables';
+import type { AdditionalFields } from '../../interfaces';
 import { useGenericForm } from '../../utils/form_generics';
-import type { Translator } from '../../utils/translator';
-import { translatorKey } from '../../utils/translator';
 
 export default defineComponent({
   name: 'WebAuthN',
   components: { GenericForm },
   setup() {
-    const http = inject('http') as FetchWrapper
-    const context = inject('context') as IPlusAuthContext
-    const translator = inject(translatorKey) as Translator
-    const settings = inject('settings') as Partial<IWidgetSettings>
+    const http = useHttp()
+    const context = useContext()
+    const i18n = useLocale()
 
     const code = ref<string>(null as any)
     const error = ref<string>(null as any)
@@ -75,17 +72,8 @@ export default defineComponent({
     const { form, loading, submit, fields, validate } = useGenericForm(
       'webauthnMfa',
       defaultFields,
-      async (values, finalFields) => {
-        try {
-          await http.post({ body: values })
-        } catch (e) {
-          if (e.error) {
-            form.value.toggleAlert(`errors.${e.error}`, {
-              dismissible: false
-            })
-          }
-          throw e
-        }
+      async (values) => {
+        await http.post({ body: values })
       }
     )
 
@@ -100,24 +88,22 @@ export default defineComponent({
         try {
           if (context.details.authentication_options) {
             loadingMsg.value = 'Select one of your security key/devices'
-            fields.response.value = await verifyDevice(context.details.authentication_options)
+            fields.response!.value = await verifyDevice(context.details.authentication_options)
           } else if (context.details.registration_options) {
             loadingMsg.value = 'Registration a security key/device'
-            fields.response.value = await registerDevice(context.details.registration_options)
+            fields.response!.value = await registerDevice(context.details.registration_options)
           } else {
             throw new Error('WebAuthN options not found')
           }
         } catch (e) {
           if (e.error || e.message) {
-            form.value.toggleAlert(`${translator.t('errors.webauthn.operation_failed')}<br>
-<strong>${e.error || e.message}</strong>`, {
-              dismissible: false
-            })
+            form.value.toggleAlert(`${i18n.t('errors.webauthn.operation_failed')}<br>
+<strong>${e.error || e.message}</strong>`)
           }
           loading.value = false;
           throw e
         }
-        loadingMsg.value = translator.t('mfa.webauthn.verifying')
+        loadingMsg.value = i18n.t('mfa.webauthn.verifying')
         await submit()
       }
 

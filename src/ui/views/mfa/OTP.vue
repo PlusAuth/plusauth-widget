@@ -84,20 +84,20 @@ details?id=com.google.android.apps.authenticator2"
 </template>
 
 <script lang="ts">
-import { defineComponent, inject, ref } from 'vue';
+import { defineComponent, ref } from 'vue';
 
 import GenericForm from '../../components/GenericForm.vue';
-import type { AdditionalFields, IPlusAuthContext, IWidgetSettings } from '../../interfaces';
-import type { FetchWrapper } from '../../utils/fetch';
+import { useContext, useHttp } from '../../composables';
+import type { AdditionalFields } from '../../interfaces';
 import { useGenericForm } from '../../utils/form_generics';
 
 export default defineComponent({
   name: 'OTP',
   components: {  GenericForm },
   setup(){
-    const http = inject('http') as FetchWrapper
-    const context = inject('context') as IPlusAuthContext
-    const settings = inject('settings') as Partial<IWidgetSettings>
+
+    const http = useHttp()
+    const context = useContext()
 
     const code = ref<string>(null as any)
     const error = ref<string>(null as any)
@@ -111,19 +111,10 @@ export default defineComponent({
     const { form, loading, submit, fields, validate } = useGenericForm(
       'otpMfa',
       defaultFields,
-      async (values, finalFields) => {
-        try{
-          await http.post({
-            body: values
-          })
-        }catch (e) {
-          if (e.error) {
-            form.value.toggleAlert(`errors.${e.error}`, {
-              dismissible: false
-            })
-          }
-          throw e
-        }
+      async (values) => {
+        await http.post({
+          body: values
+        })
       }
     )
     return {

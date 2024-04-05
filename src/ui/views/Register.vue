@@ -72,23 +72,23 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject } from 'vue';
+import { defineComponent } from 'vue';
 
 import { PasswordStrength } from '../components';
 import GenericForm from '../components/GenericForm.vue';
 import SocialConnectionButton from '../components/SocialConnectionButton.vue';
-import type { AdditionalFields, FieldDefinition, IPlusAuthContext } from '../interfaces';
+import { useContext, useHttp } from '../composables';
+import type { AdditionalFields, FieldDefinition } from '../interfaces';
 import { resolveClientLogo } from '../utils';
 import { checkPasswordStrength } from '../utils/check_passsword_strength';
-import type { FetchWrapper } from '../utils/fetch';
 import { useGenericForm } from '../utils/form_generics';
 
 export default defineComponent({
   name: 'Register',
   components: { GenericForm, SocialConnectionButton, PasswordStrength },
   setup() {
-    const http = inject('http') as FetchWrapper
-    const context = inject('context') as IPlusAuthContext
+    const http = useHttp()
+    const context = useContext()
 
     const connection = context.connection || {} as Exclude<typeof context.connection, undefined>
     const isPasswordless = connection.type && ![
@@ -149,18 +149,23 @@ export default defineComponent({
         } catch (e) {
           switch (e.error) {
             case 'already_exists':
-              finalFields.email ? finalFields.email.errors = `errors.${e.error}` :
-                finalFields.username ? finalFields.username.errors = `errors.${e.error}` : null;
+              if (finalFields.email) {
+                finalFields.email.errors = `errors.${e.error}`;
+              } else if (finalFields.username) {
+                finalFields.username.errors = `errors.${e.error}`;
+              } else {
+                form.value.toggleAlert({
+                  path: `errors.${e.error}`,
+                  args: e
+                });
+              }
               break;
             case 'email_not_verified':
               window.location.assign('/account/verifyEmail')
               break;
             default:
-              if (finalFields.password) {
-                finalFields.password['errors'] = `errors.${e.error || e.message || e.name || e}`
-              }
+              throw e
           }
-          throw e
         }
       })
 

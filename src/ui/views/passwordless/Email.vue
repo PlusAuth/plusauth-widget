@@ -60,24 +60,21 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject } from 'vue';
+import { defineComponent } from 'vue';
 
 import GenericForm from '../../components/GenericForm.vue';
-import type { AdditionalFields, IPlusAuthContext, IWidgetSettings } from '../../interfaces';
-import type { FetchWrapper } from '../../utils/fetch';
+import { useContext, useHttp, useLocale } from '../../composables';
+import type { AdditionalFields } from '../../interfaces';
 import { useGenericForm } from '../../utils/form_generics';
-import type { Translator } from '../../utils/translator';
-import { translatorKey } from '../../utils/translator';
 
 
 export default defineComponent({
   name: 'Email',
   components: { GenericForm },
   setup(){
-    const http = inject('http') as FetchWrapper
-    const context = inject('context') as IPlusAuthContext
-    const translator = inject(translatorKey) as Translator
-    const settings = inject('settings') as Partial<IWidgetSettings>
+    const http = useHttp()
+    const context = useContext()
+    const i18n = useLocale()
 
     const resendLink = `${window.location.pathname  }/resend`
 
@@ -96,7 +93,7 @@ export default defineComponent({
                 e.preventDefault()
                 window.location.assign('/signin')
               },
-              'innerHtml': translator.t('common.edit')
+              'innerHtml': i18n.t('common.edit')
             }
           }
         }
@@ -113,16 +110,14 @@ export default defineComponent({
         try{
           await http.post({ body: values })
         }catch (e) {
-          if (e.error) {
-            if(e.error === 'invalid_code'){
-              finalFields.code.errors = `errors.${e.error}`;
-            }else {
-              form.value.toggleAlert(`errors.${e.error}`, {
-                dismissible: false
-              })
-            }
+          if(e.error === 'invalid_code' && finalFields.code){
+            finalFields.code.errors = {
+              path: `errors.${e.error}`,
+              args: e
+            };
+          }else {
+            throw e
           }
-          throw e
         }
       }
     )

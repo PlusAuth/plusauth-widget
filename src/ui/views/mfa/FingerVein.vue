@@ -81,13 +81,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject, onMounted, reactive, ref } from 'vue';
+import { defineComponent, onMounted, reactive, ref } from 'vue';
 
 import GenericForm from '../../components/GenericForm.vue';
 import Hand from '../../components/Hand.vue';
 import PSpinner from '../../components/PSpinner/PSpinner';
-import type { IPlusAuthContext, IWidgetSettings } from '../../interfaces';
-import type { FetchWrapper } from '../../utils/fetch';
+import { useContext, useHttp } from '../../composables';
 import { useGenericForm } from '../../utils/form_generics';
 import { H1FingerVeinService } from '../../utils/fv_helper';
 
@@ -95,9 +94,9 @@ export default defineComponent({
   name: 'FingerVein',
   components: { PSpinner, Hand, GenericForm },
   setup(){
-    const http = inject('http') as FetchWrapper
-    const context = inject('context') as IPlusAuthContext
-    const settings = inject('settings') as Partial<IWidgetSettings>
+
+    const http = useHttp()
+    const context = useContext()
 
     const loadingMsg = ref<string | null>(null as any)
     const deviceOk = ref<boolean>(false)
@@ -127,8 +126,9 @@ export default defineComponent({
         deviceOk.value = true;
       }catch (e) {
         deviceOk.value = false;
-        form.value.toggleAlert(`errors.fv.${e.error || e.retCode || e}`, {
-          dismissible: false
+        form.value.toggleAlert({
+          path: `errors.fv.${e.error || e.retCode || e}`,
+          args: e
         })
       }finally {
         loading.value = false
