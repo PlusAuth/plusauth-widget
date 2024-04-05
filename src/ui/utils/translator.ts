@@ -25,7 +25,8 @@ export class Translator {
     return this.selectedLocale.value
   }
 
-  t(key: string,
+  t(
+    key: string,
     params?: Record<string, string | boolean | number> | (string | number | boolean)[],
     opts: {
       fallback?: string,
@@ -33,16 +34,25 @@ export class Translator {
     } = {}
   ){
     const locale = opts.locale || this.locale
-
     const value =  propertyAccessor(this.dictionary[locale], key)
-      || propertyAccessor(this.dictionary[this.fallBackLocale], key)
-      || (opts.fallback || key?.split('.').at(-1)) as string
-
-    return this._interpolate(
-      value,
-      params,
-      locale
-    )
+      || propertyAccessor(this.dictionary[this.fallBackLocale], key);
+    if(value) {
+      return this._interpolate(
+        value,
+        params,
+        locale
+      )
+    } else if(opts.fallback){
+      return this._interpolate(
+        propertyAccessor(this.dictionary[locale], opts.fallback)
+        || propertyAccessor(this.dictionary[this.fallBackLocale], opts.fallback)
+        || opts.fallback,
+        params,
+        locale
+      )
+    } else {
+      return key
+    }
   }
   _interpolate(str: string, args: any, locale: string){
     if(!str || !args){

@@ -1,10 +1,9 @@
 import type {  DirectiveBinding, ObjectDirective } from 'vue';
 
-import type { ITranslatePath } from '../interfaces';
 import { isPlainObject } from '../utils';
 
 
-function parseValue(value: ITranslatePath): any {
+function parseValue(value: any): any {
   let path: string
   let locale: string | undefined = undefined
   let fallback: string | undefined = undefined
@@ -16,7 +15,7 @@ function parseValue(value: ITranslatePath): any {
     path = value.path
     locale = value.locale
     fallback = value.fallback
-    args = value.args
+    args = value.args || value.params
   }else{
     throw new Error('unsupported value')
   }
