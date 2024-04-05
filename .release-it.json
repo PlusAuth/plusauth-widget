@@ -1,7 +1,11 @@
 {
-  "hooks":{
-    "before:init": ["npm run lint"],
-    "after:bump": ["npm run build"]
+  "hooks": {
+    "before:init": [
+      "npm run lint"
+    ],
+    "after:bump": [
+      "npm run build"
+    ]
   },
   "git": {
     "commitMessage": "chore: release v${version}",
@@ -13,5 +17,11 @@
     "release": true,
     "draft": true,
     "releaseName": "v${version}"
+  },
+  "plugins": {
+    "@release-it/conventional-changelog": {
+      "preset": "angular",
+      "infile": "CHANGELOG.md"
+    }
   }
 }
