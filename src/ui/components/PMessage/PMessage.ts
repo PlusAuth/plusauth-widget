@@ -12,11 +12,11 @@ function generateMessageVNode(message: ITranslatePath, name: string): VNode {
         class: 'pa__messages__message',
       }),
       [[i18n, {
+        ...message,
         args: {
           ...message.args,
           field: name && `common.fields.${name}`
         },
-        path: message.path
       }
       ]]
     )
