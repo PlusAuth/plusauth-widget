@@ -10,3 +10,4 @@ public
 tests
 vite.config.ts
 dev.ts
+storybook-static
