@@ -3,20 +3,11 @@ import type {  DirectiveBinding, ObjectDirective } from 'vue';
 import type { ITranslatePath } from '../interfaces';
 import { isPlainObject } from '../utils';
 
-function makeParams(locale: string, args: any): Array<any> {
-  const params: Array<any> = []
-
-  locale && params.push(locale)
-  if (args && (Array.isArray(args) || isPlainObject(args))) {
-    params.push(args)
-  }
-
-  return params
-}
 
 function parseValue(value: ITranslatePath): any {
   let path: string
   let locale: string | undefined = undefined
+  let fallback: string | undefined = undefined
   let args: any = undefined
 
   if (typeof value === 'string' || !value) {
@@ -24,6 +15,7 @@ function parseValue(value: ITranslatePath): any {
   } else if (isPlainObject(value)) {
     path = value.path
     locale = value.locale
+    fallback = value.fallback
     args = value.args
   }else{
     throw new Error('unsupported value')
@@ -32,6 +24,7 @@ function parseValue(value: ITranslatePath): any {
   return {
     path,
     locale,
+    fallback,
     args
   }
 }
@@ -39,7 +32,7 @@ function parseValue(value: ITranslatePath): any {
 function translate(el: any, binding: DirectiveBinding): void {
   const value: any = binding.value
 
-  const { path, locale, args } = parseValue(value)
+  const { path, locale, args, fallback } = parseValue(value)
   if (!path && !locale && !args) {
     console.warn('value type not supported')
     return
@@ -51,7 +44,7 @@ function translate(el: any, binding: DirectiveBinding): void {
   }
 
   const $i18n = binding?.instance?.$.appContext.config.globalProperties.$i18n
-  el._vt = el.innerHTML = $i18n?.t(path, ...makeParams(locale, args))
+  el._vt = el.innerHTML = $i18n?.t(path, args, { locale, fallback })
   el._locale = $i18n?.locale
 }
 

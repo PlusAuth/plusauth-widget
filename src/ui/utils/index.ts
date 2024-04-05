@@ -20,7 +20,7 @@ export function propertyAccessor(object: Record<string, any>,
   array = array || keys?.toString().split('.')
 
   if (array.length > 1) {
-    return propertyAccessor(object[array.shift()], null, array) || keys
+    return propertyAccessor(object[array.shift()], null, array)
   } else {
     return object[array]
   }
@@ -40,9 +40,11 @@ export function isObject(obj: any): boolean {
 export function parseArgs(...args: Array<any>): {
   locale?: string | null;
   params: any;
+  opts: Record<string, any>
 } {
   let locale: string | null = null
   let params: any = null
+  let opts = {} as any
   if (args.length === 1) {
     if (isObject(args[0]) || Array.isArray(args[0])) {
       params = args[0]
@@ -52,14 +54,17 @@ export function parseArgs(...args: Array<any>): {
   } else if (args.length === 2) {
     if (typeof args[0] === 'string') {
       locale = args[0]
-    }
-    /* istanbul ignore if */
-    if (isObject(args[1]) || Array.isArray(args[1])) {
+    } else if(isObject(args[0]) || Array.isArray(args[0]) ){
+      params = args[0]
+      if(isObject(args[1])){
+        opts = args[1]
+      }
+    }else if (isObject(args[1]) || Array.isArray(args[1])) {
       params = args[1]
     }
   }
 
-  return { locale, params }
+  return { locale, params, opts }
 }
 
 export function looseEqual(a: any, b: any): boolean {

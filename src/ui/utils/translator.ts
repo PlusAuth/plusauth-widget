@@ -1,7 +1,7 @@
 import type { Ref } from 'vue';
 import { ref } from 'vue';
 
-import { escapeRegExp, isObject, keysToDotNotation, parseArgs, propertyAccessor } from '.';
+import { escapeRegExp, isObject, keysToDotNotation, propertyAccessor } from '.';
 
 export const translatorKey = Symbol('t')
 
@@ -25,37 +25,48 @@ export class Translator {
     return this.selectedLocale.value
   }
 
-  t(key: string, ...values: any){
-    const parsedArgs = parseArgs(values)
-    const locale = parsedArgs.locale || this.locale
+  t(key: string,
+    params?: Record<string, string | boolean | number> | (string | number | boolean)[],
+    opts: {
+      fallback?: string,
+      locale?: string
+    } = {}
+  ){
+    const locale = opts.locale || this.locale
+
+    const value =  propertyAccessor(this.dictionary[locale], key)
+      || propertyAccessor(this.dictionary[this.fallBackLocale], key)
+      || (opts.fallback || key?.split('.').at(-1)) as string
+
     return this._interpolate(
-      propertyAccessor(this.dictionary[locale], key)
-          || propertyAccessor(this.dictionary[this.fallBackLocale], key)
-          || key?.split('.').at(-1) as string,
-      parsedArgs.params,
+      value,
+      params,
       locale
     )
   }
   _interpolate(str: string, args: any, locale: string){
-    if(!str){
+    if(!str || !args){
       return str
     }
+    const replace = (arg: any) => {
+      if(isObject(arg)){
+        const normalizedArg = keysToDotNotation(arg)
+        Object.keys(normalizedArg).forEach(key => {
+          const searchRegexp = new RegExp(`\\{\\s*${escapeRegExp(key)}\\s*\\}`, 'gm')
+          const v = normalizedArg[key]
+          str = str.replace(searchRegexp,
+            v === null ||
+            v === undefined ? '' : propertyAccessor(this.dictionary[locale], v)
+              || propertyAccessor(this.dictionary[this.fallBackLocale], v)
+              || v
+          )
+        })
+      }
+    }
     if(Array.isArray(args)){
-      args.forEach(arg => {
-        if(isObject(arg)){
-          const normalizedArg = keysToDotNotation(arg)
-          Object.keys(normalizedArg).forEach(key => {
-            const searchRegexp = new RegExp(`\\{\\s*${escapeRegExp(key)}\\s*\\}`, 'gm')
-            const v = normalizedArg[key]
-            str = str.replace(searchRegexp,
-              v === null ||
-              v === undefined ? '' : propertyAccessor(this.dictionary[locale], v)
-                || propertyAccessor(this.dictionary[this.fallBackLocale], v)
-                || v
-            )
-          })
-        }
-      })
+      args.forEach(replace)
+    } else {
+      replace(args)
     }
     return str
   }

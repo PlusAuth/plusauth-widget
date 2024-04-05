@@ -182,4 +182,5 @@ export type ITranslatePath = string | {
   path: string,
   args?: Record<string, any> | any[],
   locale?: string
+  fallback?: string
 }
