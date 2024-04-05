@@ -53,6 +53,7 @@ node_modules/
 npm-debug.log*
 out/
 pids
+storybook-static
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 typings/
 umd
