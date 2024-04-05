@@ -70,25 +70,18 @@ export class Translator {
     if (!str || !args) {
       return str
     }
-    const replace = (arg: any) => {
-      if (isObject(arg)) {
-        const normalizedArg = keysToDotNotation(arg)
-        Object.keys(normalizedArg).forEach(key => {
-          const searchRegexp = new RegExp(`\\{\\s*${escapeRegExp(key)}\\s*\\}`, 'gm')
-          const v = normalizedArg[key]
-          str = str.replace(searchRegexp,
-            v === null ||
-            v === undefined ? '' : propertyAccessor(this.dictionary[locale], v)
-              || propertyAccessor(this.dictionary[this.fallBackLocale], v)
-              || v
-          )
-        })
-      }
-    }
-    if (Array.isArray(args)) {
-      args.forEach(replace)
-    } else {
-      replace(args)
+    if (isObject(args)) {
+      const normalizedArg = keysToDotNotation(args)
+      Object.keys(normalizedArg).forEach(key => {
+        const searchRegexp = new RegExp(`\\{\\s*${escapeRegExp(key)}\\s*\\}`, 'gm')
+        const v = normalizedArg[key]
+        str = str.replace(searchRegexp,
+          v === null ||
+          v === undefined ? '' : propertyAccessor(this.dictionary[locale], v)
+            || propertyAccessor(this.dictionary[this.fallBackLocale], v)
+            || v
+        )
+      })
     }
     return str
   }
