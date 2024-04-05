@@ -21,7 +21,29 @@
   "plugins": {
     "@release-it/conventional-changelog": {
       "preset": {
-        "name": "conventionalcommits"
+        "name": "conventionalcommits",
+        "types": [
+          {
+            "type": "feat",
+            "section": "Features"
+          },
+          {
+            "type": "fix",
+            "section": "Bug Fixes"
+          },
+          {
+            "type": "perf",
+            "section": "Performance Updates"
+          },
+          {
+            "type": "refactor",
+            "section": "Refactors"
+          },
+          {
+            "type": "style",
+            "section": "Stylistic Updates"
+          }
+        ]
       },
       "infile": "CHANGELOG.md"
     }
