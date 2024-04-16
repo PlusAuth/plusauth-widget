@@ -46,7 +46,6 @@ export const FieldArgTypes: Partial<ArgTypes<ComponentOptions>> = {
   errors: {
     table: {
       type: {
-        // eslint-disable-next-line max-len
         summary: 'string | string[] | { path: string, args?: Record<string, any>, locale?: string } | null'
       }
     }

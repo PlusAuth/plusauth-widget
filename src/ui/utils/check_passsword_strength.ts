@@ -1,7 +1,6 @@
 export function checkPasswordStrength( value: string, passwordRules: any = {} ): any {
   value = value ?? '';
   const errors: any = {};
-  // eslint-disable-next-line prefer-const
   let { min, max, number, lower_case, upper_case, custom_chars, custom_regexp } = passwordRules;
 
   lower_case = Number( lower_case );

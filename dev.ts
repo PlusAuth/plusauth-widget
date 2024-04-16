@@ -2,8 +2,8 @@ import PlusAuthWidget from './src';
 
 window['PlusAuth'] = {
   ui_locales: [
-    {name: 'Turkce', value: 'tr'},
-    {name: 'English', value: 'en'},
+    { name: 'Turkce', value: 'tr' },
+    { name: 'English', value: 'en' },
   ],
   client: {
     clientName: 'TestApp',
@@ -11,8 +11,8 @@ window['PlusAuth'] = {
     policyUri: 'https://somepolicyuri.com',
     logoUri: 'https://static.plusauth.com/images/logo.png',
     social: [
-      {name: 'google-connection', provider: 'google'},
-      {name: 'facebook-connection', provider: 'facebook'},
+      { name: 'google-connection', provider: 'google' },
+      { name: 'facebook-connection', provider: 'facebook' },
     ]
   },
   settings: {

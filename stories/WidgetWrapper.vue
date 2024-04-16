@@ -17,8 +17,9 @@ const widget = ref<PlusAuthWidget>()
 onMounted(() => {
   widget.value = new PlusAuthWidget('#wrapper', config.value.settings, config.value.context as any)
 })
-watch(() => props, (value, oldValue) => {
+watch(() => props, () => {
   config.value = useConfig(props.settings, props.context)
+  // @ts-expect-error
   widget.value?._view.unmount()
   widget.value = new PlusAuthWidget('#wrapper', config.value.settings, config.value.context as any)
 },{ deep: true })

@@ -1,20 +1,25 @@
+import { resolve } from 'path'
+
 import vue from '@vitejs/plugin-vue'
 import { defineConfig } from 'vite'
-import { resolve } from 'path'
-import pkg from './package.json' ;
+
+import checker from 'vite-plugin-checker';
 import dts from 'vite-plugin-dts';
+
 import { libInjectCss } from 'vite-plugin-lib-inject-css'
-import checker from "vite-plugin-checker";
+
+import pkg from './package.json' ;
+
 
 const name = 'PlusAuthWidget';
 
-export default defineConfig(({ command, mode }) => ({
+export default defineConfig(({ command  }) => ({
   define: command === 'build' ? {
-    'process.env': { NODE_ENV: 'production'}
+    'process.env': { NODE_ENV: 'production' }
   }: {},
   build: {
     target: [
-      "chrome109", "edge114", "firefox114", "ios14.5", "safari11"
+      'chrome109', 'edge114', 'firefox114', 'ios14.5', 'safari11'
     ],
     lib: {
       formats: ['es', 'umd'],
@@ -34,14 +39,14 @@ export default defineConfig(({ command, mode }) => ({
     })
   ],
   resolve: {
-    dedupe: ["vue"],
+    dedupe: ['vue'],
   },
   optimizeDeps: {
     include: [
-      "@popperjs/core/lib/modifiers/offset",
-      "@popperjs/core/lib/modifiers/flip",
-      "@popperjs/core/lib/modifiers/preventOverflow",
-      "@popperjs/core/lib/popper-lite"
+      '@popperjs/core/lib/modifiers/offset',
+      '@popperjs/core/lib/modifiers/flip',
+      '@popperjs/core/lib/modifiers/preventOverflow',
+      '@popperjs/core/lib/popper-lite'
     ]
   }
 }))

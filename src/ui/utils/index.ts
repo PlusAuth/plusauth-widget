@@ -26,7 +26,6 @@ export function propertyAccessor(object: Record<string, any>,
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/ban-types
 const toString: (...args: any) => string = Object.prototype.toString
 const OBJECT_STRING = '[object Object]'
 

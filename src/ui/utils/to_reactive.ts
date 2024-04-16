@@ -1,4 +1,3 @@
-// eslint-disable-next-line no-restricted-imports
 import type { Ref, UnwrapNestedRefs } from 'vue';
 import {
   isRef, reactive, unref, toRaw,

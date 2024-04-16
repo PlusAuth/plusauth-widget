@@ -7,7 +7,6 @@ const props = withDefaults(defineProps<FieldDefinition>(), {
   visible: true
 })
 
-// eslint-disable-next-line max-len
 const parseFunctionString = /^\s*function(\s+[a-z0-9$_]*)?\(([^)]*)\)\s*\{([\s\S]*)\}\s*$/i;
 
 function stringToFn(s: any) {

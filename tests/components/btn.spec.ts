@@ -1,4 +1,5 @@
 import { mount } from '@vue/test-utils';
+
 import PBtn from '../../src/ui/components/PBtn/PBtn.vue';
 
 describe('PBtn', function () {

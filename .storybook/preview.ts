@@ -1,4 +1,4 @@
-import type {Preview} from "@storybook/vue3";
+import type { Preview } from '@storybook/vue3';
 import './preview.css'
 
 const preview: Preview = {
@@ -33,7 +33,7 @@ const preview: Preview = {
       storySort: (a, b) => {
         if (a.tags.includes('unattached-mdx')) {
           if (b.tags.includes('unattached-mdx')) {
-            return a.id === b.id ? 0 : a.id.localeCompare(b.id, undefined, {numeric: true});
+            return a.id === b.id ? 0 : a.id.localeCompare(b.id, undefined, { numeric: true });
           }
           return -1
         }
@@ -42,14 +42,14 @@ const preview: Preview = {
         }
         if (a.type === 'docs') {
           if (b.type === 'docs') {
-            return a.id === b.id ? 0 : a.id.localeCompare(b.id, undefined, {numeric: true});
+            return a.id === b.id ? 0 : a.id.localeCompare(b.id, undefined, { numeric: true });
           }
           return -1
         }
         if (b.type === 'docs') {
           return 1
         }
-        return a.id === b.id ? 0 : a.id.localeCompare(b.id, undefined, {numeric: true});
+        return a.id === b.id ? 0 : a.id.localeCompare(b.id, undefined, { numeric: true });
       },
     },
   },

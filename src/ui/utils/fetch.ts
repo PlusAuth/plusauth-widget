@@ -5,10 +5,10 @@ type RequestOptions = Omit<RequestInit, 'body'> & {
 
 export type FetchWrapper = Record<
 'get' | 'post' | 'patch' | 'delete',
-(
-  endpointOrOptions: string | RequestOptions,
-  options?: RequestOptions
-) => Promise<any>
+  (
+    endpointOrOptions: string | RequestOptions,
+    options?: RequestOptions
+  ) => Promise<any>
 >;
 
 const toQueryString = params => !params ? '' : `?${Object.entries(params)

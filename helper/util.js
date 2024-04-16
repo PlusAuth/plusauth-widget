@@ -3,7 +3,7 @@ export function itMatchesOne(arr, term) {
 }
 export function parseAttrSelector(node) {
   const { content } = node;
-  // eslint-disable-next-line max-len
+   
   const regex = /(^class|^id)([*^?~|$=]*)+(?:("\s*)([^"\\]*?(?:\\.[^"\\]*)*?)(\s*")|('\s*)([^'\\]*?(?:\\.[^'\\]*)*?)(\s*'))/i;
 
   const [type, operator, head, classes, foot] = content

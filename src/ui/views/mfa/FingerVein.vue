@@ -1,7 +1,9 @@
 <template>
   <!-- eslint-disable max-len -->
   <div style="position: relative">
-    <template v-if="deviceOk && (!context.details.fv_template || context.details.fv_template.length === 0)">
+    <template v-if="deviceOk
+    && (!context.details.fv_template || context.details.fv_template.length === 0)"
+		>
       <div class="pa__widget-info-section">
         <h2 v-t="'mfa.fv.enroll'" />
       </div>
@@ -55,7 +57,8 @@
     </div>
     <div
       v-if="loading"
-      style="position:absolute; top: 0; bottom: 0; right: 0; display: flex; align-items: center; flex-direction: column; left: 0; justify-content: center; background: white; opacity: 1;"
+      style="position:absolute; top: 0; bottom: 0; right: 0; display: flex; align-items: center;
+       flex-direction: column; left: 0; justify-content: center; background: white; opacity: 1;"
     >
       <p-spinner
         color="primary"

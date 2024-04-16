@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 import type { Meta, StoryObj } from '@storybook/vue3';
 
 import { FieldArgTypes } from '../helpers/fieldArgType';

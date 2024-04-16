@@ -30,7 +30,7 @@ function genSvg(this: ComponentPublicInstance<any>) {
   return h('svg', {
     style: this.svgStyles,
     xmlns: 'http://www.w3.org/2000/svg',
-    // eslint-disable-next-line max-len
+     
     viewBox: `${this.viewBoxSize} ${this.viewBoxSize} ${2 * this.viewBoxSize} ${2 * this.viewBoxSize}`,
   }, children)
 }
