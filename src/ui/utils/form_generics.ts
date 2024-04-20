@@ -128,6 +128,14 @@ export function useGenericForm(
                 path: `errors.${e.error}`,
                 args: e,
               }
+            } else if(e.error === 'too_many_requests' && e.$raw?.headers?.get){
+              const retryAfter = e.$raw.headers.get('retry-after')
+              form.value.toggleAlert({
+                path: `errors.${e.error}`,
+                args: {
+                  retry: retryAfter
+                }
+              })
             } else {
               form.value.toggleAlert({
                 path: `errors.${e.error}`,

@@ -57,7 +57,8 @@ export function createFetchWrapper(baseUrl?: string) {
             if (contentType && contentType.includes('json')) {
               response = JSON.parse(value)
             } else {
-              response = value
+              // noinspection JSPrimitiveTypeWrapperUsage
+              response = new String(value)
             }
             if (rawResponse.ok) {
               resolve(response)
@@ -69,7 +70,12 @@ export function createFetchWrapper(baseUrl?: string) {
               window.location.replace(response.location);
               return false;
             } else {
-              reject(response ? response : rawResponse.statusText)
+              // noinspection JSPrimitiveTypeWrapperUsage
+              const errorResponse = response || new String(rawResponse.statusText)
+              Object.defineProperty(errorResponse, '$raw', {
+                value: rawResponse
+              })
+              reject(errorResponse)
             }
           })
         }).catch(reject)
