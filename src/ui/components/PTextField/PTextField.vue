@@ -126,7 +126,10 @@ export default defineComponent({
     })
 
     const messages = computed(() => {
-      if (!isPristine.value && errorMessages.value.length) {
+      if (
+        props.errorMessages && (props.errorMessages as any[]).length
+				|| !isPristine.value && errorMessages.value.length
+      ) {
         return errorMessages.value || []
       } else if (props.hint && (props.persistentHint || props.focused)) {
         return props.hint || []
