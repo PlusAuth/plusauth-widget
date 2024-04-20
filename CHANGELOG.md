@@ -1,5 +1,22 @@
 
 
+## [0.28.0](https://github.com/PlusAuth/plusauth-widget/compare/v0.27.0...v0.28.0) (2024-04-20)
+
+
+### Features
+
+* allow accessing raw response from error ([dfef284](https://github.com/PlusAuth/plusauth-widget/commit/dfef284beef77f4a1cfc61ddc2a65d5a48934111))
+
+
+### Bug Fixes
+
+* prevent not found image shown for register page ([40a7b51](https://github.com/PlusAuth/plusauth-widget/commit/40a7b51a947eb7e6b0848fe1ae3481db878e4f3c))
+
+
+### Refactors
+
+* migrate to eslint@9 ([e28cb25](https://github.com/PlusAuth/plusauth-widget/commit/e28cb257db1a64c24e1110eb97d10b62c9dcc6c6))
+
 ## [0.27.0](https://github.com/PlusAuth/plusauth-widget/compare/v0.26.0...v0.27.0) (2024-04-05)
 
 
