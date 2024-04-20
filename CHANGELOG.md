@@ -1,5 +1,12 @@
 
 
+## [0.28.1](https://github.com/PlusAuth/plusauth-widget/compare/v0.28.0...v0.28.1) (2024-04-20)
+
+
+### Bug Fixes
+
+* regression in [#7cf0b92f](https://github.com/PlusAuth/plusauth-widget/issues/7cf0b92f) ([625fc60](https://github.com/PlusAuth/plusauth-widget/commit/625fc60d0351582c4e38b93ed0ca8807e7a62139)), closes [#7cf0b92](https://github.com/PlusAuth/plusauth-widget/issues/7cf0b92)
+
 ## [0.28.0](https://github.com/PlusAuth/plusauth-widget/compare/v0.27.0...v0.28.0) (2024-04-20)
 
 
