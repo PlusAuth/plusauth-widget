@@ -4,7 +4,23 @@
 @tailwind utilities;
 
 .widget {
-  @apply font-sans h-full;
+  @apply h-full;
+	line-height: 1.5;
+	tab-size: 4;
+	font-family: theme('fontFamily.sans', ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"); /* 4 */
+
+	-webkit-text-size-adjust: 100%;
+	font-feature-settings: normal;
+	font-variation-settings: normal;
+	-webkit-tap-highlight-color: transparent;
+	*,
+	::before,
+	::after {
+		box-sizing: border-box; /* 1 */
+		border-width: 0; /* 2 */
+		border-style: solid; /* 2 */
+		border-color: transparent; /* 2 */
+	}
 
   p {
     margin: 0;
