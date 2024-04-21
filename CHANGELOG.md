@@ -1,5 +1,30 @@
 
 
+## [0.29.0](https://github.com/PlusAuth/plusauth-widget/compare/v0.28.1...v0.29.0) (2024-04-21)
+
+
+### Features
+
+* expose form error handler ([5487f19](https://github.com/PlusAuth/plusauth-widget/commit/5487f19f029e72c31f470b6d3abac38260c1d3fb))
+* human-readable rate limit errors ([1e18794](https://github.com/PlusAuth/plusauth-widget/commit/1e1879468075b2b0706397763992ab410fd02193))
+* include resend actions for applicable mfa challenges ([8a8080c](https://github.com/PlusAuth/plusauth-widget/commit/8a8080c63534d46eb09b8b364c4e74cb87063cdb))
+* **translator:** allow array to be passed to v-t directive ([eddec6b](https://github.com/PlusAuth/plusauth-widget/commit/eddec6b66b24a57fc6053717c121e050e4773e49))
+
+
+### Bug Fixes
+
+* empty error message for fetch errors ([e2b0ec5](https://github.com/PlusAuth/plusauth-widget/commit/e2b0ec5c9ef7fa381079917e867b972d977efb4c))
+* form generics does not allow computed default fields ([06b0ffe](https://github.com/PlusAuth/plusauth-widget/commit/06b0ffef486608b081f818230a67743fcbc1616a))
+
+
+### Stylistic Updates
+
+* additional spacing between multiple elements in content footer ([b3af69a](https://github.com/PlusAuth/plusauth-widget/commit/b3af69ab75ae29f902f5154916603250c7d6fb4a))
+* cleanup reset css ([aab028c](https://github.com/PlusAuth/plusauth-widget/commit/aab028c3e232632978118b91ffa5a6859cc0153a))
+* remove top margin from alert if it is after an input contains error ([6f6b8e5](https://github.com/PlusAuth/plusauth-widget/commit/6f6b8e5369b115bb88758cd17670e9b6f65159af))
+* remove top margin from footer if it is after helper section ([fd29144](https://github.com/PlusAuth/plusauth-widget/commit/fd29144b75193b7ea27ebe48249a4150b8616aa4))
+* set logo height to 96px ([66a3b84](https://github.com/PlusAuth/plusauth-widget/commit/66a3b84ef26adbd4b773e171a1b1830f5c525fb2))
+
 ## [0.28.1](https://github.com/PlusAuth/plusauth-widget/compare/v0.28.0...v0.28.1) (2024-04-20)
 
 
