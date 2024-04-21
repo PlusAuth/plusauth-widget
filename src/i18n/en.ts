@@ -1,8 +1,8 @@
- 
 export default {
   common: {
     allow: 'Allow',
     continue: 'Continue',
+    days: 'days',
     edit: 'Edit',
     field: 'Field',
     fields: {
@@ -15,10 +15,14 @@ export default {
       username: 'Username'
     },
     hide: 'Hide',
+    hours: 'hours',
+    minutes: 'minutes',
     reject: 'Reject',
+    seconds: 'seconds',
     show: 'Show',
     submit: 'Submit',
-    verify: 'Verify'
+    verify: 'Verify',
+    years: 'years'
   },
   verifyEmail: {
     checkText: "We\'ve sent an email to <strong>{email}</strong>, please click the link included" +
@@ -83,7 +87,7 @@ export default {
     passwords_not_match: "Passwords doesn't match",
     user_not_found: 'User not found',
     weak_password: 'Password is too weak',
-    too_many_requests: 'You have ben trying too fast. Try again in {retry} seconds.',
+    too_many_requests: 'You have ben trying too fast. Try again in {retry}.',
     account_blocked: 'Your account is blocked. Please check your email for further instructions.',
   },
   fillMissing: {

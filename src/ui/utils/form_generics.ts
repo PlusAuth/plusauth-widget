@@ -10,6 +10,7 @@ import type {
   IWidgetSettings, WidgetModes
 } from '../interfaces';
 
+import { secondsToReadable } from './helpers.ts';
 import { deepToRaw, toReactive } from './to_reactive';
 import type { Translator } from './translator';
 import { translatorKey } from './translator';
@@ -133,7 +134,7 @@ export function useGenericForm(
               form.value.toggleAlert({
                 path: `errors.${e.error}`,
                 args: {
-                  retry: retryAfter
+                  retry: secondsToReadable(retryAfter, translator),
                 }
               })
             } else {
