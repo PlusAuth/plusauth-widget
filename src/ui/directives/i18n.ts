@@ -16,7 +16,10 @@ function parseValue(value: any): any {
     locale = value.locale
     fallback = value.fallback
     args = value.args || value.params
-  }else{
+  }else if (Array.isArray(value)){
+    path = value[0]
+    args = value[1]
+  } else {
     throw new Error('unsupported value')
   }
 
