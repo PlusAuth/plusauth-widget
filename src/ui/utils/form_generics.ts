@@ -55,10 +55,53 @@ export function useGenericForm(
 
   const mergedFields = toReactive<Record<string, FieldDefinition>>(merged)
 
+  function resolveFormRef(){
+    const formRef = form.value?.formRef || form.value
+    if (!formRef) {
+      throw new Error('Form ref not found')
+    }
+    if (!formRef.toggleAlert) {
+      formRef.toggleAlert = form.value.toggleAlert
+    }
+    return formRef
+  }
+  function formErrorHandler(e: any){
+    const formRef = resolveFormRef()
+    if (settings.modeOptions?.[name]?.responseErrorHandler) {
+      settings.modeOptions[name]!.responseErrorHandler!.call(
+        undefined,
+        e,
+        formRef,
+        mergedFields
+      )
+    } else {
+      if (e.field && mergedFields[e.field]) {
+        mergedFields[e.field].errors = {
+          path: `errors.${e.error}`,
+          args: e,
+        }
+      } else if(e.error === 'too_many_requests' && e.$raw?.headers?.get){
+        const retryAfter = e.$raw.headers.get('retry-after')
+        form.value.toggleAlert({
+          path: `errors.${e.error}`,
+          args: {
+            retry: secondsToReadable(retryAfter, translator),
+          }
+        })
+      } else {
+        form.value.toggleAlert({
+          path: `errors.${e.error}`,
+          args: e,
+          fallback: e.error_description || e.message || e.name || e
+        })
+      }
+    }
+  }
   return {
     form,
     loading,
     fields: mergedFields,
+    formErrorHandler,
     validate(options: FieldDefinition, field: string, value: any): any {
       if (options.required !== false && !value) {
         return translator.t('errors.field_required', {
@@ -97,13 +140,8 @@ export function useGenericForm(
         field.errors = null
       })
 
-      const formRef = form.value?.formRef || form.value
-      if (!formRef) {
-        throw new Error('Form ref not found')
-      }
-      if (!formRef.toggleAlert) {
-        formRef.toggleAlert = form.value.toggleAlert
-      }
+      const formRef = resolveFormRef()
+
       const validationResult = await formRef.validate()
       if (validationResult.valid) {
         formRef.resetValidation()
@@ -117,35 +155,7 @@ export function useGenericForm(
         try {
           await action?.(fieldsWithValues, mergedFields)
         } catch (e) {
-          if (settings.modeOptions?.[name]?.responseErrorHandler) {
-            settings.modeOptions[name]!.responseErrorHandler!.call(
-              undefined,
-              e,
-              formRef,
-              mergedFields
-            )
-          } else {
-            if (e.field && mergedFields[e.field]) {
-              mergedFields[e.field].errors = {
-                path: `errors.${e.error}`,
-                args: e,
-              }
-            } else if(e.error === 'too_many_requests' && e.$raw?.headers?.get){
-              const retryAfter = e.$raw.headers.get('retry-after')
-              form.value.toggleAlert({
-                path: `errors.${e.error}`,
-                args: {
-                  retry: secondsToReadable(retryAfter, translator),
-                }
-              })
-            } else {
-              form.value.toggleAlert({
-                path: `errors.${e.error}`,
-                args: e,
-                fallback: e.error_description || e.message || e.name || e
-              })
-            }
-          }
+          formErrorHandler(e)
         } finally {
           loading.value = false
         }
