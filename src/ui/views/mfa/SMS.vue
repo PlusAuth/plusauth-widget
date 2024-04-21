@@ -43,6 +43,17 @@
       href="/signin/challenge"
     />
   </div>
+	<div class="pa__widget-content-footer">
+		<p align="center">
+      <span
+				v-t="['common.resendText', {type: 'common.code'}]"
+				style="padding-right: 4px"
+			/><a
+			v-t="'common.resend'"
+			:href="resendLink"
+		/>
+		</p>
+	</div>
 </template>
 
 <script lang="ts">
@@ -62,7 +73,9 @@ export default defineComponent({
     const http = useHttp()
     const context = useContext()
 
-    const defaultFields: AdditionalFields = {
+		const resendLink = `${ window.location.pathname }/resend`
+
+		const defaultFields: AdditionalFields = {
       code: {
         type: 'text',
         label: 'common.fields.code'
@@ -76,6 +89,7 @@ export default defineComponent({
       }
     )
     return {
+			resendLink,
       loading,
       fields,
       form,

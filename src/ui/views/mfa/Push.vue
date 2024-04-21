@@ -84,11 +84,22 @@
         <span v-t="'common.submit'" />
       </p-btn>
     </div>
+
+		<div
+			v-if="context.details.challenges.length > 1"
+			class="pa__widget-helpers-section"
+		>
+			<a
+				v-t="'mfa.tryAnotherWay'"
+				href="/signin/challenge"
+			/>
+		</div>
     <div
-      class="pa__widget-content-footer"
+      v-if="!manualMode"
+			class="pa__widget-content-footer"
     >
       <p
-        v-if="!isRegistration && !manualMode"
+        v-if="!isRegistration"
         align="center"
       >
         <a
@@ -96,28 +107,18 @@
           @click="switchToCode"
         />
       </p>
-      <p align="center">
+      <p  align="center">
         <span
-          v-t="'mfa.push.tryCodeText'"
+          v-t="['common.resendText', { type: 'common.notification'}]"
           style="padding-right: 4px"
         />
-
         <a
-          v-t="'verifyEmail.resendAction'"
+          v-t="'common.resend'"
           :href="resendLink"
         />
       </p>
     </div>
   </template>
-  <div
-    v-if="context.details.challenges.length > 1"
-    class="pa__widget-helpers-section"
-  >
-    <a
-      v-t="'mfa.tryAnotherWay'"
-      href="/signin/challenge"
-    />
-  </div>
 </template>
 
 <script lang="ts">
@@ -156,7 +157,7 @@ export default defineComponent({
       } : undefined
     }))
 
-    const { form, loading, submit, fields, validate } = useGenericForm(
+    const { form, loading, submit, fields, validate, formErrorHandler } = useGenericForm(
       'pushMfa',
       defaultFields,
       async (values) => {
@@ -185,8 +186,7 @@ export default defineComponent({
     }
 
     watch([isRegistration, manualMode], async ([newValue, manual]) => {
-      nextTick(async () => {
-
+      await nextTick(async () => {
         if (!newValue && !manual) {
           loading.value = true;
           try {
@@ -194,10 +194,7 @@ export default defineComponent({
               pollPushValidation(resolve, reject)
             })
           } catch (e) {
-            form.value.toggleAlert({
-              path: `errors.${e.error}`,
-              args: e
-            })
+            formErrorHandler(e)
           } finally {
             loading.value = false
           }

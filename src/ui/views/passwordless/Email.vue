@@ -49,10 +49,10 @@
   <div class="pa__widget-content-footer">
     <p align="center">
       <span
-        v-t="'verifyEmail.resendText'"
+        v-t="[ 'common.resendText', { type: 'common.email' } ]"
         style="padding-right: 4px"
       /><a
-        v-t="'verifyEmail.resendAction'"
+        v-t="'common.resend'"
         :href="resendLink"
       />
     </p>
@@ -76,7 +76,7 @@ export default defineComponent({
     const context = useContext()
     const i18n = useLocale()
 
-    const resendLink = `${window.location.pathname  }/resend`
+    const resendLink = `${ window.location.pathname }/resend`
 
     const defaultFields: AdditionalFields = {
       email: {

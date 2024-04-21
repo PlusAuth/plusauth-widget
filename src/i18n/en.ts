@@ -1,9 +1,11 @@
 export default {
   common: {
     allow: 'Allow',
+    code: 'code',
     continue: 'Continue',
     days: 'days',
     edit: 'Edit',
+    email: 'email',
     field: 'Field',
     fields: {
       code: 'Code',
@@ -17,7 +19,10 @@ export default {
     hide: 'Hide',
     hours: 'hours',
     minutes: 'minutes',
+    notification: 'notification',
     reject: 'Reject',
+    resend: 'Resend',
+    resendText: 'Didn\'t receive the {type}?',
     seconds: 'seconds',
     show: 'Show',
     submit: 'Submit',
@@ -27,8 +32,6 @@ export default {
   verifyEmail: {
     checkText: "We\'ve sent an email to <strong>{email}</strong>, please click the link included" +
       ' to verify your email address.',
-    resendText: 'Didn\'t receive email?',
-    resendAction: 'Resend',
     title: 'Check Your Email'
   },
   consent: {
@@ -128,7 +131,6 @@ export default {
       description: 'Click on notification in your device to allow access',
       enrollTitle: 'Register your device',
       enrollDescription: 'Scan the QR Code below with your Authenticator application',
-      tryCodeText: 'Didn\'t receive notification?',
       tryCodeAction: 'Try entering code manually',
     }
   },

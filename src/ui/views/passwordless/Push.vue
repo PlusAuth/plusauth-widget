@@ -97,11 +97,11 @@
       </p>
       <p align="center">
         <span
-          v-t="'passwordless.push.tryCodeText'"
+					v-t="['common.resendText', { type: 'common.notification'}]"
           style="padding-right: 4px"
         />
         <a
-          v-t="'verifyEmail.resendAction'"
+          v-t="'common.resend'"
           :href="resendLink"
         />
       </p>
@@ -164,7 +164,7 @@ export default defineComponent({
       }: undefined
     }))
 
-    const { form, loading, submit, fields, validate } = useGenericForm(
+    const { form, loading, submit, fields, validate, formErrorHandler } = useGenericForm(
       'passwordlessPush',
       defaultFields,
       async (values) => {
@@ -193,8 +193,7 @@ export default defineComponent({
     }
 
     watch([isRegistration, manualMode], async ([newValue, manual]) => {
-      nextTick(async () => {
-
+      await nextTick(async () => {
         if(!newValue && !manual){
           loading.value = true;
           try {
@@ -202,10 +201,7 @@ export default defineComponent({
               pollPushValidation(resolve, reject)
             })
           } catch (e) {
-            form.value.toggleAlert({
-              path: `errors.${e.error}`,
-              args: e
-            })
+            formErrorHandler(e)
           }finally {
             loading.value = false
           }

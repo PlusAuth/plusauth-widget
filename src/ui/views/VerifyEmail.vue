@@ -26,10 +26,10 @@
     <div class="pa__widget-content-footer">
       <p align="center">
         <span
-          v-t="'verifyEmail.resendText'"
+					v-t="[ 'common.resendText', { type: 'common.email' } ]"
           style="padding-right: 4px"
         /><a
-          v-t="'verifyEmail.resendAction'"
+          v-t="'common.resend'"
           :href="resendLink"
         />
       </p>
