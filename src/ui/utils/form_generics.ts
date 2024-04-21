@@ -1,6 +1,6 @@
 import deepmerge from 'deepmerge';
 import type { MaybeRef } from 'vue';
-import { computed, ref, inject } from 'vue';
+import { computed, ref, unref, inject } from 'vue';
 
 import type GenericForm from '../components/GenericForm.vue';
 import type {
@@ -39,8 +39,9 @@ export function useGenericForm(
         value: context.params.state
       },
     } : {} as any,
-    defaultFields || {}
+    unref(defaultFields || {})
   )
+
   const merged = computed<Record<string, FieldDefinition>>(() => {
     const { fields } = settings.modeOptions?.[name] || {}
     const merged = deepToRaw(deepmerge( defuFields, fields || {}, { clone: true }))

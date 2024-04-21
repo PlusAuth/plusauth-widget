@@ -1,4 +1,4 @@
-import type { Ref, UnwrapNestedRefs } from 'vue';
+import type { MaybeRef,  UnwrapNestedRefs } from 'vue';
 import {
   isRef, reactive, unref, toRaw,
   isReactive,
@@ -12,7 +12,7 @@ import {
  * @param objectRef A ref of object
  */
 export function toReactive<T extends object>(
-  objectRef: T | Ref<T>,
+  objectRef: MaybeRef<T>,
 ): UnwrapNestedRefs<T> {
   if (!isRef(objectRef))
     return reactive(objectRef)
