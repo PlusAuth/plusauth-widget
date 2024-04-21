@@ -73,9 +73,9 @@ export default defineComponent({
     const http = useHttp()
     const context = useContext()
 
-		const resendLink = `${ window.location.pathname }/resend`
+    const resendLink = `${ window.location.pathname }/resend`
 
-		const defaultFields: AdditionalFields = {
+    const defaultFields: AdditionalFields = {
       code: {
         type: 'text',
         label: 'common.fields.code'
@@ -89,7 +89,7 @@ export default defineComponent({
       }
     )
     return {
-			resendLink,
+      resendLink,
       loading,
       fields,
       form,
