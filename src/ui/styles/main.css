@@ -117,10 +117,13 @@
     }
 
     &-footer {
+			@apply space-y-2;
+
       border: none;
       font-size: 14px;
       margin: 24px -40px 0px;
       padding: 12px 0;
+
       @media (min-width: 601px) {
         border-top: 1px solid #dadce0;
       }
