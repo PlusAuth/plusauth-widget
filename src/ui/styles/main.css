@@ -37,6 +37,9 @@
     a {
       padding-left: 4px;
     }
+		+ .widget-content-footer {
+			@apply mt-0;
+		}
   }
 
   &-social-icons {
@@ -122,9 +125,6 @@
         border-top: 1px solid #dadce0;
       }
 
-      + .widget-helpers-section {
-        @apply pt-0;
-      }
     }
 
   }
