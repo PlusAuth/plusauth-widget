@@ -5,6 +5,9 @@ window['PlusAuth'] = {
     { name: 'Turkce', value: 'tr' },
     { name: 'English', value: 'en' },
   ],
+  params: {
+    state: '018f00d8-bfd5-731a-b23f-738dfdd28b40'
+  },
   client: {
     clientName: 'TestApp',
     tosUri: 'https://sometosuri.com',

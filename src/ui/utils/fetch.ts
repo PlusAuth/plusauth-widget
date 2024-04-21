@@ -58,7 +58,7 @@ export function createFetchWrapper(baseUrl?: string) {
               response = JSON.parse(value)
             } else {
               // noinspection JSPrimitiveTypeWrapperUsage
-              response = new String(value)
+              response = value && new String(value)
             }
             if (rawResponse.ok) {
               resolve(response)
