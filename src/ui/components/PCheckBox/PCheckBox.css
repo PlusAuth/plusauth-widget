@@ -1,64 +1,69 @@
-.input-checkbox {
-  &.input {
-    @apply relative  cursor-pointer;
+.widget {
+	.input-checkbox {
+		&.input {
+			@apply relative  cursor-pointer;
 
-    .input--wrap {
-      @apply ring-0 border-0 items-center;
-    }
-    .input--label {
-      @apply pointer-events-auto inline-flex relative  cursor-pointer w-full h-full flex-1;
-      transform-origin: unset;
-      top: unset;
-      left: unset;
-      transform: unset;
-    }
+			.input--wrap {
+				@apply ring-0 border-0 items-center;
+			}
 
-    input[type=checkbox] {
-      @apply border-gray-300 relative mr-2 w-6 h-6 cursor-pointer block
-      focus:ring-2 outline-0
-      ring-primary/30 ring-offset-1 rounded-sm;
-      appearance: none;
-      font-variation-settings: inherit;
-      font-weight: inherit;
-      line-height: inherit;
+			.input--label {
+				@apply pointer-events-auto inline-flex relative  cursor-pointer w-full h-full flex-1;
+				transform-origin: unset;
+				top: unset;
+				left: unset;
+				transform: unset;
+			}
 
-    }
-    input[type=checkbox]:before {
-      content: "";
-      display: block;
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border: 2px solid theme('colors.gray.300');
-      border-radius: 3px;
-      background-color: white;
-    }
-    input[type=checkbox]:checked {
-      &:before {
-        border-color: currentColor;
-        background: currentColor;
-      }
-      &:after {
-        content: "";
-        display: block;
-        width: 30%;
-        height: 60%;
-        border: solid white;
-        border-width: 0 3px 3px 0;
-        transform: rotate(45deg);
-        position: absolute;
-        top: 13%;
-        left: 35%;
-      }
-    }
+			input[type=checkbox] {
+				@apply border-gray-300 relative mr-2 w-6 h-6 cursor-pointer block
+				focus:ring-2 outline-0
+				ring-primary/30 ring-offset-1 rounded-sm;
+				appearance: none;
+				font-variation-settings: inherit;
+				font-weight: inherit;
+				line-height: inherit;
 
-    &--error,
-    &--focus,
-    &--dirty
-    {
-      input[type=checkbox]:before {
-        border-color: currentColor;
-      }
-    }
-  }
+			}
+
+			input[type=checkbox]:before {
+				content: "";
+				display: block;
+				position: absolute;
+				width: 100%;
+				height: 100%;
+				border: 2px solid theme('colors.gray.300');
+				border-radius: 3px;
+				background-color: white;
+			}
+
+			input[type=checkbox]:checked {
+				&:before {
+					border-color: currentColor;
+					background: currentColor;
+				}
+
+				&:after {
+					content: "";
+					display: block;
+					width: 30%;
+					height: 60%;
+					border: solid white;
+					border-width: 0 3px 3px 0;
+					transform: rotate(45deg);
+					position: absolute;
+					top: 13%;
+					left: 35%;
+				}
+			}
+
+			&--error,
+			&--focus,
+			&--dirty {
+				input[type=checkbox]:before {
+					border-color: currentColor;
+				}
+			}
+		}
+	}
 }

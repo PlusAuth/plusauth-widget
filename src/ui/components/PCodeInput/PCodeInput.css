@@ -1,35 +1,42 @@
-.input.code-input {
-  @apply mt-0 ;
+.widget {
+	.input.code-input {
+		@apply mt-0 ;
 
-  & > .input--wrap {
-    @apply border-0 ring-0 flex flex-row justify-between;
-  }
+		& > .input--wrap {
+			@apply border-0 ring-0 flex flex-row justify-between;
+		}
 
-  .input--label {
-    @apply relative left-0;
-    top: unset;
-  }
-  &--digit-box {
-    @apply w-auto min-w-0;
-    &.input {
-      flex: unset;
-      .input--wrap {
-        min-width: 24px;
-        max-width: 40px;
-        padding: 1px;
-      }
-      &.input-focused {
-        .input--wrap {
-          padding: 0;
-          border-width: 2px;
-        }
-      }
-      input {
-        max-width: 40px;
-        min-width: 24px;
-        text-align: center;
-        padding: 0;
-      }
-    }
-  }
+		.input--label {
+			@apply relative left-0;
+			top: unset;
+		}
+
+		&--digit-box {
+			@apply w-auto min-w-0;
+
+			&.input {
+				flex: unset;
+
+				.input--wrap {
+					min-width: 24px;
+					max-width: 40px;
+					padding: 1px;
+				}
+
+				&.input-focused {
+					.input--wrap {
+						padding: 0;
+						border-width: 2px;
+					}
+				}
+
+				input {
+					max-width: 40px;
+					min-width: 24px;
+					text-align: center;
+					padding: 0;
+				}
+			}
+		}
+	}
 }

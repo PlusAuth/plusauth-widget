@@ -1,84 +1,95 @@
-.input {
-  &-select {
-    @apply relative outline-none;
+.widget {
+	.input {
+		&-select {
+			@apply relative outline-none;
 
-    &-arrow {
-      position: absolute;
-      top: 38%;
-      right: 10px;
-      transition: transform .2s linear;
-      fill: #767676;
-    }
-    .input--wrap {
-      @apply cursor-pointer outline-none;
-    }
+			&-arrow {
+				position: absolute;
+				top: 38%;
+				right: 10px;
+				transition: transform .2s linear;
+				fill: #767676;
+			}
 
-    .input-select-items {
-      @apply hidden overflow-auto max-h-64 ring-1 ring-gray-300 rounded-sm;
-      z-index: 1000;
+			.input--wrap {
+				@apply cursor-pointer outline-none;
+			}
 
-      .input-select-item {
-        @apply relative flex flex-1 items-center
-        tracking-normal
-        min-h-10 p-1
-        outline-none whitespace-nowrap overflow-hidden text-ellipsis select-none cursor-pointer
-        bg-white;
-        text-decoration: none;
+			.input-select-items {
+				@apply hidden overflow-auto max-h-64 ring-1 ring-gray-300 rounded-sm;
+				z-index: 1000;
 
-        &--selected {
-          @apply bg-primary/50;
-        }
-        &:hover:not(.input-select-item--selected) {
-          @apply bg-gray-200
-        }
-      }
-    }
-    &-is-open {
-      .input-select-items {
-        @apply block;
-      }
-      .input-select-arrow {
-        transform: rotate(-180deg);
-      }
-    }
-    &-value {
-      @apply flex flex-1 bg-transparent text-gray-600 items-center select-none;
-      line-height: 1.2;
-      padding: 0 24px 0 12px;
-      min-height: 42px;
-      transition: all 0.3s;
+				.input-select-item {
+					@apply relative flex flex-1 items-center
+					tracking-normal
+					min-h-10 p-1
+					outline-none whitespace-nowrap overflow-hidden text-ellipsis select-none cursor-pointer
+					bg-white;
+					text-decoration: none;
 
-      &:focus::-webkit-input-placeholder {
-        color: transparent;
-      }
-      &:focus {
-        outline: none;
-      }
-      &:-internal-autofill-selected,
-      &:-webkit-autofill::first-line,
-      &:-webkit-autofill,
-      &:-webkit-autofill:hover,
-      &:-webkit-autofill:focus,
-      &:-webkit-autofill:active {
-        font: 15px Montserrat, sans-serif !important;
-        -webkit-box-shadow: 0 0 0 30px white inset !important;
-      }
-    }
-  }
-}
-.input-select.input-dense {
-  .input {
-    &-select {
-      &-item {
-        font-size: 12px !important;
-        min-height: 16px !important;
-        padding: 0px 8px;
-      }
-      &-value {
-        font-size: 12px !important;
-        min-height: 24px;
-        padding-left: 8px;
-      }
-    }
-  }
+					&--selected {
+						@apply bg-primary/50;
+					}
+
+					&:hover:not(.input-select-item--selected) {
+						@apply bg-gray-200
+					}
+				}
+			}
+
+			&-is-open {
+				.input-select-items {
+					@apply block;
+				}
+
+				.input-select-arrow {
+					transform: rotate(-180deg);
+				}
+			}
+
+			&-value {
+				@apply flex flex-1 bg-transparent text-gray-600 items-center select-none;
+				line-height: 1.2;
+				padding: 0 24px 0 12px;
+				min-height: 42px;
+				transition: all 0.3s;
+
+				&:focus::-webkit-input-placeholder {
+					color: transparent;
+				}
+
+				&:focus {
+					outline: none;
+				}
+
+				&:-internal-autofill-selected,
+				&:-webkit-autofill::first-line,
+				&:-webkit-autofill,
+				&:-webkit-autofill:hover,
+				&:-webkit-autofill:focus,
+				&:-webkit-autofill:active {
+					font: 15px Montserrat, sans-serif !important;
+					-webkit-box-shadow: 0 0 0 30px white inset !important;
+				}
+			}
+		}
+	}
+
+	.input-select.input-dense {
+		.input {
+			&-select {
+				&-item {
+					font-size: 12px !important;
+					min-height: 16px !important;
+					padding: 0px 8px;
+				}
+
+				&-value {
+					font-size: 12px !important;
+					min-height: 24px;
+					padding-left: 8px;
+				}
+			}
+		}
+	}
 }

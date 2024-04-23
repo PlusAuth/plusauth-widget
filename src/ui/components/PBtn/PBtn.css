@@ -1,57 +1,60 @@
-.btn {
-  @apply relative inline-flex justify-center items-center
-  cursor-pointer
-  rounded-sm
-  tracking-wider
-  bg-primary text-white
-  text-sm font-medium uppercase select-none whitespace-nowrap decoration-0
-  px-4 h-10
-  hover:opacity-80
-  focus:ring-2 ring-primary/30 focus:outline-none;
+.widget {
 
-  transition-property: box-shadow, transform, opacity;
+	.btn {
+		@apply relative inline-flex justify-center items-center
+		cursor-pointer
+		rounded-sm
+		tracking-wider
+		bg-primary text-white
+		text-sm font-medium uppercase select-none whitespace-nowrap decoration-0
+		px-4 h-10
+		hover:opacity-80
+		focus:ring-2 ring-primary/30 focus:outline-none;
 
-  &--block {
-    @apply w-full;
-  }
+		transition-property: box-shadow, transform, opacity;
 
-  &--flat {
-    @apply bg-transparent text-primary;
-  }
-}
+		&--block {
+			@apply w-full;
+		}
 
-.btn__loader {
-  align-items: center;
-  display: flex;
-  height: 100%;
-  background: inherit;
-  justify-content: center;
-  left: 0;
-  position: absolute;
-  top: 0;
-  width: 100%;
-}
+		&--flat {
+			@apply bg-transparent text-primary;
+		}
+	}
 
-.btn--block {
-  display: flex;
-  flex: 1 0 auto;
-  min-width: 100% !important;
-}
+	.btn__loader {
+		align-items: center;
+		display: flex;
+		height: 100%;
+		background: inherit;
+		justify-content: center;
+		left: 0;
+		position: absolute;
+		top: 0;
+		width: 100%;
+	}
 
-.btn--disabled {
-  box-shadow: none;
-  pointer-events: none;
-}
+	.btn--block {
+		display: flex;
+		flex: 1 0 auto;
+		min-width: 100% !important;
+	}
 
-.btn--loading {
-  pointer-events: none;
-  transition: none;
+	.btn--disabled {
+		box-shadow: none;
+		pointer-events: none;
+	}
 
-  .btn__content {
-    opacity: 0;
-  }
-}
+	.btn--loading {
+		pointer-events: none;
+		transition: none;
 
-.btn--flat {
-  background-color: transparent;
+		.btn__content {
+			opacity: 0;
+		}
+	}
+
+	.btn--flat {
+		background-color: transparent;
+	}
 }
