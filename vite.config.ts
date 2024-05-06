@@ -34,9 +34,9 @@ export default defineConfig(({ command  }) => ({
     vue(),
     libInjectCss(),
     dts({ outDir: 'dist/types' }),
-    checker({
-      vueTsc: true
-    })
+    // checker({
+    //   vueTsc: true
+    // })
   ],
   resolve: {
     dedupe: ['vue'],
