@@ -84,7 +84,6 @@ export default {
     field_required: '{field} is required.',
     incorrect_code: 'Verification code is invalid',
     invalid_code: 'Code is invalid',
-    invalid_entity: 'Invalid {field}',
     invalid_credentials: 'Invalid login credentials. Please try again.',
     invalid_password: 'Invalid password provided.',
     passwords_not_match: "Passwords doesn't match",
