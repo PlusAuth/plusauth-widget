@@ -97,7 +97,7 @@
       </p>
       <p align="center">
         <span
-					v-t="['common.resendText', { type: 'common.notification'}]"
+          v-t="['common.resendText', { type: 'common.notification'}]"
           style="padding-right: 4px"
         />
         <a

@@ -85,18 +85,18 @@
       </p-btn>
     </div>
 
-		<div
-			v-if="context.details.challenges.length > 1"
-			class="pa__widget-helpers-section"
-		>
-			<a
-				v-t="'mfa.tryAnotherWay'"
-				href="/signin/challenge"
-			/>
-		</div>
+    <div
+      v-if="context.details.challenges.length > 1"
+      class="pa__widget-helpers-section"
+    >
+      <a
+        v-t="'mfa.tryAnotherWay'"
+        href="/signin/challenge"
+      />
+    </div>
     <div
       v-if="!manualMode"
-			class="pa__widget-content-footer"
+      class="pa__widget-content-footer"
     >
       <p
         v-if="!isRegistration"
@@ -107,7 +107,7 @@
           @click="switchToCode"
         />
       </p>
-      <p  align="center">
+      <p align="center">
         <span
           v-t="['common.resendText', { type: 'common.notification'}]"
           style="padding-right: 4px"

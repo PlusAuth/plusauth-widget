@@ -43,17 +43,17 @@
       href="/signin/challenge"
     />
   </div>
-	<div class="pa__widget-content-footer">
-		<p align="center">
+  <div class="pa__widget-content-footer">
+    <p align="center">
       <span
-				v-t="['common.resendText', {type: 'common.code'}]"
-				style="padding-right: 4px"
-			/><a
-			v-t="'common.resend'"
-			:href="resendLink"
-		/>
-		</p>
-	</div>
+        v-t="['common.resendText', {type: 'common.code'}]"
+        style="padding-right: 4px"
+      /><a
+        v-t="'common.resend'"
+        :href="resendLink"
+      />
+    </p>
+  </div>
 </template>
 
 <script lang="ts">

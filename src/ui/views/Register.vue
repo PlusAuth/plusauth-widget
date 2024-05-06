@@ -1,8 +1,8 @@
 <template>
   <div
-		v-if="context.client?.logoUri"
-		class="pa__logo-container"
-	>
+    v-if="context.client?.logoUri"
+    class="pa__logo-container"
+  >
     <img
       class="pa__logo"
       alt="Logo"

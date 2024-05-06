@@ -1,9 +1,10 @@
 <template>
   <!-- eslint-disable max-len -->
   <div style="position: relative">
-    <template v-if="deviceOk
-    && (!context.details.fv_template || context.details.fv_template.length === 0)"
-		>
+    <template
+      v-if="deviceOk
+        && (!context.details.fv_template || context.details.fv_template.length === 0)"
+    >
       <div class="pa__widget-info-section">
         <h2 v-t="'mfa.fv.enroll'" />
       </div>

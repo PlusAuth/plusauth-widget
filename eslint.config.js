@@ -51,7 +51,9 @@ export default tseslint.config(
       }
     },
     rules: {
-      ...pluginVue.configs.recommended.rules,
+      ...pluginVue.configs['vue3-essential'].rules,
+      ...pluginVue.configs['vue3-strongly-recommended'].rules,
+      ...pluginVue.configs['vue3-recommended'].rules,
       '@style/array-bracket-spacing': 'error',
       '@style/indent': ['error', 2, {
         'ArrayExpression': 'first',
