@@ -1,46 +1,29 @@
 <template>
-  <template v-if="isRegistration">
-    <div class="pa__widget-info-section">
-      <h1 v-t="'mfa.push.enrollTitle'" />
-      <p
-        v-t="{ path: 'passwordless.push.enrollDescription'}"
-        class="pa__subtitle-2 pa__text-left"
-        style="margin: 12px 0"
-      />
+  <WidgetLayout
+    :logo="false"
+    :title="isRegistration ? 'mfa.push.enrollTitle'
+      : manualMode ? 'mfa.otp.title' : 'mfa.push.title'"
+    :subtitle="isRegistration ? 'mfa.push.enrollDescription'
+      : manualMode ? ''
+        : context.details.push_code ?
+          'mfa.push.selectCode': 'mfa.push.description'
+    "
+  >
+    <img
+      v-if="isRegistration"
+      id="mainLogo"
+      class="pa__logo pa__qr-code"
+      alt="Logo"
+      :src="context.details.dataUrl"
+    >
+    <div
+      v-else-if="!manualMode && context.details.push_code"
+      class="pa__timer pa__timer--circle"
+    >
+      <span class="pa__timer--seconds">
+        {{ context.details.push_code }}
+      </span>
     </div>
-    <div class="pa__logo-container">
-      <img
-        id="mainLogo"
-        class="pa__logo pa__qr-code"
-        alt="Logo"
-        style="max-width: 300px; max-height: 300px;"
-        :src="context.details.dataUrl"
-      >
-    </div>
-    <div class="pa__widget-content-actions">
-      <p-btn
-        block
-        color="primary"
-        :loading="loading"
-        @click="reload"
-      >
-        <span v-t="'common.continue'" />
-      </p-btn>
-    </div>
-  </template>
-  <template v-else>
-    <div class="pa__widget-info-section">
-      <h1 v-t="'mfa.push.title'" />
-      <p
-        v-t="{
-          path: !manualMode && context.details.push_code ?
-            'mfa.push.selectCode': 'mfa.push.description'
-        }"
-        class="pa__subtitle-2 pa__text-left"
-        style="margin: 12px 0"
-      />
-    </div>
-
     <GenericForm
       ref="form"
       :fields="fields"
@@ -48,14 +31,6 @@
       :submit="submit"
     >
       <template v-if="!manualMode">
-        <div
-          v-if="context.details.push_code"
-          class="pa__timer pa__timer--circle"
-        >
-          <span class="pa__timer--seconds">
-            {{ context.details.push_code }}
-          </span>
-        </div>
         <div
           v-for="device in context.details.devices"
           :key="device.model"
@@ -69,45 +44,38 @@
         </div>
       </template>
     </GenericForm>
-
-
-    <div
-      v-if="manualMode"
-      class="pa__widget-content-actions"
-    >
+    <template #content-actions>
       <p-btn
+        v-if="manualMode || isRegistration"
         block
         color="primary"
         :loading="loading"
-        @click="submit"
+        @click="manualMode ? submit : reload"
       >
-        <span v-t="'common.submit'" />
+        <span v-t="manualMode ? 'common.submit': 'common.continue'" />
       </p-btn>
-    </div>
-
-    <div
-      v-if="context.details.challenges.length > 1"
-      class="pa__widget-helpers-section"
-    >
-      <a
-        v-t="'mfa.tryAnotherWay'"
-        href="/signin/challenge"
-      />
-    </div>
-    <div
+    </template>
+    <template
       v-if="!manualMode"
-      class="pa__widget-content-footer"
+      #content-footer
     >
       <p
+        v-if="context.details.challenges.length > 1"
+      >
+        <a
+          v-t="'mfa.tryAnotherWay'"
+          href="/signin/challenge"
+        />
+      </p>
+      <p
         v-if="!isRegistration"
-        align="center"
       >
         <a
           v-t="'mfa.push.tryCodeAction'"
           @click="switchToCode"
         />
       </p>
-      <p align="center">
+      <p>
         <span
           v-t="['common.resendText', { type: 'common.notification'}]"
           style="padding-right: 4px"
@@ -117,8 +85,8 @@
           :href="resendLink"
         />
       </p>
-    </div>
-  </template>
+    </template>
+  </WidgetLayout>
 </template>
 
 <script lang="ts">
@@ -126,13 +94,14 @@ import { computed, defineComponent, nextTick, ref, watch } from 'vue';
 
 import GenericForm from '../../components/GenericForm.vue';
 import PSpinner from '../../components/PSpinner/PSpinner';
+import WidgetLayout from '../../components/WidgetLayout.vue';
 import { useContext, useHttp } from '../../composables';
 import type { AdditionalFields } from '../../interfaces';
 import { useGenericForm } from '../../utils/form_generics';
 
 export default defineComponent({
   name: 'Push',
-  components: { PSpinner, GenericForm },
+  components: { WidgetLayout, PSpinner, GenericForm },
   setup() {
 
     const http = useHttp()
@@ -151,7 +120,8 @@ export default defineComponent({
     const defaultFields = computed<AdditionalFields>(() => ({
       ...manualMode.value ? {
         code: {
-          type: 'code',
+          type: 'number',
+          label: 'common.enterOtp',
           value: null,
         }
       } : undefined

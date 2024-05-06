@@ -1,30 +1,17 @@
 <template>
-  <template v-if="error">
-    <div class="pa__logo-container">
-      <img
-        src="https://static.plusauth.com/images/icons/email_error.svg"
-        class="pa__logo"
-        alt="Mail Confirmation"
-      >
-    </div>
-    <div class="pa__widget-info-section">
-      <h1 v-t="'errors.'+error" />
-    </div>
-  </template>
-  <template v-else-if="context.prompt?.mode === 'check' || !context.details.email_verified">
-    <div class="pa__logo-container">
-      <img
-        src="https://static.plusauth.com/images/icons/plane.svg"
-        class="pa__logo"
-        alt="Mail Confirmation"
-      >
-    </div>
-    <div class="pa__widget-info-section">
-      <h1 v-t="'verifyEmail.title'" />
-      <h2 v-t="{path: 'verifyEmail.checkText', args: { email: context.details.email}}" />
-    </div>
-    <div class="pa__widget-content-footer">
-      <p align="center">
+  <WidgetLayout
+    :logo="error ? 'images/icons/email_error.svg' :
+      context.prompt?.mode === 'check' || !context.details.email_verified ? 'images/icons/plane.svg'
+      : 'images/icons/mail_confirm.svg'
+    "
+    :title="error ? 'errors.'+error: 'verifyEmail.title'"
+    :subtitle="error ? '' : {path: 'verifyEmail.checkText', args: { email: context.details.email}}"
+  >
+    <template
+      v-if="!error && (context.prompt?.mode === 'check' || !context.details.email_verified)"
+      #content-footer
+    >
+      <p>
         <span
           v-t="[ 'common.resendText', { type: 'common.email' } ]"
           style="padding-right: 4px"
@@ -33,23 +20,17 @@
           :href="resendLink"
         />
       </p>
-    </div>
-  </template>
-  <template v-else>
-    <div class="pa__logo-container">
-      <img
-        src="https://static.plusauth.com/images/icons/mail_confirm.svg"
-        class="pa__logo"
-        alt="Mail Confirmation"
-      >
-    </div>
-    <div class="pa__widget-info-section">
+    </template>
+    <template
+      v-else-if="!error"
+      #title
+    >
       <h1>
         Your email verified successfully.
         <span v-if="loginUrl">  Redirecting to application in {{ time }} seconds.</span>
       </h1>
-    </div>
-  </template>
+    </template>
+  </WidgetLayout>
 </template>
 
 <script lang="ts">
@@ -57,11 +38,13 @@ import {
   defineComponent, ref, onMounted
 } from 'vue';
 
+import WidgetLayout from '../components/WidgetLayout.vue';
 import { useContext } from '../composables';
-import { resolveClientLogo } from '../utils';
+import { resolveLogo } from '../utils';
 
 export default defineComponent({
   name: 'VerifyEmail',
+  components: { WidgetLayout },
 
   setup() {
     const context = useContext()
@@ -98,7 +81,7 @@ export default defineComponent({
       error,
       loginUrl,
       resendLink,
-      resolveClientLogo
+      resolveClientLogo: resolveLogo
     }
   },
 })

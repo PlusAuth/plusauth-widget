@@ -3,20 +3,11 @@
     name="slide-x-transition"
     mode="out-in"
   >
-    <div v-if="!actionCompleted">
-      <div class="pa__logo-container">
-        <img
-          class="pa__logo"
-          alt="Logo"
-          :src="resolveClientLogo(context.client)"
-        >
-      </div>
-
-      <div class="pa__widget-info-section">
-        <h1 v-t="'forgotPassword.title'" />
-        <h2 v-t="'forgotPassword.subtitle'" />
-      </div>
-
+    <WidgetLayout
+      v-if="!actionCompleted"
+      title="forgotPassword.title"
+      subtitle="forgotPassword.subtitle"
+    >
       <GenericForm
         ref="form"
         :fields="fields"
@@ -24,7 +15,7 @@
         :submit="submit"
       />
 
-      <div class="pa__widget-content-actions">
+      <template #content-actions>
         <p-btn
           color="primary"
           :loading="loading"
@@ -33,22 +24,13 @@
         >
           <span v-t="'common.submit'" />
         </p-btn>
-      </div>
-    </div>
-    <template v-else>
-      <div class="pa__column">
-        <div class="pa__logo-container">
-          <img
-            src="https://static.plusauth.com/images/icons/plane.svg"
-            class="pa__logo"
-            alt="Mail Confirmation"
-          >
-        </div>
-        <div class="pa__widget-info-section">
-          <h2 v-t="{ path: 'forgotPassword.emailSent', args: {email: fields.email.value } }" />
-        </div>
-      </div>
-    </template>
+      </template>
+    </WidgetLayout>
+    <WidgetLayout
+      v-else
+      :subtitle="{ path: 'forgotPassword.emailSent', args: {email: fields.email.value } }"
+      logo="images/icons/plane.svg"
+    />
   </transition>
 </template>
 
@@ -56,14 +38,15 @@
 import { defineComponent, ref } from 'vue';
 
 import GenericForm from '../components/GenericForm.vue';
+import WidgetLayout from '../components/WidgetLayout.vue';
 import { useContext, useHttp } from '../composables';
 import type { AdditionalFields } from '../interfaces';
-import { resolveClientLogo } from '../utils';
+import { resolveLogo } from '../utils';
 import { useGenericForm } from '../utils/form_generics';
 
 export default defineComponent({
   name: 'ForgotPassword',
-  components: { GenericForm },
+  components: { WidgetLayout, GenericForm },
   setup(){
     const http = useHttp()
     const context = useContext()
@@ -115,7 +98,7 @@ export default defineComponent({
       form,
       actionCompleted,
       loading,
-      resolveClientLogo,
+      resolveClientLogo: resolveLogo,
       validate,
       submit
     }

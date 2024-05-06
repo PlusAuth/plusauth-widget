@@ -1,49 +1,42 @@
 <template>
-  <div class="pa__logo-container">
-    <img
-      class="pa__logo"
-      alt="Logo"
-      :src="resolveClientLogo(context.client)"
-    >
-  </div>
-
-  <div class="pa__widget-info-section">
-    <h1 v-t="'fillMissing.title'" />
-    <h2 v-t="'fillMissing.subtitle'" />
-  </div>
-
-  <GenericForm
-    ref="form"
-    :fields="fields"
-    :validate="validate"
-    :submit="submit"
-  />
-
-  <div class="pa__widget-content-actions">
-    <p-btn
-      color="primary"
-      block
-      :loading="loading"
-      @click="submit"
-    >
-      <span v-t="'common.submit'" />
-    </p-btn>
-  </div>
+  <WidgetLayout
+    title="fillMissing.title"
+    subtitle="fillMissing.subtitle"
+    :logo="false"
+  >
+    <GenericForm
+      ref="form"
+      :fields="fields"
+      :validate="validate"
+      :submit="submit"
+    />
+    <template #content-actions>
+      <p-btn
+        color="primary"
+        block
+        :loading="loading"
+        @click="submit"
+      >
+        <span v-t="'common.submit'" />
+      </p-btn>
+    </template>
+  </WidgetLayout>
 </template>
 
 <script lang="ts">
 import { defineComponent, inject } from 'vue';
 
 import GenericForm from '../components/GenericForm.vue';
+import WidgetLayout from '../components/WidgetLayout.vue';
 import type { FieldDefinition, IPlusAuthContext } from '../interfaces';
-import { resolveClientLogo } from '../utils';
+import { resolveLogo } from '../utils';
 import type { FetchWrapper } from '../utils/fetch';
 import { useGenericForm } from '../utils/form_generics';
 
 
 export default defineComponent({
   name: 'FillMissing',
-  components: { GenericForm },
+  components: { WidgetLayout, GenericForm },
   setup() {
     const http = inject('http') as FetchWrapper
     const context = inject('context') as IPlusAuthContext
@@ -90,7 +83,7 @@ export default defineComponent({
     return {
       fields,
       context,
-      resolveClientLogo,
+      resolveClientLogo: resolveLogo,
       form,
       loading,
       submit,

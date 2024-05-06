@@ -1,39 +1,40 @@
 <template>
-  <div style="position: relative">
-    <div class="pa__widget-info-section">
-      <div
-        v-if="loading"
-        style="position:absolute; top: 0; bottom: 0; right: 0; display: flex;
+  <WidgetLayout
+    :logo="false"
+  >
+    <div
+      v-if="loading"
+      style="position:absolute; top: 0; bottom: 0; right: 0; display: flex;
        align-items: center; flex-direction: column; left: 0; justify-content: center;
         background: white; opacity: 1;"
-      >
-        <p-spinner
-          color="primary"
-          indeterminate
-        />
-        <div
-          v-if="loadingMsg"
-          v-t="loadingMsg"
-          style="margin-top: 12px; font-size: 0.9em"
-        />
-      </div>
-      <GenericForm
-        ref="form"
-        :fields="fields"
-        :validate="validate"
-        :submit="submit"
-      />
-    </div>
-    <div
-      v-if="context.details.challenges.length > 1"
-      class="pa__widget-helpers-section"
     >
-      <a
-        v-t="'mfa.tryAnotherWay'"
-        href="/signin/challenge"
+      <p-spinner
+        color="primary"
+        indeterminate
+      />
+      <div
+        v-if="loadingMsg"
+        v-t="loadingMsg"
+        style="margin-top: 12px; font-size: 0.9em"
       />
     </div>
-  </div>
+    <GenericForm
+      ref="form"
+      :fields="fields"
+      :validate="validate"
+      :submit="submit"
+    />
+    <template #content-actions>
+      <p
+        v-if="context.details.challenges.length > 1"
+      >
+        <a
+          v-t="'mfa.tryAnotherWay'"
+          href="/signin/challenge"
+        />
+      </p>
+    </template>
+  </WidgetLayout>
 </template>
 
 <script lang="ts">
@@ -46,13 +47,14 @@ import {
 import { defineComponent, onMounted, ref } from 'vue';
 
 import GenericForm from '../../components/GenericForm.vue';
+import WidgetLayout from '../../components/WidgetLayout.vue';
 import { useContext, useHttp, useLocale } from '../../composables';
 import type { AdditionalFields } from '../../interfaces';
 import { useGenericForm } from '../../utils/form_generics';
 
 export default defineComponent({
   name: 'WebAuthN',
-  components: { GenericForm },
+  components: { WidgetLayout, GenericForm },
   setup() {
     const http = useHttp()
     const context = useContext()

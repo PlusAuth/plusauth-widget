@@ -6,6 +6,7 @@ export default {
     days: 'days',
     edit: 'Edit',
     email: 'email',
+    enterOtp: 'Enter your code',
     field: 'Field',
     fields: {
       code: 'Code',
@@ -81,6 +82,7 @@ export default {
     code_already_used: 'Code was already used',
     code_expired: 'Code has expired',
     email_not_verified: 'Email is not verified. Please verify your email by clicking the link that has been sent to your email account.',
+    invalid_entity: 'Invalid {field}',
     field_required: '{field} is required.',
     incorrect_code: 'Verification code is invalid',
     invalid_code: 'Code is invalid',
@@ -114,12 +116,15 @@ export default {
   },
   passwordless: {
     email: {
+      magicLinkTitle: 'Check your email',
       title: 'Enter authorization code sent to: <strong>{email}</strong>',
       checkText: "We\'ve sent an email to <strong>{email}</strong>, please click the link included" +
         ' to sign in. Make sure to open link in the same device/browser you are trying to sign in.',
     },
     otp: {
-      title: 'Enter authorization code:'
+      registerTitle: 'Register Your Authenticator',
+      registerSubtitle: 'Open your preferred authenticator application and scan the QRCode below. If you have trouble scanning the code you can manually enter the code below image.',
+      title: 'Enter authorization code'
     },
     sms: {
       title: 'Enter authorization code sent to: <strong>{phone_number}</strong>'
@@ -156,7 +161,9 @@ export default {
       verify: 'Click to <strong>VERIFY</strong> when you are ready to scan your finger.'
     },
     otp: {
-      title: 'Please enter authorization code'
+      title: 'Enter authorization code',
+      registerTitle: 'Register Your Authenticator',
+      registerSubtitle: 'Open your preferred authenticator application and scan the QRCode below. If you have trouble scanning the code you can manually enter the code below image.',
     },
     push: {
       selectCode: 'Select number below from your device',

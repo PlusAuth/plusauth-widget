@@ -1,42 +1,27 @@
 <template>
-  <!-- eslint-disable max-len -->
-  <div style="position: relative">
-    <template
+  <WidgetLayout
+    :logo="false"
+    :title="deviceOk
+      && (!context.details.fv_template || context.details.fv_template.length === 0)
+      ? 'mfa.fv.enroll': !deviceOk ? 'mfa.fv.checkDevice' : 'mfa.fv.verify'"
+  >
+    <div
       v-if="deviceOk
         && (!context.details.fv_template || context.details.fv_template.length === 0)"
+      class="pa__hands_container"
     >
-      <div class="pa__widget-info-section">
-        <h2 v-t="'mfa.fv.enroll'" />
-      </div>
-      <div
-        class="pa__hands_container"
-      >
-        <Hand
-          :class="{'disabled' : loading}"
-          :selected="enrolledFingers.left"
-          @select="onFingerSelect($event, 'left')"
-        />
-        <Hand
-          :class="{'disabled' : loading}"
-          style="transform: rotateY(180deg)"
-          :selected="enrolledFingers.right"
-          @select="onFingerSelect($event,'right')"
-        />
-      </div>
-    </template>
-    <template v-else-if="!deviceOk">
-      <div
-        v-t="{ path: 'mfa.fv.checkDevice'}"
-        style="margin-bottom: 8px"
-        class="pa__subtitle-2 pa__text-left"
+      <Hand
+        :class="{'disabled' : loading}"
+        :selected="enrolledFingers.left"
+        @select="onFingerSelect($event, 'left')"
       />
-    </template>
-    <template v-else>
-      <div
-        v-t="{ path: 'mfa.fv.verify'}"
-        class="pa__subtitle-2 pa__text-left"
+      <Hand
+        :class="{'disabled' : loading}"
+        style="transform: rotateY(180deg)"
+        :selected="enrolledFingers.right"
+        @select="onFingerSelect($event,'right')"
       />
-    </template>
+    </div>
     <GenericForm
       ref="form"
       style="padding-top: 24px"
@@ -44,18 +29,6 @@
       :validate="validate"
       :submit="submit"
     />
-
-    <div class="pa__widget-content-actions">
-      <p-btn
-        v-if="deviceOk"
-        block
-        color="primary"
-        :loading="loading"
-        @click="submit"
-      >
-        <span v-t="context.details.fv_template?.length > 0 ? 'common.verify' : 'common.submit'" />
-      </p-btn>
-    </div>
     <div
       v-if="loading"
       style="position:absolute; top: 0; bottom: 0; right: 0; display: flex; align-items: center;
@@ -71,17 +44,28 @@
         style="margin-top: 12px; font-size: 0.9em"
       />
     </div>
-  </div>
-
-  <div
-    v-if="context.details.challenges.length > 1"
-    class="pa__widget-helpers-section"
-  >
-    <a
-      v-t="'mfa.tryAnotherWay'"
-      href="/signin/challenge"
-    />
-  </div>
+    <template
+      v-if="deviceOk"
+      #content-actions
+    >
+      <p-btn
+        block
+        color="primary"
+        :loading="loading"
+        @click="submit"
+      >
+        <span v-t="context.details.fv_template?.length > 0 ? 'common.verify' : 'common.submit'" />
+      </p-btn>
+    </template>
+    <template #content-footer>
+      <p>
+        <a
+          v-t="'mfa.tryAnotherWay'"
+          href="/signin/challenge"
+        />
+      </p>
+    </template>
+  </WidgetLayout>
 </template>
 
 <script lang="ts">
@@ -90,13 +74,14 @@ import { defineComponent, onMounted, reactive, ref } from 'vue';
 import GenericForm from '../../components/GenericForm.vue';
 import Hand from '../../components/Hand.vue';
 import PSpinner from '../../components/PSpinner/PSpinner';
+import WidgetLayout from '../../components/WidgetLayout.vue';
 import { useContext, useHttp } from '../../composables';
 import { useGenericForm } from '../../utils/form_generics';
 import { H1FingerVeinService } from '../../utils/fv_helper';
 
 export default defineComponent({
   name: 'FingerVein',
-  components: { PSpinner, Hand, GenericForm },
+  components: { WidgetLayout, PSpinner, Hand, GenericForm },
   setup(){
 
     const http = useHttp()

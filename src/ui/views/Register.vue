@@ -1,77 +1,64 @@
 <template>
-  <div
-    v-if="context.client?.logoUri"
-    class="pa__logo-container"
-  >
-    <img
-      class="pa__logo"
-      alt="Logo"
-      :src="resolveClientLogo(context.client)"
+  <WidgetLayout title="register.title">
+    <GenericForm
+      ref="form"
+      :fields="fields"
+      :validate="validate"
+      :submit="submit"
     >
-  </div>
+      <template #password.message="{ message: [ message ], isFocused, isPristine }">
+        <PasswordStrength
+          v-if="isFocused || !isPristine"
+          :rules="context.settings?.password_policy"
+          :message="message"
+        />
+      </template>
+    </GenericForm>
 
-  <div class="pa__widget-info-section">
-    <h1 v-t="'register.title'" />
-  </div>
-
-  <GenericForm
-    ref="form"
-    :fields="fields"
-    :validate="validate"
-    :submit="submit"
-  >
-    <template #password.message="{ message: [ message ], isFocused, isPristine }">
-      <PasswordStrength
-        v-if="isFocused || !isPristine"
-        :rules="context.settings?.password_policy"
-        :message="message"
-      />
+    <template #content-actions>
+      <p-btn
+        color="primary"
+        :loading="loading"
+        block
+        @click="submit"
+      >
+        <span v-t="'register.signUp'" />
+      </p-btn>
     </template>
-  </GenericForm>
-  <div class="pa__widget-content-actions">
-    <p-btn
-      color="primary"
-      :loading="loading"
-      block
-      @click="submit"
-    >
-      <span v-t="'register.signUp'" />
-    </p-btn>
-  </div>
-
-  <div
-    v-if="context.client
-      && context.client.social
-      && context.client.social.length"
-    class="pa__widget-social-section"
-  >
-    <hr v-t="'login.socialLoginHelper'">
-    <div class="pa__widget-social-icons">
-      <SocialConnectionButton
-        v-for="connection in context.client.social"
-        :key="typeof connection === 'string' ? connection : connection.name"
-        lang-key="register.signUpWith"
-        :connection="connection"
-      />
-    </div>
-  </div>
-
-  <div class="pa__widget-helpers-section">
-    <span
-      v-t="'register.haveAccount'"
-    />
-    <a
-      v-t="'login.signIn'"
-      href="/signin"
-      @click.stop
-    />
-    <div v-if="!isPasswordless && context.settings.forgot_password_enabled">
-      <a
-        v-t="'login.forgotPassword'"
-        href="/signin/recovery"
-      />
-    </div>
-  </div>
+    <template #content-append>
+      <div class="pa__widget-helpers-section">
+        <template
+          v-if="context.client
+            && context.client.social
+            && context.client.social.length"
+        >
+          <hr v-t="'login.socialLoginHelper'">
+          <div class="pa__widget-social-icons">
+            <SocialConnectionButton
+              v-for="connection in context.client.social"
+              :key="typeof connection === 'string' ? connection : connection.name"
+              lang-key="register.signUpWith"
+              :connection="connection"
+            />
+          </div>
+        </template>
+        <span
+          v-t="'register.haveAccount'"
+        />
+        <a
+          v-t="'login.signIn'"
+          href="/signin"
+          @click.stop
+        />
+        <div v-if="!isPasswordless && context.settings.forgot_password_enabled">
+          <a
+            v-t="'login.forgotPassword'"
+            href="/signin/recovery"
+          />
+        </div>
+      </div>
+    </template>
+  </WidgetLayout>
 </template>
 
 <script lang="ts">
@@ -80,15 +67,16 @@ import { defineComponent } from 'vue';
 import { PasswordStrength } from '../components';
 import GenericForm from '../components/GenericForm.vue';
 import SocialConnectionButton from '../components/SocialConnectionButton.vue';
+import WidgetLayout from '../components/WidgetLayout.vue';
 import { useContext, useHttp } from '../composables';
 import type { AdditionalFields, FieldDefinition } from '../interfaces';
-import { resolveClientLogo } from '../utils';
+import { resolveLogo } from '../utils';
 import { checkPasswordStrength } from '../utils/check_passsword_strength';
 import { useGenericForm } from '../utils/form_generics';
 
 export default defineComponent({
   name: 'Register',
-  components: { GenericForm, SocialConnectionButton, PasswordStrength },
+  components: { WidgetLayout, GenericForm, SocialConnectionButton, PasswordStrength },
   setup() {
     const http = useHttp()
     const context = useContext()
@@ -178,7 +166,7 @@ export default defineComponent({
       fields,
       loading,
       isPasswordless,
-      resolveClientLogo,
+      resolveClientLogo: resolveLogo,
       validate,
       submit
     }

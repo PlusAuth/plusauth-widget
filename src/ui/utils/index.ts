@@ -103,8 +103,15 @@ export function looseEqual(a: any, b: any): boolean {
   }
 }
 
-export function resolveClientLogo(client: IClient) {
-  return client?.logoUri || 'https://static.plusauth.com/images/logo.png'
+export function resolveLogo(logoOrObj: string | IClient) {
+  if(typeof logoOrObj === 'string'){
+    if(logoOrObj.startsWith('http') || logoOrObj.startsWith('/')){
+      return  logoOrObj
+    } else {
+      return `https://static.plusauth.com/${logoOrObj}`
+    }
+  }
+  return logoOrObj?.logoUri || 'https://static.plusauth.com/images/logo.png'
 }
 
 export function keysToDotNotation(obj: Record<string, any>,

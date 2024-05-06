@@ -1,40 +1,25 @@
 <template>
-  <template v-if="context.prompt?.mode === 'check_email'">
-    <div class="pa__logo-container">
-      <img
-        src="https://static.plusauth.com/images/icons/plane.svg"
-        class="pa__logo"
-        alt="Mail Confirmation"
-      >
-    </div>
-    <div class="pa__widget-info-section">
-      <h1 v-t="'passwordless.email.title'" />
-      <h2 v-t="{path: 'passwordless.email.checkText', args: { email: context.details.email}}" />
-    </div>
-  </template>
-  <template v-else>
-    <div class="pa__logo-container">
-      <img
-        id="mainLogo"
-        class="pa__logo"
-        alt="Logo"
-        src="https://static.plusauth.com/images/icons/email_question.svg"
-      >
-    </div>
-    <div class="pa__widget-info-section">
-      <h2
-        v-t="{ path: 'passwordless.email.title', args: { email: context.details.email } }"
-      />
-    </div>
-
+  <WidgetLayout
+    :logo="isMagicLink ? 'images/icons/plane.svg' : 'images/icons/email_question.svg'"
+    :title="isMagicLink ? 'passwordless.email.magicLinkTitle' : {
+      path: 'passwordless.email.title', args: { email: context.details.email }
+    } "
+    :subtitle="isMagicLink ? {
+      path: 'passwordless.email.checkText', args: { email: context.details.email}
+    }: undefined
+    "
+  >
     <GenericForm
+      v-if="!isMagicLink"
       ref="form"
       :fields="fields"
       :validate="validate"
       :submit="submit"
     />
-
-    <div class="pa__widget-content-actions">
+    <template
+      v-if="!isMagicLink"
+      #content-actions
+    >
       <p-btn
         block
         color="primary"
@@ -43,26 +28,27 @@
       >
         <span v-t="'common.submit'" />
       </p-btn>
-    </div>
-  </template>
+    </template>
 
-  <div class="pa__widget-content-footer">
-    <p align="center">
-      <span
-        v-t="[ 'common.resendText', { type: 'common.email' } ]"
-        style="padding-right: 4px"
-      /><a
-        v-t="'common.resend'"
-        :href="resendLink"
-      />
-    </p>
-  </div>
+    <template #content-footer>
+      <p>
+        <span
+          v-t="[ 'common.resendText', { type: 'common.email' } ]"
+          style="padding-right: 4px"
+        /><a
+          v-t="'common.resend'"
+          :href="resendLink"
+        />
+      </p>
+    </template>
+  </WidgetLayout>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { computed, defineComponent } from 'vue';
 
 import GenericForm from '../../components/GenericForm.vue';
+import WidgetLayout from '../../components/WidgetLayout.vue';
 import { useContext, useHttp, useLocale } from '../../composables';
 import type { AdditionalFields } from '../../interfaces';
 import { useGenericForm } from '../../utils/form_generics';
@@ -70,7 +56,7 @@ import { useGenericForm } from '../../utils/form_generics';
 
 export default defineComponent({
   name: 'Email',
-  components: { GenericForm },
+  components: { WidgetLayout, GenericForm },
   setup(){
     const http = useHttp()
     const context = useContext()
@@ -78,6 +64,7 @@ export default defineComponent({
 
     const resendLink = `${ window.location.pathname }/resend`
 
+    const isMagicLink = context.prompt?.mode === 'check_email'
     const defaultFields: AdditionalFields = {
       email: {
         type: 'text',
@@ -122,6 +109,7 @@ export default defineComponent({
       }
     )
     return {
+      isMagicLink,
       loading,
       fields,
       form,

@@ -41,23 +41,9 @@ export function App(theme: Theme, settings: Partial<IWidgetSettings>): any {
           class: 'pa__widget',
           key: this.locale
         },
-        h('div', { class: 'pa__widget-content' },
-          [
-            h(
-              'div',
-              {
-                class: ['pa__widget-content-main']
-              },
-              [
-                this.resolvedView && h(
-                  this.resolvedView
-                )
-              ]
-            ),
-            settings.footer && settings.footer.enabled && h(PFooter as any,
-              { class: 'pa__widget-footer' })
-          ] )
-
+        this.resolvedView && h(
+          this.resolvedView
+        )
       )
     }
   };

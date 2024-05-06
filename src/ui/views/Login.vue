@@ -1,75 +1,62 @@
 <template>
-  <div
-    v-if="context.client?.logoUri"
-    class="pa__logo-container"
-  >
-    <img
-      class="pa__logo"
-      alt="Logo"
-      :src="resolveClientLogo(context.client)"
-    >
-  </div>
+  <WidgetLayout title="login.title">
+    <GenericForm
+      ref="form"
+      :fields="fields"
+      :validate="validate"
+      :submit="submit"
+    />
 
-  <div class="pa__widget-info-section">
-    <h1 v-t="'login.title'" />
-  </div>
-
-  <GenericForm
-    ref="form"
-    :fields="fields"
-    :validate="validate"
-    :submit="submit"
-  />
-
-  <div class="pa__widget-content-actions">
-    <p-btn
-      color="primary"
-      :loading="loading"
-      block
-      @click="submit"
-    >
-      <span v-t="'login.signIn'" />
-    </p-btn>
-  </div>
-
-  <div
-    v-if="context.client
-      && context.client.social
-      && context.client.social.length"
-    class="pa__widget-social-section"
-  >
-    <hr v-t="'login.socialLoginHelper'">
-    <div class="pa__widget-social-icons">
-      <SocialConnectionButton
-        v-for="connection in context.client.social"
-        :key="typeof connection === 'string' ? connection : connection.name"
-        lang-key="login.signInWith"
-        :connection="connection"
-      />
-    </div>
-  </div>
-  <div class="pa__widget-helpers-section">
-    <div
-      v-if="context.settings.register_enabled"
-    >
-      <span
-        v-t="'login.noAccount'"
-      />
-      <a
-        v-t="'login.signUp'"
-        tabindex="0"
-        href="/signup"
-        @click.stop
-      />
-    </div>
-    <div v-if="!isPasswordless && context.settings.forgot_password_enabled">
-      <a
-        v-t="'login.forgotPassword'"
-        tabindex="0"
-        href="/signin/recovery"
-      />
-    </div>
-  </div>
+    <template #content-actions>
+      <p-btn
+        color="primary"
+        :loading="loading"
+        block
+        @click="submit"
+      >
+        <span v-t="'login.signIn'" />
+      </p-btn>
+    </template>
+    <template #content-append>
+      <div class="pa__widget-helpers-section">
+        <template
+          v-if="context.client
+            && context.client.social
+            && context.client.social.length"
+        >
+          <hr v-t="'login.socialLoginHelper'">
+          <div class="pa__widget-social-icons">
+            <SocialConnectionButton
+              v-for="connection in context.client.social"
+              :key="typeof connection === 'string' ? connection : connection.name"
+              lang-key="login.signInWith"
+              :connection="connection"
+            />
+          </div>
+        </template>
+        <div
+          v-if="context.settings.register_enabled"
+        >
+          <span
+            v-t="'login.noAccount'"
+          />
+          <a
+            v-t="'login.signUp'"
+            tabindex="0"
+            href="/signup"
+            @click.stop
+          />
+        </div>
+        <div v-if="!isPasswordless && context.settings.forgot_password_enabled">
+          <a
+            v-t="'login.forgotPassword'"
+            tabindex="0"
+            href="/signin/recovery"
+          />
+        </div>
+      </div>
+    </template>
+  </WidgetLayout>
 </template>
 
 <script lang="ts">
@@ -77,14 +64,15 @@ import { defineComponent, ref } from 'vue';
 
 import GenericForm from '../components/GenericForm.vue';
 import SocialConnectionButton from '../components/SocialConnectionButton.vue';
+import WidgetLayout from '../components/WidgetLayout.vue';
 import { useContext, useHttp } from '../composables';
 import type { AdditionalFields } from '../interfaces';
-import { resolveClientLogo } from '../utils';
+import { resolveLogo } from '../utils';
 import { useGenericForm } from '../utils/form_generics';
 
 export default defineComponent({
   name: 'Login',
-  components: { GenericForm, SocialConnectionButton },
+  components: { WidgetLayout, GenericForm, SocialConnectionButton },
   setup() {
     const http = useHttp()
     const context = useContext()
@@ -155,7 +143,7 @@ export default defineComponent({
       validate,
       isPasswordless,
       submit,
-      resolveClientLogo
+      resolveClientLogo: resolveLogo
     }
 
   }

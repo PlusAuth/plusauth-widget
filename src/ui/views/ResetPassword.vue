@@ -1,21 +1,10 @@
 <template>
-  <div
-    v-if="actionCompleted"
-    v-t="'resetPassword.successfullyReset'"
-  />
-  <template v-else>
-    <div class="pa__logo-container">
-      <img
-        class="pa__logo"
-        alt="Logo"
-        :src="resolveClientLogo(context.client)"
-      >
-    </div>
-    <div class="pa__widget-info-section">
-      <h1 v-t="'resetPassword.title'" />
-    </div>
-
+  <WidgetLayout
+    :title="actionCompleted ? 'resetPassword.successfullyReset' : 'resetPassword.title'"
+    :logo="!actionCompleted"
+  >
     <GenericForm
+      v-if="!actionCompleted"
       ref="form"
       :fields="fields"
       :validate="validate"
@@ -31,8 +20,10 @@
       </template>
     </GenericForm>
 
-
-    <div class="pa__widget-content-actions">
+    <template
+      v-if="!actionCompleted"
+      #content-actions
+    >
       <p-btn
         color="primary"
         :loading="loading"
@@ -41,8 +32,8 @@
       >
         <span v-t="'common.submit'" />
       </p-btn>
-    </div>
-  </template>
+    </template>
+  </WidgetLayout>
 </template>
 
 <script lang="ts">
@@ -50,15 +41,16 @@ import { defineComponent, ref } from 'vue';
 
 import { PasswordStrength } from '../components';
 import GenericForm from '../components/GenericForm.vue';
+import WidgetLayout from '../components/WidgetLayout.vue';
 import { useContext, useHttp } from '../composables';
 import type { AdditionalFields, FieldDefinition } from '../interfaces';
-import { resolveClientLogo } from '../utils';
+import { resolveLogo } from '../utils';
 import { checkPasswordStrength } from '../utils/check_passsword_strength';
 import { useGenericForm } from '../utils/form_generics';
 
 export default defineComponent({
   name: 'ResetPassword',
-  components: { GenericForm, PasswordStrength },
+  components: { WidgetLayout, GenericForm, PasswordStrength },
   setup(){
 
     const http = useHttp()
@@ -101,7 +93,7 @@ export default defineComponent({
       context,
       actionCompleted,
       loading,
-      resolveClientLogo,
+      resolveClientLogo: resolveLogo,
       validate,
       submit,
     }

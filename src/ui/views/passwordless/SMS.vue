@@ -1,54 +1,43 @@
 <template>
-  <div class="pa__logo-container">
-    <img
-      id="mainLogo"
-      style="margin-left: 30px;"
-      class="pa__logo"
-      alt="Logo"
-      src="https://static.plusauth.com/images/icons/message-on-phone.svg"
-    >
-  </div>
-  <div class="pa__widget-info-section">
+  <WidgetLayout
+    :title="{
+      path: 'passwordless.sms.title',
+      args: { phone_number: context.details.phone_number}
+    }"
+    logo="images/icons/message-on-phone.svg"
+  >
     <PTimer
       class="pa__challenge-timer"
       :duration="120"
     />
-    <h2
-      v-t="{
-        path: 'passwordless.sms.title',
-        args: { phone_number: context.details.phone_number}
-      }"
+    <GenericForm
+      ref="form"
+      :fields="fields"
+      :validate="validate"
+      :submit="submit"
     />
-  </div>
-
-  <GenericForm
-    ref="form"
-    :fields="fields"
-    :validate="validate"
-    :submit="submit"
-  />
-
-  <div class="pa__widget-content-actions">
-    <p-btn
-      block
-      color="primary"
-      :loading="loading"
-      @click="submit"
-    >
-      <span v-t="'common.submit'" />
-    </p-btn>
-  </div>
-  <div class="pa__widget-content-footer">
-    <p align="center">
-      <span
-        v-t="['common.resendText', {type: 'common.code'}]"
-        style="padding-right: 4px"
-      /><a
-        v-t="'common.resend'"
-        :href="resendLink"
-      />
-    </p>
-  </div>
+    <template #content-actions>
+      <p-btn
+        block
+        color="primary"
+        :loading="loading"
+        @click="submit"
+      >
+        <span v-t="'common.submit'" />
+      </p-btn>
+    </template>
+    <template #content-footer>
+      <p>
+        <span
+          v-t="['common.resendText', {type: 'common.code'}]"
+          style="padding-right: 4px"
+        /><a
+          v-t="'common.resend'"
+          :href="resendLink"
+        />
+      </p>
+    </template>
+  </WidgetLayout>
 </template>
 
 <script lang="ts">
@@ -56,13 +45,14 @@ import { defineComponent } from 'vue';
 
 import GenericForm from '../../components/GenericForm.vue';
 import PTimer from '../../components/PTimer/PTimer';
+import WidgetLayout from '../../components/WidgetLayout.vue';
 import { useContext, useHttp, useLocale } from '../../composables';
 import type { AdditionalFields } from '../../interfaces';
 import { useGenericForm } from '../../utils/form_generics';
 
 export default defineComponent({
   name: 'SMS',
-  components: { PTimer, GenericForm },
+  components: { WidgetLayout, PTimer, GenericForm },
   setup(){
     const http = useHttp()
     const context = useContext()
@@ -92,7 +82,7 @@ export default defineComponent({
       },
       code: {
         type: 'text',
-        label: 'common.fields.code'
+        label: 'common.enterOtp'
       }
     }
     const { form, loading, submit, validate, fields } = useGenericForm(
