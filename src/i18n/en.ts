@@ -92,7 +92,8 @@ export default {
     user_not_found: 'User not found',
     weak_password: 'Password is too weak',
     too_many_requests: 'You have ben trying too fast. Try again in {retry}.',
-    account_blocked: 'Your account is blocked. Please check your email for further instructions.',
+    account_blocked: 'Your account is blocked. Please check your email for further instructions or contact an administrator.',
+    old_password: 'It looks like you\'re trying to use a password you\'ve used before. For your security, please choose a new password that hasn\'t been used in the past.'
   },
   fillMissing: {
     title: 'Fill missing information',
