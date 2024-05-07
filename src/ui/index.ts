@@ -39,6 +39,15 @@ export function createWidget(container: Element | string,
 
   installComponents(widget)
 
+  container = typeof container === 'string' ? document.querySelector(container)! : container
+  const templates = {} as Record<string, Node>
+  container.querySelectorAll('template, pa-template').forEach(temp => {
+    if(temp.id && temp.id.startsWith('pa-')){
+      templates[temp.id.replace(/^pa-/, '')] = temp.cloneNode(true)
+    }
+  })
+  widget.provide('templates', templates)
   widget.mount(container)
+
   return widget;
 }

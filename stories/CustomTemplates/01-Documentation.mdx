@@ -1,0 +1,34 @@
+import {Meta, Primary, Controls, Story, ArgTypes} from '@storybook/blocks';
+import * as FieldStories from './templating.stories.ts';
+
+<Meta of={FieldStories} />
+
+
+## Custom Templates
+
+You can provide custom templates to inject into widget. To do so, define your template inside to be mounted element.
+
+Template element type must be `template` name must be defined as `id` and must be prefixed with `pa-`.
+
+Available templates are as following:
+```
+pa-content-prepend
+pa-content-append
+pa-content-footer
+```
+
+For example:
+```html
+<div id="widget">
+  <template id="pa-content-prepend">
+    <h1>My Header</h1>
+  </template>
+  <template id="pa-content-footer">
+    My Footer
+  </template>
+</div>
+
+<script type="application/javascript">
+  new PlusAuthWidget('#widget')
+</script>
+```

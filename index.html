@@ -1,58 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
-<head >
-  <meta charset="UTF-8" >
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
-  <title >Title</title >
-  <style id="dev-style">
-    html, body{
-      margin: 0;
-      height: 100%;
-    }
-    .dev-navbar {
-      position: absolute;
-      left: 0;
-      display: flex;
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+				content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+	<title>Title</title>
+	<style id="dev-style">
+		html, body {
+			margin: 0;
+			height: 100%;
+		}
+
+		.dev-navbar {
+			position: absolute;
+			left: 0;
+			display: flex;
 			font-family: sans-serif;
-      flex-direction: column;
-      z-index: 123213;
-    }
-    .dev-navbar a {
-      display: inline-flex;
+			flex-direction: column;
+			z-index: 123213;
+		}
+
+		.dev-navbar a {
+			display: inline-flex;
 			color: inherit;
 			text-decoration: inherit;
-      padding: 10px;
-      text-align: center;
-      border: 1px solid #dedede;
-      text-decoration: none;
-    }
-    #app{
-      height: 100%;
-    }
-  </style >
-</head >
-<body >
+			padding: 10px;
+			text-align: center;
+			border: 1px solid #dedede;
+			text-decoration: none;
+		}
+
+		#app {
+			height: 100%;
+		}
+
+		@media (max-width: 1200px) {
+			.dev-navbar {
+				display: none;
+			}
+		}
+
+	</style>
+</head>
+<body>
 <div class="pa__dev-navbar">
-  <a href="/signin" > Login </a >
-  <a href="/signup" > Register </a >
-  <a href="/signin/consent" > Consent </a >
-  <a href="/signin/passwordless/email" > Passwordless Email </a >
-  <a href="/signin/passwordless/sms" > Passwordless Sms </a >
-  <a href="/signin/passwordless/otp" > Passwordless OTP </a >
-  <a href="/signin/passwordless/push" > Passwordless Push </a >
-  <a href="/account/verifyEmail" > VerifyEmail </a >
-  <a href="/account/updateMissingInformation" > Fill Missing </a >
-  <a href="/account/resetPassword/token" > Password Reset </a >
-  <a href="/signin/recovery" > Password Recovery </a >
-  <a href="/signin/challenge" > Challenge </a >
-  <a href="/signin/challenge/sms" > SMS </a >
-  <a href="/signin/challenge/email" > EMAIL </a >
-  <a href="/signin/challenge/otp" > OTP </a >
-  <a href="/signin/challenge/fv" > FingerVein </a >
-  <a href="/signin/challenge/push" > Push </a >
-  <a href="/signin/challenge/webauthn" > WebAuthN </a >
+	<a href="/signin"> Login </a>
+	<a href="/signup"> Register </a>
+	<a href="/signin/consent"> Consent </a>
+	<a href="/signin/passwordless/email"> Passwordless Email </a>
+	<a href="/signin/passwordless/sms"> Passwordless Sms </a>
+	<a href="/signin/passwordless/otp"> Passwordless OTP </a>
+	<a href="/signin/passwordless/push"> Passwordless Push </a>
+	<a href="/account/verifyEmail"> VerifyEmail </a>
+	<a href="/account/updateMissingInformation"> Fill Missing </a>
+	<a href="/account/resetPassword/token"> Password Reset </a>
+	<a href="/signin/recovery"> Password Recovery </a>
+	<a href="/signin/challenge"> Challenge </a>
+	<a href="/signin/challenge/sms"> SMS </a>
+	<a href="/signin/challenge/email"> EMAIL </a>
+	<a href="/signin/challenge/otp"> OTP </a>
+	<a href="/signin/challenge/fv"> FingerVein </a>
+	<a href="/signin/challenge/push"> Push </a>
+	<a href="/signin/challenge/webauthn"> WebAuthN </a>
 </div>
-<div id="pa__app" ></div>
-<script src="/dev.ts" type="module"></script >
-</body >
-</html >
+<div id="pa__app">
+	<template id="pa-content-footer">
+		<style>
+			.my-class {
+				background: red;
+			}
+		</style>
+		<div class="my-class"> test ssss</div>
+		<h1> TEst 22e2323 </h1>
+		<a href="/signin">Signin</a>
+	</template>
+</div>
+<script src="/dev.ts" type="module"></script>
+</body>
+</html>

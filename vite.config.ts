@@ -31,7 +31,7 @@ export default defineConfig(({ command  }) => ({
     },
   },
   plugins: [
-    vue(),
+    vue({}),
     libInjectCss(),
     dts({ outDir: 'dist/types' }),
     // checker({
