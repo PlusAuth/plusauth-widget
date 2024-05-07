@@ -1,5 +1,24 @@
 
 
+## [0.30.0](https://github.com/PlusAuth/plusauth-widget/compare/v0.29.0...v0.30.0) (2024-05-07)
+
+
+### Features
+
+* add pre/post hooks for page actions ([cc884f2](https://github.com/PlusAuth/plusauth-widget/commit/cc884f20c614855eeb088559c48494135363be3a))
+* custom template injecting ([7e6329f](https://github.com/PlusAuth/plusauth-widget/commit/7e6329f07b1a64769bac08def9c635f223933a3e))
+
+
+### Refactors
+
+* centralize layout ([861dda9](https://github.com/PlusAuth/plusauth-widget/commit/861dda95bc121dcc2db470a149a3930f094db1f0))
+
+
+### Stylistic Updates
+
+* show inline border for text field button ([0efd5c2](https://github.com/PlusAuth/plusauth-widget/commit/0efd5c24e1b182f5fa0b6365cc6f7f811e621711))
+* wrap all components ([1bfd039](https://github.com/PlusAuth/plusauth-widget/commit/1bfd03972ba7f0a1adef021c1edd7aa52395a91d))
+
 ## [0.29.0](https://github.com/PlusAuth/plusauth-widget/compare/v0.28.1...v0.29.0) (2024-04-21)
 
 

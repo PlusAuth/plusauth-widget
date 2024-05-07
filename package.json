@@ -1,6 +1,6 @@
 {
   "name": "@plusauth/plusauth-widget",
-  "version": "0.29.0",
+  "version": "0.30.0",
   "type": "module",
   "main": "dist/plusauth-widget.min.js",
   "module": "dist/plusauth-widget.esm.js",
@@ -39,7 +39,7 @@
   "devDependencies": {
     "@commitlint/cli": "^19.3.0",
     "@commitlint/config-conventional": "^19.2.2",
-		"storybook-addon-vue-mdx": "^0.1.5",
+    "storybook-addon-vue-mdx": "^0.1.5",
     "@release-it/conventional-changelog": "^8.0.1",
     "@storybook/addon-essentials": "^8.0.10",
     "@storybook/addon-interactions": "^8.0.10",
