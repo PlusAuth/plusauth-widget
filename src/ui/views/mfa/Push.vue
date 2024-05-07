@@ -156,6 +156,7 @@ export default defineComponent({
     }
 
     watch([isRegistration, manualMode], async ([newValue, manual]) => {
+      // eslint-disable-next-line vue/valid-next-tick
       await nextTick(async () => {
         if (!newValue && !manual) {
           loading.value = true;

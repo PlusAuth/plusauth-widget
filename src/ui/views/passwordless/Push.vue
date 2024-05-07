@@ -1,7 +1,7 @@
 <template>
   <WidgetLayout
     :logo="false"
-		:title="isRegistration ? 'passwordless.push.enrollTitle'
+    :title="isRegistration ? 'passwordless.push.enrollTitle'
       : manualMode ? 'mfa.otp.title' : 'passwordless.push.title'"
     :subtitle="isRegistration ? 'passwordless.push.enrollDescription'
       : manualMode ? ''
@@ -167,6 +167,7 @@ export default defineComponent({
     }
 
     watch([isRegistration, manualMode], async ([newValue, manual]) => {
+      // eslint-disable-next-line vue/valid-next-tick
       await nextTick(async () => {
         if(!newValue && !manual){
           loading.value = true;
