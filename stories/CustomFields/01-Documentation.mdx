@@ -32,6 +32,49 @@ CheckBox with `type: 'checkbox'`
 Code with `type: 'code'`
 Every other property or `type: 'text'` renders a TextField
 
+## Action Helpers
+You can execute your own defined functions for error handling and responses.
+
+To execute a function before or after the action successfully completed, define them with `preAction` or `postAction` property.
+Example:
+```js
+new PlusAuthWidget('#widget', {
+	modeOptions: {
+		'resetPassword': {
+			preAction(values, fields, formRef){
+				// Executed just before http request is sent
+				if(values.password.includes('something')){
+					// will be handled by responseErrorHandler
+					throw { error: 'my_custom_error' }
+				}
+			},
+			postAction(){
+				// Executed when action completed successfully
+				window.location.replace('https://myapplication.url/after-reset-password')
+			}
+		}
+	}
+})
+```
+
+Another common use case is handling form errors. For such cases you can define a function as `responseErrorHandler` and take action accordingly.
+
+For example:
+
+```js
+new PlusAuthWidget('#widget', {
+	modeOptions: {
+		'resetPassword': {
+			responseErrorHandler(error, formRef, fields){
+				if(error && error.error === 'my_custom_error' ){
+					formRef.toggleAlert('My custom text')
+				}
+			}
+		}
+	}
+})
+```
+
 ## Field Properties
 
 <div className="hide-controls-column">

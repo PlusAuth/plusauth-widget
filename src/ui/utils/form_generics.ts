@@ -153,7 +153,9 @@ export function useGenericForm(
           }, {})
 
         try {
+          await settings.modeOptions?.[name]?.preAction?.(fieldsWithValues, mergedFields, formRef)
           await action?.(fieldsWithValues, mergedFields)
+          await settings.modeOptions?.[name]?.postAction?.(fieldsWithValues, mergedFields, formRef)
         } catch (e) {
           formErrorHandler(e)
         } finally {

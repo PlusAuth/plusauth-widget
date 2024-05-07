@@ -110,17 +110,27 @@ export type FieldDefinition =  {
   validator?: FieldValidator<keyof AdditionalFields>;
 }
 
+type FormRef = ReturnType<typeof createForm> & {
+  toggleAlert(message?: string | null, options?: Partial<PAlertProps>): void
+}
 export interface IWidgetSettings {
   apiUrl: string;
   locale: ILocaleSettings;
   mode?: string
   modeOptions: Partial<Record<WidgetModes, {
     fields?: AdditionalFields,
+    preAction?: (
+      values: any,
+      fields: Record<string, FieldDefinition>,
+      form: FormRef
+    ) => Promise<void> | void,
+    postAction?: (
+      values: any,
+      fields: Record<string, FieldDefinition>,
+      form: FormRef) => Promise<void> | void,
     responseErrorHandler?: (
       err: Error,
-      form: ReturnType<typeof createForm> & {
-        toggleAlert(message?: string | null, options?: Partial<PAlertProps>): void
-      },
+      form: FormRef,
       fields: AdditionalFields
     ) => void
   }>>,
