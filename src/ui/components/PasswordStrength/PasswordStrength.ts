@@ -35,6 +35,9 @@ export default defineComponent({
             }
           },
           Object.keys(props.rules).map((policy) => {
+            if(policy === 'history'){
+              return
+            }
             const elemText = translator.t(
               `passwordPolicy.${camelize(policy.replace('_', '-'))}`,
               [props.rules[policy]]
