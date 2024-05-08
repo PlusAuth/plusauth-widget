@@ -116,6 +116,7 @@
         2,
         "always",
         [
+          "a11y",
           "build",
           "chore",
           "ci",

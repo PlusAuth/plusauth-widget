@@ -36,6 +36,10 @@
             "section": "Performance Updates"
           },
           {
+            "type": "a11y",
+            "section": "Accessibility"
+          },
+          {
             "type": "refactor",
             "section": "Refactors"
           },
