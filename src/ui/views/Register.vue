@@ -6,9 +6,10 @@
       :validate="validate"
       :submit="submit"
     >
-      <template #password.message="{ message: [ message ], isFocused, isPristine }">
+      <template #password.message="{ message: [ message ], isFocused, isPristine, isDirty }">
         <PasswordStrength
           v-if="isFocused || !isPristine"
+          :state="{isFocused, isPristine, isDirty}"
           :rules="context.settings?.password_policy"
           :message="message"
         />

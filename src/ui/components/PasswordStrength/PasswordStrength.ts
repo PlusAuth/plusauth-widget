@@ -1,3 +1,4 @@
+import type { PropType } from 'vue';
 import { camelize, defineComponent, h, inject } from 'vue';
 
 import { setColorStyle } from '../../utils';
@@ -9,6 +10,9 @@ import './PasswordStrength.css'
 export default defineComponent({
   name: 'PasswordStrengthTooltip',
   props: {
+    state: {
+      type: Object as PropType<{ isDirty: boolean, isPristine: boolean, isFocused: boolean }>
+    },
     message: { type: null, default: null },
     rules: null
   },
@@ -21,6 +25,7 @@ export default defineComponent({
             value: result
           })
         }
+        const isDirty = props.state?.isDirty
         return h(
           'div',
           {
@@ -35,7 +40,11 @@ export default defineComponent({
               [props.rules[policy]]
             )
             return h('div', {
-              style: setColorStyle({ textColor: !result || !result[policy] ? 'success' : 'error' }),
+              style: setColorStyle( isDirty ? {
+                textColor: !result || !result[policy] ? 'success' : 'error'
+              } : {
+                textColor: '#000000de'
+              }),
               class: {
                 'pa__messages__message': true,
                 'pa__pw-policy': true,
@@ -43,7 +52,7 @@ export default defineComponent({
               key: policy, ref: 'policy'
             },
             [
-              h('div', {}, result && result[policy] ? '✕' : '✓'),
+              h('span', { }, isDirty ? result && result[policy] ? '✕' : '✓' : '○'),
               elemText
             ])
           })

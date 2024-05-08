@@ -32,6 +32,7 @@
         :message="messages"
         :is-focused="isFocused"
         :is-pristine="isPristine"
+        :is-dirty="isDirty"
       >
         <PMessage
           v-if="!hideMessages"
@@ -145,6 +146,7 @@ export default defineComponent({
       i18n,
       inputRef,
       isFocused,
+      isDirty,
       isPristine,
       messages,
       classes

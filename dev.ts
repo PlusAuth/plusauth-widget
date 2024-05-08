@@ -24,7 +24,8 @@ window['PlusAuth'] = {
     password_policy: {
       min: 4,
       max: 16,
-      lower_case: 4
+      lower_case: 4,
+      history: 5
     }
   },
   prompt: {
