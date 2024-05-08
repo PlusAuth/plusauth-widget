@@ -1,7 +1,8 @@
 .widget {
 	.input {
 		&-select {
-			@apply relative outline-none;
+			@apply relative outline-none
+      focus:ring-2 ring-primary/30 focus:outline-none;
 
 			&-arrow {
 				position: absolute;
@@ -27,6 +28,10 @@
 					bg-white;
 					text-decoration: none;
 
+          &:focus:not(&--selected){
+            @apply bg-gray-300/60;
+            box-shadow: inset 0px 0px 2px 0px theme('colors.gray.300/80');
+          }
 					&--selected {
 						@apply bg-primary/50;
 					}

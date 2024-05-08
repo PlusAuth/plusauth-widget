@@ -6,11 +6,11 @@
     tabindex="0"
     @keydown="onKeyDown"
     @click="onClick"
+    @blur="onBlur"
   >
     <div
       ref="containerRef"
       class="pa__input--wrap"
-      tabindex="0"
     >
       <label
         v-if="label"
@@ -40,9 +40,12 @@
         <div
           v-for="(item, ind) in items"
           :key="ind"
+          :tabindex="-1"
           class="pa__input-select-item"
           :class="{'pa__input-select-item--selected': getItemValue(item) === internalValue }"
+          @blur="onBlur"
           @click="onItemClick($event, item)"
+          @keydown.enter="onItemClick($event, item)"
         >
           {{ getItemText(item) }}
         </div>
@@ -58,6 +61,7 @@ import preventOverflow from '@popperjs/core/lib/modifiers/preventOverflow';
 import { createPopper } from '@popperjs/core/lib/popper-lite';
 import type { Instance } from '@popperjs/core/lib/popper-lite';
 import type { PropType } from 'vue';
+import { nextTick } from 'vue';
 import { inject, watch, computed, reactive, defineComponent, onMounted, ref } from 'vue';
 
 import { makeFocusProps, useFocus } from '../../composables/focus';
@@ -123,6 +127,20 @@ export default defineComponent({
       emit('update:modelValue', props.returnObject ? selectedItem.value : internalValue.value)
     }, { immediate: true })
 
+    watch(() => state.open, (isOpen) => {
+      popperInstance.value.update()
+      if(isOpen){
+        nextTick(() => {
+          activate(popoverRef.value.querySelector('.pa__input-select-item--selected'))
+        })
+      } else {
+        popoverRef.value.querySelectorAll('.pa__input-select-item[tabindex="0"]').forEach(item => {
+          item.tabIndex = -1
+        })
+      }
+
+    })
+
     const { blur, focus, focusClasses, isFocused } = useFocus(props, 'pa__input')
 
     function onFocus() {
@@ -134,19 +152,16 @@ export default defineComponent({
 
     const onClick = (e: Event) => {
       state.open = !state.open
-      popperInstance.value.update()
       emit('click', e)
     }
 
     const onBlur = (e: FocusEvent) => {
       e.preventDefault()
       e.stopPropagation()
-      if(!(e.target as Element).contains(e.relatedTarget as Element)){
-        // @ts-ignore
+      if(!inputRef.value?.contains(e.relatedTarget as Element)){
         state.open = false
         if (isFocused.value) blur()
       }
-
     }
 
     const onItemClick = (event: MouseEvent, item) => {
@@ -156,8 +171,40 @@ export default defineComponent({
       state.open = false
       return
     }
+
+    function activate(item) {
+      if(!item){
+        return
+      }
+      // Set all of the buttons to tabindex -1
+      popoverRef.value.querySelectorAll('.pa__input-select-item')
+        .forEach((btn) => btn.tabIndex = -1);
+
+      // Make the current button "active"
+      item.tabIndex = 0;
+      nextTick(()=> {
+        item.focus();
+      })
+    }
+
     const onKeyDown =  (e: KeyboardEvent) => {
-      if (e.code === '13') emit('change', internalValue.value)
+      if (e.key === 'Enter') {
+        state.open = true
+      }else if (e.code === '13') {
+        emit('change', internalValue.value)
+      } else if (e.key === 'ArrowDown'){
+        if(!state.open) {
+          state.open = true
+        }else {
+          activate(popoverRef.value.querySelector('.pa__input-select-item[tabindex="0"]')?.nextElementSibling)
+        }
+      } else if (e.key === 'ArrowUp'){
+        if(!state.open) {
+          state.open = true
+        }else {
+          activate(popoverRef.value.querySelector('.pa__input-select-item[tabindex="0"]')?.previousElementSibling)
+        }
+      }
 
       emit('keydown', e)
     }

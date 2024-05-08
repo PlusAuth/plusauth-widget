@@ -92,6 +92,7 @@ const auth = new PlusAuthWidget('#pa__app', {
         username: {
           type: 'text',
           label: 'Username',
+          placeholder: 'Enter your username',
           attrs: {
             autocomplete: 'email'
           },
