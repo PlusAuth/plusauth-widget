@@ -18,6 +18,7 @@
       >
         <a
           :href="tosUri"
+          tabindex="0"
           target="_blank"
           referrerpolicy="no-referrer"
         >Terms of Service</a>
@@ -28,6 +29,7 @@
         <a
           :href="policyUri"
           target="_blank"
+          tabindex="0"
           referrerpolicy="no-referrer"
         >Privacy Policy</a>
       </li>
