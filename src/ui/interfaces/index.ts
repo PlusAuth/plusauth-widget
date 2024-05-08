@@ -73,6 +73,10 @@ export type FieldDefinition =  {
   label?: string,
   format?: 'tel' | 'email' | string | undefined ;
   /**
+   * Only applies for text field
+   */
+  placeholder?: string
+  /**
    * This property can be used to arrange ordering the display of form elements.
    */
   order?: number;

@@ -42,6 +42,7 @@
           :name="field"
           :type="fields[field].type"
           :label="fields[field].label"
+          :placeholder="fields[field].placeholder"
           :rules="[ validate.bind( null, fields[field], field) ] "
         >
           <template
