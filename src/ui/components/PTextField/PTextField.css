@@ -3,7 +3,7 @@
 		@apply flex flex-col w-full text-lg relative flex-wrap mt-3;
 
 		&--wrap {
-			@apply flex ring-1 ring-gray-300 rounded-sm border-none w-full min-w-0 bg-white;
+			@apply flex ring-1 ring-gray-300 rounded-sm border-none w-full min-w-0;
 			--input-ring-color: var(--pa-ring-color);
 		}
 
