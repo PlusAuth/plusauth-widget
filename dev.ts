@@ -51,6 +51,8 @@ window['PlusAuth'] = {
         format: 'email'
       }
     ],
+    resent: true,
+    resend_after: 60000,
     challenges: [
       'sms',
       'email',
@@ -70,7 +72,6 @@ const auth = new PlusAuthWidget('#pa__app', {
           field_required: 'Alan zorunlu'
         },
         common: {
-
           edit: 'Degistir'
         },
         login: {

@@ -29,7 +29,70 @@
 		text-decoration: inherit;
 	}
 
-	button,
+  a:not(.btn) {
+    @apply text-primary cursor-pointer font-medium decoration-0 outline-0;
+
+    &:not(.btn):focus {
+      outline: auto;
+    }
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: #202124;
+    padding-bottom: 0;
+    font-family: 'Montserrat', 'Noto Sans Myanmar UI', arial, sans-serif;
+    font-weight: 400;
+    margin-bottom: 0;
+    margin-top: 0;
+  }
+
+  h1 {
+    font-size: 20px;
+    padding-top: 16px;
+    font-weight: 400;
+  }
+
+  h2 {
+    font-size: 16px;
+    padding-top: 14px;
+    font-weight: 400;
+  }
+
+  hr {
+    @apply flex items-center text-center text-gray-500 my-2;
+
+    &::before,
+    &::after {
+      @apply flex-1 border-b border-b-gray-400/25;
+      content: '';
+    }
+
+    &:not(:empty)::before {
+      @apply mr-4;
+    }
+
+    &:not(:empty)::after {
+      @apply ml-4;
+    }
+  }
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Firefox */
+  input[type=number] {
+    -moz-appearance: textfield;
+  }
+
+
+  button,
 	input,
 	optgroup,
 	select,
@@ -139,12 +202,12 @@
       flex-grow: 1;
       overflow: hidden;
 
-      &:has(.widget-content-footer), &:has(.widget-helpers-section){
-        padding-bottom: 0;
+      &:has(.widget-content-footer) {
+        @apply pb-0;
       }
 
       @media (min-width: 450px) {
-				@apply px-8 py-6;
+				@apply px-8 py-8;
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -186,7 +249,7 @@
 	}
 
 	&-helpers-section {
-		@apply text-center py-4;
+		@apply text-center pt-4;
 		line-height: 24px;
 
 		a {
@@ -225,36 +288,20 @@
 
 
 	&-footer {
+    @apply p-1;
     align-items: center;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     font-size: 12px;
     line-height: 1.4;
-    padding: 0 12px 14px;
-
-    @media (min-width: 450px) {
-			@apply px-16;
-    }
-    @media (min-width: 601px) {
-      padding: 4px 0 0;
-    }
 
     &-link-list {
-      list-style: none;
-      margin: 8px -12px;
-      padding: 0;
-
-      li {
-        display: inline-block;
-        margin: 0;
-      }
+      @apply flex gap-4 p-0 px-2 list-none my-0;
 
       a {
-        border-radius: 2px;
-        color: #757575;
+        color: #757575 !important;
         display: inline-block;
-        padding: 6px 16px;
         transition: background .2s;
       }
 
@@ -263,40 +310,6 @@
         margin-bottom: 0;
       }
     }
-  }
-
-  a:not(.btn) {
-    @apply text-primary cursor-pointer font-medium decoration-0 outline-0;
-
-    &:not(.btn):focus {
-      outline: auto;
-    }
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    color: #202124;
-    padding-bottom: 0;
-    font-family: 'Montserrat', 'Noto Sans Myanmar UI', arial, sans-serif;
-    font-weight: 400;
-    margin-bottom: 0;
-    margin-top: 0;
-  }
-
-  h1 {
-    font-size: 20px;
-    padding-top: 16px;
-    font-weight: 400;
-  }
-
-  h2 {
-    font-size: 16px;
-    padding-top: 14px;
-    font-weight: 400;
   }
 
   .logo-container {
@@ -331,33 +344,4 @@
       justify-content: start;
     }
   }
-
-  hr {
-    @apply flex items-center text-center text-gray-500 my-0;
-
-    &::before,
-    &::after {
-      @apply flex-1 border-b border-b-gray-400;
-      content: '';
-    }
-
-    &:not(:empty)::before {
-     @apply mr-4;
-    }
-
-    &:not(:empty)::after {
-      @apply ml-4;
-    }
-  }
-	input::-webkit-outer-spin-button,
-	input::-webkit-inner-spin-button {
-		-webkit-appearance: none;
-		margin: 0;
-	}
-
-	/* Firefox */
-	input[type=number] {
-		-moz-appearance: textfield;
-	}
-
 }
