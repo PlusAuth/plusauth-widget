@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import {computed} from 'vue';
+import { computed } from 'vue';
 
-import {useContext, useLocale} from '../composables';
-import {useTimer} from '../composables/use_timer.ts';
-import {secondsToTime} from '../utils';
+import { useContext, useLocale } from '../composables';
+import { useTimer } from '../composables/use_timer.ts';
+import { secondsToTime } from '../utils';
 
 withDefaults(defineProps<{
   type?: string
@@ -12,10 +12,10 @@ withDefaults(defineProps<{
 })
 
 const context = useContext()
-const {t} = useLocale()
+const { t } = useLocale()
 const resendLink = `${window.location.pathname}/resend`
 const resendAfter = context.details.resend_after as number
-const {countdown} = useTimer(Math.floor(resendAfter / 1000) || 0)
+const { countdown } = useTimer(Math.floor(resendAfter / 1000) || 0)
 const formattedTimer = computed(() => {
   return secondsToTime(countdown.value)
 })
