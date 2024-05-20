@@ -1,4 +1,5 @@
 import type { Ref } from 'vue';
+import { getCurrentInstance } from 'vue';
 import { ref } from 'vue';
 
 import { escapeRegExp, isObject, keysToDotNotation, propertyAccessor } from '.';
@@ -37,6 +38,10 @@ export class Translator {
       locale?: string
     } = {}
   ) {
+    const vm = this instanceof Translator
+      ? this
+      : getCurrentInstance()?.appContext?.config?.globalProperties.$i18n;
+
     if (!opts.fallback && (params instanceof Error || typeof params === 'string')) {
       opts.fallback = params['error_description']
         || params['error_details']
@@ -45,18 +50,18 @@ export class Translator {
         || params
     }
     const locale = opts.locale || this.locale
-    const value = propertyAccessor(this.dictionary[locale], key)
-      || propertyAccessor(this.dictionary[this.fallBackLocale], key);
+    const value = propertyAccessor(vm.dictionary[locale], key)
+      || propertyAccessor(vm.dictionary[vm.fallBackLocale], key);
     if (value) {
-      return this._interpolate(
+      return vm._interpolate(
         value,
         params,
         locale
       )
     } else if (opts.fallback) {
-      return this._interpolate(
-        propertyAccessor(this.dictionary[locale], opts.fallback)
-        || propertyAccessor(this.dictionary[this.fallBackLocale], opts.fallback)
+      return vm._interpolate(
+        propertyAccessor(vm.dictionary[locale], opts.fallback)
+        || propertyAccessor(vm.dictionary[vm.fallBackLocale], opts.fallback)
         || opts.fallback,
         params,
         locale

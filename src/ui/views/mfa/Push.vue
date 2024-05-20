@@ -75,16 +75,7 @@
           @click="switchToCode"
         />
       </p>
-      <p>
-        <span
-          v-t="['common.resendText', { type: 'common.notification'}]"
-          style="padding-right: 4px"
-        />
-        <a
-          v-t="'common.resend'"
-          :href="resendLink"
-        />
-      </p>
+      <ResendAction type="common.notification" />
     </template>
   </WidgetLayout>
 </template>
@@ -94,6 +85,7 @@ import { computed, defineComponent, nextTick, ref, watch } from 'vue';
 
 import GenericForm from '../../components/GenericForm.vue';
 import PSpinner from '../../components/PSpinner/PSpinner';
+import ResendAction from '../../components/ResendAction.vue';
 import WidgetLayout from '../../components/WidgetLayout.vue';
 import { useContext, useHttp } from '../../composables';
 import type { AdditionalFields } from '../../interfaces';
@@ -101,13 +93,11 @@ import { useGenericForm } from '../../utils/form_generics';
 
 export default defineComponent({
   name: 'Push',
-  components: { WidgetLayout, PSpinner, GenericForm },
+  components: { ResendAction, WidgetLayout, PSpinner, GenericForm },
   setup() {
 
     const http = useHttp()
     const context = useContext()
-
-    const resendLink = `${window.location.pathname}/resend`
 
     const urlParams = new URLSearchParams(window.location.search)
     const manualMode = computed(() => urlParams.get('useQuery') === 'true')
@@ -175,7 +165,6 @@ export default defineComponent({
     }, { immediate: true, flush: 'post' })
     return {
       fields,
-      resendLink,
       validate,
       isRegistration,
       manualMode,

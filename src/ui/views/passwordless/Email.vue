@@ -31,15 +31,7 @@
     </template>
 
     <template #content-footer>
-      <p>
-        <span
-          v-t="[ 'common.resendText', { type: 'common.email' } ]"
-          style="padding-right: 4px"
-        /><a
-          v-t="'common.resend'"
-          :href="resendLink"
-        />
-      </p>
+      <ResendAction type="common.email" />
     </template>
   </WidgetLayout>
 </template>
@@ -48,6 +40,7 @@
 import { computed, defineComponent } from 'vue';
 
 import GenericForm from '../../components/GenericForm.vue';
+import ResendAction from '../../components/ResendAction.vue';
 import WidgetLayout from '../../components/WidgetLayout.vue';
 import { useContext, useHttp, useLocale } from '../../composables';
 import type { AdditionalFields } from '../../interfaces';
@@ -56,13 +49,11 @@ import { useGenericForm } from '../../utils/form_generics';
 
 export default defineComponent({
   name: 'Email',
-  components: { WidgetLayout, GenericForm },
+  components: { ResendAction, WidgetLayout, GenericForm },
   setup(){
     const http = useHttp()
     const context = useContext()
     const i18n = useLocale()
-
-    const resendLink = `${ window.location.pathname }/resend`
 
     const isMagicLink = context.prompt?.mode === 'check_email'
     const defaultFields: AdditionalFields = {
@@ -114,7 +105,6 @@ export default defineComponent({
       fields,
       form,
       context,
-      resendLink,
       validate,
       submit
     }

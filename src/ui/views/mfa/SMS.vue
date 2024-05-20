@@ -33,15 +33,7 @@
           href="/signin/challenge"
         />
       </p>
-      <p>
-        <span
-          v-t="['common.resendText', {type: 'common.code'}]"
-          style="padding-right: 4px"
-        /><a
-          v-t="'common.resend'"
-          :href="resendLink"
-        />
-      </p>
+      <ResendAction />
     </template>
   </WidgetLayout>
 </template>
@@ -51,6 +43,7 @@ import { defineComponent } from 'vue';
 
 import GenericForm from '../../components/GenericForm.vue';
 import PTimer from '../../components/PTimer/PTimer';
+import ResendAction from '../../components/ResendAction.vue';
 import WidgetLayout from '../../components/WidgetLayout.vue';
 import { useContext, useHttp } from '../../composables';
 import type { AdditionalFields } from '../../interfaces';
@@ -58,7 +51,7 @@ import { useGenericForm } from '../../utils/form_generics';
 
 export default defineComponent({
   name: 'SMS',
-  components: { WidgetLayout, PTimer, GenericForm },
+  components: { ResendAction, WidgetLayout, PTimer, GenericForm },
   setup(){
 
     const http = useHttp()

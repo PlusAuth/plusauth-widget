@@ -24,6 +24,7 @@ export default {
     reject: 'Reject',
     resend: 'Resend',
     resendText: 'Didn\'t receive the {type}?',
+    resendAfter: 'Resend in: {time}',
     seconds: 'seconds',
     show: 'Show',
     submit: 'Submit',

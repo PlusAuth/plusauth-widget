@@ -11,15 +11,7 @@
       v-if="!error && (context.prompt?.mode === 'check' || !context.details.email_verified)"
       #content-footer
     >
-      <p>
-        <span
-          v-t="[ 'common.resendText', { type: 'common.email' } ]"
-          style="padding-right: 4px"
-        /><a
-          v-t="'common.resend'"
-          :href="resendLink"
-        />
-      </p>
+      <ResendAction type="common.email" />
     </template>
     <template
       v-else-if="!error"
@@ -38,13 +30,14 @@ import {
   defineComponent, ref, onMounted
 } from 'vue';
 
+import ResendAction from '../components/ResendAction.vue';
 import WidgetLayout from '../components/WidgetLayout.vue';
 import { useContext } from '../composables';
 import { resolveLogo } from '../utils';
 
 export default defineComponent({
   name: 'VerifyEmail',
-  components: { WidgetLayout },
+  components: { ResendAction, WidgetLayout },
 
   setup() {
     const context = useContext()
@@ -54,8 +47,6 @@ export default defineComponent({
 
     const error = context.error?.error
     let loginUrl = context.settings.auto_sign_in && context.settings.tenant_login_url
-
-    const resendLink = `${window.location.pathname}/resend`
 
     onMounted(() => {
       if (
@@ -80,7 +71,6 @@ export default defineComponent({
       actionCompleted,
       error,
       loginUrl,
-      resendLink,
       resolveClientLogo: resolveLogo
     }
   },

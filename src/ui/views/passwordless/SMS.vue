@@ -27,15 +27,7 @@
       </p-btn>
     </template>
     <template #content-footer>
-      <p>
-        <span
-          v-t="['common.resendText', {type: 'common.code'}]"
-          style="padding-right: 4px"
-        /><a
-          v-t="'common.resend'"
-          :href="resendLink"
-        />
-      </p>
+      <ResendAction type="common.code" />
     </template>
   </WidgetLayout>
 </template>
@@ -45,6 +37,7 @@ import { defineComponent } from 'vue';
 
 import GenericForm from '../../components/GenericForm.vue';
 import PTimer from '../../components/PTimer/PTimer';
+import ResendAction from '../../components/ResendAction.vue';
 import WidgetLayout from '../../components/WidgetLayout.vue';
 import { useContext, useHttp, useLocale } from '../../composables';
 import type { AdditionalFields } from '../../interfaces';
@@ -52,13 +45,11 @@ import { useGenericForm } from '../../utils/form_generics';
 
 export default defineComponent({
   name: 'SMS',
-  components: { WidgetLayout, PTimer, GenericForm },
+  components: { ResendAction, WidgetLayout, PTimer, GenericForm },
   setup(){
     const http = useHttp()
     const context = useContext()
     const i18n = useLocale()
-
-    const resendLink = `${ window.location.pathname }/resend`
 
     const defaultFields: AdditionalFields = {
       phone_number: {
@@ -93,7 +84,6 @@ export default defineComponent({
       }
     )
     return {
-      resendLink,
       loading,
       fields,
       form,
