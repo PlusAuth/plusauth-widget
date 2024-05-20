@@ -1,5 +1,39 @@
 
 
+## [0.31.0](https://github.com/PlusAuth/plusauth-widget/compare/v0.30.0...v0.31.0) (2024-05-20)
+
+
+### Features
+
+* dynamic timer for sms views ([aba61f8](https://github.com/PlusAuth/plusauth-widget/commit/aba61f81d454294dc6ebaff874b744fe1fcc7978))
+* placeholder support for text-fields ([771e46d](https://github.com/PlusAuth/plusauth-widget/commit/771e46d1914cb3ed4a64d4129c9fba5cf3c646f9))
+* resend timer for mfa & passwordless views that support it ([83ec772](https://github.com/PlusAuth/plusauth-widget/commit/83ec772131b039a896a2bf7e554904f771031bdd))
+
+
+### Bug Fixes
+
+* password policy displays history as rule ([ba4270a](https://github.com/PlusAuth/plusauth-widget/commit/ba4270a28f5940bab24d01f0eb7a93d2887d8a75))
+
+
+### Accessibility
+
+* accessible footer links ([4807f5d](https://github.com/PlusAuth/plusauth-widget/commit/4807f5dd24039bc79549a9a8e2330da81862daa9))
+* **select:** better navigation ([fbfa7a0](https://github.com/PlusAuth/plusauth-widget/commit/fbfa7a0d478fabbb93586e1dd648ac7084c1e4c5))
+
+
+### Refactors
+
+* create use_timer composable ([8a1f6ee](https://github.com/PlusAuth/plusauth-widget/commit/8a1f6eebafcc8b9c7f7fd5c70e04d7f9cc776d87))
+
+
+### Stylistic Updates
+
+* consistent paddings for footer ([1989747](https://github.com/PlusAuth/plusauth-widget/commit/19897472f6b6f207df5386d5f4777dedb6d91c95))
+* differentiate evaluated rules for password policy ([e61e0b5](https://github.com/PlusAuth/plusauth-widget/commit/e61e0b55acb05b7559798370409f223b250c2068))
+* increase content footer margin ([8fbd4de](https://github.com/PlusAuth/plusauth-widget/commit/8fbd4ded175b4013e9850d3ed6e00eb828931ef9))
+* predefine widget background ([503a3bb](https://github.com/PlusAuth/plusauth-widget/commit/503a3bb43e17de1788377d59095291cc96e82563))
+* remove input bg color ([167aaaf](https://github.com/PlusAuth/plusauth-widget/commit/167aaaf365b85385ece7c58824637d50170d9edc))
+
 ## [0.30.0](https://github.com/PlusAuth/plusauth-widget/compare/v0.29.0...v0.30.0) (2024-05-07)
 
 
