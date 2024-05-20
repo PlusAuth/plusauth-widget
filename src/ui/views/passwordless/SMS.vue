@@ -8,7 +8,7 @@
   >
     <PTimer
       class="pa__challenge-timer"
-      :duration="120"
+      :duration="context.details.code_ttl"
     />
     <GenericForm
       ref="form"

@@ -6,7 +6,7 @@
   >
     <PTimer
       class="pa__challenge-timer"
-      :duration="120"
+      :duration="context.details.code_ttl"
     />
     <GenericForm
       ref="form"
@@ -57,7 +57,6 @@ export default defineComponent({
     const http = useHttp()
     const context = useContext()
 
-    const resendLink = `${ window.location.pathname }/resend`
 
     const defaultFields: AdditionalFields = {
       code: {
@@ -73,7 +72,6 @@ export default defineComponent({
       }
     )
     return {
-      resendLink,
       loading,
       fields,
       form,
