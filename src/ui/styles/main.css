@@ -23,7 +23,6 @@
 		border-color: transparent; /* 2 */
 	}
 
-
 	a {
 		color: inherit;
 		text-decoration: inherit;
@@ -344,4 +343,13 @@
       justify-content: start;
     }
   }
+
+
+  input:-webkit-autofill {
+    background: #fff;
+    -webkit-text-fill-color: #000; /* Surcharge la font color d'autofill */
+    -webkit-background-clip: text; /* Supprime le background autofill, utile pour le border radius */
+    box-shadow: 0 0 0 50px #fff inset; /* Ajoute un fake background à base d'ombrage aplatit */
+  }
+
 }
