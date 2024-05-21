@@ -84,14 +84,20 @@
 			}
 		}
 
+    &--focused,
+    &--error {
+      .input--wrap {
+        @apply ring-2 ring-primary;
+      }
+      .input--label {
+        color: currentColor !important;
+      }
+    }
+
+    &:has([placeholder]),
 		&--focused,
 		&--error {
-			.input--wrap {
-				@apply ring-2 ring-primary;
-			}
-
 			.input--label {
-				color: currentColor !important;
 				transform: translateY(-22px) scale(.85);
 			}
 		}
