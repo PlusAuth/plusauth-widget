@@ -90,10 +90,14 @@ export default defineComponent({
         try {
           if (context.details.authentication_options) {
             loadingMsg.value = 'Select one of your security key/devices'
-            fields.response!.value = await verifyDevice(context.details.authentication_options)
+            fields.response!.value = await verifyDevice({
+              optionsJSON: context.details.authentication_options
+            })
           } else if (context.details.registration_options) {
             loadingMsg.value = 'Registration a security key/device'
-            fields.response!.value = await registerDevice(context.details.registration_options)
+            fields.response!.value = await registerDevice({
+              optionsJSON: context.details.registration_options,
+            })
           } else {
             throw new Error('WebAuthN options not found')
           }

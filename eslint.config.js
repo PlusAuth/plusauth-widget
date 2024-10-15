@@ -80,7 +80,7 @@ export default tseslint.config(
           ignoreRegExpLiterals: true
         }
       ],
-      '@style/no-extra-parens': 'off',
+      '@style/no-extra-parens': ['error'],
       '@style/no-mixed-spaces-and-tabs': 'error',
       '@style/no-whitespace-before-property': 'error',
       '@style/object-curly-spacing': [
@@ -106,6 +106,7 @@ export default tseslint.config(
           'named': 'never'
         }
       ],
+      '@style/type-annotation-spacing': ['error'],
       '@typescript-eslint/ban-ts-comment': 'off',
       '@typescript-eslint/ban-ts-ignore': 'off',
       '@typescript-eslint/consistent-type-imports': [
@@ -117,10 +118,8 @@ export default tseslint.config(
       ],
       '@typescript-eslint/interface-name-prefix': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
-      '@typescript-eslint/no-extra-parens': ['error'],
       '@typescript-eslint/no-unused-vars': ['warn'],
       '@typescript-eslint/prefer-string-starts-ends-with': 'error',
-      '@typescript-eslint/type-annotation-spacing': 'error',
       'import/first': 'error',
       'import/no-unresolved': 'warn',
       'import/no-useless-path-segments': [
