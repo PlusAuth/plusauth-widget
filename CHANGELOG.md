@@ -1,5 +1,17 @@
 
 
+## [0.31.1](https://github.com/PlusAuth/plusauth-widget/compare/v0.31.0...v0.31.1) (2024-10-15)
+
+
+### Bug Fixes
+
+* label is not transformed when placeholder exists ([eb78c94](https://github.com/PlusAuth/plusauth-widget/commit/eb78c94c821584963fb608fdf48f6d60adfe4aff))
+
+
+### Stylistic Updates
+
+* override autofill background ([042f251](https://github.com/PlusAuth/plusauth-widget/commit/042f251c47a1ef0c25231705058b12209fc28d92))
+
 ## [0.31.0](https://github.com/PlusAuth/plusauth-widget/compare/v0.30.0...v0.31.0) (2024-05-20)
 
 
