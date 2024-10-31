@@ -93,6 +93,7 @@ export default defineComponent({
         attrs: {
           autocomplete: identifierField
         },
+        value: context.params.login_hint,
         type: 'text',
         label: `common.fields.${  identifierField}`,
         format: identifierField === 'email' ? 'email' : undefined
