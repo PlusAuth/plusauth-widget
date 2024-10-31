@@ -1,5 +1,10 @@
 
 
+## 0.32.0 (2024-10-31)
+
+* feat: use login_hint param for identifier value if provided ([43dfc2a](https://github.com/PlusAuth/plusauth-widget/commit/43dfc2a))
+* chore: update dependencies ([e0455a4](https://github.com/PlusAuth/plusauth-widget/commit/e0455a4))
+
 ## [0.31.1](https://github.com/PlusAuth/plusauth-widget/compare/v0.31.0...v0.31.1) (2024-10-15)
 
 
