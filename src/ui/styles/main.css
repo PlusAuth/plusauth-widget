@@ -315,12 +315,11 @@
     display: flex;
     justify-content: center;
     margin: 12px 0;
-    min-height: 96px;
+    min-height: 72px;
 
     .logo {
-      max-height: 96px;
       object-fit: contain;
-      max-width: 100%;
+      max-width: 80%;
     }
   }
 
