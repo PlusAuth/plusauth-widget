@@ -5,11 +5,8 @@ globalThis.PlusAuthWidget = window.PlusAuthWidget = PlusAuthWidget
 if (!window.PlusAuth) {
 
   window['PlusAuth'] = {
-    ui_locales: [
-      { name: 'Turkce', value: 'tr' },
-      { name: 'English', value: 'en' },
-    ],
     params: {
+      ui_locales: 'tr en',
       state: '018f00d8-bfd5-731a-b23f-738dfdd28b40'
     },
     client: {
@@ -78,6 +75,10 @@ if (!window.PlusAuth) {
   }
   const auth = new PlusAuthWidget('#pa__app', {
     locale: {
+      locales: {
+        'tr': { label: 'Turkce', codes: ['tr'] },
+        'en': { label: 'English', codes: ['en'] },
+      },
       defaultLocale: 'en',
       dictionary: {
         tr: {
