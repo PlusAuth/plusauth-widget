@@ -1,5 +1,6 @@
 import type { Component } from 'vue';
 
+import AccountLinking from '../views/AccountLinking.vue';
 import Consent from '../views/Consent.vue';
 import FillMissing from '../views/FillMissing.vue';
 import ForgotPassword from '../views/ForgotPassword.vue';
@@ -89,5 +90,8 @@ export function resolveView(mode?: string): Component<any, any, any, any, any> |
   }
   if (m === 'resetpassword' || parts[0] === 'account' && parts[1] === 'resetPassword') {
     return ResetPassword
+  }
+  if (m === 'accountlinking' || parts[0] === 'account' && parts[1] === 'link-identity') {
+    return AccountLinking
   }
 }

@@ -32,6 +32,7 @@ export type WidgetModes = 'login' | 'recovery' | 'consent'
 | 'challenge' | 'smsMfa' | 'emailMfa' | 'otpMfa' | 'fvMfa' | 'webauthnMfa' | 'pushMfa'
 | 'signup' | 'resetPassword' | 'fillMissing' | 'verifyEmail'
 | 'passwordlessEmail' | 'passwordlessSms' | 'passwordlessPush' | 'passwordlessOtp' | 'userProfile'
+| 'accountLinking'
 
 export type FieldValidator<T extends (string | number)> = (
   this: { $t: (key: string, ...args: any[]) => string },

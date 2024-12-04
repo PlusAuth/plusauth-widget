@@ -116,6 +116,10 @@ export default {
     socialLoginHelper: 'or',
     signUp: 'Sign Up'
   },
+  accountLinking: {
+    title: 'Link Account',
+    description: 'It appears that an account is already associated with your email address. Please verify ownership to proceed.'
+  },
   passwordless: {
     email: {
       magicLinkTitle: 'Check your email',
