@@ -1,5 +1,20 @@
 
 
+## 0.33.0 (2024-12-04)
+
+* chore: include locales in dev script ([4519e3e](https://github.com/PlusAuth/plusauth-widget/commit/4519e3e))
+* chore: lint ([b91d08a](https://github.com/PlusAuth/plusauth-widget/commit/b91d08a))
+* chore: update dependencies ([93d02b8](https://github.com/PlusAuth/plusauth-widget/commit/93d02b8))
+* chore: update dev scripts ([7ffe2cc](https://github.com/PlusAuth/plusauth-widget/commit/7ffe2cc))
+* squash! feat: account linking page ([19388df](https://github.com/PlusAuth/plusauth-widget/commit/19388df))
+* squash! feat: account linking page ([df01e8f](https://github.com/PlusAuth/plusauth-widget/commit/df01e8f))
+* squash! style: better logo sizing ([dd45c2b](https://github.com/PlusAuth/plusauth-widget/commit/dd45c2b))
+* feat: account linking page ([618d664](https://github.com/PlusAuth/plusauth-widget/commit/618d664))
+* feat: allow using href for submit button ([2662442](https://github.com/PlusAuth/plusauth-widget/commit/2662442))
+* feat: improve localization interface ([d997327](https://github.com/PlusAuth/plusauth-widget/commit/d997327))
+* feat: info slot for widget layout ([f977f55](https://github.com/PlusAuth/plusauth-widget/commit/f977f55))
+* style: better logo sizing ([5e0677e](https://github.com/PlusAuth/plusauth-widget/commit/5e0677e))
+
 ## 0.32.0 (2024-10-31)
 
 * feat: use login_hint param for identifier value if provided ([43dfc2a](https://github.com/PlusAuth/plusauth-widget/commit/43dfc2a))
