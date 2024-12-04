@@ -109,6 +109,11 @@ export default defineComponent({
 
 <style>
 .account-merge-list {
-  @apply flex justify-center items-center my-4;
+  @apply flex justify-center items-center my-4 px-12;
+
+  svg {
+    @apply mx-2;
+    min-width: 24px;
+  }
 }
 </style>

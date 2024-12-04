@@ -33,6 +33,7 @@ const initials = getUserInitials(props.user)
     ring-1 ring-gray-200/80 w-full;
 
   max-width: theme('width.20');
+  min-width: 32px;
   aspect-ratio: 1;
   container-type: size;
 
