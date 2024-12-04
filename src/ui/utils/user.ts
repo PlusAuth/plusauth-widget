@@ -26,8 +26,13 @@ export function getUserInitials(userRef: any) {
   if (!user) {
     return
   }
-  const name =
-    user.name || [user.profile.first_name, user.profile.middle_name, user.profile.last_name].filter((v) => !!v).join(' ')
+  const profile = user.profile || {}
+  const name = user.name || [
+    profile.first_name,
+    profile.middle_name,
+    profile.last_name
+  ].filter((v) => !!v).join(' ')
+
   if (name) {
     return name
       .match(/(^\w\w?|\s\w)?/g)
@@ -37,12 +42,8 @@ export function getUserInitials(userRef: any) {
       .join('')
       .toLocaleUpperCase()
   }
-  if (user.email) {
-    return user.email.charAt(0).toUpperCase() + user.email.charAt(1).toUpperCase()
-  }
-  if (user.username) {
-    return user.username.charAt(0).toUpperCase() + user.username.charAt(1).toUpperCase()
-  }
+  const identifier = user.email || user.username || user.phone_number || user.id
+  return identifier.charAt(0).toUpperCase() + (identifier.charAt(1)?.toUpperCase() || '')
 }
 
 function getHslVars(initials: string) {
