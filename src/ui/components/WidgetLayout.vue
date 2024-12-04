@@ -51,6 +51,7 @@ const templates = inject('templates')
             v-t="subtitle"
           />
         </slot>
+        <slot name="info"></slot>
       </div>
       <slot />
       <div
