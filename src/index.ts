@@ -1,13 +1,11 @@
-import deepmerge from 'deepmerge';
 import type { App } from 'vue';
 import { reactive } from 'vue';
 
-import defaultDictionary from './i18n'
-import { createTranslator, createWidget } from './ui';
+import { createWidget } from './ui';
 import type { IPlusAuthContext, IWidgetSettings } from './ui/interfaces';
 import type { FetchWrapper } from './ui/utils/fetch';
 import { createFetchWrapper } from './ui/utils/fetch';
-import type { Translator } from './ui/utils/translator';
+import { Translator } from './ui/utils/translator';
 
 export default class PlusAuthWidget {
   private _view: App<Element>;
@@ -22,21 +20,18 @@ export default class PlusAuthWidget {
 
     this.http = createFetchWrapper(settings.apiUrl)
 
-    const { locale: localeSettings, ...otherSettings } = settings
+    const reactiveSettings = reactive(settings)
 
-    const reactiveSettings = reactive(
-      deepmerge({
-        locale: {
-          defaultLocale: localeSettings?.defaultLocale || 'en',
-          selectedLocale: localeSettings?.selectedLocale || context.params?.ui_locale,
-          dictionary: deepmerge(defaultDictionary, localeSettings?.dictionary || {})
+    this.i18n = new Translator(reactiveSettings.locale)
+    if(context.params?.ui_locales){
+      const userPreferredLocales = context.params?.ui_locales?.split(' ') || []
+      for (let contextLocale of userPreferredLocales) {
+        if(this.i18n.locales[contextLocale]){
+          this.i18n.locale = contextLocale
+          break;
         }
-      },
-      otherSettings,
-      { clone: true })
-    )
-
-    this.i18n = createTranslator(reactiveSettings.locale)
+      }
+    }
     this._view = createWidget(container || document.body, reactiveSettings as any, context, {
       i18n: this.i18n,
       http: this.http,

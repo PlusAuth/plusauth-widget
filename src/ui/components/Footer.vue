@@ -1,6 +1,6 @@
 <template>
   <footer>
-    <template v-if="languages && languages.length">
+    <template v-if="languages && languages.length > 1">
       <PSelect
         v-model="translator.locale"
         flat
@@ -8,6 +8,7 @@
         style="width: auto; margin: 0"
         dense
         hide-messages
+        item-text="label"
         :items="languages"
       />
     </template>
@@ -38,9 +39,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject, reactive } from 'vue';
+import { defineComponent, inject } from 'vue';
 
 import type { IPlusAuthContext } from '../interfaces';
+import type { Translator } from '../utils/translator';
 import { translatorKey } from '../utils/translator';
 
 export default defineComponent({
@@ -57,12 +59,11 @@ export default defineComponent({
   },
   setup(){
     const context = inject('context') as IPlusAuthContext
-    const translator = inject(translatorKey) as any
+    const translator = inject(translatorKey) as Translator
     const client = context.client
-    const languages = reactive(context.ui_locales || [])
     return {
       translator,
-      languages,
+      languages: Object.values(translator.locales || []),
       tosUri: client.tosUri,
       policyUri: client.policyUri,
     }

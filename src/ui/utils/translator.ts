@@ -1,6 +1,11 @@
+import deepmerge from 'deepmerge';
 import type { Ref } from 'vue';
 import { getCurrentInstance } from 'vue';
 import { ref } from 'vue';
+
+import defaultDictionary from '../../i18n'
+
+import type { ILocaleSettings } from '../interfaces';
 
 import { escapeRegExp, isObject, keysToDotNotation, propertyAccessor } from '.';
 
@@ -8,14 +13,20 @@ export const translatorKey = Symbol('t')
 
 
 export class Translator {
-  private fallBackLocale: string;
+  private defaultLocale: string;
   private dictionary: any;
   private selectedLocale: Ref
+  locales: Record<string, { label: string, codes: string[], value: string }>
 
-  constructor(dictionary: any, fallbackLocale?: string, selectedLocale?: string) {
-    this.dictionary = dictionary;
-    this.fallBackLocale = fallbackLocale || 'en'
-    this.selectedLocale = ref<string | undefined>(selectedLocale || this.fallBackLocale)
+  constructor(options: Partial<ILocaleSettings> = {}) {
+    this.dictionary = deepmerge(defaultDictionary, options.dictionary || {});
+    this.defaultLocale = options.defaultLocale = options.defaultLocale || 'en'
+    this.selectedLocale = ref<string | undefined>(options.selectedLocale || this.defaultLocale)
+    this.locales = Object.keys(this.dictionary).reduce((finalLocales, dictKey) => {
+      finalLocales[dictKey] = options.locales?.[dictKey] || { label: dictKey, codes: [dictKey] }
+      finalLocales[dictKey].value = dictKey
+      return finalLocales
+    }, {})
   }
 
   get localeRef() {
@@ -23,7 +34,11 @@ export class Translator {
   }
 
   set locale(locale: string) {
-    this.selectedLocale.value = locale
+    if (this.locales[locale]) {
+      this.selectedLocale.value = locale
+    } else {
+      this.selectedLocale.value = this.defaultLocale
+    }
   }
 
   get locale(): string {
@@ -51,7 +66,7 @@ export class Translator {
     }
     const locale = opts.locale || this.locale
     const value = propertyAccessor(vm.dictionary[locale], key)
-      || propertyAccessor(vm.dictionary[vm.fallBackLocale], key);
+      || propertyAccessor(vm.dictionary[vm.defaultLocale], key);
     if (value) {
       return vm._interpolate(
         value,
@@ -61,7 +76,7 @@ export class Translator {
     } else if (opts.fallback) {
       return vm._interpolate(
         propertyAccessor(vm.dictionary[locale], opts.fallback)
-        || propertyAccessor(vm.dictionary[vm.fallBackLocale], opts.fallback)
+        || propertyAccessor(vm.dictionary[vm.defaultLocale], opts.fallback)
         || opts.fallback,
         params,
         locale
@@ -83,7 +98,7 @@ export class Translator {
         str = str.replace(searchRegexp,
           v === null ||
           v === undefined ? '' : propertyAccessor(this.dictionary[locale], v)
-            || propertyAccessor(this.dictionary[this.fallBackLocale], v)
+            || propertyAccessor(this.dictionary[this.defaultLocale], v)
             || v
         )
       })

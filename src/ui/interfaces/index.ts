@@ -23,6 +23,7 @@ export interface IClient {
 
 type DictionaryItem = string | Record<string, any>
 export interface ILocaleSettings {
+  locales?: Record<string, { label: string, codes: string[] }>
   dictionary: Record<string, typeof defaultDictionary | DictionaryItem>;
   defaultLocale: string;
   selectedLocale?: string;
@@ -189,8 +190,7 @@ export interface IPlusAuthContext {
   prompt?: {
     name: string,
     mode?: string
-  },
-  ui_locales: string[]
+  }
 }
 
 export type ITranslatePath = string | {
