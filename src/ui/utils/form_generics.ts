@@ -131,9 +131,15 @@ export function useGenericForm(
         return undefined
       }
     },
-    async submit($event?: Event) {
+    async submit($event?: MouseEvent) {
       $event?.preventDefault()
       loading.value = true
+      const targetEl = $event?.target as HTMLLinkElement
+      const href = targetEl?.href || (targetEl?.parentElement as HTMLLinkElement)?.href
+      if(href){
+        window.location.assign(href)
+        return
+      }
 
       // reset error messages
       Object.values(mergedFields).forEach(field => {
