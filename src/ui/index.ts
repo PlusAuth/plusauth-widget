@@ -23,7 +23,7 @@ export function createWidget(container: Element | string,
   widget.config.globalProperties.$i18n = inject.i18n
   widget.config.globalProperties.settings = settings
 
-  watch(() => settings.locale.selectedLocale, (locale,) => {
+  watch(translator.localeRef, (locale) => {
     if (locale) {
       translator.locale = locale
     }
