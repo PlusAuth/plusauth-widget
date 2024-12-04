@@ -1,5 +1,9 @@
 
 
+## <small>0.33.1 (2024-12-04)</small>
+
+* fix: invalid key used for watching locale changes ([46e3a49](https://github.com/PlusAuth/plusauth-widget/commit/46e3a49))
+
 ## 0.33.0 (2024-12-04)
 
 * chore: include locales in dev script ([4519e3e](https://github.com/PlusAuth/plusauth-widget/commit/4519e3e))
