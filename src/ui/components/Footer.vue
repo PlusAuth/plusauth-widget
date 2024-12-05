@@ -12,7 +12,7 @@
         :items="languages"
       />
     </template>
-
+    <WidgetTemplate name="footer-body" />
     <ul class="pa__widget-footer-link-list">
       <li
         v-if="tosUri"
@@ -45,8 +45,11 @@ import type { IPlusAuthContext } from '../interfaces';
 import type { Translator } from '../utils/translator';
 import { translatorKey } from '../utils/translator';
 
+import WidgetTemplate from './WidgetTemplate.tsx';
+
 export default defineComponent({
   name: 'PFooter',
+  components: { WidgetTemplate },
   props: {
     termsOfService: {
       type: String as () => string,
