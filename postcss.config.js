@@ -15,7 +15,7 @@ export default () => ({
       prefix: 'pa__',
       ignore: [/sb-?/],
       ignoreFiles: [
-        /\.storybook/
+        /\.storybook/, 'index\.html'
       ]
     }),
     postcss_import(),
