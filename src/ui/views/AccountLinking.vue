@@ -7,7 +7,7 @@
         <UserAvatar :user="context.details.user" />
       </div>
       <h2>
-        {{ t('accountLinking.description') }}
+        {{ i18n.t('accountLinking.description') }}
       </h2>
     </template>
 
@@ -54,7 +54,7 @@ export default defineComponent({
     const context = useContext()
     const mergeContext = context.details.merge_context || {}
     const passwordVisible = ref(false)
-    const { t } = useLocale()
+    const i18n = useLocale()
     const defaultFields: AdditionalFields = mergeContext.type === 'password' ? {
       password: {
         order: 1,
@@ -92,7 +92,7 @@ export default defineComponent({
     )
 
     return {
-      t,
+      i18n,
       fields,
       context,
       form,

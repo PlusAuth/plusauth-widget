@@ -12,7 +12,7 @@ withDefaults(defineProps<{
 })
 
 const context = useContext()
-const { t } = useLocale()
+const i18n = useLocale()
 const resendLink = `${window.location.pathname}/resend`
 const resendAfter = context.details.resend_after as number
 const { countdown } = useTimer(Math.floor(resendAfter / 1000) || 0)
@@ -29,7 +29,7 @@ const formattedTimer = computed(() => {
     <span
       v-if="countdown > 0"
     >
-      {{ t('common.resendAfter', {time: formattedTimer}) }}
+      {{ i18n.t('common.resendAfter', {time: formattedTimer}) }}
     </span>
     <a
       v-else
