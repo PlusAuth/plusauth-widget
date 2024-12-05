@@ -50,7 +50,7 @@
         block
         color="primary"
         :loading="loading"
-        @click="manualMode ? submit : reload"
+        @click="(...args) => manualMode ? submit(...args) : reload()"
       >
         <span v-t="manualMode ? 'common.submit': 'common.continue'" />
       </p-btn>
