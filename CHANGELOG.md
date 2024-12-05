@@ -1,5 +1,14 @@
 
 
+## 0.34.0 (2024-12-05)
+
+* dev: dev page improvements ([86ef153](https://github.com/PlusAuth/plusauth-widget/commit/86ef153))
+* feat: data-t attribute for translation raw inside html templates ([26dbd3c](https://github.com/PlusAuth/plusauth-widget/commit/26dbd3c))
+* feat: footer-body template ([f811093](https://github.com/PlusAuth/plusauth-widget/commit/f811093))
+* fix: click listener not working for push submission ([f0c00c4](https://github.com/PlusAuth/plusauth-widget/commit/f0c00c4))
+* fix: invalid usage of localization util ([50a72a0](https://github.com/PlusAuth/plusauth-widget/commit/50a72a0))
+* i18n: turkish translation ([d5efb15](https://github.com/PlusAuth/plusauth-widget/commit/d5efb15))
+
 ## <small>0.33.1 (2024-12-04)</small>
 
 * fix: invalid key used for watching locale changes ([46e3a49](https://github.com/PlusAuth/plusauth-widget/commit/46e3a49))
