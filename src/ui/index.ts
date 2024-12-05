@@ -23,12 +23,6 @@ export function createWidget(container: Element | string,
   widget.config.globalProperties.$i18n = inject.i18n
   widget.config.globalProperties.settings = settings
 
-  watch(translator.localeRef, (locale) => {
-    if (locale) {
-      translator.locale = locale
-    }
-  })
-
   installComponents(widget)
 
   container = typeof container === 'string' ? document.querySelector(container)! : container
@@ -40,6 +34,17 @@ export function createWidget(container: Element | string,
   })
   widget.provide('templates', templates)
   widget.mount(container)
+
+  watch(translator.localeRef, (locale) => {
+    if(locale !== translator.locale ){
+      translator.locale = locale
+    }
+    if (locale) {
+      document.querySelectorAll('[data-t]').forEach((el) => {
+        el.textContent = translator.t((el as HTMLElement).dataset.t)
+      });
+    }
+  }, { immediate: true, flush: 'post' })
 
   return widget;
 }
