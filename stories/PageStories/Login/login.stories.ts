@@ -10,7 +10,7 @@ type Story = StoryObj<typeof LoginStory>;
 const meta: Meta<typeof LoginStory> = {
   component: LoginStory,
   title: 'pages/Login',
-  tags: ['autodocs'],
+  tags: ['autodocs', '!dev'],
 }
 
 export default meta
@@ -26,6 +26,10 @@ export const CustomFields: Story = {
         label: 'MyCustomField',
         order: -1
       }
+    }
+  },
+  parameters: {
+    docs: {
     }
   }
 

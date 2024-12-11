@@ -5,6 +5,9 @@ import type { IWidgetSettings } from '../src/ui/interfaces';
 const defaultContext =  {
   ui_locales: [
   ],
+  params: {
+
+  },
   client: {
     logoUri: false
   },

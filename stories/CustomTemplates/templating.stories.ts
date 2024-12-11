@@ -86,7 +86,7 @@ export const ContentFooter: Story = {
 const meta: Meta<typeof ContentFooterTemplate> = {
   component: ContentFooterTemplate,
   title: 'Custom Templates',
-
+  tags: ['!autodocs']
 }
 
 

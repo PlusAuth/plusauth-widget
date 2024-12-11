@@ -88,7 +88,7 @@ export const CheckBox: Story = {
 const meta: Meta<typeof CustomField> = {
   component: CustomField,
   title: 'Custom Fields',
-
+  tags: ['!autodocs']
 }
 
 

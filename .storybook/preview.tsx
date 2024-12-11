@@ -1,8 +1,25 @@
 import type { Preview } from '@storybook/vue3';
 import './preview.css'
+import React from 'react';
+
+import { Title, Subtitle, Description, Primary, Controls, Stories } from '@storybook/blocks';
 
 const preview: Preview = {
+  tags: ['autodocs'],
   parameters: {
+    docs: {
+      canvas: {
+      },
+      page: () => (
+        <>
+        <Title />
+        <Subtitle />
+        <Description />
+        <Primary />
+        <Controls />
+        </>
+      ),
+    },
     viewport: {
       viewports: {
         mobile: {
