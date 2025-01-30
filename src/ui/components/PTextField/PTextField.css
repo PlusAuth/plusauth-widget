@@ -64,10 +64,6 @@
 			@apply mt-1 ps-0.5;
 		}
 
-		input:-webkit-autofill + .input--label {
-			transform: translateY(-20px) scale(.85);
-		}
-
 		&-has-error {
 			.input--wrap {
 				box-shadow: 0 0 1px 1px currentColor;
@@ -92,6 +88,10 @@
       .input--label {
         color: currentColor !important;
       }
+    }
+
+    &:has(input:is(:-webkit-autofill, :autofill)) .input--label {
+      transform: translateY(-22px) scale(.85);
     }
 
     &:has([placeholder]),
