@@ -29,7 +29,7 @@
           },
           {
             "type": "type",
-            "section": "Types"
+            "section": "Type Improvements"
           },
           {
             "type": "fix",
@@ -50,6 +50,22 @@
           {
             "type": "style",
             "section": "Stylistic Updates"
+          },
+          {
+            "type": "i18n",
+            "section": "Localization"
+          },
+          {
+            "type": "chore",
+            "hidden": true
+          },
+          {
+            "type": "ci",
+            "hidden": true
+          },
+          {
+            "type": "docs",
+            "hidden": true
           }
         ]
       },
