@@ -1,4 +1,20 @@
+# Changelog
 
+## [0.35.0](https://github.com/PlusAuth/plusauth-widget/compare/v0.34.0...v0.35.0) (2025-02-19)
+
+### Features
+
+* add auth+ reference to push register pages ([1431485](https://github.com/PlusAuth/plusauth-widget/commit/1431485ce884decb30159184ec5109db7a5ad2c6))
+
+### Stylistic Updates
+
+* fill screen for small devices ([3801d32](https://github.com/PlusAuth/plusauth-widget/commit/3801d321bc8dc5124ad46a162e30de39fd7e1cc6))
+* fix invalid selector for autofilled input detection ([4bb0b8a](https://github.com/PlusAuth/plusauth-widget/commit/4bb0b8a67ae10f39a6353958d5c915e34305a385))
+* use column layout for widget content ([264f988](https://github.com/PlusAuth/plusauth-widget/commit/264f988f5b0c5b400833723fede8b059cb28227c))
+
+### Localization
+
+* include turkish translations ([259f00d](https://github.com/PlusAuth/plusauth-widget/commit/259f00d2ae7189286430c37824f76bbf13018a42))
 
 ## 0.34.0 (2024-12-05)
 
