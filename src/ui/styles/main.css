@@ -196,7 +196,7 @@
 			}
 		}
     &-main {
-			@apply relative pt-6 px-6 pb-8 bg-white;
+			@apply relative pt-6 px-6 pb-8 bg-white flex flex-col;
       box-flex: 1;
       flex-grow: 1;
       overflow: hidden;
