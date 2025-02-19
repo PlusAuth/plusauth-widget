@@ -28,6 +28,10 @@
             "section": "Features"
           },
           {
+            "type": "type",
+            "section": "Types"
+          },
+          {
             "type": "fix",
             "section": "Bug Fixes"
           },
