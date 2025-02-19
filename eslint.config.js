@@ -16,7 +16,7 @@ export default tseslint.config(
       'storybook-static/',
       '**/*/*.min.js',
       '**/*/*.umd.js',
-      '**/dist/'
+      'dist'
     ],
   },
   {
@@ -30,7 +30,6 @@ export default tseslint.config(
       'import': importPlugin,
       '@typescript-eslint': tseslint.plugin,
       'unicorn': eslintPluginUnicorn,
-      // @ts-ignore
       '@style': stylisticJs,
       vue: pluginVue
     },

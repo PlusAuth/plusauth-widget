@@ -86,10 +86,10 @@ if (!window.PlusAuth) {
             field_required: 'Alan zorunlu'
           },
           common: {
-            edit: 'Degistir'
+            edit: 'Değiştir'
           },
           login: {
-            signIn: 'Giris yap'
+            signIn: 'Giriş yap'
           }
         }
       }

@@ -8,7 +8,7 @@
       <div style="text-align: center">
         <img
           id="mainLogo"
-          class="pa__logo"
+          class="pa__logo pa__qr-code"
           alt="Logo"
           style="max-width: 300px; max-height: 300px;"
           :src="context.details.dataUrl"

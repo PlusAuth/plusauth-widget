@@ -3,19 +3,27 @@
     :logo="false"
     :title="isRegistration ? 'mfa.push.enrollTitle'
       : manualMode ? 'mfa.otp.title' : 'mfa.push.title'"
-    :subtitle="isRegistration ? 'mfa.push.enrollDescription'
-      : manualMode ? ''
-        : context.details.push_code ?
-          'mfa.push.selectCode': 'mfa.push.description'
-    "
+    :subtitle="{
+      path: isRegistration ? 'mfa.push.enrollDescription'
+        : manualMode ? ''
+          : context.details.push_code ?
+            'mfa.push.selectCode': 'mfa.push.description',
+      args: [
+        AuthPlusLogo
+      ]
+    }"
   >
-    <img
+    <template
       v-if="isRegistration"
-      id="mainLogo"
-      class="pa__logo pa__qr-code"
-      alt="Logo"
-      :src="context.details.dataUrl"
     >
+      <AuthPlusInfo />
+      <img
+        id="mainLogo"
+        class="pa__logo pa__qr-code"
+        alt="QRCode"
+        :src="context.details.dataUrl"
+      >
+    </template>
     <div
       v-else-if="!manualMode && context.details.push_code"
       class="pa__timer pa__timer--circle"
@@ -56,7 +64,7 @@
       </p-btn>
     </template>
     <template
-      v-if="!manualMode"
+      v-if="!manualMode && (context.details.challenges.length > 1 || !isRegistration)"
       #content-footer
     >
       <p
@@ -67,15 +75,17 @@
           href="/signin/challenge"
         />
       </p>
-      <p
+      <template
         v-if="!isRegistration"
       >
+      <p>
         <a
           v-t="'mfa.push.tryCodeAction'"
           @click="switchToCode"
         />
       </p>
       <ResendAction type="common.notification" />
+      </template>
     </template>
   </WidgetLayout>
 </template>
@@ -83,6 +93,8 @@
 <script lang="ts">
 import { computed, defineComponent, nextTick, ref, watch } from 'vue';
 
+import AuthPlusInfo from '../../components/AuthPlusInfo.vue';
+import { AuthPlusLogo } from '../../components/AuthPlusLogo.ts';
 import GenericForm from '../../components/GenericForm.vue';
 import PSpinner from '../../components/PSpinner/PSpinner';
 import ResendAction from '../../components/ResendAction.vue';
@@ -93,7 +105,7 @@ import { useGenericForm } from '../../utils/form_generics';
 
 export default defineComponent({
   name: 'Push',
-  components: { ResendAction, WidgetLayout, PSpinner, GenericForm },
+  components: { AuthPlusInfo, ResendAction, WidgetLayout, PSpinner, GenericForm },
   setup() {
 
     const http = useHttp()
@@ -181,6 +193,11 @@ export default defineComponent({
       reload(){
         window.location.reload()
       }
+    }
+  },
+  methods: {
+    AuthPlusLogo() {
+      return AuthPlusLogo
     }
   }
 })

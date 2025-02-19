@@ -1,11 +1,12 @@
 export default {
   common: {
     allow: 'İzin Ver',
-    code: 'kod',
+    code: 'Kod',
     continue: 'Devam Et',
     days: 'gün',
+    downloadAuthPlus: 'Market uygulamanızdan {0}\'ı indirebilirsiniz.',
     edit: 'Düzenle',
-    email: 'e-posta',
+    email: 'E-posta',
     enterOtp: 'Kodunuzu girin',
     field: 'Alan',
     fields: {
@@ -20,7 +21,7 @@ export default {
     hide: 'Gizle',
     hours: 'saat',
     minutes: 'dakika',
-    notification: 'bildirim',
+    notification: 'Bildirim',
     reject: 'Reddet',
     resend: 'Tekrar Gönder',
     resendText: '{type} almadınız mı?',
@@ -136,7 +137,7 @@ export default {
       title: 'Cihazınızı Kontrol Edin',
       description: 'Erişim izni vermek için cihazınızdaki bildirime tıklayın',
       enrollTitle: 'Cihazınızı Kaydedin',
-      enrollDescription: 'Kimlik Doğrulayıcı uygulamanızla aşağıdaki QR Kodunu tarayın',
+      enrollDescription: '{0} uygulamanızla aşağıdaki QR Kodunu tarayın',
       tryCodeAction: 'Kodu manuel olarak girmeyi deneyin'
     }
   },
@@ -172,7 +173,7 @@ export default {
       title: 'Cihazınızı Kontrol Edin',
       description: 'Erişim izni vermek için cihazınızdaki bildirime tıklayın',
       enrollTitle: 'Cihazınızı Kaydedin',
-      enrollDescription: 'Kimlik Doğrulayıcı uygulamanızla aşağıdaki QR Kodunu tarayın',
+      enrollDescription: '{0} uygulamanızla aşağıdaki QR Kodunu tarayın',
       tryCodeText: 'Bildirim almadınız mı?',
       tryCodeAction: 'Kodu manuel olarak girmeyi deneyin'
     },

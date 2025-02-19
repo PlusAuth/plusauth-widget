@@ -3,19 +3,27 @@
     :logo="false"
     :title="isRegistration ? 'passwordless.push.enrollTitle'
       : manualMode ? 'mfa.otp.title' : 'passwordless.push.title'"
-    :subtitle="isRegistration ? 'passwordless.push.enrollDescription'
-      : manualMode ? ''
-        : context.details.push_code ?
-          'passwordless.push.selectCode': 'passwordless.push.description'
-    "
+    :subtitle="{
+      path: isRegistration ? 'passwordless.push.enrollDescription'
+        : manualMode ? ''
+          : context.details.push_code ?
+            'passwordless.push.selectCode': 'passwordless.push.description',
+      args: [
+        AuthPlusLogo
+      ]
+    }"
   >
-    <img
+    <template
       v-if="isRegistration"
-      id="mainLogo"
-      class="pa__logo pa__qr-code"
-      alt="Logo"
-      :src="context.details.dataUrl"
     >
+      <AuthPlusInfo />
+      <img
+        id="mainLogo"
+        class="pa__logo pa__qr-code"
+        alt="QRCode"
+        :src="context.details.dataUrl"
+      >
+    </template>
     <div
       v-else-if="!manualMode && context.details.push_code"
       class="pa__timer pa__timer--circle"
@@ -56,12 +64,10 @@
       </p-btn>
     </template>
     <template
-      v-if="!manualMode"
+      v-if="!manualMode && !isRegistration"
       #content-footer
     >
-      <p
-        v-if="!isRegistration"
-      >
+      <p>
         <a
           v-t="'passwordless.push.tryCodeAction'"
           @click="switchToCode"
@@ -75,6 +81,8 @@
 <script lang="ts">
 import { computed, defineComponent, nextTick, ref, watch } from 'vue';
 
+import AuthPlusInfo from '../../components/AuthPlusInfo.vue';
+import { AuthPlusLogo } from '../../components/AuthPlusLogo.ts';
 import GenericForm from '../../components/GenericForm.vue';
 import PSpinner from '../../components/PSpinner/PSpinner';
 import ResendAction from '../../components/ResendAction.vue';
@@ -85,8 +93,8 @@ import { useGenericForm } from '../../utils/form_generics';
 
 export default defineComponent({
   name: 'Push',
-  components: { ResendAction, WidgetLayout, PSpinner,  GenericForm },
-  setup(){
+  components: { AuthPlusInfo, ResendAction, WidgetLayout, PSpinner, GenericForm },
+  setup() {
     const http = useHttp()
     const context = useContext()
     const i18n = useLocale()
@@ -125,7 +133,7 @@ export default defineComponent({
           label: 'common.enterOtp',
           value: null,
         }
-      }: undefined
+      } : undefined
     }))
 
     const { form, loading, submit, fields, validate, formErrorHandler } = useGenericForm(
@@ -136,15 +144,15 @@ export default defineComponent({
       }
     )
 
-    async function pollPushValidation(resolve, reject){
-      try{
+    async function pollPushValidation(resolve, reject) {
+      try {
         resolve(await http.post({
           body: {}
         }))
-      }catch (e) {
+      } catch (e) {
         if (e.error === 'authorization_pending') {
           setTimeout(() => pollPushValidation(resolve, reject), 3000)
-        } else if(e.error === 'invalid_code') {
+        } else if (e.error === 'invalid_code') {
           form.value.toggleAlert({
             path: `errors.${e.error}`,
             args: e
@@ -159,21 +167,21 @@ export default defineComponent({
     watch([isRegistration, manualMode], async ([newValue, manual]) => {
       // eslint-disable-next-line vue/valid-next-tick
       await nextTick(async () => {
-        if(!newValue && !manual){
+        if (!newValue && !manual) {
           loading.value = true;
           try {
-            await new Promise( (resolve, reject) => {
+            await new Promise((resolve, reject) => {
               pollPushValidation(resolve, reject)
             })
           } catch (e) {
             formErrorHandler(e)
-          }finally {
+          } finally {
             loading.value = false
           }
         }
       })
 
-    }, { immediate: true, flush: 'post' } )
+    }, { immediate: true, flush: 'post' })
     return {
       fields,
       validate,
@@ -185,13 +193,18 @@ export default defineComponent({
       form,
       loading,
       submit,
-      switchToCode(){
+      switchToCode() {
         urlParams.set('useQuery', 'true')
         window.location.search = urlParams.toString();
       },
-      reload(){
+      reload() {
         window.location.reload()
       }
+    }
+  },
+  methods: {
+    AuthPlusLogo() {
+      return AuthPlusLogo
     }
   }
 })
