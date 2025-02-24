@@ -52,6 +52,7 @@ const templates = inject('templates')
           />
         </slot>
         <slot name="info" />
+        <WidgetTemplate name="info-append" />
       </div>
       <slot />
       <div
