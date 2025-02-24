@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.36.0](https://github.com/PlusAuth/plusauth-widget/compare/v0.35.0...v0.36.0) (2025-02-24)
+
+### Features
+
+* custom template for info-append ([2970102](https://github.com/PlusAuth/plusauth-widget/commit/2970102553ab12165193fccc4f5dc34b89b4659b))
+
 ## [0.35.0](https://github.com/PlusAuth/plusauth-widget/compare/v0.34.0...v0.35.0) (2025-02-19)
 
 ### Features
