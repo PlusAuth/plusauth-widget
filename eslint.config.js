@@ -20,6 +20,11 @@ export default tseslint.config(
     ],
   },
   {
+    extends: [
+      ...pluginVue.configs['flat/essential'],
+      ...pluginVue.configs['flat/strongly-recommended'],
+      ...pluginVue.configs['flat/recommended'],
+    ],
     files: [
       '**/*.ts',
       '**/*.js',
@@ -50,9 +55,6 @@ export default tseslint.config(
       }
     },
     rules: {
-      ...pluginVue.configs['vue3-essential'].rules,
-      ...pluginVue.configs['vue3-strongly-recommended'].rules,
-      ...pluginVue.configs['vue3-recommended'].rules,
       '@style/array-bracket-spacing': 'error',
       '@style/indent': ['error', 2, {
         'ArrayExpression': 'first',
