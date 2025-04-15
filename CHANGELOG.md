@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.37.0](https://github.com/PlusAuth/plusauth-widget/compare/v0.36.0...v0.37.0) (2025-04-15)
+
+### Features
+
+* respect document base ([f3ec87a](https://github.com/PlusAuth/plusauth-widget/commit/f3ec87ad19b01f45dd49115cec74eca4d08dddd0))
+
 ## [0.36.0](https://github.com/PlusAuth/plusauth-widget/compare/v0.35.0...v0.36.0) (2025-02-24)
 
 ### Features
