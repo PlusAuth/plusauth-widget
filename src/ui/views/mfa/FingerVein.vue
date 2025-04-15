@@ -61,7 +61,7 @@
       <p>
         <a
           v-t="'mfa.tryAnotherWay'"
-          href="/signin/challenge"
+          href="signin/challenge"
         />
       </p>
     </template>

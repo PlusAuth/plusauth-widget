@@ -22,7 +22,8 @@ import VerifyEmail from '../views/VerifyEmail.vue';
 
 export function resolveView(mode?: string): Component<any, any, any, any, any> | undefined {
   const m = mode ? mode.toLowerCase().replaceAll('-', '').replaceAll('_', '') : ''
-  const parts = window.location.pathname.split('/').slice(1)
+  const pathname = document.baseURI === window.location.href  ? window.location.pathname : window.location.href.replace(document.baseURI, '')
+  const parts = (pathname.startsWith('/') ? pathname: `/${pathname}`).split('/').slice(1)
 
   if (m === 'consent' || parts[0] === 'signin' && parts[1] === 'consent') {
     return Consent

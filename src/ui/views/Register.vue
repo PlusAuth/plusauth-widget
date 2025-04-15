@@ -48,13 +48,13 @@
         />
         <a
           v-t="'login.signIn'"
-          href="/signin"
+          href="signin"
           @click.stop
         />
         <div v-if="!isPasswordless && context.settings.forgot_password_enabled">
           <a
             v-t="'login.forgotPassword'"
-            href="/signin/recovery"
+            href="signin/recovery"
           />
         </div>
       </div>
@@ -136,7 +136,7 @@ export default defineComponent({
           if (result && result.message === 'verification_email_sent') {
             context.details.email = finalFields.email?.value
             context.details.email_verified = false
-            window.location.assign('/account/verifyEmail')
+            window.location.assign('account/verifyEmail')
           }
         } catch (e) {
           switch (e.error) {
@@ -153,7 +153,7 @@ export default defineComponent({
               }
               break;
             case 'email_not_verified':
-              window.location.assign('/account/verifyEmail')
+              window.location.assign('account/verifyEmail')
               break;
             default:
               throw e

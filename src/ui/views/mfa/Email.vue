@@ -25,7 +25,7 @@
       >
         <a
           v-t="'mfa.tryAnotherWay'"
-          href="/signin/challenge"
+          href="signin/challenge"
         />
       </p>
       <ResendAction type="common.email" />

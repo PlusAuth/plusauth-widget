@@ -74,7 +74,7 @@ export default defineComponent({
               class: 'pa__btn pa__btn--flat pa__pw-toggle-visibility',
               onClick: (e) => {
                 e.preventDefault()
-                window.location.assign('/signin')
+                window.location.assign('signin')
               },
               'innerHtml': i18n.t('common.edit')
             }
