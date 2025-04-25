@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.37.1](https://github.com/PlusAuth/plusauth-widget/compare/v0.37.0...v0.37.1) (2025-04-25)
+
+### Bug Fixes
+
+* social connection and challenge links do not respect baseURI ([7f2f53b](https://github.com/PlusAuth/plusauth-widget/commit/7f2f53b5f43c6afa7dbb12c705860bb704d3b625))
+
 ## [0.37.0](https://github.com/PlusAuth/plusauth-widget/compare/v0.36.0...v0.37.0) (2025-04-15)
 
 ### Features
