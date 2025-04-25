@@ -3,7 +3,7 @@
     class="pa__widget-social-button"
     :block="mode === 'block'"
     :class="{ 'pa__widget-social-button-circle': mode === 'circle' }"
-    :href="'/social?provider=' + (typeof connection === 'string' ? connection : connection.name )"
+    :href="'social?provider=' + (typeof connection === 'string' ? connection : connection.name )"
   >
     <span
       class="pa__widget-social-icon"
