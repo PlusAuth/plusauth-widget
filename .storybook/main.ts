@@ -4,9 +4,9 @@ const config: StorybookConfig = {
   stories: ['../stories/**/*.@(md|mdx)', '../**/*.stories.@(js|jsx|mjs|ts|tsx)'],
   staticDirs: [{ from: '../stories/public', to: '/' }],
   addons: [
-    '@storybook/addon-essentials',
     '@storybook/addon-links',
-    'storybook-addon-vue-mdx'
+    'storybook-addon-vue-mdx',
+    '@storybook/addon-docs'
   ],
 
   core: {

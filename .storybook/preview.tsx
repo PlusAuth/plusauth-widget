@@ -1,5 +1,5 @@
-import { Title, Subtitle, Description, Primary, Controls, Stories } from '@storybook/blocks';
-import type { Preview } from '@storybook/vue3';
+import { Title, Subtitle, Description, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import type { Preview } from '@storybook/vue3-vite';
 import './preview.css'
 
 import React from 'react';
@@ -46,7 +46,7 @@ const preview: Preview = {
       }
     },
     options: {
-      // The `a` and `b` arguments in this function have a type of `import('@storybook/types').IndexEntry`. Remember that the function is executed in a JavaScript environment, so use JSDoc for IntelliSense to introspect it.
+      // The `a` and `b` arguments in this function have a type of `import('storybook/internal/types').IndexEntry`. Remember that the function is executed in a JavaScript environment, so use JSDoc for IntelliSense to introspect it.
       storySort: (a, b) => {
         if (a.tags.includes('unattached-mdx')) {
           if (b.tags.includes('unattached-mdx')) {

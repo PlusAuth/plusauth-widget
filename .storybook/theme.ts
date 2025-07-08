@@ -1,4 +1,4 @@
-import { create } from '@storybook/theming/create';
+import { create } from 'storybook/theming/create';
 
 import logoFile from '../stories/public/plusauth-md-dark.svg';
 import './global.css'
