@@ -40,7 +40,7 @@ export function createFetchWrapper(baseUrl?: string) {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
         'X-Requested-With': 'XMLHttpRequest',
-        'X-PlusAuth-Widget-Version': `${version}`
+        'User-Agent': `${navigator.userAgent} PlusAuthWidget/${version}`
       }, fetchOptions.headers || {})
 
       if (fetchOptions.body) {
