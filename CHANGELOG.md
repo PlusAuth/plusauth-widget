@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.38.0](https://github.com/PlusAuth/plusauth-widget/compare/v0.37.1...v0.38.0) (2025-07-08)
+
+### Features
+
+* ensure request errors are displayed correctly ([a6c053d](https://github.com/PlusAuth/plusauth-widget/commit/a6c053d72c90b9c2274e488086e4ff2972a373f2))
+* include widget version as header ([2052741](https://github.com/PlusAuth/plusauth-widget/commit/20527412ea4f22dcecdd9c0a6358d6ccc7c6abc8))
+
+### Type Improvements
+
+* remove duplicate type definition ([d829884](https://github.com/PlusAuth/plusauth-widget/commit/d8298848688a59bb31117f1c619adc146db4c63c))
+
 ## [0.37.1](https://github.com/PlusAuth/plusauth-widget/compare/v0.37.0...v0.37.1) (2025-04-25)
 
 ### Bug Fixes
