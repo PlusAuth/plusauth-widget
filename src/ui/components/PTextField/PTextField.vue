@@ -59,7 +59,6 @@ export default defineComponent({
     placeholder: String,
     color: String,
     label: String,
-    disabled: Boolean,
     modelValue: null,
     hideMessages: Boolean,
     loading: Boolean,
