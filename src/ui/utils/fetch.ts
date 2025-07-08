@@ -38,7 +38,8 @@ export function createFetchWrapper(baseUrl?: string) {
       fetchOptions.headers = Object.assign({
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'X-Requested-With': 'XMLHttpRequest'
+        'X-Requested-With': 'XMLHttpRequest',
+        'X-PlusAuth-Widget-Version': `${version}`
       }, fetchOptions.headers || {})
 
       if (fetchOptions.body) {
