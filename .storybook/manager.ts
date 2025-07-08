@@ -1,6 +1,6 @@
+import { startCase } from 'lodash-es'
 import { addons } from 'storybook/manager-api';
 
-import { startCase } from 'lodash-es'
 
 import PATheme from './theme';
 
