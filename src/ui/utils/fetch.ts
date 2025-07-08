@@ -1,3 +1,4 @@
+import { version } from '../../../package.json'
 type RequestOptions = Omit<RequestInit, 'body'> & {
   body?: Record<string, any>,
   query?: Record<string, any>
@@ -72,7 +73,9 @@ export function createFetchWrapper(baseUrl?: string) {
               return false;
             } else {
               // noinspection JSPrimitiveTypeWrapperUsage
-              const errorResponse = response || new String(rawResponse.statusText)
+              const errorResponse = response || {
+                error: rawResponse.statusText,
+              }
               Object.defineProperty(errorResponse, '$raw', {
                 value: rawResponse
               })

@@ -10,7 +10,7 @@ import type {
   IWidgetSettings, WidgetModes
 } from '../interfaces';
 
-import { secondsToReadable } from './helpers.ts';
+import { normalizePlusAuthError, secondsToReadable } from './helpers.ts';
 import { deepToRaw, toReactive } from './to_reactive';
 import type { Translator } from './translator';
 import { translatorKey } from './translator';
@@ -79,6 +79,7 @@ export function useGenericForm(
         mergedFields[e.field].errors = {
           path: `errors.${e.error}`,
           args: e,
+          fallback: normalizePlusAuthError(e)
         }
       } else if(e.error === 'too_many_requests' && e.$raw?.headers?.get){
         const retryAfter = e.$raw.headers.get('retry-after')
@@ -92,7 +93,7 @@ export function useGenericForm(
         form.value.toggleAlert({
           path: `errors.${e.error}`,
           args: e,
-          fallback: e.error_description || e.message || e.name || e
+          fallback: normalizePlusAuthError(e)
         })
       }
     }
