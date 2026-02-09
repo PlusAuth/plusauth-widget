@@ -264,7 +264,11 @@
 	}
 
 	&-social-button.btn {
-		@apply capitalize justify-start gap-2 bg-transparent text-gray-800 border border-gray-300 hover:bg-gray-100 hover:opacity-100;
+		@apply capitalize justify-start gap-2
+    bg-transparent text-gray-800 border border-gray-300 hover:bg-gray-100 hover:opacity-100
+    whitespace-normal;
+    word-break: auto-phrase;
+    min-height: min-content;
 
 		&-circle {
 			@apply w-10 h-10 p-0 rounded-full overflow-hidden;
@@ -283,6 +287,7 @@
 		@apply w-8 h-8 flex-shrink-0;
 		background-repeat: no-repeat;
 		background-position: center center;
+    background-size: contain;
 	}
 
 
