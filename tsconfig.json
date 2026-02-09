@@ -29,6 +29,7 @@
     "strictPropertyInitialization": false,
     "target": "ESNext",
     "types": [
+      "vitest/globals",
       "vite/client"
     ],
     "useUnknownInCatchVariables": false
