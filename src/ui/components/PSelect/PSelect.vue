@@ -1,3 +1,236 @@
+<script lang="ts">
+import {
+  computePosition,
+  flip,
+  offset,
+  shift,
+  autoUpdate
+} from '@floating-ui/dom'
+import type { PropType } from 'vue'
+import {
+  nextTick,
+  inject,
+  watch,
+  computed,
+  reactive,
+  defineComponent,
+  onMounted,
+  onBeforeUnmount,
+  ref
+} from 'vue'
+
+import { makeFocusProps, useFocus } from '../../composables/focus'
+import { useProxiedModel } from '../../composables/proxied_model'
+import { type Translator, translatorKey } from '../../utils/translator'
+
+export default defineComponent({
+  props: {
+    modelValue: null,
+    label: { type: String as PropType<string> },
+    name: { type: String as PropType<string> },
+    returnObject: { type: Boolean as PropType<boolean> },
+    dense: { type: Boolean as PropType<boolean> },
+    flat: { type: Boolean as PropType<boolean> },
+    itemText: { type: String as PropType<string>, default: 'name' },
+    itemValue: { type: String as PropType<string>, default: 'value' },
+    items: { type: Array as PropType<any[]>, default: () => [] },
+    ...makeFocusProps(),
+  },
+  emits: ['update:modelValue', 'keydown', 'change', 'click'],
+  setup(props, { emit }) {
+    const inputRef = ref<HTMLElement | null>(null)
+    const containerRef = ref<HTMLElement | null>(null)
+    const popoverRef = ref<HTMLElement | null>(null)
+
+    const cleanupAutoUpdate = ref<(() => void) | null>(null)
+
+    const i18n = inject(translatorKey) as Translator
+    const internalValue = useProxiedModel(props, 'modelValue')
+    const selectedItem = ref<any>()
+
+    const state = reactive({ open: false })
+
+    const { blur, focus, focusClasses, isFocused } = useFocus(props, 'pa__input')
+
+    async function updatePosition() {
+      if (!containerRef.value || !popoverRef.value) return
+
+      const { x, y } = await computePosition(
+        containerRef.value,
+        popoverRef.value,
+        {
+          strategy: 'fixed',
+          middleware: [
+            offset(0),
+            flip(),
+            shift({ padding: 0 })
+          ]
+        }
+      )
+
+      Object.assign(popoverRef.value.style, {
+        left: `${x}px`,
+        top: `${y}px`
+      })
+    }
+
+    onMounted(() => {
+      containerRef.value?.addEventListener('blur', blur)
+      containerRef.value?.addEventListener('focus', onFocus)
+    })
+
+    onBeforeUnmount(() => {
+      cleanupAutoUpdate.value?.()
+    })
+
+    watch(() => state.open, async (isOpen) => {
+      cleanupAutoUpdate.value?.()
+      cleanupAutoUpdate.value = null
+
+      if (isOpen) {
+        await nextTick()
+        await updatePosition()
+
+        cleanupAutoUpdate.value = autoUpdate(
+          containerRef.value!,
+          popoverRef.value!,
+          updatePosition
+        )
+
+        nextTick(() => {
+          activate(
+            popoverRef.value?.querySelector(
+              '.pa__input-select-item--selected'
+            )
+          )
+        })
+      } else {
+        popoverRef.value
+          ?.querySelectorAll('.pa__input-select-item[tabindex="0"]')
+          .forEach((el) => ((el as HTMLElement).tabIndex = -1))
+      }
+    })
+
+    watch(internalValue, (val) => {
+      selectedItem.value = props.items.find(i =>
+        val === (typeof i === 'object' ? i[props.itemValue] : i)
+      )
+
+      emit(
+        'update:modelValue',
+        props.returnObject ? selectedItem.value : internalValue.value
+      )
+    }, { immediate: true })
+
+    function onFocus() {
+      if (inputRef.value !== document.activeElement) {
+        inputRef.value?.focus()
+      }
+      if (!isFocused.value) focus()
+    }
+
+    function onClick(e: Event) {
+      state.open = !state.open
+      emit('click', e)
+    }
+
+    function onBlur(e: FocusEvent) {
+      e.preventDefault()
+      e.stopPropagation()
+
+      if (!inputRef.value?.contains(e.relatedTarget as Element)) {
+        state.open = false
+        if (isFocused.value) blur()
+      }
+    }
+
+    function onItemClick(event: Event, item: any) {
+      event.preventDefault()
+      event.stopPropagation()
+      internalValue.value = getItemValue(item)
+      state.open = false
+    }
+
+    function activate(item?: HTMLElement | null) {
+      if (!item || !popoverRef.value) return
+
+      popoverRef.value
+        .querySelectorAll('.pa__input-select-item')
+        .forEach((el) => ((el as HTMLElement).tabIndex = -1))
+
+      item.tabIndex = 0
+      nextTick(() => item.focus())
+    }
+
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key === 'Enter') {
+        state.open = true
+      } else if (e.code === '13') {
+        emit('change', internalValue.value)
+      } else if (e.key === 'ArrowDown') {
+        if (!state.open) {
+          state.open = true
+        } else {
+          activate(
+            popoverRef.value?.querySelector(
+              '.pa__input-select-item[tabindex="0"]'
+            )?.nextElementSibling as HTMLElement
+          )
+        }
+      } else if (e.key === 'ArrowUp') {
+        if (!state.open) {
+          state.open = true
+        } else {
+          activate(
+            popoverRef.value?.querySelector(
+              '.pa__input-select-item[tabindex="0"]'
+            )?.previousElementSibling as HTMLElement
+          )
+        }
+      }
+
+      emit('keydown', e)
+    }
+
+    function getItemText(item: any) {
+      return typeof item === 'object'
+        ? item[props.itemText]
+        : item
+    }
+
+    function getItemValue(item: any) {
+      return typeof item === 'object'
+        ? item[props.itemValue]
+        : item
+    }
+
+    const classes = computed(() => ({
+      'pa__input-has-value': !!internalValue.value,
+      'pa__input-select-is-open': state.open,
+      'pa__input-dense': props.dense,
+      'pa__input-flat': props.flat,
+      ...focusClasses
+    }))
+
+    return {
+      classes,
+      selectedItem,
+      onClick,
+      containerRef,
+      popoverRef,
+      inputRef,
+      onItemClick,
+      onKeyDown,
+      onFocus,
+      onBlur,
+      getItemText,
+      getItemValue,
+      internalValue,
+      i18n
+    }
+  }
+})
+</script>
 <template>
   <div
     ref="inputRef"
@@ -53,194 +286,6 @@
     </div>
   </div>
 </template>
-
-<script lang="ts">
-import flip from '@popperjs/core/lib/modifiers/flip';
-import offset from '@popperjs/core/lib/modifiers/offset';
-import preventOverflow from '@popperjs/core/lib/modifiers/preventOverflow';
-import { createPopper } from '@popperjs/core/lib/popper-lite';
-import type { Instance } from '@popperjs/core/lib/popper-lite';
-import type { PropType } from 'vue';
-import { nextTick } from 'vue';
-import { inject, watch, computed, reactive, defineComponent, onMounted, ref } from 'vue';
-
-import { makeFocusProps, useFocus } from '../../composables/focus';
-import { useProxiedModel } from '../../composables/proxied_model';
-import { type Translator, translatorKey } from '../../utils/translator';
-
-export default defineComponent({
-  props: {
-    modelValue: null,
-    label: { type: String  as PropType<string> },
-    name: { type: String  as PropType<string> },
-    returnObject: { type: Boolean  as PropType<boolean> },
-    dense: { type: Boolean as PropType<boolean> },
-    flat: { type: Boolean  as PropType<boolean> },
-    itemText: { type: String as PropType<string>, default: 'name' },
-    itemValue: { type: String as PropType<string>, default: 'value' },
-    items: { type: Array as PropType<any[]>, default: () => [] },
-    ...makeFocusProps(),
-  },
-  emits: ['update:modelValue', 'keydown', 'change', 'click'],
-  setup(props, { emit }) {
-    const inputRef = ref<HTMLElement>(null as any)
-    const popoverRef = ref<HTMLElement>(null as any)
-    const containerRef = ref<HTMLElement>(null as any)
-    const popperInstance = ref<Instance>(null as any);
-    const i18n = inject(translatorKey) as Translator
-
-    const internalValue = useProxiedModel(props, 'modelValue')
-    const selectedItem = ref<any>()
-    const state = reactive({
-      open: false
-    })
-    onMounted(()=>{
-      containerRef.value.addEventListener('blur', blur)
-      containerRef.value.addEventListener('focus', onFocus)
-
-      popperInstance.value = createPopper(containerRef.value, popoverRef.value, {
-        strategy: 'fixed',
-        modifiers: [
-          {
-            ...preventOverflow,
-            options: {
-              rootBoundary: containerRef.value,
-              altBoundary: true,
-              padding: 0
-            }
-          },
-          flip,
-          {
-            ...offset,
-            options: {
-              offset: [0, 0],
-            }
-          }
-        ],
-      });
-    })
-
-    watch(internalValue, (val) => {
-      selectedItem.value = props.items.find(i => {
-        return val === (typeof i === 'object' ? i[props.itemValue] : i)
-      })
-      emit('update:modelValue', props.returnObject ? selectedItem.value : internalValue.value)
-    }, { immediate: true })
-
-    watch(() => state.open, (isOpen) => {
-      popperInstance.value.update()
-      if(isOpen){
-        nextTick(() => {
-          activate(popoverRef.value.querySelector('.pa__input-select-item--selected'))
-        })
-      } else {
-        popoverRef.value.querySelectorAll('.pa__input-select-item[tabindex="0"]').forEach(item => {
-          item.tabIndex = -1
-        })
-      }
-
-    })
-
-    const { blur, focus, focusClasses, isFocused } = useFocus(props, 'pa__input')
-
-    function onFocus() {
-      if (inputRef.value !== document.activeElement) {
-        inputRef.value?.focus()
-      }
-      if (!isFocused.value) focus()
-    }
-
-    const onClick = (e: Event) => {
-      state.open = !state.open
-      emit('click', e)
-    }
-
-    const onBlur = (e: FocusEvent) => {
-      e.preventDefault()
-      e.stopPropagation()
-      if(!inputRef.value?.contains(e.relatedTarget as Element)){
-        state.open = false
-        if (isFocused.value) blur()
-      }
-    }
-
-    const onItemClick = (event: MouseEvent, item) => {
-      event.preventDefault()
-      event.stopPropagation()
-      internalValue.value = getItemValue(item)
-      state.open = false
-      return
-    }
-
-    function activate(item) {
-      if(!item){
-        return
-      }
-      // Set all of the buttons to tabindex -1
-      popoverRef.value.querySelectorAll('.pa__input-select-item')
-        .forEach((btn) => btn.tabIndex = -1);
-
-      // Make the current button "active"
-      item.tabIndex = 0;
-      nextTick(()=> {
-        item.focus();
-      })
-    }
-
-    const onKeyDown =  (e: KeyboardEvent) => {
-      if (e.key === 'Enter') {
-        state.open = true
-      }else if (e.code === '13') {
-        emit('change', internalValue.value)
-      } else if (e.key === 'ArrowDown'){
-        if(!state.open) {
-          state.open = true
-        }else {
-          activate(popoverRef.value.querySelector('.pa__input-select-item[tabindex="0"]')?.nextElementSibling)
-        }
-      } else if (e.key === 'ArrowUp'){
-        if(!state.open) {
-          state.open = true
-        }else {
-          activate(popoverRef.value.querySelector('.pa__input-select-item[tabindex="0"]')?.previousElementSibling)
-        }
-      }
-
-      emit('keydown', e)
-    }
-    function getItemText(item: string | Record<string, any>){
-      return typeof item === 'object' ?  item[props.itemText] : item
-    }
-    function getItemValue(item: string | Record<string, any>){
-      return typeof item === 'object' ?  item[props.itemValue] : item
-    }
-
-    const classes = computed(() => ({
-      'pa__input-has-value': !!internalValue.value,
-      'pa__input-select-is-open': state.open,
-      'pa__input-dense': props.dense,
-      'pa__input-flat': props.flat,
-      ...focusClasses
-    }))
-    return {
-      classes,
-      selectedItem,
-      onClick,
-      containerRef,
-      popoverRef,
-      inputRef,
-      onItemClick,
-      onKeyDown,
-      onFocus,
-      onBlur,
-      getItemText,
-      internalValue,
-      i18n,
-      getItemValue
-    }
-  }
-})
-</script>
 
 <style src="./PSelect.css">
 

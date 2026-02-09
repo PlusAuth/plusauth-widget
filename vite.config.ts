@@ -1,3 +1,4 @@
+/// <reference types="vitest/config" />
 import { resolve } from 'path'
 
 import vue from '@vitejs/plugin-vue'
@@ -13,10 +14,11 @@ import pkg from './package.json' ;
 
 const name = 'PlusAuthWidget';
 
-export default defineConfig(({ command  }) => ({
+export default defineConfig(({ command }) => ({
   define: command === 'build' ? {
     'process.env': { NODE_ENV: 'production' }
-  }: {},
+  } : {},
+
   build: {
     target: [
       'chrome109', 'edge114', 'firefox114', 'ios14.5', 'safari11'
@@ -48,5 +50,9 @@ export default defineConfig(({ command  }) => ({
       '@popperjs/core/lib/modifiers/preventOverflow',
       '@popperjs/core/lib/popper-lite'
     ]
+  },
+  test: {
+    environment: 'jsdom',
+    globals: true
   }
 }))

@@ -161,13 +161,13 @@ export interface ITenantSettings {
   auto_sign_in: boolean,
   forgot_password_enabled: boolean,
   password_policy: {
-    min?: (number | null)
-    max?: (number | null)
-    custom_chars?: (string | null)
-    history?: (number | null)
-    upper_case?: (number | null)
-    lower_case?: (number | null)
-    number?: (number | null)
+    min?: number | null
+    max?: number | null
+    custom_chars?: string | null
+    history?: number | null
+    upper_case?: number | null
+    lower_case?: number | null
+    number?: number | null
   };
   register_enabled: boolean,
   welcome_emails_enabled: boolean,

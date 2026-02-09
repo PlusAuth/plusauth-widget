@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { inject, defineProps, withDefaults } from 'vue'
+import { inject } from 'vue';
 
 import { useContext } from '../composables';
 
@@ -19,7 +19,7 @@ withDefaults( defineProps<{
 })
 const context = useContext()
 
-const templates = inject('templates')
+const templates = inject<Record<string, any>>('templates') || {}
 </script>
 
 <template>

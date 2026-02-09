@@ -1,6 +1,8 @@
 {
   "compilerOptions": {
     "allowJs": true,
+    "jsx": "preserve",
+    "jsxImportSource": "vue",
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
     "rootDir": ".",

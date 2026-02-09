@@ -1,4 +1,4 @@
-import { get } from 'lodash-es';
+import { get } from 'es-toolkit/compat';
 import type { ReactNode } from 'react';
 import React from 'react';
 

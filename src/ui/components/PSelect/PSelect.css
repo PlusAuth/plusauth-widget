@@ -17,7 +17,7 @@
 			}
 
 			.input-select-items {
-				@apply hidden overflow-auto max-h-64 ring-1 ring-gray-300 rounded-sm;
+				@apply hidden fixed overflow-auto max-h-64 ring-1 ring-gray-300 rounded-sm bg-white;
 				z-index: 1000;
 
 				.input-select-item {

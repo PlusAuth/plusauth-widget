@@ -1,5 +1,10 @@
 import PlusAuthWidget from './src';
 
+declare global {
+  interface Window {
+    [key: string]: any;
+  }
+}
 globalThis.PlusAuthWidget = window.PlusAuthWidget = PlusAuthWidget
 
 if (!window.PlusAuth) {

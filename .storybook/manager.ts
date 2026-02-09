@@ -1,4 +1,4 @@
-import { startCase } from 'lodash-es'
+import { startCase } from 'es-toolkit/compat'
 import { addons } from 'storybook/manager-api';
 
 
