@@ -30,7 +30,7 @@ const templates = inject<Record<string, any>>('templates') || {}
         name="logo"
       >
         <div
-          v-if="logo && context.client?.logoUri"
+          v-if="typeof logo ==='string' || (logo && context.client?.logoUri)"
           class="pa__logo-container"
         >
           <img
