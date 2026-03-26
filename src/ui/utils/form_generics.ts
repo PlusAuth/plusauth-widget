@@ -104,6 +104,9 @@ export function useGenericForm(
     fields: mergedFields,
     formErrorHandler,
     validate(options: FieldDefinition, field: string, value: any): any {
+      if(options.ignored){
+        return
+      }
       if (options.required !== false && !value) {
         return translator.t('errors.field_required', {
           field: translator.t(`common.fields.${field}`)
@@ -155,6 +158,9 @@ export function useGenericForm(
 
         const fieldsWithValues = Object.keys(mergedFields)
           .reduce((prev: any, curr: string) => {
+            if(mergedFields[curr].ignored){
+              return prev
+            }
             prev[curr] = mergedFields[curr].value
             return prev
           }, {})

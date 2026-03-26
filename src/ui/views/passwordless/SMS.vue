@@ -23,39 +23,46 @@
         :loading="loading"
         @click="submit"
       >
-        <span v-t="'common.submit'" />
+        <span v-t="'common.submit'"/>
       </p-btn>
     </template>
     <template #content-footer>
-      <ResendAction type="common.code" />
+      <p>
+        <a
+          v-t="'common.usePassword'"
+          href="signin/challenge/pw"
+        />
+      </p>
+      <ResendAction type="common.code"/>
     </template>
   </WidgetLayout>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import {defineComponent} from 'vue';
 
 import GenericForm from '../../components/GenericForm.vue';
 import PTimer from '../../components/PTimer/PTimer';
 import ResendAction from '../../components/ResendAction.vue';
 import WidgetLayout from '../../components/WidgetLayout.vue';
-import { useContext, useHttp, useLocale } from '../../composables';
-import type { AdditionalFields } from '../../interfaces';
-import { useGenericForm } from '../../utils/form_generics';
+import {useContext, useHttp, useLocale} from '../../composables';
+import type {AdditionalFields} from '../../interfaces';
+import {useGenericForm} from '../../utils/form_generics';
 
 export default defineComponent({
   name: 'SMS',
-  components: { ResendAction, WidgetLayout, PTimer, GenericForm },
-  setup(){
+  components: {ResendAction, WidgetLayout, PTimer, GenericForm},
+  setup() {
     const http = useHttp()
     const context = useContext()
     const i18n = useLocale()
 
     const defaultFields: AdditionalFields = {
-      phone_number: {
+      user_placeholder: {
         type: 'text',
-        value: context.details.phone_number,
-        attrs: { readOnly: true },
+        value: context.details.user_identifier || context.details.phone_number,
+        attrs: {readOnly: true},
+        ignored: true,
         slots: {
           append: {
             element: 'button',
@@ -76,11 +83,11 @@ export default defineComponent({
         label: 'common.enterOtp'
       }
     }
-    const { form, loading, submit, validate, fields } = useGenericForm(
+    const {form, loading, submit, validate, fields} = useGenericForm(
       'passwordlessSms',
       defaultFields,
       async (values) => {
-        await http.post({ body: values })
+        await http.post({body: values})
       }
     )
     return {

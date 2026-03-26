@@ -38,6 +38,16 @@
         <span v-t="'common.submit'" />
       </p-btn>
     </template>
+    <template
+      #content-footer
+    >
+      <p>
+        <a
+          v-t="'common.usePassword'"
+          href="signin/challenge/pw"
+        />
+      </p>
+    </template>
   </WidgetLayout>
 </template>
 
@@ -62,10 +72,11 @@ export default defineComponent({
     const error = ref<string>(null as any)
 
     const defaultFields: AdditionalFields = {
-      email: {
+      user_placeholder: {
         type: 'text',
-        value: context.details.email,
+        value: context.details.user_identifier || context.details.email,
         attrs: { readOnly: true },
+        ignored: true,
         slots: {
           append: {
             element: 'button',

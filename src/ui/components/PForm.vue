@@ -3,6 +3,7 @@
     ref="formElRef"
     class="pa__form"
     novalidate
+    :disabled="disabled"
     @reset="onReset"
     @submit="onSubmit"
   >

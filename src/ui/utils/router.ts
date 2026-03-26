@@ -5,6 +5,7 @@ import Consent from '../views/Consent.vue';
 import FillMissing from '../views/FillMissing.vue';
 import ForgotPassword from '../views/ForgotPassword.vue';
 import Login from '../views/Login.vue';
+import PasswordChallenge from '../views/Password.vue';
 import MFAChallenge from '../views/mfa/Challenge.vue';
 import MFAEmail from '../views/mfa/Email.vue';
 import MFAFingerVein from '../views/mfa/FingerVein.vue';
@@ -12,6 +13,7 @@ import MFAOTP from '../views/mfa/OTP.vue';
 import MFAPush from '../views/mfa/Push.vue';
 import MFASMS from '../views/mfa/SMS.vue';
 import MFAWebauthN from '../views/mfa/WebAuthN.vue';
+import PasswordlessWebauthn from '../views/passwordless/WebAuthN.vue';
 import PasswordlessEmail from '../views/passwordless/Email.vue';
 import PasswordlessOTP from '../views/passwordless/OTP.vue';
 import PasswordlessPush from '../views/passwordless/Push.vue';
@@ -32,6 +34,11 @@ export function resolveView(mode?: string): Component<any, any, any, any, any> |
     return ForgotPassword
   }
 
+
+  if(m ==='passwordchallenge' || (parts[0] === 'signin' && parts[1] === 'challenge' && parts[2] === 'pw')){
+    return PasswordChallenge
+  }
+
   if (parts[0] === 'signin' || m.startsWith('passwordless')) {
     // PASSWORDLESS
 
@@ -46,6 +53,9 @@ export function resolveView(mode?: string): Component<any, any, any, any, any> |
     }
     if (m === 'passwordlesspush' || parts[1] === 'passwordless' && parts[2] === 'push') {
       return PasswordlessPush
+    }
+    if (m === 'passwordlesswebauthn' || parts[1] === 'passwordless' && parts[2] === 'webauthn') {
+      return PasswordlessWebauthn
     }
   }
 

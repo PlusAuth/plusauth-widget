@@ -31,7 +31,8 @@ export default {
     show: 'Show',
     submit: 'Submit',
     verify: 'Verify',
-    years: 'years'
+    years: 'years',
+    usePassword: 'Use you password instead'
   },
   verifyEmail: {
     checkText: "We\'ve sent an email to <strong>{email}</strong>, please click the link included" +
@@ -144,7 +145,11 @@ export default {
       enrollTitle: 'Register your device',
       enrollDescription: 'Scan the QR Code below with your {0} application',
       tryCodeAction: 'Try entering code manually',
-    }
+    },
+    webauthn: {
+      title: 'Click continue to use your passkey',
+      verifying: 'Verifying your credentials...'
+    },
   },
   mfa: {
     challenge: {
@@ -186,6 +191,7 @@ export default {
       title: 'Enter authorization code sent to: <strong>{phone_number}</strong>'
     },
     webauthn: {
+      title: 'Click continue to use your passkey',
       verifying: 'Verifying your credentials...'
     },
     tryAnotherWay: 'Try another way'

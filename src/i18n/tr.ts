@@ -31,7 +31,8 @@ export default {
     show: 'Göster',
     submit: 'Gönder',
     verify: 'Doğrula',
-    years: 'yıl'
+    years: 'yıl',
+    usePassword: 'Şifre kullanarak gir'
   },
   verifyEmail: {
     checkText: '<strong>{email}</strong> adresine bir e-posta gönderdik, lütfen e-posta adresinizi doğrulamak için içindeki bağlantıya tıklayın.',
@@ -140,6 +141,10 @@ export default {
       enrollTitle: 'Cihazınızı Kaydedin',
       enrollDescription: '{0} uygulamanızla aşağıdaki QR Kodunu tarayın',
       tryCodeAction: 'Kodu manuel olarak girmeyi deneyin'
+    },
+    webauthn: {
+      title: 'Devam et tuşuna basarak güvenlik cihazınızı kullanın',
+      verifying: 'Kimlik bilgileriniz doğrulanıyor...'
     }
   },
   mfa: {
@@ -182,6 +187,7 @@ export default {
       title: 'Gönderilen doğrulama kodunu girin: <strong>{phone_number}</strong>'
     },
     webauthn: {
+      title: 'Devam et tuşuna basarak güvenlik cihazınızı kullanın',
       verifying: 'Kimlik bilgileriniz doğrulanıyor...'
     },
     tryAnotherWay: 'Başka bir yöntem dene'

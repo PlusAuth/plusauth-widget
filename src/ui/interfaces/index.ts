@@ -23,7 +23,7 @@ export interface IClient {
 
 type DictionaryItem = string | Record<string, any>
 export interface ILocaleSettings {
-  locales?: Record<string, { label: string, codes: string[] }>
+  locales?: string[] | Record<string, { label: string, codes: string[] }>
   dictionary: Record<string, typeof defaultDictionary | DictionaryItem>;
   defaultLocale: string;
   selectedLocale?: string;
@@ -78,6 +78,11 @@ export type FieldDefinition =  {
    * Only applies for text field
    */
   placeholder?: string
+
+  /**
+   * If set to true, the field will be ignored, not validated and not included in the form data
+   */
+  ignored?: boolean
   /**
    * This property can be used to arrange ordering the display of form elements.
    */

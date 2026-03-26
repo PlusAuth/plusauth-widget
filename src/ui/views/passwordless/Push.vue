@@ -64,9 +64,17 @@
       </p-btn>
     </template>
     <template
-      v-if="!manualMode && !isRegistration"
       #content-footer
     >
+      <p>
+        <a
+          v-t="'common.usePassword'"
+          href="signin/challenge/pw"
+        />
+      </p>
+      <template
+        v-if="!manualMode && !isRegistration"
+      >
       <p>
         <a
           v-t="'passwordless.push.tryCodeAction'"
@@ -74,6 +82,7 @@
         />
       </p>
       <ResendAction type="common.notification" />
+      </template>
     </template>
   </WidgetLayout>
 </template>
@@ -108,10 +117,11 @@ export default defineComponent({
     const error = ref<string>(null as any)
 
     const defaultFields = computed<AdditionalFields>(() => ({
-      email: {
+      user_placeholder: {
         type: 'text',
-        value: context.details.email,
+        value: context.details.user_identifier || context.details.email,
         attrs: { readOnly: true },
+        ignored: true,
         slots: {
           append: {
             element: 'button',

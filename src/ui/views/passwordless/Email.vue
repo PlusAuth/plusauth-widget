@@ -31,6 +31,12 @@
     </template>
 
     <template #content-footer>
+        <p>
+          <a
+            v-t="'common.usePassword'"
+            href="signin/challenge/pw"
+          />
+        </p>
       <ResendAction type="common.email" />
     </template>
   </WidgetLayout>
@@ -57,10 +63,11 @@ export default defineComponent({
 
     const isMagicLink = context.prompt?.mode === 'check_email'
     const defaultFields: AdditionalFields = {
-      email: {
+      user_placeholder: {
         type: 'text',
-        value: context.details.email,
+        value: context.details.user_identifier || context.details.email,
         attrs: { readOnly: true },
+        ignored: true,
         slots: {
           append: {
             element: 'button',

@@ -2,6 +2,7 @@
   <p-form
     ref="formRef"
     autocomplete="off"
+    :disabled="disabled"
     @submit="submit"
   >
     <template
@@ -11,6 +12,7 @@
       <template v-if="fields[field].visible !== 'hidden' && fields[field].visible !== false">
         <template v-if="fields[field].type === 'code'">
           <PCodeInput
+            :disabled="disabled"
             v-model="fields[field].value"
             v-bind="fields[field].attrs"
             :label="fields[field].label"
@@ -26,6 +28,7 @@
         <template v-else-if="fields[field].type === 'checkbox'">
           <PCheckBox
             v-model="fields[field].value"
+            :disabled="disabled"
             v-bind="fields[field].attrs"
             :name="field"
             :error-messages="fields[field].errors"
@@ -37,6 +40,7 @@
         <p-text-field
           v-else
           v-model="fields[field].value"
+          :disabled="disabled"
           v-bind="fields[field].attrs"
           :error-messages="fields[field].errors"
           :name="field"
@@ -126,6 +130,9 @@ export default defineComponent( {
   name: 'GenericForm',
   components: { PCheckBox, PCodeInput, PForm, PTextField, PMessage, PBtn },
   props: {
+    disabled: {
+      type: Boolean
+    },
     submit: {
       type: Function as () => any,
       required: true,
