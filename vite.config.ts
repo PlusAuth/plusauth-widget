@@ -14,7 +14,7 @@ import pkg from './package.json' ;
 
 const name = 'PlusAuthWidget';
 
-export default defineConfig(({ command }) => ({
+export default defineConfig(({ command }) => ({server:{cors: true},
   define: command === 'build' ? {
     'process.env': { NODE_ENV: 'production' }
   } : {},
@@ -42,14 +42,6 @@ export default defineConfig(({ command }) => ({
   ],
   resolve: {
     dedupe: ['vue'],
-  },
-  optimizeDeps: {
-    include: [
-      '@popperjs/core/lib/modifiers/offset',
-      '@popperjs/core/lib/modifiers/flip',
-      '@popperjs/core/lib/modifiers/preventOverflow',
-      '@popperjs/core/lib/popper-lite'
-    ]
   },
   test: {
     environment: 'jsdom',
