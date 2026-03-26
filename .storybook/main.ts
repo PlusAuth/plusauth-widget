@@ -32,6 +32,11 @@ const config: StorybookConfig = {
     config.plugins = config.plugins?.filter((p: any) => {
       return !['vite-plugin-checker'].includes(p.name);
     })
+    config.esbuild = {
+      ...config.esbuild,
+      jsx: 'automatic',
+      jsxImportSource: 'react',
+    } as any
     return config
   },
   framework: {

@@ -80,10 +80,7 @@ if (!window.PlusAuth) {
   }
   const auth = new PlusAuthWidget('#pa__app', {
     locale: {
-      locales: {
-        'tr': { label: 'Turkce', codes: ['tr'] },
-        'en': { label: 'English', codes: ['en'] },
-      },
+      locales: ['en', 'tr'],
       defaultLocale: 'en',
       dictionary: {
         tr: {
