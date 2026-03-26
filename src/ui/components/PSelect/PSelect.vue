@@ -250,6 +250,7 @@ export default defineComponent({
         class="pa__input--label"
       > {{ i18n.t(label) }}
       </label>
+      <slot name="prepend"></slot>
       <div
         class="pa__input-select-value"
         v-bind="$attrs"
