@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.40.1](https://github.com/PlusAuth/plusauth-widget/compare/v0.40.0...v0.40.1) (2026-03-26)
+
+### Bug Fixes
+
+* incorrect build environment variable handling for vite@8 ([ee3a7cf](https://github.com/PlusAuth/plusauth-widget/commit/ee3a7cff636d375c9f9549ff6d5948a431110c65))
+
 ## [0.40.0](https://github.com/PlusAuth/plusauth-widget/compare/v0.39.0...v0.40.0) (2026-03-26)
 
 ### Features
