@@ -107,7 +107,7 @@ export default defineComponent({
       } else {
         popoverRef.value
           ?.querySelectorAll('.pa__input-select-item[tabindex="0"]')
-          .forEach((el) => ((el as HTMLElement).tabIndex = -1))
+          .forEach((el) => (el as HTMLElement).tabIndex = -1)
       }
     })
 
@@ -156,7 +156,7 @@ export default defineComponent({
 
       popoverRef.value
         .querySelectorAll('.pa__input-select-item')
-        .forEach((el) => ((el as HTMLElement).tabIndex = -1))
+        .forEach((el) => (el as HTMLElement).tabIndex = -1)
 
       item.tabIndex = 0
       nextTick(() => item.focus())

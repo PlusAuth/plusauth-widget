@@ -39,19 +39,19 @@
 </template>
 
 <script lang="ts">
-import {defineComponent} from 'vue';
+import { defineComponent } from 'vue';
 
 import GenericForm from '../../components/GenericForm.vue';
 import PTimer from '../../components/PTimer/PTimer';
 import ResendAction from '../../components/ResendAction.vue';
 import WidgetLayout from '../../components/WidgetLayout.vue';
-import {useContext, useHttp, useLocale} from '../../composables';
-import type {AdditionalFields} from '../../interfaces';
-import {useGenericForm} from '../../utils/form_generics';
+import { useContext, useHttp, useLocale } from '../../composables';
+import type { AdditionalFields } from '../../interfaces';
+import { useGenericForm } from '../../utils/form_generics';
 
 export default defineComponent({
   name: 'SMS',
-  components: {ResendAction, WidgetLayout, PTimer, GenericForm},
+  components: { ResendAction, WidgetLayout, PTimer, GenericForm },
   setup() {
     const http = useHttp()
     const context = useContext()
@@ -61,7 +61,7 @@ export default defineComponent({
       user_placeholder: {
         type: 'text',
         value: context.details.user_identifier || context.details.phone_number,
-        attrs: {readOnly: true},
+        attrs: { readOnly: true },
         ignored: true,
         slots: {
           append: {
@@ -83,11 +83,11 @@ export default defineComponent({
         label: 'common.enterOtp'
       }
     }
-    const {form, loading, submit, validate, fields} = useGenericForm(
+    const { form, loading, submit, validate, fields } = useGenericForm(
       'passwordlessSms',
       defaultFields,
       async (values) => {
-        await http.post({body: values})
+        await http.post({ body: values })
       }
     )
     return {

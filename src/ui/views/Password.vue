@@ -32,19 +32,18 @@
 </template>
 
 <script lang="ts">
-import {defineComponent, ref} from 'vue';
+import { defineComponent, ref } from 'vue';
 
 import GenericForm from '../components/GenericForm.vue';
-import SocialConnectionButton from '../components/SocialConnectionButton.vue';
 import WidgetLayout from '../components/WidgetLayout.vue';
-import {useContext, useHttp, useLocale} from '../composables';
-import type {AdditionalFields} from '../interfaces';
-import {resolveLogo} from '../utils';
-import {useGenericForm} from '../utils/form_generics';
+import { useContext, useHttp, useLocale } from '../composables';
+import type { AdditionalFields } from '../interfaces';
+import { resolveLogo } from '../utils';
+import { useGenericForm } from '../utils/form_generics';
 
 export default defineComponent({
   name: 'Password',
-  components: {WidgetLayout, GenericForm, SocialConnectionButton},
+  components: { WidgetLayout, GenericForm },
   setup() {
     const http = useHttp()
     const context = useContext()
@@ -73,7 +72,8 @@ export default defineComponent({
           }
         },
         order: 0,
-        value: context.details.user_identifier || context.params.login_hint || context.details.identifier || context.details.email ,
+        value: context.details.user_identifier || context.params.login_hint
+          || context.details.identifier || context.details.email ,
       },
       password: {
         order: 1,
@@ -82,13 +82,13 @@ export default defineComponent({
       }
     }
 
-    const {form, loading, submit, validate, fields} = useGenericForm(
+    const { form, loading, submit, validate, fields } = useGenericForm(
       'passwordChallenge',
       defaultFields,
       async (values, finalFields) => {
         form.value.toggleAlert(null)
         try {
-          await http.post({body: values})
+          await http.post({ body: values })
         } catch (e) {
           switch (e.error) {
             case 'user_not_found':

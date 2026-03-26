@@ -14,7 +14,7 @@ import pkg from './package.json' ;
 
 const name = 'PlusAuthWidget';
 
-export default defineConfig(({ command }) => ({server:{cors: true},
+export default defineConfig(({ command }) => ({ server: { cors: true },
   define: command === 'build' ? {
     'process.env': { NODE_ENV: 'production' }
   } : {},

@@ -94,7 +94,7 @@ export default defineComponent({
           loading.value = false;
           throw e
         }
-        await http.post({ body: {...values, response} })
+        await http.post({ body: { ...values, response } })
       }
     )
 

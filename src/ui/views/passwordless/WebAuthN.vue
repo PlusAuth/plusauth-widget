@@ -46,11 +46,10 @@ import WidgetLayout from '../../components/WidgetLayout.vue';
 import { useContext, useHttp, useLocale } from '../../composables';
 import type { AdditionalFields } from '../../interfaces';
 import { useGenericForm } from '../../utils/form_generics';
-import ResendAction from "../../components/ResendAction.vue";
 
 export default defineComponent({
   name: 'WebAuthN',
-  components: {ResendAction, WidgetLayout, GenericForm },
+  components: { WidgetLayout, GenericForm },
   setup() {
     const http = useHttp()
     const context = useContext()
@@ -64,7 +63,8 @@ export default defineComponent({
     const defaultFields: AdditionalFields = {
       user_placeholder: {
         type: 'text',
-        value: context.details.user_identifier || context.details.email || context.details.username || context.details.phone_number,
+        value: context.details.user_identifier || context.details.email
+          || context.details.username || context.details.phone_number,
         attrs: { readOnly: true },
         ignored: true,
         slots: {
@@ -114,7 +114,7 @@ export default defineComponent({
           loading.value = false;
           throw e
         }
-        await http.post({ body: {...values, response} })
+        await http.post({ body: { ...values, response } })
       }
     )
 

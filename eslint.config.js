@@ -2,7 +2,7 @@ import path from 'node:path';
 import url from 'node:url';
 
 import stylisticJs from '@stylistic/eslint-plugin';
-import importPlugin from 'eslint-plugin-import';
+import importPlugin from 'eslint-plugin-import-x';
 import eslintPluginUnicorn from 'eslint-plugin-unicorn';
 import pluginVue from 'eslint-plugin-vue';
 import tseslint from 'typescript-eslint';

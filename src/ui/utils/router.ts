@@ -5,7 +5,6 @@ import Consent from '../views/Consent.vue';
 import FillMissing from '../views/FillMissing.vue';
 import ForgotPassword from '../views/ForgotPassword.vue';
 import Login from '../views/Login.vue';
-import PasswordChallenge from '../views/Password.vue';
 import MFAChallenge from '../views/mfa/Challenge.vue';
 import MFAEmail from '../views/mfa/Email.vue';
 import MFAFingerVein from '../views/mfa/FingerVein.vue';
@@ -13,11 +12,12 @@ import MFAOTP from '../views/mfa/OTP.vue';
 import MFAPush from '../views/mfa/Push.vue';
 import MFASMS from '../views/mfa/SMS.vue';
 import MFAWebauthN from '../views/mfa/WebAuthN.vue';
-import PasswordlessWebauthn from '../views/passwordless/WebAuthN.vue';
+import PasswordChallenge from '../views/Password.vue';
 import PasswordlessEmail from '../views/passwordless/Email.vue';
 import PasswordlessOTP from '../views/passwordless/OTP.vue';
 import PasswordlessPush from '../views/passwordless/Push.vue';
 import PasswordlessSMS from '../views/passwordless/SMS.vue';
+import PasswordlessWebauthn from '../views/passwordless/WebAuthN.vue';
 import Register from '../views/Register.vue';
 import ResetPassword from '../views/ResetPassword.vue';
 import VerifyEmail from '../views/VerifyEmail.vue';
@@ -35,7 +35,7 @@ export function resolveView(mode?: string): Component<any, any, any, any, any> |
   }
 
 
-  if(m ==='passwordchallenge' || (parts[0] === 'signin' && parts[1] === 'challenge' && parts[2] === 'pw')){
+  if(m ==='passwordchallenge' || parts[0] === 'signin' && parts[1] === 'challenge' && parts[2] === 'pw'){
     return PasswordChallenge
   }
 
