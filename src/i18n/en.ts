@@ -1,4 +1,5 @@
 export default {
+  $locale: 'English',
   common: {
     allow: 'Allow',
     code: 'code',

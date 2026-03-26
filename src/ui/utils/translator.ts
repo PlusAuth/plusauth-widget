@@ -23,7 +23,8 @@ export class Translator {
     this.defaultLocale = options.defaultLocale = options.defaultLocale || 'en'
     this.selectedLocale = ref<string | undefined>(options.selectedLocale || this.defaultLocale)
     this.locales = Object.keys(this.dictionary).reduce((finalLocales, dictKey) => {
-      finalLocales[dictKey] = options.locales?.[dictKey] || { label: dictKey, codes: [dictKey] }
+      const userOpt = options.locales?.[dictKey]
+      finalLocales[dictKey] = userOpt && typeof userOpt === 'object' ? userOpt : { label: this.dictionary[dictKey]?.$locale || dictKey, codes: [dictKey] }
       finalLocales[dictKey].value = dictKey
       return finalLocales
     }, {})

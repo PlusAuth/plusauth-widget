@@ -1,4 +1,5 @@
 export default {
+  $locale: 'Türkçe',
   common: {
     allow: 'İzin Ver',
     code: 'Kod',
