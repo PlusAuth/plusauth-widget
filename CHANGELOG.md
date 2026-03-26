@@ -1,5 +1,21 @@
 # Changelog
 
+## [0.40.0](https://github.com/PlusAuth/plusauth-widget/compare/v0.39.0...v0.40.0) (2026-03-26)
+
+### Features
+
+* improve passwordless flows ([cb02815](https://github.com/PlusAuth/plusauth-widget/commit/cb028158b80902846d5b1d2f87cea46c9dd82398))
+* support locale label in dictionary ([e8e8dd4](https://github.com/PlusAuth/plusauth-widget/commit/e8e8dd43f30cb40ccaefb60b8acd147eee8de921))
+
+### Bug Fixes
+
+* default images not displayed when client logo missing ([13c2552](https://github.com/PlusAuth/plusauth-widget/commit/13c2552380422fd451d1ef81a48e3d9b880df77c))
+
+### Stylistic Updates
+
+* globe icon in language select ([c1f4dfb](https://github.com/PlusAuth/plusauth-widget/commit/c1f4dfb541ad904dde5f6a7c3b2716aad1942eb6))
+* improve social buttons ([51a7f4e](https://github.com/PlusAuth/plusauth-widget/commit/51a7f4e0e4901585b53ae7aac8f20abced0e495f))
+
 ## [0.39.0](https://github.com/PlusAuth/plusauth-widget/compare/v0.38.0...v0.39.0) (2025-07-08)
 
 ### Features
