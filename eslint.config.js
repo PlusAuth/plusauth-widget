@@ -71,16 +71,6 @@ export default tseslint.config(
         'error',
         'unix'
       ],
-      '@style/max-len': [
-        'error',
-        {
-          code: 100,
-          ignoreStrings: true,
-          ignoreTemplateLiterals: true,
-          ignoreComments: true,
-          ignoreRegExpLiterals: true
-        }
-      ],
       '@style/no-extra-parens': ['error'],
       '@style/no-mixed-spaces-and-tabs': 'error',
       '@style/no-whitespace-before-property': 'error',
