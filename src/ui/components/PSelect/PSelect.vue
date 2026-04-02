@@ -209,7 +209,7 @@ export default defineComponent({
       'pa__input-select-is-open': state.open,
       'pa__input-dense': props.dense,
       'pa__input-flat': props.flat,
-      ...focusClasses
+      ...focusClasses.value
     }))
 
     return {
@@ -250,7 +250,7 @@ export default defineComponent({
         class="pa__input--label"
       > {{ i18n.t(label) }}
       </label>
-      <slot name="prepend"></slot>
+      <slot name="prepend" />
       <div
         class="pa__input-select-value"
         v-bind="$attrs"

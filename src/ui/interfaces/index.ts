@@ -9,7 +9,16 @@ export interface IClient {
   clientName?: string;
   jwksUri: string;
   applicationType: 'native' | 'web' | 'server-to-server' |
-  'single-page-application' | 'financial';
+    'single-page-application' | 'financial';
+  passwordless:  {
+    name: string,
+    provider: string,
+    branding: {
+      show_in_login?: boolean
+      logo_url?: string
+      display_name?: string
+    }
+  }[],
   social: string[] | {
     name: string,
     provider: string,
@@ -18,10 +27,11 @@ export interface IClient {
       logo_url?: string
       display_name?: string
     }
-  } [];
+  }[];
 }
 
 type DictionaryItem = string | Record<string, any>
+
 export interface ILocaleSettings {
   locales?: string[] | Record<string, { label: string, codes: string[] }>
   dictionary: Record<string, typeof defaultDictionary | DictionaryItem>;
@@ -30,10 +40,10 @@ export interface ILocaleSettings {
 }
 
 export type WidgetModes = 'login' | 'recovery' | 'consent'
-| 'challenge' | 'smsMfa' | 'emailMfa' | 'otpMfa' | 'fvMfa' | 'webauthnMfa' | 'pushMfa'
-| 'signup' | 'resetPassword' | 'fillMissing' | 'verifyEmail'
-| 'passwordlessEmail' | 'passwordlessSms' | 'passwordlessPush' | 'passwordlessOtp' | 'userProfile'
-| 'accountLinking'
+  | 'challenge' | 'smsMfa' | 'emailMfa' | 'otpMfa' | 'fvMfa' | 'webauthnMfa' | 'pushMfa'
+  | 'signup' | 'resetPassword' | 'fillMissing' | 'verifyEmail'
+  | 'passwordlessEmail' | 'passwordlessSms' | 'passwordlessPush' | 'passwordlessOtp' | 'userProfile'
+  | 'accountLinking' | 'passwordlessWebauthn' | 'passwordChallenge'
 
 export type FieldValidator<T extends (string | number)> = (
   this: { $t: (key: string, ...args: any[]) => string },
@@ -49,7 +59,7 @@ export interface AdditionalFields {
   [key: string]: FieldDefinition | null | undefined;
 }
 
-export type FieldDefinition =  {
+export type FieldDefinition = {
   /**
    * HTML attributes to be set to input element.
    */
@@ -57,7 +67,10 @@ export type FieldDefinition =  {
     hideMessages?: boolean
     [key: string]: string | boolean | number | undefined | null
   };
-  slots?: Record<string, { element: string, props: Record<string, any> }>,
+  slots?: Record<string, {
+    element: string,
+    props: Record<string, any>
+  } | undefined | null | false>,
   /**
    * If set `true` or string `hidden` the field will not be visible.
    * This could be used for sending static or generic values.
@@ -73,7 +86,7 @@ export type FieldDefinition =  {
    * Label of the field
    */
   label?: string,
-  format?: 'tel' | 'email' | string | undefined ;
+  format?: 'tel' | 'email' | string | undefined;
   /**
    * Only applies for text field
    */
@@ -94,7 +107,7 @@ export type FieldDefinition =  {
    * The set value will be looked up from the locale dictionary
    * or it can be set as object to provide arguments for the interpolation.
    */
-  errors?: null | string | string[] | ITranslatePath | ITranslatePath[] ;
+  errors?: null | string | string[] | ITranslatePath | ITranslatePath[];
   /**
    * Whether the field is required or not.
    */
@@ -124,6 +137,7 @@ export type FieldDefinition =  {
 type FormRef = ReturnType<typeof createForm> & {
   toggleAlert(message?: string | null, options?: Partial<PAlertProps>): void
 }
+
 export interface IWidgetSettings {
   apiUrl: string;
   locale: ILocaleSettings;
@@ -184,6 +198,7 @@ export interface IPlusAuthContext {
   connection?: {
     name: string
     type: string
+    require_password?: boolean
   },
   error?: {
     error: string,

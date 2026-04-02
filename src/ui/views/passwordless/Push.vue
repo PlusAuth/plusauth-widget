@@ -40,15 +40,14 @@
     >
       <template v-if="!manualMode">
         <div
-          v-for="device in context.details.devices"
-          :key="device.model"
-          style="border: 1px solid; padding: 12px; display: flex; align-items: center"
+          v-if="loading"
+          class="pa__default-border"
+          style="padding: 12px; display: flex; align-items: center"
         >
           <PSpinner
-            v-if="loading"
             indeterminate
           />
-          <span style="margin-left: 12px">{{ device.vendor }} {{ device.model }}</span>
+          <span style="margin-left: 12px">{{ t('mfa.challenge.waitingApproval') }}</span>
         </div>
       </template>
     </GenericForm>
@@ -68,20 +67,20 @@
     >
       <p>
         <a
-          v-t="'common.usePassword'"
-          href="signin/challenge/pw"
+          v-t="'passwordless.useAnotherMethod'"
+          href="signin/passwordless"
         />
       </p>
       <template
         v-if="!manualMode && !isRegistration"
       >
-      <p>
-        <a
-          v-t="'passwordless.push.tryCodeAction'"
-          @click="switchToCode"
-        />
-      </p>
-      <ResendAction type="common.notification" />
+        <p>
+          <a
+            v-t="'passwordless.push.tryCodeAction'"
+            @click="switchToCode"
+          />
+        </p>
+        <ResendAction type="common.notification" />
       </template>
     </template>
   </WidgetLayout>
@@ -99,6 +98,7 @@ import WidgetLayout from '../../components/WidgetLayout.vue';
 import { useContext, useHttp, useLocale } from '../../composables';
 import type { AdditionalFields } from '../../interfaces';
 import { useGenericForm } from '../../utils/form_generics';
+import { getUserIdentifierField } from '../../utils/user.ts';
 
 export default defineComponent({
   name: 'Push',
@@ -106,7 +106,7 @@ export default defineComponent({
   setup() {
     const http = useHttp()
     const context = useContext()
-    const i18n = useLocale()
+    const { t } = useLocale()
 
     const urlParams = new URLSearchParams(window.location.search)
     const manualMode = computed(() => urlParams.get('useQuery') === 'true')
@@ -117,26 +117,7 @@ export default defineComponent({
     const error = ref<string>(null as any)
 
     const defaultFields = computed<AdditionalFields>(() => ({
-      user_placeholder: {
-        type: 'text',
-        value: context.details.user_identifier || context.details.email,
-        attrs: { readOnly: true },
-        ignored: true,
-        slots: {
-          append: {
-            element: 'button',
-            props: {
-              type: 'button',
-              class: 'pa__btn pa__btn--flat pa__pw-toggle-visibility',
-              onClick: (e) => {
-                e.preventDefault()
-                window.location.assign('signin')
-              },
-              'innerHtml': i18n.t('common.edit')
-            }
-          }
-        }
-      },
+      user_placeholder: getUserIdentifierField(context),
       ...manualMode.value ? {
         code: {
           type: 'number',
@@ -193,6 +174,7 @@ export default defineComponent({
 
     }, { immediate: true, flush: 'post' })
     return {
+      t,
       fields,
       validate,
       isRegistration,

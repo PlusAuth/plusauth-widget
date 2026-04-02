@@ -11,18 +11,34 @@ export function convertToUnit(str: string | number | null | undefined,
   }
 }
 
-export function propertyAccessor(object: Record<string, any>,
-                                 keys: string | null,
+export function propertyAccessor(obj: Record<string, any>,
+                                 key: string | null,
                                  array?: any[] | any): string | null | undefined {
-  if(!object){
-    return undefined
-  }
-  array = array || keys?.toString().split('.')
+  try{
 
-  if (array.length > 1) {
-    return propertyAccessor(object[array.shift()], null, array)
-  } else {
-    return object[array]
+    if (!obj || !key) return undefined
+
+    key = String(key)
+    // exact match first — handles keys that contain dots
+    if (key in obj) {
+      return obj[key]
+    }
+
+    const parts = key.split('.')
+
+    // try longest prefix match at each level, e.g. for "resources.urn:plus.com:api"
+    // tries "resources.urn:plus.com:api" → "resources.urn:plus.com" → "resources"
+    for (let i = parts.length; i > 0; i--) {
+      const head = parts.slice(0, i).join('.')
+      if (head in obj) {
+        if (i === parts.length) return obj[head]
+        return propertyAccessor(obj[head], parts.slice(i).join('.'))
+      }
+    }
+
+    return undefined
+  } catch (e) {
+    return undefined
   }
 }
 
@@ -111,7 +127,7 @@ export function resolveLogo(logoOrObj: string | IClient) {
       return `https://static.plusauth.com/${logoOrObj}`
     }
   }
-  return logoOrObj?.logoUri || 'https://static.plusauth.com/images/logo.png'
+  return logoOrObj?.logoUri
 }
 
 export function keysToDotNotation(obj: Record<string, any>,

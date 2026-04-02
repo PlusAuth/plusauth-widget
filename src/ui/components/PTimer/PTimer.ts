@@ -25,7 +25,7 @@ export default defineComponent({
         style: { borderColor: this.countdown  > 0 ? 'orange' : 'red' }
       }, h('span', {
         class: ['pa__timer--seconds']
-      }, this.countdown  )
+      }, this.countdown || 0 )
     )
   }
 })

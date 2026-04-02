@@ -14,8 +14,8 @@
           :src="context.details.dataUrl"
         >
         <h3
-          style="text-align: center;
-      background-color: lightgray; border: 1px solid black; margin: 16px 0;"
+          class="pa__default-border"
+          style="text-align: center; background-color: lightgray; margin: 16px 0;"
         >
           {{ context.details.secret }}
         </h3>
@@ -43,8 +43,8 @@
     >
       <p>
         <a
-          v-t="'common.usePassword'"
-          href="signin/challenge/pw"
+          v-t="'passwordless.useAnotherMethod'"
+          href="signin/passwordless"
         />
       </p>
     </template>
@@ -59,6 +59,7 @@ import WidgetLayout from '../../components/WidgetLayout.vue';
 import { useContext, useHttp, useLocale } from '../../composables';
 import type { AdditionalFields } from '../../interfaces';
 import { useGenericForm } from '../../utils/form_generics';
+import { getUserIdentifierField } from '../../utils/user.ts';
 
 export default defineComponent({
   name: 'OTP',
@@ -72,26 +73,7 @@ export default defineComponent({
     const error = ref<string>(null as any)
 
     const defaultFields: AdditionalFields = {
-      user_placeholder: {
-        type: 'text',
-        value: context.details.user_identifier || context.details.email,
-        attrs: { readOnly: true },
-        ignored: true,
-        slots: {
-          append: {
-            element: 'button',
-            props: {
-              type: 'button',
-              class: 'pa__btn pa__btn--flat pa__pw-toggle-visibility',
-              onClick: (e) => {
-                e.preventDefault()
-                window.location.assign('signin')
-              },
-              'innerHtml': i18n.t('common.edit')
-            }
-          }
-        }
-      },
+      user_placeholder: getUserIdentifierField(context),
       code: {
         type: 'number',
         label: 'common.enterOtp',

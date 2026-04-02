@@ -1,22 +1,24 @@
 <script setup lang="ts">
-import { getAvatarBg, getUserInitials } from '../utils/user.ts';
+import { getAvatarBg } from '../utils/user.ts';
 
-const props = defineProps(['user'])
+defineProps<{
+  initials: string,
+  picture?: string,
+}>()
 
-const initials = getUserInitials(props.user)
 </script>
 
 <template>
   <div
     class="pa__avatar"
-    :style="!user.picture && {
+    :style="!picture && {
       color: getAvatarBg(initials, true),
       backgroundColor: getAvatarBg(initials),
     }"
   >
     <img
-      v-if="user.picture"
-      :src="user.picture"
+      v-if="picture"
+      :src="picture"
       alt="User picture"
     >
     <span v-else>

@@ -3,18 +3,16 @@ import { resolve } from 'path'
 
 import vue from '@vitejs/plugin-vue'
 import { defineConfig } from 'vite'
-
-import checker from 'vite-plugin-checker';
 import dts from 'vite-plugin-dts';
 
 import { libInjectCss } from 'vite-plugin-lib-inject-css'
 
-import pkg from './package.json' ;
-
+import pkg from './package.json';
 
 const name = 'PlusAuthWidget';
 
-export default defineConfig(({ command }) => ({ server: { cors: true },
+export default defineConfig(({ command }) => ({
+  server: { cors: true },
   define: {
     'process.env.NODE_ENV': JSON.stringify(command === 'build' ? 'production' : 'development'),
   },

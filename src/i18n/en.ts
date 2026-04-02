@@ -10,6 +10,7 @@ export default {
     email: 'email',
     enterOtp: 'Enter your code',
     field: 'Field',
+    user: 'User',
     fields: {
       code: 'Code',
       email: 'Email',
@@ -35,14 +36,17 @@ export default {
     usePassword: 'Use you password instead'
   },
   verifyEmail: {
-    checkText: "We\'ve sent an email to <strong>{email}</strong>, please click the link included" +
-      ' to verify your email address.',
+    checkText: "We\'ve sent an email to <strong>{email}</strong>, please click the link included to verify your email address.",
     title: 'Check Your Email'
   },
   consent: {
     allow: 'Allow',
     reject: 'Reject',
-    title: '{clientName} asks for your consent for the followings'
+    title: '{clientName} asks for your consent for the followings',
+    groups: {
+      base: 'Base Attributes',
+      claims: 'Claims'
+    }
   },
   errors: {
     fv: {
@@ -104,9 +108,7 @@ export default {
     subtitle: 'Please fill in additional information required to proceed application.',
   },
   forgotPassword: {
-    'emailSent': 'If there is an account with <strong>{email}</strong> you will receive an' +
-      ' email' +
-      ' containing a link to reset your password.',
+    emailSent: 'If there is an account with <strong>{email}</strong> you will receive an email containing a link to reset your password.',
     subtitle: 'Please enter your email address to request a password reset',
     title: 'Reset your password'
   },
@@ -124,11 +126,15 @@ export default {
     description: 'It appears that an account is already associated with your email address. Please verify ownership to proceed.'
   },
   passwordless: {
+    challenge: {
+      title: 'Select one of following methods',
+    },
+    useAnotherMethod: 'Sign in with another method',
     email: {
+      choice: 'Continue with Email',
       magicLinkTitle: 'Check your email',
       title: 'Enter authorization code sent to: <strong>{email}</strong>',
-      checkText: "We\'ve sent an email to <strong>{email}</strong>, please click the link included" +
-        ' to sign in. Make sure to open link in the same device/browser you are trying to sign in.',
+      checkText: "We\'ve sent an email to <strong>{email}</strong>, please click the link included to sign in. Make sure to open link in the same device/browser you are trying to sign in.",
     },
     otp: {
       registerTitle: 'Register Your Authenticator',
@@ -136,9 +142,11 @@ export default {
       title: 'Enter authorization code'
     },
     sms: {
+      choice: 'Continue with SMS',
       title: 'Enter authorization code sent to: <strong>{phone_number}</strong>'
     },
     push: {
+      choice: 'Continue with App Approval',
       selectCode: 'Select number below from your device',
       title: 'Check your device',
       description: 'Click on notification in your device to allow access',
@@ -147,9 +155,13 @@ export default {
       tryCodeAction: 'Try entering code manually',
     },
     webauthn: {
+      choice: 'Continue with Passkey',
       title: 'Click continue to use your passkey',
       verifying: 'Verifying your credentials...'
     },
+    pw: {
+      choice: 'Continue with password'
+    }
   },
   mfa: {
     challenge: {
@@ -159,7 +171,8 @@ export default {
       sc: 'SmartCard/E-Signature',
       otp: 'Authenticator Application',
       sms: 'SMS',
-      title: 'Select one of following methods'
+      title: 'Select one of following methods',
+      waitingApproval: 'Waiting for approval on your device…'
     },
     email: {
       title: 'Enter authorization code sent to: <strong>{email}</strong>'

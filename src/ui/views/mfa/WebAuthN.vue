@@ -12,8 +12,8 @@
     />
     <template #content-actions>
       <p-btn
-        block
         v-if="supported"
+        block
         color="primary"
         :loading="loading"
         @click="submit"
@@ -21,10 +21,11 @@
         <span v-t="'common.submit'" />
       </p-btn>
     </template>
-    <template #content-footer>
-      <p
-        v-if="context.details.challenges.length > 1"
-      >
+    <template
+      v-if="context.details.challenges.length > 1"
+      #content-footer
+    >
+      <p>
         <a
           v-t="'mfa.tryAnotherWay'"
           href="signin/challenge"
@@ -48,6 +49,7 @@ import WidgetLayout from '../../components/WidgetLayout.vue';
 import { useContext, useHttp, useLocale } from '../../composables';
 import type { AdditionalFields } from '../../interfaces';
 import { useGenericForm } from '../../utils/form_generics';
+import { getUserIdentifierField } from '../../utils/user.ts';
 
 export default defineComponent({
   name: 'WebAuthN',
@@ -63,6 +65,7 @@ export default defineComponent({
     const loadingMsg = ref<string | null>(null as any)
 
     const defaultFields: AdditionalFields = {
+      user_placeholder: getUserIdentifierField(context),
       response: {
         type: 'text',
         visible: false,

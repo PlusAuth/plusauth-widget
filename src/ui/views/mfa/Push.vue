@@ -42,10 +42,12 @@
         <div
           v-for="device in context.details.devices"
           :key="device.model"
-          style="border: 1px solid; padding: 12px; display: flex; align-items: center"
+          class="pa__default-border"
+          style="padding: 12px; display: flex; align-items: center"
         >
           <PSpinner
             v-if="loading"
+            color="primary"
             indeterminate
           />
           <span style="margin-left: 12px">{{ device.vendor }} {{ device.model }}</span>
@@ -78,13 +80,13 @@
       <template
         v-if="!isRegistration"
       >
-      <p>
-        <a
-          v-t="'mfa.push.tryCodeAction'"
-          @click="switchToCode"
-        />
-      </p>
-      <ResendAction type="common.notification" />
+        <p>
+          <a
+            v-t="'mfa.push.tryCodeAction'"
+            @click="switchToCode"
+          />
+        </p>
+        <ResendAction type="common.notification" />
       </template>
     </template>
   </WidgetLayout>
@@ -102,6 +104,7 @@ import WidgetLayout from '../../components/WidgetLayout.vue';
 import { useContext, useHttp } from '../../composables';
 import type { AdditionalFields } from '../../interfaces';
 import { useGenericForm } from '../../utils/form_generics';
+import { getUserIdentifierField } from '../../utils/user.ts';
 
 export default defineComponent({
   name: 'Push',
@@ -120,6 +123,7 @@ export default defineComponent({
     const error = ref<string>(null as any)
 
     const defaultFields = computed<AdditionalFields>(() => ({
+      user_placeholder: getUserIdentifierField(context),
       ...manualMode.value ? {
         code: {
           type: 'number',

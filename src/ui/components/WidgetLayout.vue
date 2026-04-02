@@ -6,10 +6,13 @@ import { useContext } from '../composables';
 import type { ITranslatePath } from '../interfaces';
 import { resolveLogo } from '../utils';
 
+import { getInitials, getUserInitials } from '../utils/user.ts';
+
+import Avatar from './Avatar.vue';
 import PFooter from './Footer.vue';
 import WidgetTemplate from './WidgetTemplate.tsx';
 
-withDefaults( defineProps<{
+const props = withDefaults( defineProps<{
   logo?: string | boolean,
   title?: ITranslatePath
   logoStyle?: any,
@@ -20,6 +23,8 @@ withDefaults( defineProps<{
 const context = useContext()
 
 const templates = inject<Record<string, any>>('templates') || {}
+
+const logoSource = resolveLogo(typeof props.logo === 'string' ? props.logo : context.client)
 </script>
 
 <template>
@@ -30,15 +35,21 @@ const templates = inject<Record<string, any>>('templates') || {}
         name="logo"
       >
         <div
-          v-if="typeof logo ==='string' || (logo && context.client?.logoUri)"
+          v-if="logo"
           class="pa__logo-container"
         >
           <img
+            v-if="logoSource"
             class="pa__logo"
             :style="logoStyle"
             alt="Logo"
             :src="resolveLogo(typeof logo === 'string' ? logo : context.client)"
           >
+          <Avatar
+            v-else
+            :initials="getInitials(context.client?.clientName)"
+            :picture="logoSource"
+          />
         </div>
       </slot>
       <div class="pa__widget-info-section">

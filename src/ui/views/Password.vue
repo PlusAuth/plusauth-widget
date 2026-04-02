@@ -14,7 +14,7 @@
         block
         @click="submit"
       >
-        <span v-t="'common.continue'"/>
+        <span v-t="'common.continue'" />
       </p-btn>
     </template>
     <template #content-append>
@@ -40,6 +40,7 @@ import { useContext, useHttp, useLocale } from '../composables';
 import type { AdditionalFields } from '../interfaces';
 import { resolveLogo } from '../utils';
 import { useGenericForm } from '../utils/form_generics';
+import { getUserIdentifierField } from '../utils/user.ts';
 
 export default defineComponent({
   name: 'Password',
@@ -52,29 +53,7 @@ export default defineComponent({
     const passwordVisible = ref(false)
 
     const defaultFields: AdditionalFields = {
-      user_placeholder: {
-        type: 'text',
-        attrs: {
-          readOnly: true
-        },
-        slots: {
-          append: {
-            element: 'button',
-            props: {
-              type: 'button',
-              class: 'pa__btn pa__btn--flat pa__pw-toggle-visibility',
-              onClick: (e) => {
-                e.preventDefault()
-                window.location.assign('signin')
-              },
-              'innerHtml': i18n.t('common.edit')
-            }
-          }
-        },
-        order: 0,
-        value: context.details.user_identifier || context.params.login_hint
-          || context.details.identifier || context.details.email ,
-      },
+      user_placeholder: getUserIdentifierField(context),
       password: {
         order: 1,
         type: 'password',

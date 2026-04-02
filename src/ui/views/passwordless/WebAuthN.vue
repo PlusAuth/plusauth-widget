@@ -24,8 +24,8 @@
     <template #content-footer>
       <p>
         <a
-          v-t="'common.usePassword'"
-          href="signin/challenge/pw"
+          v-t="'passwordless.useAnotherMethod'"
+          href="signin/passwordless"
         />
       </p>
     </template>
@@ -46,6 +46,7 @@ import WidgetLayout from '../../components/WidgetLayout.vue';
 import { useContext, useHttp, useLocale } from '../../composables';
 import type { AdditionalFields } from '../../interfaces';
 import { useGenericForm } from '../../utils/form_generics';
+import { getUserIdentifierField } from '../../utils/user.ts';
 
 export default defineComponent({
   name: 'WebAuthN',
@@ -61,27 +62,7 @@ export default defineComponent({
     const loadingMsg = ref<string | null>(null as any)
 
     const defaultFields: AdditionalFields = {
-      user_placeholder: {
-        type: 'text',
-        value: context.details.user_identifier || context.details.email
-          || context.details.username || context.details.phone_number,
-        attrs: { readOnly: true },
-        ignored: true,
-        slots: {
-          append: {
-            element: 'button',
-            props: {
-              type: 'button',
-              class: 'pa__btn pa__btn--flat pa__pw-toggle-visibility',
-              onClick: (e) => {
-                e.preventDefault()
-                window.location.assign('signin')
-              },
-              'innerHtml': i18n.t('common.edit')
-            }
-          }
-        }
-      },
+      user_placeholder: getUserIdentifierField(context),
       response: {
         type: 'text',
         visible: false,

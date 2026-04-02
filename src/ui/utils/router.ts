@@ -15,6 +15,7 @@ import MFAWebauthN from '../views/mfa/WebAuthN.vue';
 import PasswordChallenge from '../views/Password.vue';
 import PasswordlessEmail from '../views/passwordless/Email.vue';
 import PasswordlessOTP from '../views/passwordless/OTP.vue';
+import PasswordlessChallenges from '../views/passwordless/PasswordlessChallenges.vue';
 import PasswordlessPush from '../views/passwordless/Push.vue';
 import PasswordlessSMS from '../views/passwordless/SMS.vue';
 import PasswordlessWebauthn from '../views/passwordless/WebAuthN.vue';
@@ -42,6 +43,9 @@ export function resolveView(mode?: string): Component<any, any, any, any, any> |
   if (parts[0] === 'signin' || m.startsWith('passwordless')) {
     // PASSWORDLESS
 
+    if(parts[1] === 'passwordless' && !parts[2]){
+      return PasswordlessChallenges
+    }
     if (m === 'passwordlessemail' || parts[1] === 'passwordless' && parts[2] === 'email') {
       return PasswordlessEmail
     }

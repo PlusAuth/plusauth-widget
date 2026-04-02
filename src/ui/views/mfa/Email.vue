@@ -39,9 +39,10 @@ import { defineComponent } from 'vue';
 import GenericForm from '../../components/GenericForm.vue';
 import ResendAction from '../../components/ResendAction.vue';
 import WidgetLayout from '../../components/WidgetLayout.vue';
-import { useContext, useHttp } from '../../composables';
+import { useContext, useHttp, useLocale } from '../../composables';
 import type { AdditionalFields } from '../../interfaces';
 import { useGenericForm } from '../../utils/form_generics';
+import { getUserIdentifierField } from '../../utils/user.ts';
 
 
 export default defineComponent({
@@ -52,6 +53,7 @@ export default defineComponent({
     const context = useContext()
 
     const defaultFields: AdditionalFields = {
+      user_placeholder: getUserIdentifierField(context),
       code: {
         type: 'text',
         label: 'common.enterOtp'

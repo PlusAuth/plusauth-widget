@@ -12,8 +12,8 @@
       <template v-if="fields[field].visible !== 'hidden' && fields[field].visible !== false">
         <template v-if="fields[field].type === 'code'">
           <PCodeInput
-            :disabled="disabled"
             v-model="fields[field].value"
+            :disabled="disabled"
             v-bind="fields[field].attrs"
             :label="fields[field].label"
             :size="fields[field].length"
@@ -56,6 +56,7 @@
           >
             <component
               :is="opts.element"
+              v-if="opts"
               v-bind="{...opts.props, innerHtml: undefined}"
               v-html="opts.props.innerHtml"
             />

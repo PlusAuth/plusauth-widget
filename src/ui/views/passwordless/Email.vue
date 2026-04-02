@@ -31,19 +31,19 @@
     </template>
 
     <template #content-footer>
-        <p>
-          <a
-            v-t="'common.usePassword'"
-            href="signin/challenge/pw"
-          />
-        </p>
+      <p>
+        <a
+          v-t="'passwordless.useAnotherMethod'"
+          href="signin/passwordless"
+        />
+      </p>
       <ResendAction type="common.email" />
     </template>
   </WidgetLayout>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue';
+import {  defineComponent } from 'vue';
 
 import GenericForm from '../../components/GenericForm.vue';
 import ResendAction from '../../components/ResendAction.vue';
@@ -51,7 +51,7 @@ import WidgetLayout from '../../components/WidgetLayout.vue';
 import { useContext, useHttp, useLocale } from '../../composables';
 import type { AdditionalFields } from '../../interfaces';
 import { useGenericForm } from '../../utils/form_generics';
-
+import { getUserIdentifierField } from '../../utils/user.ts';
 
 export default defineComponent({
   name: 'Email',
@@ -63,26 +63,7 @@ export default defineComponent({
 
     const isMagicLink = context.prompt?.mode === 'check_email'
     const defaultFields: AdditionalFields = {
-      user_placeholder: {
-        type: 'text',
-        value: context.details.user_identifier || context.details.email,
-        attrs: { readOnly: true },
-        ignored: true,
-        slots: {
-          append: {
-            element: 'button',
-            props: {
-              type: 'button',
-              class: 'pa__btn pa__btn--flat pa__pw-toggle-visibility',
-              onClick: (e) => {
-                e.preventDefault()
-                window.location.assign('signin')
-              },
-              'innerHtml': i18n.t('common.edit')
-            }
-          }
-        }
-      },
+      user_placeholder: getUserIdentifierField(context),
       code: {
         type: 'text',
         label: 'common.fields.code'

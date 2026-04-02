@@ -1,15 +1,16 @@
 import { version } from '../../../package.json'
+
 type RequestOptions = Omit<RequestInit, 'body'> & {
   body?: Record<string, any>,
   query?: Record<string, any>
 }
 
 export type FetchWrapper = Record<
-'get' | 'post' | 'patch' | 'delete',
-(
-  endpointOrOptions: string | RequestOptions,
-  options?: RequestOptions
-) => Promise<any>
+  'get' | 'post' | 'patch' | 'delete',
+  (
+    endpointOrOptions: string | RequestOptions,
+    options?: RequestOptions
+  ) => Promise<any>
 >;
 
 const toQueryString = params => !params ? '' : `?${Object.entries(params)
@@ -25,13 +26,14 @@ export function createFetchWrapper(baseUrl?: string) {
 
   ['get', 'post', 'patch', 'delete'].forEach(method => {
     http[method] = function (
-      endpointOrOptions: string | RequestOptions,
+      endpointOrOpts: string | RequestOptions,
       options: RequestOptions
     ) {
-      const url = typeof endpointOrOptions === 'string' ? endpointOrOptions
-        : window.location.pathname;
-      options = options || endpointOrOptions
-      const fetchOptions: RequestInit = Object.assign({}, options as any || {} , {
+      const currentUrl = new URL(window.location.href);
+      const url = typeof endpointOrOpts === 'string' ? endpointOrOpts
+        : currentUrl.pathname;
+      options = options || endpointOrOpts
+      const fetchOptions: RequestInit = Object.assign({}, options as any || {}, {
         method,
         credentials: 'include',
       })
@@ -46,9 +48,11 @@ export function createFetchWrapper(baseUrl?: string) {
       if (fetchOptions.body) {
         fetchOptions.body = JSON.stringify(fetchOptions.body)
       }
-
       return new Promise(function (resolve, reject) {
-        fetch(`${baseUrl}${url}${toQueryString(options.query)}`, fetchOptions).then(rawResponse => {
+        fetch(`${baseUrl}${url}${toQueryString({
+          ...Object.fromEntries(currentUrl.searchParams.entries()),
+          ...options.query,
+        })}`, fetchOptions).then(rawResponse => {
           const contentType = rawResponse.headers.get('content-type')
           if (rawResponse.redirected && contentType && contentType.includes('html')) {
             window.location.assign(rawResponse.url)
@@ -66,8 +70,8 @@ export function createFetchWrapper(baseUrl?: string) {
               resolve(response)
             } else if (
               rawResponse.status === 400
-                && response.error === 'xhr_request'
-                && response.location
+              && response.error === 'xhr_request'
+              && response.location
             ) {
               window.location.replace(response.location);
               return false;

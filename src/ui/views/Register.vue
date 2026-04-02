@@ -51,7 +51,7 @@
           href="signin"
           @click.stop
         />
-        <div v-if="!isPasswordless && context.settings.forgot_password_enabled">
+        <div v-if="context.settings.forgot_password_enabled">
           <a
             v-t="'login.forgotPassword'"
             href="signin/recovery"
@@ -83,9 +83,6 @@ export default defineComponent({
     const context = useContext()
 
     const connection = context.connection || {} as Exclude<typeof context.connection, undefined>
-    const isPasswordless = connection.type && ![
-      'social', 'enterprise', 'plusauth'
-    ].includes(connection.type)
 
     let identifierField = connection.type === 'sms' ? 'phone_number' : 'email';
 
@@ -98,7 +95,7 @@ export default defineComponent({
         type: 'text',
         label: `common.fields.${identifierField}`
       },
-      ...isPasswordless ? {} : {
+      ...connection.require_password !== false ? {
         password: {
           order: 1,
           type: 'password',
@@ -124,7 +121,7 @@ export default defineComponent({
             return true
           }
         } as FieldDefinition
-      },
+      }: {}
     }
 
     const { form, loading, submit, validate, fields } = useGenericForm(
@@ -166,7 +163,6 @@ export default defineComponent({
       context,
       fields,
       loading,
-      isPasswordless,
       resolveClientLogo: resolveLogo,
       validate,
       submit

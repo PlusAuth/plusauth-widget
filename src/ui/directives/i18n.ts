@@ -34,6 +34,9 @@ function parseValue(value: any): any {
 function translate(el: any, binding: DirectiveBinding): void {
   const value: any = binding.value
 
+  if(!value){
+    return
+  }
   const { path, locale, args, fallback } = parseValue(value)
   if (!path && !locale && !args) {
     console.warn('value type not supported')

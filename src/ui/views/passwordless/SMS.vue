@@ -4,6 +4,7 @@
       path: 'passwordless.sms.title',
       args: { phone_number: context.details.phone_number}
     }"
+    logo-style="margin-left: 36px"
     logo="images/icons/message-on-phone.svg"
   >
     <PTimer
@@ -23,17 +24,17 @@
         :loading="loading"
         @click="submit"
       >
-        <span v-t="'common.submit'"/>
+        <span v-t="'common.submit'" />
       </p-btn>
     </template>
     <template #content-footer>
       <p>
         <a
-          v-t="'common.usePassword'"
-          href="signin/challenge/pw"
+          v-t="'passwordless.useAnotherMethod'"
+          href="signin/passwordless"
         />
       </p>
-      <ResendAction type="common.code"/>
+      <ResendAction type="common.code" />
     </template>
   </WidgetLayout>
 </template>
@@ -48,6 +49,7 @@ import WidgetLayout from '../../components/WidgetLayout.vue';
 import { useContext, useHttp, useLocale } from '../../composables';
 import type { AdditionalFields } from '../../interfaces';
 import { useGenericForm } from '../../utils/form_generics';
+import { getUserIdentifierField } from '../../utils/user.ts';
 
 export default defineComponent({
   name: 'SMS',
@@ -58,26 +60,7 @@ export default defineComponent({
     const i18n = useLocale()
 
     const defaultFields: AdditionalFields = {
-      user_placeholder: {
-        type: 'text',
-        value: context.details.user_identifier || context.details.phone_number,
-        attrs: { readOnly: true },
-        ignored: true,
-        slots: {
-          append: {
-            element: 'button',
-            props: {
-              type: 'button',
-              class: 'pa__btn pa__btn--flat pa__pw-toggle-visibility',
-              onClick: (e) => {
-                e.preventDefault()
-                window.location.assign('signin')
-              },
-              'innerHtml': i18n.t('common.edit')
-            }
-          }
-        }
-      },
+      user_placeholder: getUserIdentifierField(context),
       code: {
         type: 'text',
         label: 'common.enterOtp'

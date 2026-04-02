@@ -87,6 +87,18 @@ export class Translator {
     }
   }
 
+  te(key: string, locale?: string): boolean {
+    const vm = this instanceof Translator
+      ? this
+      : getCurrentInstance()?.appContext?.config?.globalProperties.$i18n;
+
+    const loc = locale || vm.locale
+    return !!(
+      propertyAccessor(vm.dictionary[loc], key) ||
+      propertyAccessor(vm.dictionary[vm.defaultLocale], key)
+    )
+  }
+
   _interpolate(str: string, args: any, locale: string) {
     if (!str || !args) {
       return str

@@ -1,8 +1,8 @@
 <template>
   <WidgetLayout
-    logo="images/icons/message-on-phone.svg"
-    logo-style="margin-left: 30px;"
     :title="{ path: 'mfa.sms.title', args: { phone_number: context.details.phone_number} }"
+    logo="images/icons/message-on-phone.svg"
+    logo-style="margin-left: 36px"
   >
     <PTimer
       class="pa__challenge-timer"
@@ -48,6 +48,7 @@ import WidgetLayout from '../../components/WidgetLayout.vue';
 import { useContext, useHttp } from '../../composables';
 import type { AdditionalFields } from '../../interfaces';
 import { useGenericForm } from '../../utils/form_generics';
+import { getUserIdentifierField } from '../../utils/user.ts';
 
 export default defineComponent({
   name: 'SMS',
@@ -59,6 +60,7 @@ export default defineComponent({
 
 
     const defaultFields: AdditionalFields = {
+      user_placeholder: getUserIdentifierField(context),
       code: {
         type: 'text',
         label: 'common.fields.code'

@@ -2,9 +2,15 @@
   <WidgetLayout title="accountLinking.title">
     <template #info>
       <div class="pa__account-merge-list">
-        <UserAvatar :user="context.details.merge_with" />
+        <UserAvatar
+          :initials="getUserInitials(context.details.merge_with)"
+          :picture="context.details.merge_with.picture"
+        />
         <MergeIcon />
-        <UserAvatar :user="context.details.user" />
+        <UserAvatar
+          :initials="getUserInitials(context.details.user)"
+          :picture="context.details.user.picture"
+        />
       </div>
       <h2>
         {{ i18n.t('accountLinking.description') }}
@@ -37,18 +43,19 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 
+import Avatar from '../components/Avatar.vue';
 import GenericForm from '../components/GenericForm.vue';
 import MergeIcon from '../components/MergeIcon.vue';
-import UserAvatar from '../components/UserAvatar.vue';
 import WidgetLayout from '../components/WidgetLayout.vue';
 import { useContext, useHttp, useLocale } from '../composables';
 import type { AdditionalFields } from '../interfaces';
 import { resolveLogo } from '../utils';
 import { useGenericForm } from '../utils/form_generics';
+import { getUserInitials } from '../utils/user.ts';
 
 export default defineComponent({
   name: 'AccountLinking',
-  components: { MergeIcon, UserAvatar, WidgetLayout, GenericForm },
+  components: { MergeIcon, UserAvatar: Avatar, WidgetLayout, GenericForm },
   setup() {
     const http = useHttp()
     const context = useContext()
@@ -103,7 +110,8 @@ export default defineComponent({
       resolveClientLogo: resolveLogo
     }
 
-  }
+  },
+  methods: { getUserInitials }
 })
 </script>
 

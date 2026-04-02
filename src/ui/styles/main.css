@@ -191,6 +191,10 @@
       width: 450px;
     }
 		&-footer {
+      &:empty {
+        display: none;
+      }
+
 			p {
 					@apply text-center;
 			}
@@ -225,6 +229,10 @@
       display: flex;
       justify-content: center;
       margin-top: 12px;
+
+      &:empty {
+        display: none;
+      }
     }
 
     &-footer {
@@ -337,7 +345,7 @@
   }
 
   .challenge-timer {
-    margin-top: 16px;
+    margin-top: 0px;
   }
 
   .signin-challenges {
@@ -350,6 +358,30 @@
   }
 
 
+  .passwordless-challenges {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .passwordless-challenge {
+    border: 1px solid #dadce0;
+    border-radius: 4px;
+    text-transform: none;
+    color: unset;
+  }
+
+  .passwordless-challenge__icon {
+    width: 24px;
+    height: 24px;
+    margin-inline-end: 16px;
+
+    & > * {
+      height: 100%;
+    }
+  }
+
+
   input:-webkit-autofill {
     background: #fff;
     -webkit-text-fill-color: #000; /* Surcharge la font color d'autofill */
@@ -357,4 +389,10 @@
     box-shadow: 0 0 0 50px #fff inset; /* Ajoute un fake background à base d'ombrage aplatit */
   }
 
+}
+
+.default-border {
+  @apply border;
+  border-color: #dadce0;
+  border-radius: 2px;
 }

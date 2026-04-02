@@ -30,7 +30,7 @@ function genSvg(this: ComponentPublicInstance<any>) {
   return h('svg', {
     style: this.svgStyles,
     xmlns: 'http://www.w3.org/2000/svg',
-     
+
     viewBox: `${this.viewBoxSize} ${this.viewBoxSize} ${2 * this.viewBoxSize} ${2 * this.viewBoxSize}`,
   }, children)
 }
@@ -51,7 +51,7 @@ export default defineComponent({
       default: 0,
     },
     color: {
-      type: String
+      type: String,
     },
     size: {
       type: [Number, String],

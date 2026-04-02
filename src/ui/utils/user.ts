@@ -1,5 +1,7 @@
 import { toValue } from 'vue';
 
+import { useLocale } from '../composables';
+
 export function getUserIdentifier(userRef: any) {
   const user = toValue(userRef)
   if (!user) {
@@ -19,6 +21,18 @@ export function getUserIdentifier(userRef: any) {
   if (user.phone_number) {
     return user.phone_number
   }
+}
+
+export function getInitials(input?: string, maxInitials = 2): string {
+  if (!input || typeof input !== 'string') return '';
+
+  return input
+    .trim()
+    .split(/\s+/)                 // split by whitespace
+    .filter(Boolean)              // remove empty parts
+    .slice(0, maxInitials)        // limit number of initials
+    .map(word => word[0]?.toUpperCase() ?? '')
+    .join('');
 }
 
 export function getUserInitials(userRef: any) {
@@ -76,4 +90,43 @@ function getHslVars(initials: string) {
 export function getAvatarBg(initials: string, lighten = false) {
   const [h, s, l] = getHslVars(initials)
   return `hsl(${h}, ${s}%, ${lighten ? `calc(${l}% + 30%)` : `${l}%`}`
+}
+
+
+export function getUserIdentifierField(context, editable = true) {
+  const i18n = useLocale()
+  const details = context.details || {}
+
+  const identifier = details.user_identifier ||
+    details[details.identifier] || details.identifier ||
+    details.email || details.phone_number
+    || details.username
+
+  return {
+    type: 'text',
+    value: identifier,
+    attrs: { readOnly: true },
+    label: i18n.t('common.user'),
+    ignored: true,
+    slots: !editable ? { } : {
+      prepend: {
+        element: 'div',
+        props: {
+          innerHtml: 'User'
+        }
+      },
+      append: {
+        element: 'button',
+        props: {
+          type: 'button',
+          class: 'pa__btn pa__btn--flat pa__pw-toggle-visibility',
+          onClick: (e) => {
+            e.preventDefault()
+            window.location.assign('signin')
+          },
+          'innerHtml': i18n.t('common.edit')
+        }
+      }
+    }
+  }
 }

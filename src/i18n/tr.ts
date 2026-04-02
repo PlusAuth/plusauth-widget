@@ -1,6 +1,7 @@
 export default {
   $locale: 'Türkçe',
   common: {
+    user: 'Kullanıcı',
     allow: 'İzin Ver',
     code: 'Kod',
     continue: 'Devam Et',
@@ -41,7 +42,11 @@ export default {
   consent: {
     allow: 'İzin Ver',
     reject: 'Reddet',
-    title: '{clientName}, aşağıdakiler için onayınızı istiyor'
+    title: '{clientName}, aşağıdakiler için onayınızı istiyor',
+    groups: {
+      base: 'Temel Bilgiler',
+      claims: 'İstekler'
+    }
   },
   errors: {
     fv: {
@@ -121,7 +126,12 @@ export default {
     description: 'Görünüşe göre e-posta adresinizle zaten bir hesap ilişkilendirilmiş. Devam etmek için mülkiyeti doğrulayın.'
   },
   passwordless: {
+    challenge: {
+      title: 'Aşağıdaki yöntemlerden birini seçin',
+    },
+    useAnotherMethod: 'Başka bir yöntemle giriş yap',
     email: {
+      choice: 'E-posta ile devam et',
       magicLinkTitle: 'E-postanızı Kontrol Edin',
       title: 'Gönderilen doğrulama kodunu girin: <strong>{email}</strong>',
       checkText: '<strong>{email}</strong> adresine bir e-posta gönderdik, içindeki bağlantıya tıklayarak giriş yapabilirsiniz. Giriş yapmaya çalıştığınız cihaz/tarayıcıda bağlantıyı açtığınızdan emin olun.'
@@ -132,9 +142,11 @@ export default {
       title: 'Doğrulama kodunu girin'
     },
     sms: {
+      choice: 'SMS ile devam et',
       title: 'Gönderilen doğrulama kodunu girin: <strong>{phone_number}</strong>'
     },
     push: {
+      choice: 'Uygulama Onayı ile devam et',
       selectCode: 'Cihazınızdan aşağıdaki numarayı seçin',
       title: 'Cihazınızı Kontrol Edin',
       description: 'Erişim izni vermek için cihazınızdaki bildirime tıklayın',
@@ -143,8 +155,12 @@ export default {
       tryCodeAction: 'Kodu manuel olarak girmeyi deneyin'
     },
     webauthn: {
+      choice: 'Geçiş Anahtarı (Passkey) ile devam et',
       title: 'Devam et tuşuna basarak güvenlik cihazınızı kullanın',
       verifying: 'Kimlik bilgileriniz doğrulanıyor...'
+    },
+    pw: {
+      choice: 'Şifre ile devam et'
     }
   },
   mfa: {
@@ -155,7 +171,8 @@ export default {
       sc: 'Akıllı Kart/E-İmza',
       otp: 'Kimlik Doğrulama Uygulaması',
       sms: 'SMS',
-      title: 'Aşağıdaki yöntemlerden birini seçin'
+      title: 'Aşağıdaki yöntemlerden birini seçin',
+      waitingApproval: 'Cihazınızda onay bekleniyor…'
     },
     email: {
       title: 'Gönderilen doğrulama kodunu girin: <strong>{email}</strong>'
@@ -167,7 +184,7 @@ export default {
       checkingDevice: 'Cihaz bağlantısı kontrol ediliyor',
       checkDevice: 'Cihazınızın bağlı olduğundan ve gerekli yazılımın yüklü olduğundan emin olun. Cihaz hazır olduğunda bu sayfayı yenileyin.',
       enroll: 'Kaydetmek için bir parmak seçin. Birden fazla parmak kaydedebilirsiniz.',
-      verify: 'Parmağınızı taramaya hazır olduğunuzda <strong>DOĞRULA</strong> butonuna tıklayın.'
+      verify: 'Parmağınızı taramaya hazır olduğunuzda <strong>DOĞRULA</strong> butonuna tıklayın.',
     },
     otp: {
       title: 'Doğrulama kodunu girin',

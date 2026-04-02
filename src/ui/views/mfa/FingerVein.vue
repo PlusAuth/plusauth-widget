@@ -57,7 +57,10 @@
         <span v-t="context.details.fv_template?.length > 0 ? 'common.verify' : 'common.submit'" />
       </p-btn>
     </template>
-    <template #content-footer>
+    <template
+      v-if="context.details.challenges.length > 1"
+      #content-footer
+    >
       <p>
         <a
           v-t="'mfa.tryAnotherWay'"
@@ -75,17 +78,19 @@ import GenericForm from '../../components/GenericForm.vue';
 import Hand from '../../components/Hand.vue';
 import PSpinner from '../../components/PSpinner/PSpinner';
 import WidgetLayout from '../../components/WidgetLayout.vue';
-import { useContext, useHttp } from '../../composables';
+import { useContext, useHttp, useLocale } from '../../composables';
 import { useGenericForm } from '../../utils/form_generics';
 import { H1FingerVeinService } from '../../utils/fv_helper';
+import { getUserIdentifierField } from '../../utils/user.ts';
 
 export default defineComponent({
   name: 'FingerVein',
   components: { WidgetLayout, PSpinner, Hand, GenericForm },
-  setup(){
+  setup() {
 
     const http = useHttp()
     const context = useContext()
+    const i18n = useLocale()
 
     const loadingMsg = ref<string | null>(null as any)
     const deviceOk = ref<boolean>(false)
@@ -100,26 +105,29 @@ export default defineComponent({
     const fv = new H1FingerVeinService()
 
     const { form, loading, fields, validate } = useGenericForm(
-      'fvMfa'
+      'fvMfa',
+      {
+        user_placeholder: getUserIdentifierField(context),
+      }
     )
 
-    loading.value= true
+    loading.value = true
     onMounted(async () => {
-      try{
+      try {
         loadingMsg.value = 'mfa.fv.checkingDevice'
         await fv.ping()
         const status = await fv.deviceStatus()
-        if(status.ReturnCode !== '0'){
+        if (status.ReturnCode !== '0') {
           throw `0x${status.ReturnCode}`
         }
         deviceOk.value = true;
-      }catch (e) {
+      } catch (e) {
         deviceOk.value = false;
         form.value.toggleAlert({
           path: `errors.fv.${e.error || e.retCode || e}`,
           args: e
         })
-      }finally {
+      } finally {
         loading.value = false
       }
     })
@@ -135,14 +143,14 @@ export default defineComponent({
       enrolledFingers,
       form,
       loading,
-      async onFingerSelect(ind: number, hand: 'left' | 'right'){
+      async onFingerSelect(ind: number, hand: 'left' | 'right') {
         loadingMsg.value = 'mfa.fv.enrollmentInProgress'
-        loading.value= true
+        loading.value = true
         let h1Index = ind
-        if(hand === 'right'){
+        if (hand === 'right') {
           h1Index += 3
         }
-        try{
+        try {
           const resp = await fv.enroll(h1Index)
           enrolledFingers[hand].push(ind)
           templates[h1Index] = resp.template
@@ -151,21 +159,21 @@ export default defineComponent({
             timeout: 3000,
             type: 'success'
           })
-        }catch (e){
+        } catch (e) {
           form.value.toggleAlert(`errors.fv.${e.error || e.retCode || e}`, {
             dismissible: false
           })
-        }finally {
+        } finally {
           loadingMsg.value = null
-          loading.value= false
+          loading.value = false
         }
 
       },
 
-      async submit(){
+      async submit() {
         loading.value = true
         loadingMsg.value = null
-        try{
+        try {
           if (!context.details.fv_template || context.details.fv_template.length === 0) {
             if (!templates || Object.keys(templates).length === 0) {
               form.value.toggleAlert('errors.fv.enrollRequired', {
@@ -177,7 +185,7 @@ export default defineComponent({
                 body: { templates }
               })
             }
-          }else {
+          } else {
             loadingMsg.value = 'mfa.fv.verifyInProgress'
             const resp = await fv.verify(1, context.details.fv_template)
 
@@ -185,8 +193,8 @@ export default defineComponent({
               body: { response: resp }
             })
           }
-        }catch (e) {
-          if(e.retCode){
+        } catch (e) {
+          if (e.retCode) {
             form.value.toggleAlert(`errors.fv.${e.retCode}`, {
               dismissible: false
             })
@@ -196,7 +204,7 @@ export default defineComponent({
             })
           }
           throw e
-        }finally {
+        } finally {
           loading.value = false
         }
       }
@@ -205,8 +213,8 @@ export default defineComponent({
 })
 </script>
 
-<style  lang="postcss">
-.hands_container{
+<style lang="postcss">
+.hands_container {
   padding: 12px 0;
   display: flex;
 
@@ -237,14 +245,18 @@ export default defineComponent({
     path {
       fill: #262626;
     }
-    .selected{
+
+    .selected {
       pointer-events: none;
-      .finger{
+
+      .finger {
         fill: #6bbb40;
       }
     }
+
     .thumb_container, .little_container, .palm {
       pointer-events: none;
+
       path {
         fill: gray;
         opacity: 0.3;
