@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.41.0](https://github.com/PlusAuth/plusauth-widget/compare/v0.40.1...v0.41.0) (2026-04-02)
+
+### Features
+
+* passwordless flow improvements ([9166dd8](https://github.com/PlusAuth/plusauth-widget/commit/9166dd80fdead174a58bc146ead9dbf1857c9404))
+
 ## [0.40.1](https://github.com/PlusAuth/plusauth-widget/compare/v0.40.0...v0.40.1) (2026-03-26)
 
 ### Bug Fixes
