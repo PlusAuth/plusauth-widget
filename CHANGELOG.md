@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.41.1](https://github.com/PlusAuth/plusauth-widget/compare/v0.41.0...v0.41.1) (2026-04-06)
+
+### Bug Fixes
+
+* use user placeholder instead of email for error input location ([c53423e](https://github.com/PlusAuth/plusauth-widget/commit/c53423e4120aaf4c638e7df4ae535c0fa8116dc5))
+
 ## [0.41.0](https://github.com/PlusAuth/plusauth-widget/compare/v0.40.1...v0.41.0) (2026-04-02)
 
 ### Features
