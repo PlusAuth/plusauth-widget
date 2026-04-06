@@ -71,8 +71,7 @@ export default defineComponent({
         } catch (e) {
           switch (e.error) {
             case 'user_not_found':
-              finalFields.email ? finalFields.email.errors = `errors.${e.error}` :
-                finalFields.username ? finalFields.username.errors = `errors.${e.error}` : null;
+              finalFields.user_placeholder.errors = `errors.${e.error}`;
               break;
             case 'email_not_verified':
               window.location.assign('account/verifyEmail')
