@@ -23,7 +23,7 @@
 import { computed } from 'vue';
 
 import { setColorStyle } from '../../utils';
-import PSpinner from '../PSpinner/PSpinner';
+import PSpinner from '../PSpinner/PSpinner.vue';
 
 const props = defineProps<{
   block?: boolean,

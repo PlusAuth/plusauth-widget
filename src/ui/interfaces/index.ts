@@ -1,5 +1,5 @@
 import type defaultDictionary from '../../i18n/en';
-import type { PAlertProps } from '../components/PAlert/PAlert';
+import type { PAlertProps } from '../components/PAlert/PAlert.vue';
 import type { createForm } from '../composables/form';
 
 export interface IClient {

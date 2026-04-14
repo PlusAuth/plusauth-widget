@@ -119,12 +119,12 @@ import { computed, defineComponent, reactive, ref } from 'vue';
 import type { FieldDefinition, ITranslatePath } from '../interfaces';
 
 
-import type { PAlertProps } from './PAlert/PAlert';
+import type { PAlertProps } from './PAlert/PAlert.vue';
 import PBtn from './PBtn/PBtn.vue';
 import PCheckBox from './PCheckBox/PCheckBox.vue';
-import PCodeInput from './PCodeInput/PCodeInput';
+import PCodeInput from './PCodeInput/PCodeInput.vue';
 import PForm from './PForm.vue';
-import PMessage from './PMessage/PMessage.ts';
+import PMessage from './PMessage/PMessage.vue';
 import PTextField from './PTextField/PTextField.vue';
 
 export default defineComponent( {

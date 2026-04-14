@@ -43,7 +43,7 @@
 import { defineComponent } from 'vue';
 
 import GenericForm from '../../components/GenericForm.vue';
-import PTimer from '../../components/PTimer/PTimer';
+import PTimer from '../../components/PTimer/PTimer.vue';
 import ResendAction from '../../components/ResendAction.vue';
 import WidgetLayout from '../../components/WidgetLayout.vue';
 import { useContext, useHttp, useLocale } from '../../composables';

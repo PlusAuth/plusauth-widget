@@ -98,7 +98,7 @@ import { computed, defineComponent, nextTick, ref, watch } from 'vue';
 import AuthPlusInfo from '../../components/AuthPlusInfo.vue';
 import { AuthPlusLogo } from '../../components/AuthPlusLogo.ts';
 import GenericForm from '../../components/GenericForm.vue';
-import PSpinner from '../../components/PSpinner/PSpinner';
+import PSpinner from '../../components/PSpinner/PSpinner.vue';
 import ResendAction from '../../components/ResendAction.vue';
 import WidgetLayout from '../../components/WidgetLayout.vue';
 import { useContext, useHttp } from '../../composables';

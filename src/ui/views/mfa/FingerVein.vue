@@ -76,7 +76,7 @@ import { defineComponent, onMounted, reactive, ref } from 'vue';
 
 import GenericForm from '../../components/GenericForm.vue';
 import Hand from '../../components/Hand.vue';
-import PSpinner from '../../components/PSpinner/PSpinner';
+import PSpinner from '../../components/PSpinner/PSpinner.vue';
 import WidgetLayout from '../../components/WidgetLayout.vue';
 import { useContext, useHttp, useLocale } from '../../composables';
 import { useGenericForm } from '../../utils/form_generics';
