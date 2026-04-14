@@ -6,7 +6,6 @@ import type { IPlusAuthContext, IWidgetSettings } from './ui/interfaces';
 import type { FetchWrapper } from './ui/utils/fetch';
 import { createFetchWrapper } from './ui/utils/fetch';
 import { Translator } from './ui/utils/translator';
-
 export default class PlusAuthWidget {
   private _view: App<Element>;
   public i18n: Translator;

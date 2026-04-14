@@ -1,32 +1,29 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 .widget {
   @apply h-full;
-	line-height: 1.5;
-	tab-size: 4;
-	box-sizing: border-box;
-	font-family: theme('fontFamily.sans', ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"); /* 4 */
+  line-height: 1.5;
+  tab-size: 4;
+  box-sizing: border-box;
+  font-family: var(--pa-font-family);
 
-	-webkit-text-size-adjust: 100%;
-	font-feature-settings: normal;
-	font-variation-settings: normal;
-	-webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+  font-feature-settings: normal;
+  font-variation-settings: normal;
+  -webkit-tap-highlight-color: transparent;
+  text-align: var(--pa-widget-align);
 
-	*,
-	::before,
-	::after {
-		box-sizing: border-box; /* 1 */
-		border-width: 0; /* 2 */
-		border-style: solid; /* 2 */
-		border-color: transparent; /* 2 */
-	}
+  *,
+  ::before,
+  ::after {
+    box-sizing: border-box;
+    border-width: 0;
+    border-style: solid;
+    border-color: transparent;
+  }
 
-	a {
-		color: inherit;
-		text-decoration: inherit;
-	}
+  a {
+    color: inherit;
+    text-decoration: inherit;
+  }
 
   a:not(.btn) {
     @apply text-primary cursor-pointer font-medium decoration-0 outline-0;
@@ -44,22 +41,23 @@
   h6 {
     color: #202124;
     padding-bottom: 0;
-    font-family: 'Montserrat', 'Noto Sans Myanmar UI', arial, sans-serif;
-    font-weight: 400;
+    font-family: var(--pa-font-family);
     margin-bottom: 0;
     margin-top: 0;
   }
 
   h1 {
-    font-size: 20px;
+    font-size: var(--pa-fs-h1);
     padding-top: 16px;
-    font-weight: 400;
+    font-weight: var(--pa-fw-h1);
+    text-align: var(--pa-align-h1);
   }
 
   h2 {
-    font-size: 16px;
+    font-size: var(--pa-fs-h2);
     padding-top: 14px;
-    font-weight: 400;
+    font-weight: var(--pa-fw-h2);
+    text-align: var(--pa-align-h2);
   }
 
   hr {
@@ -79,148 +77,136 @@
       @apply ml-4;
     }
   }
+
   input::-webkit-outer-spin-button,
   input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
   }
 
-  /* Firefox */
   input[type=number] {
     -moz-appearance: textfield;
   }
 
+  &:has(&-footer:not(:empty)) &-content-main {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-width: 0; 
+  }
 
   button,
-	input,
-	optgroup,
-	select,
-	textarea {
-		@apply bg-transparent;
-		border-style: none;
-		font-family: inherit; /* 1 */
-		font-feature-settings: inherit; /* 1 */
-		font-variation-settings: inherit; /* 1 */
-		font-size: 100%; /* 1 */
-		font-weight: inherit; /* 1 */
-		line-height: inherit; /* 1 */
-		color: inherit; /* 1 */
-		margin: 0; /* 2 */
-		padding: 0; /* 3 */
-	}
+  input,
+  optgroup,
+  select,
+  textarea {
+    @apply bg-transparent;
+    font-family: inherit;
+    font-feature-settings: inherit;
+    font-variation-settings: inherit;
+    font-size: 100%;
+    font-weight: inherit;
+    line-height: inherit;
+    color: inherit;
+    margin: 0;
+    padding: 0;
+  }
 
-	/*
-	Use the modern Firefox focus style for all focusable elements.
-	*/
+  input, 
+  textarea, 
+  select {
+    border-radius: var(--pa-input-radius);
+    border-width: var(--pa-input-border-w);
+  }
 
-	:-moz-focusring {
-		outline: auto;
-	}
+  :-moz-focusring {
+    outline: auto;
+  }
 
-	/*
-	Remove the additional `:invalid` styles in Firefox. (https://github.com/mozilla/gecko-dev/blob/2f9eacd9d3d995c937b4251a5557d95d494c9be1/layout/style/res/forms.css#L728-L737)
-	*/
+  :-moz-ui-invalid {
+    box-shadow: none;
+  }
 
-	:-moz-ui-invalid {
-		box-shadow: none;
-	}
+  ::-webkit-inner-spin-button,
+  ::-webkit-outer-spin-button {
+    height: auto;
+  }
 
-	/*
-	Correct the cursor style of increment and decrement buttons in Safari.
-	*/
+  input::placeholder,
+  textarea::placeholder {
+    opacity: 1;
+    color: gray;
+  }
 
-	::-webkit-inner-spin-button,
-	::-webkit-outer-spin-button {
-		height: auto;
-	}
+  button,
+  [role="button"] {
+    cursor: pointer;
+  }
 
+  :disabled {
+    cursor: default;
+  }
 
-	/*
-	1. Reset the default placeholder opacity in Firefox. (https://github.com/tailwindlabs/tailwindcss/issues/3300)
-	2. Set the default placeholder color to the user's configured gray 400 color.
-	*/
-
-	input::placeholder,
-	textarea::placeholder {
-		opacity: 1; /* 1 */
-		color: theme('colors.gray.400', #9ca3af); /* 2 */
-	}
-
-	/*
-	Set the default cursor for buttons.
-	*/
-
-	button,
-	[role="button"] {
-		cursor: pointer;
-	}
-
-	/*
-	Make sure disabled buttons don't get the pointer cursor.
-	*/
-	:disabled {
-		cursor: default;
-	}
-
-	/* Make elements with the HTML hidden attribute stay hidden by default */
-	[hidden] {
-		display: none;
-	}
+  [hidden] {
+    display: none;
+  }
 
   p {
     margin: 0;
+    font-size: var(--pa-fs-p);
+    font-weight: var(--pa-fw-p);
+    text-align: var(--pa-align-p);
   }
 
   @media (min-width: 601px) {
-    @apply flex flex-col relative justify-center;
+    @apply flex flex-col relative;
+    background: var(--pa-main-bg);
+    padding: 0 10%;
+    justify-content: center;
+    align-items: var(--pa-widget-align);
+    min-height: 100vh;
+    overflow-y: auto;
   };
-
 
   &-content {
     display: flex;
     flex-direction: column;
     max-width: 100%;
-    min-height: 100vh;
     position: relative;
     z-index: 2;
 
     @media (min-width: 601px) {
       display: block;
-      margin: 16px auto;
-      min-height: 0;
+      margin: auto 0;
       width: 450px;
     }
-		&-footer {
+
+    &-footer {
       &:empty {
         display: none;
       }
 
-			p {
-					@apply text-center;
-			}
-		}
+      p {
+        @apply text-center;
+      }
+    }
+
     &-main {
-			@apply relative pt-6 px-6 pb-8 bg-white flex flex-col;
+      @apply relative pt-6 px-6 pb-8 bg-white flex flex-col;
       box-flex: 1;
       flex-grow: 1;
       overflow: hidden;
-
-      &:has(.widget-content-footer) {
-        @apply pb-0;
-      }
+      border-radius: var(--pa-main-radius);
+      border: var(--pa-main-border-w) solid var(--pa-main-border-c);
 
       @media (min-width: 450px) {
-				@apply px-8 py-8;
+        @apply px-8 py-8;
         display: flex;
         flex-direction: column;
         justify-content: center;
       }
 
       @media (min-width: 601px) {
-        border: 1px solid #dadce0;
-        border-radius: 2px;
         height: auto;
-        /*//min-height: 500px*/
         overflow-y: auto;
       }
     }
@@ -236,77 +222,91 @@
     }
 
     &-footer {
-			@apply space-y-2
-			mt-8 mb-0 -mx-8
-			px-8 py-6;
-
+      @apply space-y-2 mt-0 mb-0 -mx-8 px-8 py-6;
       border: none;
       font-size: 14px;
 
-      @media (min-width: 601px) {
-        border-top: 1px solid #dadce0;
+      &:not(:empty) {
+        margin-top: 0;
+        border: var(--pa-main-border-w) solid var(--pa-main-border-c);
+        border-top-width: 0;
+        border-bottom-left-radius: var(--pa-main-radius);
+        border-bottom-right-radius: var(--pa-main-radius);
       }
-
     }
-
   }
 
-	&-info-section {
-		@apply text-center pb-4;
-	}
+  &-info-section {
+    @apply text-center pb-4;
+  }
 
-	&-helpers-section {
-		@apply text-center pt-4;
-		line-height: 24px;
+  &-helpers-section {
+    @apply text-center pt-4;
+    line-height: 24px;
 
-		a {
-			padding-left: 4px;
-		}
-		+ .widget-content-footer {
-			@apply mt-0;
-		}
-	}
+    a {
+      padding-left: 4px;
+    }
+    + .widget-content-footer {
+      @apply mt-0;
+    }
+  }
 
-	&-social-icons {
-		@apply flex justify-center py-4 flex-wrap gap-2;
-	}
+  &-social-icons {
+    @apply flex justify-center py-4 flex-wrap gap-2;
+  }
 
-	&-social-button.btn {
-		@apply capitalize justify-start gap-2
-    bg-transparent text-gray-800 border border-gray-300 hover:bg-gray-100 hover:opacity-100
-    whitespace-normal;
+  &-social-button.btn {
+    @apply capitalize justify-start gap-2 bg-transparent text-gray-800 border border-gray-300 hover:bg-gray-100 hover:opacity-100 whitespace-normal;
     word-break: auto-phrase;
     min-height: min-content;
 
-		&-circle {
-			@apply w-10 h-10 p-0 rounded-full overflow-hidden;
+    &-circle {
+      @apply w-10 h-10 p-0 rounded-full overflow-hidden;
 
-			.widget-social-icon {
-				@apply w-10 h-10 ;
-			}
+      .widget-social-icon {
+        @apply w-10 h-10 ;
+      }
 
-			&:hover{
-				filter: brightness(0.8);
-			}
-		}
-	}
+      &:hover{
+        filter: brightness(0.8);
+      }
+    }
+  }
 
-	&-social-icon {
-		@apply w-8 h-8 flex-shrink-0;
-		background-repeat: no-repeat;
-		background-position: center center;
+  &-social-icon {
+    @apply w-8 h-8 flex-shrink-0;
+    background-repeat: no-repeat;
+    background-position: center center;
     background-size: contain;
-	}
+  }
 
-
-	&-footer {
+  &-footer {
     @apply p-1;
+    background-color: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
     align-items: center;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
     font-size: 12px;
     line-height: 1.4;
+
+    border: var(--pa-main-border-w) solid var(--pa-main-border-c);
+    border-bottom-left-radius: var(--pa-main-radius);
+    border-bottom-right-radius: var(--pa-main-radius);
+    border-top: none;
+
+    .input {
+      &--wrap{
+        border:none !important;
+        border-width: 0px !important;
+        border-radius: var(--pa-input-radius);
+      }
+    }
+
+
 
     &-link-list {
       @apply flex gap-4 p-0 px-2 list-none my-0;
@@ -324,9 +324,18 @@
     }
   }
 
+  &:has(&-footer:not(:empty)) &-main{
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  &:has(&-footer:not(:empty)) &-content-footer{
+    border: none;
+  }
+
   .logo-container {
     display: flex;
-    justify-content: center;
+    justify-content: var(--pa-logo-align);
     margin: 12px 0;
     min-height: 72px;
 
@@ -338,10 +347,11 @@
   }
 
   .qr-code {
-		@apply mx-auto mb-4;
+    @apply mx-auto mb-4;
     border: 1px solid lightgray;
-		object-position: center;
-		max-width: 220px; max-height: 220px;
+    object-position: center;
+    max-width: 220px; 
+    max-height: 220px;
   }
 
   .challenge-timer {
@@ -356,7 +366,6 @@
       justify-content: start;
     }
   }
-
 
   .passwordless-challenges {
     display: flex;
@@ -381,18 +390,16 @@
     }
   }
 
-
   input:-webkit-autofill {
     background: #fff;
-    -webkit-text-fill-color: #000; /* Surcharge la font color d'autofill */
-    -webkit-background-clip: text; /* Supprime le background autofill, utile pour le border radius */
-    box-shadow: 0 0 0 50px #fff inset; /* Ajoute un fake background à base d'ombrage aplatit */
+    -webkit-text-fill-color: #000;
+    -webkit-background-clip: text;
+    box-shadow: 0 0 0 50px #fff inset;
   }
-
 }
 
 .default-border {
   @apply border;
-  border-color: #dadce0;
-  border-radius: 2px;
+  border-color: var(--pa-main-border-c);
+  border-radius: var(--pa-main-radius);
 }

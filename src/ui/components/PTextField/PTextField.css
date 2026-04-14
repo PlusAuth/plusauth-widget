@@ -1,178 +1,133 @@
+@unocss;
+
 .widget {
-	.input {
-		@apply flex flex-col w-full text-lg relative flex-wrap mt-3;
+    .input {
+        @apply flex flex-col w-full text-lg relative flex-wrap mt-3;
 
-		&--wrap {
-			@apply flex ring-1 ring-gray-300 rounded-sm border-none w-full min-w-0;
-			--input-ring-color: var(--pa-ring-color);
-		}
+        &--wrap {
+            @apply flex w-full min-w-0 text-9xl;
+            border-radius: var(--pa-input-radius);
+            border: var(--pa-input-border-w) solid #d1d5db; 
+            --input-ring-color: #d1d5db;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
 
-		letter-spacing: normal;
-		flex-direction: column;
+        letter-spacing: normal;
+        flex-direction: column;
 
-		input.text-field {
-			@apply text-black;
-			display: flex;
-			flex: 1 1 auto;
-			background: transparent;
-			font: 15px Montserrat, sans-serif !important;
-			line-height: 1.2;
-			padding: 0 12px;
-			min-height: 45px;
-			min-width: 0px;
-			transition: all 0.3s;
-			border-radius: inherit;
+        input.text-field {
+            @apply text-black;
+            display: flex;
+            flex: 1 1 auto;
+            background: transparent;
+            font-family: var(--pa-font-family) !important;
+            font-size: var(--pa-fs-p);
+            font-weight: var(--pa-fw-p);
+            line-height: 1.2;
+            padding: 0 12px;
+            min-height: 45px;
+            min-width: 0px;
+            transition: all 0.3s;
+            border-radius: inherit;
 
-			&:focus::-webkit-input-placeholder {
-				color: transparent;
-			}
+            &:focus::-webkit-input-placeholder {
+                color: transparent;
+            }
 
-			&:focus {
-				outline: none;
-				border-color: transparent !important;
-			}
+            &:focus {
+                outline: none;
+            }
 
-			&:-internal-autofill-selected,
-			&:-webkit-autofill::first-line,
-			&:-webkit-autofill,
-			&:-webkit-autofill:hover,
-			&:-webkit-autofill:focus,
-			&:-webkit-autofill:active {
-				font: 15px Montserrat, sans-serif !important;
-				-webkit-box-shadow: 0 0 0 30px white inset !important;
-			}
+            &:-internal-autofill-selected,
+            &:-webkit-autofill::first-line,
+            &:-webkit-autofill,
+            &:-webkit-autofill:hover,
+            &:-webkit-autofill:focus,
+            &:-webkit-autofill:active {
+                font-family: var(--pa-font-family) !important;
+                -webkit-box-shadow: 0 0 0 30px white inset !important;
+            }
 
-			& + .btn {
-				@apply flex h-auto self-stretch flex-1 active:ring-0 focus:ring-0 focus:bg-black/5 rounded-l-none
-				border-s border-solid;
-				border-inline-start-color: var(--input-ring-color);
-			}
-		}
+            & + .btn {
+                @apply flex h-auto self-stretch flex-1 active:ring-0 focus:ring-0 focus:bg-black/5;
+                border-radius: var(--pa-input-radius);
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+                border-inline-start: var(--pa-input-border-w) solid var(--input-ring-color);
+                margin-block: calc(var(--pa-input-border-w) * -1);
+                margin-inline-end: calc(var(--pa-input-border-w) * -1);
+            }
+        }
 
-		&--label {
-			@apply absolute select-none pointer-events-none
-			font-medium
-			font-sans text-base text-gray-600
-			start-2
-			bg-white;
-			top: calc(theme('fontSize.base') / 1.5);
-			transform-origin: top left;
-			transition: all .15s cubic-bezier(.4, 0, .2, 1), color 0s, opacity .15s cubic-bezier(.4, 0, .2, 1), background-color .15s cubic-bezier(.4, 0, .2, 1);
-		}
+        &--label {
+            @apply absolute select-none pointer-events-none start-2 bg-white px-1 text-9xl;
+            font-family: var(--pa-font-family);
+            font-weight: 500;
+            font-size: var(--pa-fs-p);
+            color: #5f6368;
+            top: calc(theme('fontSize.base') / 1.5);
+            transform-origin: top left;
+            transition: all .15s cubic-bezier(.4, 0, .2, 1), color 0s, opacity .15s cubic-bezier(.4, 0, .2, 1), background-color .15s cubic-bezier(.4, 0, .2, 1);
+        }
 
-		&-details {
-			@apply mt-1 ps-0.5;
-		}
+        &-details {
+            @apply mt-1 ps-0.5;
+            font-size: 12px;
+            font-family: var(--pa-font-family);
+			text-align: start;
+        }
 
-		&-has-error {
-			.input--wrap {
-				box-shadow: 0 0 1px 1px currentColor;
-			}
-		}
+        &-has-error {
+            .input--wrap {
+                border-color: currentColor;
+                --input-ring-color: currentColor;
+            }
+        }
 
-		&--error {
-			color: rgb(var(--pa-color-error-DEFAULT)) !important;
+        &--error {
+            color: rgb(var(--pa-color-error-DEFAULT)) !important;
 
-			.input--wrap {
-				color: rgb(var(--pa-color-error-DEFAULT)) !important;
-				--input-ring-color: rgb(var(--pa-color-error-DEFAULT));
-				--pa-ring-color: rgb(var(--pa-color-error-DEFAULT)) !important;
-			}
-		}
+            .input--wrap {
+                border-color: rgb(var(--pa-color-error-DEFAULT)) !important;
+                --input-ring-color: rgb(var(--pa-color-error-DEFAULT));
+            }
 
-    &--focused,
-    &--error {
-      .input--wrap {
-        @apply ring-2 ring-primary;
-      }
-      .input--label {
-        color: currentColor !important;
-      }
-    }
-
-    &:has(input:is(:-webkit-autofill, :autofill)) .input--label {
-      transform: translateY(-22px) scale(.85);
-    }
-
-    &:has([placeholder]),
-		&--focused,
-		&--error {
 			.input--label {
-				transform: translateY(-22px) scale(.85);
-			}
-		}
+                color: rgb(var(--pa-color-error-DEFAULT)) !important;
+            }
+        }
 
-		&--has-value {
-			.input--label {
-				transform: translateY(-22px) scale(.85);
-			}
-		}
+        &--focused {
+            .input--wrap {
+                border-color: theme('colors.primary.DEFAULT');
+                --input-ring-color: theme('colors.primary.DEFAULT');
+                box-shadow: 0 0 0 1px theme('colors.primary.DEFAULT'); 
+            }
+            .input--label {
+                color: currentColor !important;
+            }
+        }
 
-		input[readonly] {
-			@apply cursor-default;
-		}
+        &:has(input:is(:-webkit-autofill, :autofill)) .input--label {
+            transform: translateY(-22px) scale(.85);
+        }
 
-	}
+        &:has([placeholder]),
+        &--focused,
+        &--error {
+            .input--label {
+                transform: translateY(-22px) scale(.85);
+            }
+        }
 
-	.input-dense {
-		&.input {
-			input:-webkit-autofill + .input--label {
-				transform: translateY(-20px) scale(.75);
-			}
+        &--has-value {
+            .input--label {
+                transform: translateY(-22px) scale(.85);
+            }
+        }
 
-			&-focused,
-			&-has-error,
-			&-has-state,
-			&-has-value {
-				.input--label {
-					top: 15px;
-				}
-			}
-		}
-
-		.input {
-			&--label {
-				top: 10px;
-			}
-		}
-	}
-
-	.input-flat {
-		&.input {
-			input:-webkit-autofill + .input--label {
-				transform: none;
-			}
-
-			&-focused,
-			&-has-error,
-			&-has-state {
-				.input--label {
-					transform: none;
-					top: 10px;
-				}
-			}
-
-			&-has-value {
-				.input--label {
-					display: none;
-				}
-			}
-		}
-
-		&.input-focused .input--wrap {
-			outline: auto;
-		}
-
-		.input {
-			&--wrap {
-				@apply ring-0;
-				border: none;
-				margin: 0;
-			}
-
-			&--label {
-				top: 10px;
-			}
-		}
-	}
+        input[readonly] {
+            @apply cursor-default;
+        }
+    }
 }

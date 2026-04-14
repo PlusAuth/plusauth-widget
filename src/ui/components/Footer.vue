@@ -1,6 +1,6 @@
 
 <script lang="ts">
-/* eslint-disable @style/max-len */
+ 
 import { defineComponent, inject } from 'vue';
 
 import type { IPlusAuthContext } from '../interfaces';
@@ -41,8 +41,7 @@ export default defineComponent({
       <PSelect
         v-model="translator.locale"
         flat
-        label="Language"
-        style="width: auto; margin: 0"
+        style="width: auto; margin: 0;"
         dense
         hide-messages
         item-text="label"
@@ -54,7 +53,7 @@ export default defineComponent({
             width="16"
             height="16"
             viewBox="0 0 256 256"
-            style="margin: auto 0"
+            style="margin: auto 0; margin-left: 8px;"
           >
             <path
               fill="currentColor"

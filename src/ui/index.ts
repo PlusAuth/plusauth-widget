@@ -6,6 +6,7 @@ import type { IPlusAuthContext, IWidgetSettings } from './interfaces';
 import { Theme } from './utils/theme';
 import { Translator, translatorKey } from './utils/translator';
 import { App } from './widget';
+import 'virtual:uno.css';
 
 export function createWidget(container: Element | string,
                              settings: IWidgetSettings,

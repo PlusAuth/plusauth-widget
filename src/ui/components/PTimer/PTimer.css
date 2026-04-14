@@ -1,22 +1,24 @@
 .widget {
 
-	.timer {
-		&--circle {
-			width: 80px;
-			height: 80px;
-			border-radius: 50%;
-			border: 4px solid;
-			display: flex;
-			margin: 16px auto;
-		}
+    .timer {
+        &--circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: var(--pa-main-border-w) solid;
+            display: flex;
+            margin: 16px auto;
+        }
 
-		&--seconds {
-			display: block;
-			width: 100%;
-			margin: auto;
-			padding-top: 0px;
-			text-align: center;
-			font-size: 2em;
-		}
-	}
+        &--seconds {
+            display: block;
+            width: 100%;
+            margin: auto;
+            padding-top: 0px;
+            text-align: center;
+            font-size: 2em;
+            font-family: var(--pa-font-family);
+            font-weight: var(--pa-fw-h1);
+        }
+    }
 }

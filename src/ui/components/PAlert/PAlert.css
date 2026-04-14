@@ -1,44 +1,44 @@
 .widget {
-	.alert {
-		display: block;
-		font-size: 12px;
-		padding: 6px 12px;
-		position: relative;
-		text-align: start;
-		border-radius: 2px;
+    .alert {
+        display: block;
+        font-size: 12px;
+        padding: 6px 12px;
+        position: relative;
+        text-align: start;
+        border-radius: var(--pa-input-radius);
 
-		&--tile {
-			border-radius: 0;
-		}
+        &--tile {
+            border-radius: 0;
+        }
 
-		&-dismiss-icon {
-			margin-left: auto;
-			margin-right: -12px;
-			border-radius: 50%;
-			height: 24px;
-			min-width: 24px;
-			font-size: 32px;
+        &-dismiss-icon {
+            margin-left: auto;
+            margin-right: -12px;
+            border-radius: 50%;
+            height: 24px;
+            min-width: 24px;
+            font-size: 32px;
 
-			&:hover {
-				background-color: rgba(184, 184, 184, 0.30);
-				cursor: pointer;
-			}
-		}
+            &:hover {
+                background-color: rgba(184, 184, 184, 0.30);
+                cursor: pointer;
+            }
+        }
 
-		&-content {
-			display: flex;
-			align-items: center;
-		}
-	}
+        &-content {
+            display: flex;
+            align-items: center;
+        }
+    }
 
-	.alert {
-		&.alert--text {
-			background-color: transparent !important;
-			color: inherit;
-		}
-	}
+    .alert {
+        &.alert--text {
+            background-color: transparent !important;
+            color: inherit;
+        }
+    }
 
-	.input:not(.input--error) + .alert {
-		@apply mt-0 !important;
-	}
+    .input:not(.input--error) + .alert {
+        @apply mt-0 !important;
+    }
 }
