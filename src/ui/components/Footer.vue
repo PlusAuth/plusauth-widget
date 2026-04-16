@@ -1,7 +1,5 @@
-
-<script lang="ts">
- 
-import { defineComponent, inject } from 'vue';
+<script setup lang="ts">
+import { inject, computed } from 'vue';
 
 import type { IPlusAuthContext } from '../interfaces';
 import type { Translator } from '../utils/translator';
@@ -9,32 +7,24 @@ import { translatorKey } from '../utils/translator';
 
 import WidgetTemplate from './WidgetTemplate.tsx';
 
-export default defineComponent({
-  name: 'PFooter',
-  components: { WidgetTemplate },
-  props: {
-    termsOfService: {
-      type: String as () => string,
-      default: null
-    },
-    privacyPolicy: {
-      type: String as () => string,
-      default: null
-    },
-  },
-  setup() {
-    const context = inject('context') as IPlusAuthContext
-    const translator = inject(translatorKey) as Translator
-    const client = context.client || {}
-    return {
-      translator,
-      languages: Object.values(translator.locales || []),
-      tosUri: client.tosUri,
-      policyUri: client.policyUri,
-    }
-  }
-})
+defineOptions({
+  name: 'PFooter'
+});
+
+const props = defineProps<{
+  termsOfService?: string | null;
+  privacyPolicy?: string | null;
+}>();
+
+const context = inject('context') as IPlusAuthContext;
+const translator = inject(translatorKey) as Translator;
+
+const client = computed(() => context.client || {});
+const languages = computed(() => Object.values(translator.locales || []));
+const tosUri = computed(() => client.value.tosUri);
+const policyUri = computed(() => client.value.policyUri);
 </script>
+
 <template>
   <footer>
     <template v-if="languages && languages.length > 1">
@@ -65,9 +55,7 @@ export default defineComponent({
     </template>
     <WidgetTemplate name="footer-body" />
     <ul class="pa__widget-footer-link-list">
-      <li
-        v-if="tosUri"
-      >
+      <li v-if="tosUri">
         <a
           :href="tosUri"
           tabindex="0"
@@ -75,9 +63,7 @@ export default defineComponent({
           referrerpolicy="no-referrer"
         >Terms of Service</a>
       </li>
-      <li
-        v-if="policyUri"
-      >
+      <li v-if="policyUri">
         <a
           :href="policyUri"
           target="_blank"
@@ -90,5 +76,4 @@ export default defineComponent({
 </template>
 
 <style scoped>
-
 </style>

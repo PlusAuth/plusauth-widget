@@ -1,3 +1,86 @@
+<script setup lang="ts">
+import { ref, computed } from 'vue';
+
+import GenericForm from '../components/GenericForm.vue';
+import SocialConnectionButton from '../components/SocialConnectionButton.vue';
+import WidgetLayout from '../components/WidgetLayout.vue';
+import { useContext, useHttp } from '../composables';
+import type { AdditionalFields } from '../interfaces';
+import { resolveLogo } from '../utils';
+import { useGenericForm } from '../utils/form_generics';
+
+defineOptions({
+  name: 'Login'
+});
+
+const http = useHttp();
+const context = useContext();
+
+const passwordVisible = ref(false);
+
+const connection = (context.connection || {}) as any;
+const isPasswordless = computed(() => {
+  return connection.type && ![
+    'social',
+    'enterprise',
+    'plusauth'
+  ].includes(connection.type);
+});
+
+const identifierField = connection.type === 'sms' ? 'phone_number' : 'email';
+
+const defaultFields: AdditionalFields = {
+  [identifierField]: {
+    order: 0,
+    attrs: {
+      autocomplete: identifierField
+    },
+    value: context.params.login_hint,
+    type: 'text',
+    label: `common.fields.${identifierField}`,
+    format: identifierField === 'email' ? 'email' : undefined
+  },
+  ...isPasswordless.value ? {} : {
+    password: {
+      order: 1,
+      type: 'password',
+      label: 'common.fields.password',
+    }
+  },
+};
+
+const { form, loading, submit, validate, fields } = useGenericForm(
+  'login',
+  defaultFields,
+  async (values, finalFields) => {
+    form.value?.toggleAlert(null);
+    try {
+      await http.post({ body: values });
+    } catch (e: any) {
+      switch (e.error) {
+        case 'user_not_found':
+          if (finalFields[identifierField]) {
+            finalFields[identifierField].errors = `errors.${e.error}`;
+          }
+          break;
+        case 'email_not_verified':
+          window.location.assign('account/verifyEmail');
+          break;
+        case 'invalid_password':
+          if (finalFields.password) {
+            finalFields.password.errors = `errors.${e.error}`;
+          }
+          break;
+        default:
+          throw e;
+      }
+    }
+  }
+);
+
+const resolveClientLogo = resolveLogo;
+</script>
+
 <template>
   <WidgetLayout title="login.title">
     <GenericForm
@@ -27,10 +110,10 @@
           <hr v-t="'login.socialLoginHelper'">
           <div class="pa__widget-social-icons">
             <SocialConnectionButton
-              v-for="connection in context.client.social"
-              :key="typeof connection === 'string' ? connection : connection.name"
+              v-for="connectionItem in context.client.social"
+              :key="typeof connectionItem === 'string' ? connectionItem : connectionItem.name"
               lang-key="login.signInWith"
-              :connection="connection"
+              :connection="connectionItem"
             />
           </div>
         </template>
@@ -59,99 +142,5 @@
   </WidgetLayout>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-
-import GenericForm from '../components/GenericForm.vue';
-import SocialConnectionButton from '../components/SocialConnectionButton.vue';
-import WidgetLayout from '../components/WidgetLayout.vue';
-import { useContext, useHttp } from '../composables';
-import type { AdditionalFields } from '../interfaces';
-import { resolveLogo } from '../utils';
-import { useGenericForm } from '../utils/form_generics';
-
-export default defineComponent({
-  name: 'Login',
-  components: { WidgetLayout, GenericForm, SocialConnectionButton },
-  setup() {
-    const http = useHttp()
-    const context = useContext()
-
-    const passwordVisible = ref(false)
-
-    const connection = context.connection || {} as Exclude<typeof context.connection, undefined>
-    const isPasswordless = connection.type && ![
-      'social',
-      'enterprise',
-      'plusauth'
-    ].includes(connection.type)
-    let identifierField = connection.type === 'sms' ? 'phone_number': 'email';
-
-    const defaultFields: AdditionalFields = {
-      [identifierField]: {
-        order: 0,
-        attrs: {
-          autocomplete: identifierField
-        },
-        value: context.params.login_hint,
-        type: 'text',
-        label: `common.fields.${  identifierField}`,
-        format: identifierField === 'email' ? 'email' : undefined
-      },
-      ...isPasswordless ? {} : {
-        password: {
-          order: 1,
-          type: 'password',
-          label: 'common.fields.password',
-        }
-      },
-    }
-
-    const { form, loading, submit, validate, fields } = useGenericForm(
-      'login',
-      defaultFields,
-      async (values, finalFields) => {
-        form.value.toggleAlert(null)
-        try {
-          await http.post({ body: values })
-        } catch (e) {
-          switch (e.error) {
-            case 'user_not_found':
-              if(finalFields[identifierField]){
-                finalFields[identifierField].errors = `errors.${e.error}`;
-              }
-              break;
-            case 'email_not_verified':
-              window.location.assign('account/verifyEmail')
-              break;
-            case 'invalid_password':
-              if (finalFields.password) {
-                finalFields.password.errors = `errors.${e.error}`;
-              }
-              break;
-            default:
-              throw e
-          }
-        }
-      }
-    )
-
-    return {
-      fields,
-      context,
-      form,
-      loading,
-      passwordVisible,
-      validate,
-      isPasswordless,
-      submit,
-      resolveClientLogo: resolveLogo
-    }
-
-  }
-})
-</script>
-
 <style scoped>
-
 </style>

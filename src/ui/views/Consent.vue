@@ -1,3 +1,28 @@
+<script setup lang="ts">
+import WidgetLayout from '../components/WidgetLayout.vue';
+import { useContext, useHttp, useLocale } from '../composables';
+import { resolveLogo } from '../utils';
+
+type Requested = {
+  base?: string[];
+  claims?: string[];
+  resources?: Record<string, string[]>;
+};
+
+defineOptions({
+  name: 'Consent'
+});
+
+const http = useHttp();
+const { t, te } = useLocale();
+const context = useContext();
+
+const requested = (context.details.requested ?? {}) as Requested;
+
+const resolve = (response: boolean) => http.post({ body: { accepted: response } });
+const resolveClientLogo = resolveLogo;
+</script>
+
 <template>
   <WidgetLayout
     :title="{
@@ -83,41 +108,6 @@
     </template>
   </WidgetLayout>
 </template>
-
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-import WidgetLayout from '../components/WidgetLayout.vue'
-import { useContext, useHttp, useLocale } from '../composables'
-import { resolveLogo } from '../utils'
-
-type Requested = {
-  base?: string[]
-  claims?: string[]
-  resources?: Record<string, string[]>
-}
-
-export default defineComponent({
-  name: 'Consent',
-  components: { WidgetLayout },
-  setup() {
-    const http = useHttp()
-    const { t, te } =useLocale()
-    const context = useContext()
-
-    const requested = (context.details.requested ?? {}) as Requested
-
-    return {
-      t,
-      te,
-      context,
-      requested,
-      resolve: (response: boolean) => http.post({ body: { accepted: response } }),
-      resolveClientLogo: resolveLogo,
-    }
-  },
-})
-</script>
 
 <style scoped>
 .groups {

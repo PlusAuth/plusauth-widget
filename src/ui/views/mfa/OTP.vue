@@ -1,3 +1,43 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+
+import GenericForm from '../../components/GenericForm.vue';
+import WidgetLayout from '../../components/WidgetLayout.vue';
+import { useContext, useHttp } from '../../composables';
+import type { AdditionalFields } from '../../interfaces';
+import { useGenericForm } from '../../utils/form_generics';
+import { getUserIdentifierField } from '../../utils/user.ts';
+
+defineOptions({
+  name: 'OTP'
+});
+
+const http = useHttp();
+const context = useContext();
+
+const code = ref<string | null>(null);
+const error = ref<string | null>(null);
+
+const defaultFields: AdditionalFields = {
+  user_placeholder: getUserIdentifierField(context),
+  code: {
+    type: 'number',
+    label: 'common.enterOtp',
+    value: null,
+  }
+};
+
+const { form, loading, submit, fields, validate } = useGenericForm(
+  'otpMfa',
+  defaultFields,
+  async (values) => {
+    await http.post({
+      body: values
+    });
+  }
+);
+</script>
+
 <template>
   <WidgetLayout
     :logo="false"
@@ -52,59 +92,5 @@
   </WidgetLayout>
 </template>
 
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-
-import GenericForm from '../../components/GenericForm.vue';
-import WidgetLayout from '../../components/WidgetLayout.vue';
-import { useContext, useHttp, useLocale } from '../../composables';
-import type { AdditionalFields } from '../../interfaces';
-import { useGenericForm } from '../../utils/form_generics';
-import { getUserIdentifierField } from '../../utils/user.ts';
-
-export default defineComponent({
-  name: 'OTP',
-  components: { WidgetLayout,  GenericForm },
-  setup(){
-
-    const http = useHttp()
-    const context = useContext()
-    const i18n = useLocale()
-
-    const code = ref<string>(null as any)
-    const error = ref<string>(null as any)
-
-    const defaultFields: AdditionalFields = {
-      user_placeholder: getUserIdentifierField(context),
-      code: {
-        type: 'number',
-        label: 'common.enterOtp',
-        value: null,
-      }
-    }
-    const { form, loading, submit, fields, validate } = useGenericForm(
-      'otpMfa',
-      defaultFields,
-      async (values) => {
-        await http.post({
-          body: values
-        })
-      }
-    )
-    return {
-      fields,
-      validate,
-      code,
-      context,
-      error,
-      form,
-      loading,
-      submit
-    }
-  }
-})
-</script>
-
 <style scoped>
-
 </style>
