@@ -366,6 +366,7 @@
     .signin-challenge {
       text-align: left;
       justify-content: start;
+      color: rgb(var(--pa-color-primary))
     }
   }
 
