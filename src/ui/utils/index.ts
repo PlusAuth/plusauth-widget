@@ -162,7 +162,7 @@ export function isPhone(value: string): boolean {
 
 const isHexColor = (str: string) => str.startsWith('#')
 const resolveColor = (color: string) => {
-  return isHexColor(color) ? color :`rgb(var(--pa-color-${color}-DEFAULT))`
+  return isHexColor(color) ? color :`rgb(var(--pa-color-${color}))`
 }
 export function setColorStyle(props: { color?: string, textColor?: string } ){
   return {

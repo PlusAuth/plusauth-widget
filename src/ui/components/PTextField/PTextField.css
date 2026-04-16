@@ -5,7 +5,7 @@
         @apply flex flex-col w-full text-lg relative flex-wrap mt-3;
 
         &--wrap {
-            @apply flex w-full min-w-0 text-9xl;
+            @apply flex w-full min-w-0;
             border-radius: var(--pa-input-radius);
             border: var(--pa-input-border-w) solid #d1d5db; 
             --input-ring-color: #d1d5db;
@@ -53,6 +53,7 @@
                 border-radius: var(--pa-input-radius);
                 border-top-left-radius: 0;
                 border-bottom-left-radius: 0;
+                color: black;
                 border-inline-start: var(--pa-input-border-w) solid var(--input-ring-color);
                 margin-block: calc(var(--pa-input-border-w) * -1);
                 margin-inline-end: calc(var(--pa-input-border-w) * -1);
@@ -60,12 +61,12 @@
         }
 
         &--label {
-            @apply absolute select-none pointer-events-none start-2 bg-white px-1 text-9xl;
+            @apply absolute select-none pointer-events-none start-2 bg-white px-1;
             font-family: var(--pa-font-family);
             font-weight: 500;
-            font-size: var(--pa-fs-p);
+            font-size: 18px;
             color: #5f6368;
-            top: calc(theme('fontSize.base') / 1.5);
+            top: calc(theme('fontSize.base') / 2.5);
             transform-origin: top left;
             transition: all .15s cubic-bezier(.4, 0, .2, 1), color 0s, opacity .15s cubic-bezier(.4, 0, .2, 1), background-color .15s cubic-bezier(.4, 0, .2, 1);
         }

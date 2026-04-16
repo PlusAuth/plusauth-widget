@@ -12,13 +12,16 @@
 
         border-radius: var(--pa-input-radius);
         transition-property: box-shadow, transform, opacity;
+        
 
         &--block {
             @apply w-full;
+            color: #5f6368;
         }
 
         &--flat {
             @apply bg-transparent text-primary;
+            color: #5f6368;
         }
     }
 

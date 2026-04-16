@@ -19,7 +19,7 @@ export function genStyles(theme: any): string {
         }
       })
       const defColor = swatch.find(s => s.stop === 500)
-      variablesCss += `  ${genColorVariableName(`${name}-DEFAULT`)}: ${defColor!.plainRgb};\n`
+      variablesCss += `  ${genColorVariableName(`${name}`)}: ${defColor!.plainRgb};\n`
     }
   }
 
