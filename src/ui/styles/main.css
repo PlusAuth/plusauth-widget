@@ -27,7 +27,7 @@
 
   a:not(.btn) {
     @apply text-primary cursor-pointer font-medium decoration-0 outline-0;
-
+    /* color: rgb(var(--pa-color-primary-DEFAULT)); */
     &:not(.btn):focus {
       outline: auto;
     }
@@ -268,7 +268,9 @@
         @apply w-10 h-10 ;
       }
 
-      &:hover{
+      &:hover,
+      .hover--demo
+      {
         filter: brightness(0.8);
       }
     }

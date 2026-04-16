@@ -74,37 +74,31 @@
             @apply mt-1 ps-0.5;
             font-size: 12px;
             font-family: var(--pa-font-family);
-			text-align: start;
-        }
-
-        &-has-error {
-            .input--wrap {
-                border-color: currentColor;
-                --input-ring-color: currentColor;
-            }
+            text-align: start;
         }
 
         &--error {
-            color: rgb(var(--pa-color-error-DEFAULT)) !important;
+            color: rgb(var(--pa-color-error)) !important;
 
             .input--wrap {
-                border-color: rgb(var(--pa-color-error-DEFAULT)) !important;
-                --input-ring-color: rgb(var(--pa-color-error-DEFAULT));
+                border-color: rgb(var(--pa-color-error)) !important;
+                --input-ring-color: rgb(var(--pa-color-error)) !important;
+                box-shadow: 0 0 0 1px rgb(var(--pa-color-error)) !important;
             }
 
-			.input--label {
-                color: rgb(var(--pa-color-error-DEFAULT)) !important;
+            .input--label {
+                color: rgb(var(--pa-color-error)) !important;
             }
         }
 
-        &--focused {
+        &--focused:not(.input--error) {
             .input--wrap {
-                border-color: theme('colors.primary.DEFAULT');
-                --input-ring-color: theme('colors.primary.DEFAULT');
-                box-shadow: 0 0 0 1px theme('colors.primary.DEFAULT'); 
+                border-color: rgb(var(--pa-color-primary));
+                --input-ring-color: rgb(var(--pa-color-primary));
+                box-shadow: 0 0 0 1px rgb(var(--pa-color-primary)); 
             }
             .input--label {
-                color: currentColor !important;
+                color: rgb(var(--pa-color-primary)) !important;
             }
         }
 
@@ -114,12 +108,7 @@
 
         &:has([placeholder]),
         &--focused,
-        &--error {
-            .input--label {
-                transform: translateY(-22px) scale(.85);
-            }
-        }
-
+        &--error,
         &--has-value {
             .input--label {
                 transform: translateY(-22px) scale(.85);
@@ -127,7 +116,7 @@
         }
 
         input[readonly] {
-            @apply cursor-default;
+            @apply cursor;
         }
     }
 }

@@ -19,7 +19,9 @@
             min-width: 24px;
             font-size: 32px;
 
-            &:hover {
+            &:hover,
+            .hover--demo
+            {
                 background-color: rgba(184, 184, 184, 0.30);
                 cursor: pointer;
             }
