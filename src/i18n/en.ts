@@ -8,7 +8,7 @@ export default {
     downloadAuthPlus: 'You can download {0} from your app store',
     edit: 'Edit',
     email: 'email',
-    enterOtp: 'Enter your code',
+    enterOtp: 'Enter your @:common.code',
     field: 'Field',
     user: 'User',
     fields: {
@@ -26,7 +26,7 @@ export default {
     notification: 'notification',
     reject: 'Reject',
     resend: 'Resend',
-    resendText: 'Didn\'t receive the {type}?',
+    resendText: "Didn't receive the {type}?",
     resendAfter: 'Resend in: {time}',
     seconds: 'seconds',
     show: 'Show',
@@ -36,12 +36,12 @@ export default {
     usePassword: 'Use you password instead'
   },
   verifyEmail: {
-    checkText: "We\'ve sent an email to <strong>{email}</strong>, please click the link included to verify your email address.",
-    title: 'Check Your Email'
+    checkText: "We\'ve sent an email to <strong>{email}</strong>, please click the link included to verify your @:common.email address.",
+    title: 'Check Your @:common.email'
   },
   consent: {
-    allow: 'Allow',
-    reject: 'Reject',
+    allow: '@:common.allow',
+    reject: '@:common.reject',
     title: '{clientName} asks for your consent for the followings',
     groups: {
       base: 'Base Attributes',
@@ -86,44 +86,44 @@ export default {
       not_supported: 'Looks like your browser is not supporting WebAuthN API. Try upgrading your browser or use a supported one.',
       operation_failed: 'Operation failed with error:'
     },
-    already_exists: 'User already exists',
-    code_already_used: 'Code was already used',
-    code_expired: 'Code has expired',
-    email_not_verified: 'Email is not verified. Please verify your email by clicking the link that has been sent to your email account.',
+    already_exists: '@:common.user already exists',
+    code_already_used: '@:common.code was already used',
+    code_expired: '@:common.code has expired',
+    email_not_verified: '@:common.email is not verified. Please verify your @:common.email by clicking the link that has been sent to your @:common.email account.',
     invalid_entity: 'Invalid {field}',
     field_required: '{field} is required.',
-    incorrect_code: 'Verification code is invalid',
-    invalid_code: 'Code is invalid',
-    invalid_credentials: 'Invalid login credentials. Please try again.',
-    invalid_password: 'Invalid password provided.',
+    incorrect_code: 'Verification @:common.code is invalid',
+    invalid_code: '@:common.code is invalid',
+    invalid_credentials: 'Invalid @:login.signIn credentials. Please try again.',
+    invalid_password: 'Invalid @:common.fields.password provided.',
     passwords_not_match: "Passwords doesn't match",
-    user_not_found: 'User not found',
-    weak_password: 'Password is too weak',
+    user_not_found: '@:common.user not found',
+    weak_password: '@:common.fields.password is too weak',
     too_many_requests: 'You have ben trying too fast. Try again in {retry}.',
-    account_blocked: 'Your account is blocked. Please check your email for further instructions or contact an administrator.',
-    old_password: 'It looks like you\'re trying to use a password you\'ve used before. For your security, please choose a new password that hasn\'t been used in the past.'
+    account_blocked: 'Your account is blocked. Please check your @:common.email for further instructions or contact an administrator.',
+    old_password: 'It looks like you\'re trying to use a @:common.fields.password you\'ve used before. For your security, please choose a new @:common.fields.password that hasn\'t been used in the past.'
   },
   fillMissing: {
     title: 'Fill missing information',
     subtitle: 'Please fill in additional information required to proceed application.',
   },
   forgotPassword: {
-    emailSent: 'If there is an account with <strong>{email}</strong> you will receive an email containing a link to reset your password.',
-    subtitle: 'Please enter your email address to request a password reset',
-    title: 'Reset your password'
+    emailSent: 'If there is an account with <strong>{email}</strong> you will receive an @:common.email containing a link to reset your @:common.fields.password.',
+    subtitle: 'Please enter your @:common.email address to request a @:common.fields.password reset',
+    title: 'Reset your @:common.fields.password'
   },
   login: {
-    forgotPassword: 'Forgot Password',
+    forgotPassword: 'Forgot @:common.fields.password',
     noAccount: "Don't have an account?",
     title: 'Sign In',
-    signIn: 'Sign In',
+    signIn: '@:login.title',
     signInWith: 'Sign in with {0}',
     socialLoginHelper: 'or',
     signUp: 'Sign Up'
   },
   accountLinking: {
     title: 'Link Account',
-    description: 'It appears that an account is already associated with your email address. Please verify ownership to proceed.'
+    description: 'It appears that an account is already associated with your @:common.email address. Please verify ownership to proceed.'
   },
   passwordless: {
     challenge: {
@@ -131,41 +131,41 @@ export default {
     },
     useAnotherMethod: 'Sign in with another method',
     email: {
-      choice: 'Continue with Email',
-      magicLinkTitle: 'Check your email',
-      title: 'Enter authorization code sent to: <strong>{email}</strong>',
-      checkText: "We\'ve sent an email to <strong>{email}</strong>, please click the link included to sign in. Make sure to open link in the same device/browser you are trying to sign in.",
+      choice: 'Continue with @:common.email',
+      magicLinkTitle: 'Check your @:common.email',
+      title: 'Enter authorization @:common.code sent to: <strong>{email}</strong>',
+      checkText: "We\'ve sent an @:common.email to <strong>{email}</strong>, please click the link included to sign in. Make sure to open link in the same device/browser you are trying to sign in.",
     },
     otp: {
       registerTitle: 'Register Your Authenticator',
-      registerSubtitle: 'Open your preferred authenticator application and scan the QRCode below. If you have trouble scanning the code you can manually enter the code below image.',
-      title: 'Enter authorization code'
+      registerSubtitle: 'Open your preferred authenticator application and scan the QRCode below. If you have trouble scanning the @:common.code you can manually enter the @:common.code below image.',
+      title: 'Enter authorization @:common.code'
     },
     sms: {
       choice: 'Continue with SMS',
-      title: 'Enter authorization code sent to: <strong>{phone_number}</strong>'
+      title: 'Enter authorization @:common.code sent to: <strong>{phone_number}</strong>'
     },
     push: {
       choice: 'Continue with App Approval',
       selectCode: 'Select number below from your device',
       title: 'Check your device',
-      description: 'Click on notification in your device to allow access',
+      description: 'Click on @:common.notification in your device to allow access',
       enrollTitle: 'Register your device',
-      enrollDescription: 'Scan the QR Code below with your {0} application',
-      tryCodeAction: 'Try entering code manually',
+      enrollDescription: 'Scan the QR @:common.code below with your {0} application',
+      tryCodeAction: 'Try entering @:common.code manually',
     },
     webauthn: {
       choice: 'Continue with Passkey',
-      title: 'Click continue to use your passkey',
+      title: 'Click @:common.continue to use your passkey',
       verifying: 'Verifying your credentials...'
     },
     pw: {
-      choice: 'Continue with password'
+      choice: 'Continue with @:common.fields.password'
     }
   },
   mfa: {
     challenge: {
-      email: 'Email',
+      email: '@:common.email',
       fv: 'Finger Vein',
       webauthn: 'Security Key or Device',
       sc: 'SmartCard/E-Signature',
@@ -175,37 +175,37 @@ export default {
       waitingApproval: 'Waiting for approval on your device…'
     },
     email: {
-      title: 'Enter authorization code sent to: <strong>{email}</strong>'
+      title: 'Enter authorization @:common.code sent to: <strong>{email}</strong>'
     },
     fv: {
       enrollmentInProgress: 'Enrollment in progress',
-      verifyInProgress: 'Verification in progress',
+      verifyInProgress: '@:common.verify in progress',
       saving: 'Saving enrollments',
       checkingDevice: 'Checking device connectivity',
       checkDevice: 'Make sure your device is connected and necessary software is installed. Refresh this page when device is ready.',
       enroll: 'Select a finger to enroll. You can enroll multiple fingers.',
-      verify: 'Click to <strong>VERIFY</strong> when you are ready to scan your finger.'
+      verify: 'Click to <strong>@:common.verify</strong> when you are ready to scan your finger.'
     },
     otp: {
-      title: 'Enter authorization code',
-      registerTitle: 'Register Your Authenticator',
-      registerSubtitle: 'Open your preferred authenticator application and scan the QRCode below. If you have trouble scanning the code you can manually enter the code below image.',
+      title: '@:passwordless.otp.title',
+      registerTitle: '@:passwordless.otp.registerTitle',
+      registerSubtitle: '@:passwordless.otp.registerSubtitle',
     },
     push: {
-      selectCode: 'Select number below from your device',
-      title: 'Check your device',
-      description: 'Click on notification in your device to allow access',
-      enrollTitle: 'Register your device',
-      enrollDescription: 'Scan the QR Code below with your {0} application',
-      tryCodeText: 'Didn\'t receive notification?',
-      tryCodeAction: 'Try entering code manually',
+      selectCode: '@:passwordless.push.selectCode',
+      title: '@:passwordless.push.title',
+      description: '@:passwordless.push.description',
+      enrollTitle: '@:passwordless.push.enrollTitle',
+      enrollDescription: '@:passwordless.push.enrollDescription',
+      tryCodeText: 'Didn\'t receive @:common.notification?',
+      tryCodeAction: '@:passwordless.push.tryCodeAction',
     },
     sms: {
-      title: 'Enter authorization code sent to: <strong>{phone_number}</strong>'
+      title: 'Enter authorization @:common.code sent to: <strong>{phone_number}</strong>'
     },
     webauthn: {
-      title: 'Click continue to use your passkey',
-      verifying: 'Verifying your credentials...'
+      title: '@:passwordless.webauthn.title',
+      verifying: '@:passwordless.webauthn.verifying'
     },
     tryAnotherWay: 'Try another way'
   },
@@ -221,12 +221,13 @@ export default {
   register: {
     haveAccount: 'Have an account?',
     title: 'Sign Up',
-    signIn: 'Sign In',
-    signUp: 'Sign Up',
-    signUpWith: 'Sign Up with {0}'
+    signIn: '@:login.signIn',
+    signUp: '@:login.signUp',
+    signUpWith: 'Sign Up with {0}',
+    socialLoginHelper: '@:login.socialLoginHelper'
   },
   resetPassword: {
-    successfullyReset: 'Your password has been successfully reset.',
-    title: 'Reset Password'
+    successfullyReset: 'Your @:common.fields.password has been successfully reset.',
+    title: 'Reset @:common.fields.password'
   }
 }
