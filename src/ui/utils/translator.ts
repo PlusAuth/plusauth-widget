@@ -59,31 +59,45 @@ export class Translator {
       : getCurrentInstance()?.appContext?.config?.globalProperties.$i18n;
 
     if (!opts.fallback && (params instanceof Error || typeof params === 'string')) {
-      opts.fallback = params['error_description']
-        || params['error_details']
-        || params.message
-        || params.name
-        || params
+      const p = params as any;
+      opts.fallback = p['error_description']
+        || p['error_details']
+        || p.message
+        || p.name
+        || params;
     }
-    const locale = opts.locale || this.locale
-    const value = propertyAccessor(vm.dictionary[locale], key)
+
+    const locale = opts.locale || this.locale;
+    let value = propertyAccessor(vm.dictionary[locale], key)
       || propertyAccessor(vm.dictionary[vm.defaultLocale], key);
+
+    if (typeof value === 'string') {
+      const linkRegex = /@:([\w.]+)/g;
+      while (linkRegex.test(value)) {
+        value = value.replace(linkRegex, (match, linkPath) => {
+          return vm.t(linkPath, undefined, { locale });
+        });
+      }
+    }
+
     if (value) {
       return vm._interpolate(
         value,
         params,
         locale
-      )
+      );
     } else if (opts.fallback) {
-      return vm._interpolate(
-        propertyAccessor(vm.dictionary[locale], opts.fallback)
+      let fallbackValue = propertyAccessor(vm.dictionary[locale], opts.fallback)
         || propertyAccessor(vm.dictionary[vm.defaultLocale], opts.fallback)
-        || opts.fallback,
+        || opts.fallback;
+      
+      return vm._interpolate(
+        fallbackValue,
         params,
         locale
-      )
+      );
     } else {
-      return key
+      return key;
     }
   }
 
