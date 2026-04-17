@@ -131,7 +131,9 @@ const resolveClientLogo = resolveLogo;
             && context.client.social
             && context.client.social.length"
         >
-          <hr v-t="'login.socialLoginHelper'">
+          <div class="pa__social-seperator">
+            <span v-t="'register.socialLoginHelper'"></span>
+          </div>
           <div class="pa__widget-social-icons">
             <SocialConnectionButton
               v-for="connectionItem in context.client.social"

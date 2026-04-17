@@ -60,21 +60,23 @@
     text-align: var(--pa-align-h2);
   }
 
-  hr {
-    @apply flex items-center text-center text-gray-500 my-2;
+   .social-seperator{
+    span{
+      @apply flex items-center text-center text-gray-500 my-2;
 
-    &::before,
-    &::after {
-      @apply flex-1 border-b border-b-gray-400/25;
-      content: '';
-    }
+      &::before,
+      &::after {
+        @apply flex-1 border-b border-b-gray-400/25;
+        content: '';
+      }
 
-    &:not(:empty)::before {
-      @apply mr-4;
-    }
+      &:not(:empty)::before {
+        @apply mr-4;
+      }
 
-    &:not(:empty)::after {
-      @apply ml-4;
+      &:not(:empty)::after {
+        @apply ml-4;
+      }
     }
   }
 
