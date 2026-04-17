@@ -18,7 +18,7 @@ const defaultFields: AdditionalFields = {
   user_placeholder: getUserIdentifierField(context),
   code: {
     type: 'text',
-    label: 'common.enterOtp'
+    label: 'mfa.email.otpLabel'
   }
 };
 
@@ -51,7 +51,7 @@ const { form, loading, submit, validate, fields } = useGenericForm(
         :loading="loading"
         @click="submit"
       >
-        <span v-t="'common.submit'" />
+        <span v-t="'mfa.email.submitAction'" />
       </p-btn>
     </template>
     <template #content-footer>
@@ -59,11 +59,11 @@ const { form, loading, submit, validate, fields } = useGenericForm(
         v-if="context.details.challenges.length > 1"
       >
         <a
-          v-t="'mfa.tryAnotherWay'"
+          v-t="'mfa.email.tryAnotherWay'"
           href="signin/challenge"
         />
       </p>
-      <ResendAction type="common.email" />
+      <ResendAction type="mfa.email.emailType" />
     </template>
   </WidgetLayout>
 </template>

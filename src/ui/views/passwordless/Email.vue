@@ -20,7 +20,7 @@ const defaultFields: AdditionalFields = {
   user_placeholder: getUserIdentifierField(context),
   code: {
     type: 'text',
-    label: 'common.fields.code'
+    label: 'passwordless.email.codeLabel'
   }
 };
 
@@ -33,7 +33,7 @@ const { form, loading, submit, validate, fields } = useGenericForm(
     } catch (e: any) {
       if (e.error === 'invalid_code' && finalFields.code) {
         finalFields.code.errors = {
-          path: `errors.${e.error}`,
+          path: 'passwordless.email.invalidCodeError',
           args: e
         };
       } else {
@@ -72,18 +72,18 @@ const { form, loading, submit, validate, fields } = useGenericForm(
         :loading="loading"
         @click="submit"
       >
-        <span v-t="'common.submit'" />
+        <span v-t="'passwordless.email.submitAction'" />
       </p-btn>
     </template>
 
     <template #content-footer>
       <p>
         <a
-          v-t="'passwordless.useAnotherMethod'"
+          v-t="'passwordless.email.useAnotherMethod'"
           href="signin/passwordless"
         />
       </p>
-      <ResendAction type="common.email" />
+      <ResendAction type="passwordless.email.emailType" />
     </template>
   </WidgetLayout>
 </template>

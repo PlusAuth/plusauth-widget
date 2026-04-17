@@ -54,7 +54,7 @@ const { form, loading, submit, fields, validate } = useGenericForm(
       }
     } catch (e: any) {
       if (e.error || e.message) {
-        form.value?.toggleAlert(`${i18n.t('errors.webauthn.operation_failed')}<br>
+        form.value?.toggleAlert(`${i18n.t('mfa.webauthn.operationFailedError')}<br>
 <strong>${e.error || e.message}</strong>`);
       }
       loading.value = false;
@@ -66,7 +66,7 @@ const { form, loading, submit, fields, validate } = useGenericForm(
 
 onMounted(async () => {
   if (!isWebAuthNSupported()) {
-    form.value?.toggleAlert('errors.webauthn.not_supported', {
+    form.value?.toggleAlert('mfa.webauthn.notSupportedError', {
       dismissible: false
     });
   } else {
@@ -95,7 +95,7 @@ onMounted(async () => {
         :loading="loading"
         @click="submit"
       >
-        <span v-t="'common.submit'" />
+        <span v-t="'mfa.webauthn.submitAction'" />
       </p-btn>
     </template>
     <template
@@ -104,7 +104,7 @@ onMounted(async () => {
     >
       <p>
         <a
-          v-t="'mfa.tryAnotherWay'"
+          v-t="'mfa.webauthn.tryAnotherWay'"
           href="signin/challenge"
         />
       </p>

@@ -57,15 +57,15 @@ const resolveClientLogo = resolveLogo;
       v-if="!error && (context.prompt?.mode === 'check' || !context.details.email_verified)"
       #content-footer
     >
-      <ResendAction type="common.email" />
+      <ResendAction type="verifyEmail.emailType" />
     </template>
     <template
       v-else-if="!error"
       #title
     >
       <h1>
-        Your email verified successfully.
-        <span v-if="loginUrl"> Redirecting to application in {{ time }} seconds.</span>
+        <span v-t="'verifyEmail.successTitle'" />
+        <span v-if="loginUrl" v-t="{ path: 'verifyEmail.redirectingText', args: { time } }" />
       </h1>
     </template>
   </WidgetLayout>

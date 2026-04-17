@@ -37,14 +37,14 @@ const defaultFields: AdditionalFields = {
     },
     value: context.params.login_hint,
     type: 'text',
-    label: `common.fields.${identifierField}`,
+    label: identifierField === 'email' ? 'login.emailLabel' : 'login.phoneLabel',
     format: identifierField === 'email' ? 'email' : undefined
   },
   ...isPasswordless.value ? {} : {
     password: {
       order: 1,
       type: 'password',
-      label: 'common.fields.password',
+      label: 'login.passwordLabel',
     }
   },
 };
@@ -60,7 +60,7 @@ const { form, loading, submit, validate, fields } = useGenericForm(
       switch (e.error) {
         case 'user_not_found':
           if (finalFields[identifierField]) {
-            finalFields[identifierField].errors = `errors.${e.error}`;
+            finalFields[identifierField].errors = 'login.userNotFoundError';
           }
           break;
         case 'email_not_verified':
@@ -68,7 +68,7 @@ const { form, loading, submit, validate, fields } = useGenericForm(
           break;
         case 'invalid_password':
           if (finalFields.password) {
-            finalFields.password.errors = `errors.${e.error}`;
+            finalFields.password.errors = 'login.invalidPasswordError';
           }
           break;
         default:

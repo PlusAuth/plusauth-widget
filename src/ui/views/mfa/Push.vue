@@ -31,7 +31,7 @@ const defaultFields = computed<AdditionalFields>(() => ({
   ...manualMode.value ? {
     code: {
       type: 'number',
-      label: 'common.enterOtp',
+      label: 'mfa.push.otpLabel',
       value: null,
     }
   } : {}
@@ -96,7 +96,7 @@ watch([isRegistration, manualMode], async ([newValue, manual]) => {
   <WidgetLayout
     :logo="false"
     :title="isRegistration ? 'mfa.push.enrollTitle'
-      : manualMode ? 'mfa.otp.title' : 'mfa.push.title'"
+      : manualMode ? 'mfa.push.otpTitle' : 'mfa.push.title'"
     :subtitle="{
       path: isRegistration ? 'mfa.push.enrollDescription'
         : manualMode ? ''
@@ -154,7 +154,7 @@ watch([isRegistration, manualMode], async ([newValue, manual]) => {
         :loading="loading"
         @click="(...args) => manualMode ? submit(...args) : reload()"
       >
-        <span v-t="manualMode ? 'common.submit': 'common.continue'" />
+        <span v-t="manualMode ? 'mfa.push.submitAction': 'mfa.push.continueAction'" />
       </p-btn>
     </template>
     <template
@@ -165,7 +165,7 @@ watch([isRegistration, manualMode], async ([newValue, manual]) => {
         v-if="context.details.challenges.length > 1"
       >
         <a
-          v-t="'mfa.tryAnotherWay'"
+          v-t="'mfa.push.tryAnotherWay'"
           href="signin/challenge"
         />
       </p>
@@ -178,7 +178,7 @@ watch([isRegistration, manualMode], async ([newValue, manual]) => {
             @click="switchToCode"
           />
         </p>
-        <ResendAction type="common.notification" />
+        <ResendAction type="mfa.push.notificationType" />
       </template>
     </template>
   </WidgetLayout>

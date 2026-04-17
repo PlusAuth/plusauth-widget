@@ -95,7 +95,7 @@ const resolveClientLogo = resolveLogo;
         color="success"
         @click="resolve(true)"
       >
-        <span v-t="'common.allow'" />
+        <span v-t="'consent.allow'" />
       </p-btn>
       <div style="padding: 4px" />
       <p-btn
@@ -103,7 +103,7 @@ const resolveClientLogo = resolveLogo;
         color="error"
         @click="resolve(false)"
       >
-        <span v-t="'common.reject'" />
+        <span v-t="'consent.reject'" />
       </p-btn>
     </template>
   </WidgetLayout>

@@ -26,7 +26,7 @@ const defaultFields: AdditionalFields = mergeContext.type === 'password' ? {
   password: {
     order: 1,
     type: 'password',
-    label: 'common.fields.password',
+    label: 'accountLinking.passwordLabel',
   },
 } : {};
 
@@ -40,15 +40,15 @@ const { form, loading, submit, validate, fields } = useGenericForm(
     } catch (e: any) {
       switch (e.error) {
         case 'user_not_found':
-          if (finalFields.email) finalFields.email.errors = `errors.${e.error}`;
-          else if (finalFields.username) finalFields.username.errors = `errors.${e.error}`;
+          if (finalFields.email) finalFields.email.errors = 'accountLinking.userNotFoundError';
+          else if (finalFields.username) finalFields.username.errors = 'accountLinking.userNotFoundError';
           break;
         case 'email_not_verified':
           window.location.assign('account/verifyEmail');
           break;
         case 'invalid_password':
           if (finalFields.password) {
-            finalFields.password.errors = `errors.${e.error}`;
+            finalFields.password.errors = 'accountLinking.invalidPasswordError';
           }
           break;
         default:
@@ -94,7 +94,7 @@ const resolveClientLogo = resolveLogo;
         :href="context.details.merge_context.url"
         @click="submit"
       >
-        <span v-t="context.details.merge_context.url ? 'common.continue' : 'common.submit'" />
+        <span v-t="context.details.merge_context.url ? 'accountLinking.continueAction' : 'accountLinking.submitAction'" />
       </p-btn>
     </template>
     <template #content-append>

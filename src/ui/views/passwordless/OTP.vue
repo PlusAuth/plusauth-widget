@@ -22,7 +22,7 @@ const defaultFields: AdditionalFields = {
   user_placeholder: getUserIdentifierField(context),
   code: {
     type: 'number',
-    label: 'common.enterOtp',
+    label: 'passwordless.otp.otpLabel',
     value: null,
   }
 };
@@ -73,13 +73,13 @@ const { form, loading, submit, fields, validate } = useGenericForm(
         :loading="loading"
         @click="submit"
       >
-        <span v-t="'common.submit'" />
+        <span v-t="'passwordless.otp.submitAction'" />
       </p-btn>
     </template>
     <template #content-footer>
       <p>
         <a
-          v-t="'passwordless.useAnotherMethod'"
+          v-t="'passwordless.otp.useAnotherMethod'"
           href="signin/passwordless"
         />
       </p>

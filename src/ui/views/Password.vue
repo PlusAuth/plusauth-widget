@@ -23,7 +23,7 @@ const defaultFields: AdditionalFields = {
   password: {
     order: 1,
     type: 'password',
-    label: 'common.fields.password',
+    label: 'passwordChallenge.passwordLabel',
   }
 };
 
@@ -38,7 +38,7 @@ const { form, loading, submit, validate, fields } = useGenericForm(
       switch (e.error) {
         case 'user_not_found':
           if (finalFields.user_placeholder) {
-            finalFields.user_placeholder.errors = `errors.${e.error}`;
+            finalFields.user_placeholder.errors = 'passwordChallenge.userNotFoundError';
           }
           break;
         case 'email_not_verified':
@@ -46,7 +46,7 @@ const { form, loading, submit, validate, fields } = useGenericForm(
           break;
         case 'invalid_password':
           if (finalFields.password) {
-            finalFields.password.errors = `errors.${e.error}`;
+            finalFields.password.errors = 'passwordChallenge.invalidPasswordError';
           }
           break;
         default:
@@ -60,7 +60,7 @@ const resolveClientLogo = resolveLogo;
 </script>
 
 <template>
-  <WidgetLayout title="login.title">
+  <WidgetLayout title="passwordChallenge.title">
     <GenericForm
       ref="form"
       :fields="fields"
@@ -75,14 +75,14 @@ const resolveClientLogo = resolveLogo;
         block
         @click="submit"
       >
-        <span v-t="'common.continue'" />
+        <span v-t="'passwordChallenge.continueAction'" />
       </p-btn>
     </template>
     <template #content-append>
       <div class="pa__widget-helpers-section">
         <div v-if="context.settings.forgot_password_enabled">
           <a
-            v-t="'login.forgotPassword'"
+            v-t="'passwordChallenge.forgotPassword'"
             tabindex="0"
             href="signin/recovery"
           />

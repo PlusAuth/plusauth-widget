@@ -21,7 +21,7 @@ const defaultFields: AdditionalFields = {
   email: {
     type: 'text',
     format: 'email',
-    label: 'common.fields.email'
+    label: 'forgotPassword.emailLabel'
   }
 };
 
@@ -33,14 +33,10 @@ const { form, loading, submit, validate, fields } = useGenericForm(
       await http.post({ body: values });
       actionCompleted.value = true;
     } catch (e: any) {
-      if (finalFields.email && e.error === 'user_not_found') {
-        finalFields.email.errors = `errors.${e.error}`;
-      }
-
       switch (e.error) {
         case 'user_not_found':
           if (finalFields.email) {
-            finalFields.email.errors = `errors.${e.error}`;
+            finalFields.email.errors = 'forgotPassword.userNotFoundError';
           } else {
             throw e;
           }
@@ -79,7 +75,7 @@ const resolveClientLogo = resolveLogo;
           block
           @click="submit"
         >
-          <span v-t="'common.submit'" />
+          <span v-t="'forgotPassword.submitAction'" />
         </p-btn>
       </template>
     </WidgetLayout>

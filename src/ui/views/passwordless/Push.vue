@@ -32,7 +32,7 @@ const defaultFields = computed<AdditionalFields>(() => ({
   ...manualMode.value ? {
     code: {
       type: 'number',
-      label: 'common.enterOtp',
+      label: 'passwordless.push.otpLabel',
       value: null,
     }
   } : {}
@@ -56,7 +56,7 @@ async function pollPushValidation(resolve: (value: any) => void, reject: (reason
       setTimeout(() => pollPushValidation(resolve, reject), 3000);
     } else if (e.error === 'invalid_code') {
       form.value?.toggleAlert({
-        path: `errors.${e.error}`,
+        path: 'passwordless.push.invalidCodeError',
         args: e
       });
       loading.value = false;
@@ -97,7 +97,7 @@ watch([isRegistration, manualMode], async ([newValue, manual]) => {
   <WidgetLayout
     :logo="false"
     :title="isRegistration ? 'passwordless.push.enrollTitle'
-      : manualMode ? 'mfa.otp.title' : 'passwordless.push.title'"
+      : manualMode ? 'passwordless.push.otpTitle' : 'passwordless.push.title'"
     :subtitle="{
       path: isRegistration ? 'passwordless.push.enrollDescription'
         : manualMode ? ''
@@ -138,7 +138,7 @@ watch([isRegistration, manualMode], async ([newValue, manual]) => {
           style="padding: 12px; display: flex; align-items: center"
         >
           <PSpinner indeterminate />
-          <span style="margin-left: 12px">{{ t('mfa.challenge.waitingApproval') }}</span>
+          <span style="margin-left: 12px">{{ t('passwordless.push.waitingApproval') }}</span>
         </div>
       </template>
     </GenericForm>
@@ -150,13 +150,13 @@ watch([isRegistration, manualMode], async ([newValue, manual]) => {
         :loading="loading"
         @click="(...args) => manualMode ? submit(...args) : reload()"
       >
-        <span v-t="manualMode ? 'common.submit' : 'common.continue'" />
+        <span v-t="manualMode ? 'passwordless.push.submitAction' : 'passwordless.push.continueAction'" />
       </p-btn>
     </template>
     <template #content-footer>
       <p>
         <a
-          v-t="'passwordless.useAnotherMethod'"
+          v-t="'passwordless.push.useAnotherMethod'"
           href="signin/passwordless"
         />
       </p>
@@ -167,7 +167,7 @@ watch([isRegistration, manualMode], async ([newValue, manual]) => {
             @click="switchToCode"
           />
         </p>
-        <ResendAction type="common.notification" />
+        <ResendAction type="passwordless.push.notificationType" />
       </template>
     </template>
   </WidgetLayout>

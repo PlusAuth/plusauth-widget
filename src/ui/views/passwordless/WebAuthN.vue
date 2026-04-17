@@ -54,7 +54,7 @@ const { form, loading, submit, fields, validate } = useGenericForm(
       }
     } catch (e: any) {
       if (e.error || e.message) {
-        form.value?.toggleAlert(`${i18n.t('errors.webauthn.operation_failed')}<br>
+        form.value?.toggleAlert(`${i18n.t('passwordless.webauthn.operationFailedError')}<br>
 <strong>${e.error || e.message}</strong>`);
       }
       loading.value = false;
@@ -66,7 +66,7 @@ const { form, loading, submit, fields, validate } = useGenericForm(
 
 onMounted(async () => {
   if (!isWebAuthNSupported()) {
-    form.value?.toggleAlert('errors.webauthn.not_supported', {
+    form.value?.toggleAlert('passwordless.webauthn.notSupportedError', {
       dismissible: false
     });
   } else {
@@ -95,13 +95,13 @@ onMounted(async () => {
         block
         @click="submit"
       >
-        <span v-t="'common.continue'" />
+        <span v-t="'passwordless.webauthn.continueAction'" />
       </p-btn>
     </template>
     <template #content-footer>
       <p>
         <a
-          v-t="'passwordless.useAnotherMethod'"
+          v-t="'passwordless.webauthn.useAnotherMethod'"
           href="signin/passwordless"
         />
       </p>

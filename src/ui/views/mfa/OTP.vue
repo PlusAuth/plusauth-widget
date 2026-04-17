@@ -22,7 +22,7 @@ const defaultFields: AdditionalFields = {
   user_placeholder: getUserIdentifierField(context),
   code: {
     type: 'number',
-    label: 'common.enterOtp',
+    label: 'mfa.otp.otpLabel',
     value: null,
   }
 };
@@ -75,7 +75,7 @@ const { form, loading, submit, fields, validate } = useGenericForm(
         :loading="loading"
         @click="submit"
       >
-        <span v-t="'common.submit'" />
+        <span v-t="'mfa.otp.submitAction'" />
       </p-btn>
     </template>
     <template
@@ -84,7 +84,7 @@ const { form, loading, submit, fields, validate } = useGenericForm(
     >
       <p>
         <a
-          v-t="'mfa.tryAnotherWay'"
+          v-t="'mfa.otp.tryAnotherWay'"
           href="signin/challenge"
         />
       </p>

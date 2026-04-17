@@ -70,7 +70,7 @@ async function onFingerSelect(ind: number, hand: 'left' | 'right') {
     const resp = await fv.enroll(h1Index);
     enrolledFingers[hand].push(ind);
     templates[h1Index] = resp.template;
-    form.value?.toggleAlert('Finger Enrolled', {
+    form.value?.toggleAlert('mfa.fv.fingerEnrolledSuccess', {
       dismissible: false,
       timeout: 3000,
       type: 'success'
@@ -91,7 +91,7 @@ async function submit() {
   try {
     if (!context.details.fv_template || context.details.fv_template.length === 0) {
       if (!templates || Object.keys(templates).length === 0) {
-        form.value?.toggleAlert('errors.fv.enrollRequired', {
+        form.value?.toggleAlert('mfa.fv.enrollRequiredError', {
           dismissible: false
         });
       } else {
@@ -181,7 +181,7 @@ async function submit() {
         :loading="loading"
         @click="submit"
       >
-        <span v-t="context.details.fv_template?.length > 0 ? 'common.verify' : 'common.submit'" />
+        <span v-t="context.details.fv_template?.length > 0 ? 'mfa.fv.verifyAction' : 'mfa.fv.submitAction'" />
       </p-btn>
     </template>
     <template
@@ -190,7 +190,7 @@ async function submit() {
     >
       <p>
         <a
-          v-t="'mfa.tryAnotherWay'"
+          v-t="'mfa.fv.tryAnotherWay'"
           href="signin/challenge"
         />
       </p>

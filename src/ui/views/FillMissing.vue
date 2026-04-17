@@ -43,12 +43,12 @@ if (contextFields && Array.isArray(contextFields)) {
     fields[fieldName] = {
       value: null,
       type: fieldType,
-      label: `common.fields.${fieldName}`,
+      // label: t('fillMissing.fieldLabel', [t(`common.fields.${fieldName}`)]),
       validator: function (_fields: any, value: any) {
         if (!value) {
-          return t('errors.field_required', [
-            t(`common.fields.${fieldName}`)
-          ]);
+          return t('fillMissing.fieldRequiredError', {
+            field: t(`common.fields.${fieldName}`)
+          });
         }
         return true;
       }
@@ -78,7 +78,7 @@ const resolveClientLogo = resolveLogo;
         :loading="loading"
         @click="submit"
       >
-        <span v-t="'common.submit'" />
+        <span v-t="'fillMissing.submitAction'" />
       </p-btn>
     </template>
   </WidgetLayout>

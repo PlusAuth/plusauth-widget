@@ -27,13 +27,13 @@ const defaultFields: AdditionalFields = {
       autocomplete: identifierField
     },
     type: 'text',
-    label: `common.fields.${identifierField}`
+    label: identifierField === 'email' ? 'register.emailLabel' : 'register.phoneLabel'
   },
   ...connection.require_password !== false ? {
     password: {
       order: 1,
       type: 'password',
-      label: 'common.fields.password',
+      label: 'register.passwordLabel',
       attrs: {
         autocomplete: 'new-password'
       },
@@ -44,13 +44,13 @@ const defaultFields: AdditionalFields = {
     rePassword: {
       order: 2,
       type: 'password',
-      label: 'common.fields.rePassword',
+      label: 'register.rePasswordLabel',
       attrs: {
         autocomplete: 'new-password'
       },
       validator: function (fields: any, value: any) {
         if (fields.password.value !== value) {
-          return t('errors.passwords_not_match');
+          return t('register.passwordMismatchError');
         }
         return true;
       }
@@ -73,12 +73,12 @@ const { form, loading, submit, validate, fields } = useGenericForm(
       switch (e.error) {
         case 'already_exists':
           if (finalFields.email) {
-            finalFields.email.errors = `errors.${e.error}`;
+            finalFields.email.errors = 'register.alreadyExistsError';
           } else if (finalFields.username) {
-            finalFields.username.errors = `errors.${e.error}`;
+            finalFields.username.errors = 'register.alreadyExistsError';
           } else {
             form.value?.toggleAlert({
-              path: `errors.${e.error}`,
+              path: 'register.alreadyExistsError',
               args: e
             });
           }
@@ -147,13 +147,13 @@ const resolveClientLogo = resolveLogo;
           v-t="'register.haveAccount'"
         />
         <a
-          v-t="'login.signIn'"
+          v-t="'register.signIn'"
           href="signin"
           @click.stop
         />
         <div v-if="context.settings.forgot_password_enabled">
           <a
-            v-t="'login.forgotPassword'"
+            v-t="'register.forgotPassword'"
             href="signin/recovery"
           />
         </div>

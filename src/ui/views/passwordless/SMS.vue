@@ -19,7 +19,7 @@ const defaultFields: AdditionalFields = {
   user_placeholder: getUserIdentifierField(context),
   code: {
     type: 'text',
-    label: 'common.enterOtp'
+    label: 'passwordless.sms.otpLabel'
   }
 };
 
@@ -58,17 +58,17 @@ const { form, loading, submit, validate, fields } = useGenericForm(
         :loading="loading"
         @click="submit"
       >
-        <span v-t="'common.submit'" />
+        <span v-t="'passwordless.sms.submitAction'" />
       </p-btn>
     </template>
     <template #content-footer>
       <p>
         <a
-          v-t="'passwordless.useAnotherMethod'"
+          v-t="'passwordless.sms.useAnotherMethod'"
           href="signin/passwordless"
         />
       </p>
-      <ResendAction type="common.code" />
+      <ResendAction :type="'passwordless.sms.codeType'" />
     </template>
   </WidgetLayout>
 </template>

@@ -23,7 +23,7 @@ const actionCompleted = ref(false);
 const defaultFields: AdditionalFields = {
   password: {
     type: 'password',
-    label: 'common.fields.newPassword',
+    label: 'resetPassword.newPasswordLabel',
     attrs: {
       autocomplete: 'new-password'
     },
@@ -33,10 +33,10 @@ const defaultFields: AdditionalFields = {
   },
   rePassword: {
     type: 'password',
-    label: 'common.fields.rePassword',
+    label: 'resetPassword.rePasswordLabel',
     validator: function (fields: any, value: any) {
       if (fields.password.value !== value) {
-        return t('errors.passwords_not_match');
+        return t('resetPassword.passwordMismatchError');
       }
       return true;
     }
@@ -88,7 +88,7 @@ const resolveClientLogo = resolveLogo;
         block
         @click="submit"
       >
-        <span v-t="'common.submit'" />
+        <span v-t="'resetPassword.submitAction'" />
       </p-btn>
     </template>
   </WidgetLayout>
