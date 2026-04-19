@@ -54,10 +54,14 @@ export class Translator {
       locale?: string
     } = {}
   ) {
-    const vm = this instanceof Translator
-      ? this
-      : getCurrentInstance()?.appContext?.config?.globalProperties.$i18n;
 
+    const globalI18n = getCurrentInstance()?.appContext?.config?.globalProperties.$i18n;
+    const vm = this instanceof Translator ? this : globalI18n;
+
+    if (!vm) {
+      return key;
+    }
+    
     if (!opts.fallback && (params instanceof Error || typeof params === 'string')) {
       const p = params as any;
       opts.fallback = p['error_description']

@@ -48,7 +48,7 @@ const defaultFields: AdditionalFields = {
       attrs: {
         autocomplete: 'new-password'
       },
-      validator: function (fields: any, value: any) {
+      validator: (fields: any, value: any) => {
         if (fields.password.value !== value) {
           return t('register.passwordMismatchError');
         }
