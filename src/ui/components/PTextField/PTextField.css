@@ -29,11 +29,13 @@
       transition: all 0.3s;
       border-radius: inherit;
 
-      &:focus::-webkit-input-placeholder {
+      &:focus::-webkit-input-placeholder,
+      &.focus--demo::-webkit-input-placeholder {
         color: transparent;
       }
 
-      &:focus {
+      &:focus,
+      &.focus--demo {
         outline: none;
       }
 
@@ -41,7 +43,9 @@
       &:-webkit-autofill::first-line,
       &:-webkit-autofill,
       &:-webkit-autofill:hover,
+      &:-webkit-autofill.hover--demo,
       &:-webkit-autofill:focus,
+      &:-webkit-autofill.focus--demo,
       &:-webkit-autofill:active {
         font-family: var(--pa-font-family) !important;
         -webkit-box-shadow: 0 0 0 30px white inset !important;
@@ -56,6 +60,10 @@
         border-inline-start: var(--pa-input-border-w) solid var(--input-ring-color);
         margin-block: calc(var(--pa-input-border-w) * -1);
         margin-inline-end: calc(var(--pa-input-border-w) * -1);
+
+        &.focus--demo {
+          @apply ring-0 bg-black/5;
+        }
       }
     }
 
@@ -91,7 +99,8 @@
       }
     }
 
-    &--focused:not(.input--error) {
+    &--focused:not(.input--error),
+    &.focus--demo:not(.input--error) {
       .input--wrap {
         border-color: rgb(var(--pa-color-primary));
         --input-ring-color: rgb(var(--pa-color-primary));
@@ -108,6 +117,7 @@
 
     &:has([placeholder]),
     &--focused,
+    &.focus--demo,
     &--error,
     &--has-value {
       .input--label {

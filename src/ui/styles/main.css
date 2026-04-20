@@ -33,8 +33,9 @@
 
   a:not(.btn) {
     @apply text-primary cursor-pointer font-medium decoration-0 outline-0;
-    /* color: rgb(var(--pa-color-primary-DEFAULT)); */
-    &:not(.btn):focus {
+    
+    &:not(.btn):focus,
+    &:not(.btn).focus--demo {
       outline: auto;
     }
   }
@@ -66,7 +67,7 @@
     text-align: var(--pa-align-h2);
   }
 
-   .social-seperator{
+  .social-seperator{
     span{
       @apply flex items-center text-center text-gray-500 my-2;
 
@@ -126,7 +127,8 @@
     border-width: var(--pa-input-border-w);
   }
 
-  :-moz-focusring {
+  :-moz-focusring,
+  .focus--demo {
     outline: auto;
   }
 
@@ -268,9 +270,14 @@
   }
 
   &-social-button.btn {
-    @apply capitalize justify-start gap-2 bg-transparent text-gray-800 border border-gray-300 hover:bg-gray-100 hover:opacity-100 whitespace-normal;
+    @apply capitalize justify-start gap-2 bg-transparent text-gray-800 border border-gray-300 whitespace-normal;
     word-break: auto-phrase;
     min-height: min-content;
+
+    &:hover,
+    &.hover--demo {
+      @apply bg-gray-100 opacity-100;
+    }
 
     &-circle {
       @apply w-10 h-10 p-0 rounded-full overflow-hidden;
@@ -280,8 +287,7 @@
       }
 
       &:hover,
-      .hover--demo
-      {
+      &.hover--demo {
         filter: brightness(0.8);
       }
     }
@@ -318,8 +324,6 @@
         border-radius: var(--pa-input-radius);
       }
     }
-
-
 
     &-link-list {
       @apply flex gap-4 p-0 px-2 list-none my-0;
