@@ -11,7 +11,13 @@
       border-radius: var(--pa-input-radius);
       border: var(--pa-input-border-w) solid #d1d5db;
       --input-ring-color: #d1d5db;
-      transition: border-color 0.2s, box-shadow 0.2s;
+      transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+
+      &:hover,
+      &.hover--demo {
+        border-color: #9ca3af;
+        background-color: rgba(0, 0, 0, 0.01);
+      }
     }
 
     input.text-field {
@@ -52,7 +58,7 @@
       }
 
       & + .btn {
-        @apply flex h-auto self-stretch flex-1 active:ring-0 focus:ring-0 focus:bg-black/5;
+        @apply flex h-auto self-stretch flex-1 transition-colors duration-200;
         border-radius: var(--pa-input-radius);
         border-top-left-radius: 0;
         border-bottom-left-radius: 0;
@@ -61,8 +67,16 @@
         margin-block: calc(var(--pa-input-border-w) * -1);
         margin-inline-end: calc(var(--pa-input-border-w) * -1);
 
+        &:hover,
+        &.hover--demo {
+          background-color: rgba(0, 0, 0, 0.04);
+        }
+
+        &:active,
+        &:focus,
         &.focus--demo {
-          @apply ring-0 bg-black/5;
+          @apply ring-0 bg-black/8;
+          outline: none;
         }
       }
     }
@@ -92,6 +106,11 @@
         border-color: rgb(var(--pa-color-error)) !important;
         --input-ring-color: rgb(var(--pa-color-error)) !important;
         box-shadow: 0 0 0 1px rgb(var(--pa-color-error)) !important;
+
+        &:hover,
+        &.hover--demo {
+          background-color: rgba(var(--pa-color-error), 0.02);
+        }
       }
 
       .input--label {
@@ -105,6 +124,7 @@
         border-color: rgb(var(--pa-color-primary));
         --input-ring-color: rgb(var(--pa-color-primary));
         box-shadow: 0 0 0 1px rgb(var(--pa-color-primary));
+        background-color: transparent;
       }
       .input--label {
         color: rgb(var(--pa-color-primary)) !important;
@@ -127,6 +147,9 @@
 
     input[readonly] {
       @apply cursor-default;
+      &:hover + .btn {
+        background-color: transparent;
+      }
     }
   }
 }

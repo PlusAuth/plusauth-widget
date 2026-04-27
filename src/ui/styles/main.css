@@ -1,3 +1,5 @@
+@unocss;
+
 .widget {
   @apply h-full;
   line-height: 1.5;
@@ -32,11 +34,19 @@
   }
 
   a:not(.btn) {
-    @apply text-primary cursor-pointer font-medium decoration-0 outline-0;
+    @apply text-primary cursor-pointer font-medium decoration-0 outline-0 transition-all duration-200;
     
-    &:not(.btn):focus,
-    &:not(.btn).focus--demo {
-      outline: auto;
+    &:hover,
+    &.hover--demo {
+      filter: brightness(1.1);
+      text-decoration: underline;
+    }
+
+    &:focus,
+    &.focus--demo {
+      outline: 2px solid rgba(var(--pa-color-primary), 0.5);
+      outline-offset: 2px;
+      border-radius: 2px;
     }
   }
 
@@ -51,6 +61,8 @@
     font-family: var(--pa-font-family);
     margin-bottom: 0;
     margin-top: 0;
+    text-wrap: balance;
+    white-space: wrap;
   }
 
   h1 {
@@ -270,13 +282,19 @@
   }
 
   &-social-button.btn {
-    @apply capitalize justify-start gap-2 bg-transparent text-gray-800 border border-gray-300 whitespace-normal;
+    @apply capitalize justify-start gap-2 bg-transparent text-gray-800 border border-gray-300 whitespace-normal transition-all duration-200;
     word-break: auto-phrase;
     min-height: min-content;
 
     &:hover,
     &.hover--demo {
-      @apply bg-gray-100 opacity-100;
+      @apply bg-gray-50 border-gray-400;
+      opacity: 1;
+    }
+
+    &:focus,
+    &.focus--demo {
+      @apply outline-none ring-2 ring-primary/20 border-primary/50;
     }
 
     &-circle {
@@ -288,7 +306,7 @@
 
       &:hover,
       &.hover--demo {
-        filter: brightness(0.8);
+        filter: brightness(0.9);
       }
     }
   }
@@ -331,7 +349,22 @@
       a {
         color: #757575 !important;
         display: inline-block;
-        transition: background .2s;
+        transition: all .2s;
+        padding: 2px 4px;
+
+        &:hover,
+        &.hover--demo {
+          color: #202124 !important;
+          background-color: rgba(0, 0, 0, 0.05);
+          border-radius: 4px;
+        }
+
+        &:focus,
+        &.focus--demo {
+          outline: none;
+          background-color: rgba(0, 0, 0, 0.08);
+          border-radius: 4px;
+        }
       }
 
       @media (min-width: 601px) {
@@ -364,11 +397,16 @@
   }
 
   .qr-code {
-    @apply mx-auto mb-4;
+    @apply mx-auto mb-4 transition-transform duration-300;
     border: 1px solid lightgray;
     object-position: center;
     max-width: 220px; 
     max-height: 220px;
+
+    &:hover,
+    &.hover--demo {
+      transform: scale(1.02);
+    }
   }
 
   .challenge-timer {
@@ -381,7 +419,13 @@
     .signin-challenge {
       text-align: left;
       justify-content: start;
-      color: rgb(var(--pa-color-primary))
+      color: rgb(var(--pa-color-primary));
+      @apply transition-colors duration-200;
+
+      &:hover,
+      &.hover--demo {
+        filter: brightness(0.9);
+      }
     }
   }
 
@@ -396,6 +440,20 @@
     border-radius: 4px;
     text-transform: none;
     color: unset;
+    @apply transition-all duration-200;
+
+    &:hover,
+    &.hover--demo {
+      background-color: #f8f9fa;
+      border-color: #d1d5db;
+    }
+
+    &:focus,
+    &.focus--demo {
+      outline: none;
+      border-color: rgb(var(--pa-color-primary));
+      box-shadow: 0 0 0 1px rgb(var(--pa-color-primary));
+    }
   }
 
   .passwordless-challenge__icon {
@@ -413,6 +471,159 @@
     -webkit-text-fill-color: #000;
     -webkit-background-clip: text;
     box-shadow: 0 0 0 50px #fff inset;
+  }
+
+  /* Input Component Specifics */
+  .input {
+    @apply flex flex-col w-full text-lg relative flex-wrap mt-3;
+    letter-spacing: normal;
+    flex-direction: column;
+
+    &--wrap {
+      @apply flex w-full min-w-0;
+      border-radius: var(--pa-input-radius);
+      border: var(--pa-input-border-w) solid #d1d5db;
+      --input-ring-color: #d1d5db;
+      transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+
+      &:hover,
+      &.hover--demo {
+        border-color: #9ca3af;
+        background-color: rgba(0, 0, 0, 0.01);
+      }
+    }
+
+    input.text-field {
+      @apply text-black;
+      display: flex;
+      flex: 1 1 auto;
+      background: transparent;
+      font-family: var(--pa-font-family) !important;
+      font-size: var(--pa-fs-p);
+      font-weight: var(--pa-fw-p);
+      line-height: 1.2;
+      padding: 0 12px;
+      min-height: 45px;
+      min-width: 0px;
+      transition: all 0.3s;
+      border-radius: inherit;
+
+      &:focus::-webkit-input-placeholder,
+      &.focus--demo::-webkit-input-placeholder {
+        color: transparent;
+      }
+
+      &:focus,
+      &.focus--demo {
+        outline: none;
+      }
+
+      &:-internal-autofill-selected,
+      &:-webkit-autofill::first-line,
+      &:-webkit-autofill,
+      &:-webkit-autofill:hover,
+      &:-webkit-autofill.hover--demo,
+      &:-webkit-autofill:focus,
+      &:-webkit-autofill.focus--demo,
+      &:-webkit-autofill:active {
+        font-family: var(--pa-font-family) !important;
+        -webkit-box-shadow: 0 0 0 30px white inset !important;
+      }
+
+      & + .btn {
+        @apply flex h-auto self-stretch flex-1 transition-colors duration-200;
+        border-radius: var(--pa-input-radius);
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        color: black;
+        border-inline-start: var(--pa-input-border-w) solid var(--input-ring-color);
+        margin-block: calc(var(--pa-input-border-w) * -1);
+        margin-inline-end: calc(var(--pa-input-border-w) * -1);
+
+        &:hover,
+        &.hover--demo {
+          background-color: rgba(0, 0, 0, 0.04);
+        }
+
+        &:active,
+        &:focus,
+        &.focus--demo {
+          @apply ring-0 bg-black/8;
+          outline: none;
+        }
+      }
+    }
+
+    &--label {
+      @apply absolute select-none pointer-events-none start-2 bg-white px-1;
+      font-family: var(--pa-font-family);
+      font-weight: 500;
+      font-size: 18px;
+      color: #5f6368;
+      top: calc(theme('fontSize.base') / 2.5);
+      transform-origin: top left;
+      transition: all .15s cubic-bezier(.4, 0, .2, 1), color 0s, opacity .15s cubic-bezier(.4, 0, .2, 1), background-color .15s cubic-bezier(.4, 0, .2, 1);
+    }
+
+    &-details {
+      @apply mt-1 ps-0.5;
+      font-size: 12px;
+      font-family: var(--pa-font-family);
+      text-align: start;
+    }
+
+    &--error {
+      color: rgb(var(--pa-color-error)) !important;
+
+      .input--wrap {
+        border-color: rgb(var(--pa-color-error)) !important;
+        --input-ring-color: rgb(var(--pa-color-error)) !important;
+        box-shadow: 0 0 0 1px rgb(var(--pa-color-error)) !important;
+
+        &:hover,
+        &.hover--demo {
+          background-color: rgba(var(--pa-color-error), 0.02);
+        }
+      }
+
+      .input--label {
+        color: rgb(var(--pa-color-error)) !important;
+      }
+    }
+
+    &--focused:not(.input--error),
+    &.focus--demo:not(.input--error) {
+      .input--wrap {
+        border-color: rgb(var(--pa-color-primary));
+        --input-ring-color: rgb(var(--pa-color-primary));
+        box-shadow: 0 0 0 1px rgb(var(--pa-color-primary));
+        background-color: transparent;
+      }
+      .input--label {
+        color: rgb(var(--pa-color-primary)) !important;
+      }
+    }
+
+    &:has(input:is(:-webkit-autofill, :autofill)) .input--label {
+      transform: translateY(-22px) scale(.85);
+    }
+
+    &:has([placeholder]),
+    &--focused,
+    &.focus--demo,
+    &--error,
+    &--has-value {
+      .input--label {
+        transform: translateY(-22px) scale(.85);
+      }
+    }
+
+    input[readonly] {
+      @apply cursor-default;
+      &:hover + .btn {
+        background-color: transparent;
+      }
+    }
   }
 }
 
