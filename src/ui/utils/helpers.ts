@@ -52,6 +52,17 @@ export function isEmpty(obj: any){
   }
 }
 
+export function shortenEmail(raw: string){
+  const regex = /^(?<username>[^@]+)@(?<domain>[^.]+)\.(?<tld>.+)$/
+  const match = raw.match(regex)
+  if(match && match.groups){
+    const { username, domain, tld } = match.groups
+    const result = `${username[0]}****@${domain[0]}****.${tld}`
+    return result
+  }
+  return raw
+}
+
 /**
  * https://stackoverflow.com/a/34270811
  *
