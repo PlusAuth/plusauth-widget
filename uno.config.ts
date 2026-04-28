@@ -1,7 +1,6 @@
 import presetRemToPx from '@unocss/preset-rem-to-px'
 import {
   defineConfig,
-  presetAttributify,
   presetIcons,
   presetTypography,
   presetWind4,
@@ -44,7 +43,6 @@ export default defineConfig({
     presetWind4({
       variablePrefix: 'pa-',
     }),
-    presetAttributify(),
     presetIcons(),
     presetTypography(),
     presetRemToPx()
