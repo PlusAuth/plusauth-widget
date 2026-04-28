@@ -90,10 +90,10 @@ defineExpose({
 
 <template>
   <div
-    class="pa__input"
+    class="pa__input pa__input-tf--wrap"
     :class="classes"
   >
-    <div class="pa__input--wrap">
+    <div class="pa__input--wrap ">
       <label
         v-if="label"
         class="pa__input--label"

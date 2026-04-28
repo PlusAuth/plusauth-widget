@@ -1,155 +1,70 @@
 @unocss;
 
-.widget {
-  .input {
-    @apply flex flex-col w-full text-lg relative flex-wrap mt-3;
-    letter-spacing: normal;
-    flex-direction: column;
+.widget .input {
+  @apply flex flex-col w-full relative mt-6;
 
-    &--wrap {
-      @apply flex w-full min-w-0;
+  &--wrap {
+    @apply flex w-full border-solid transition-all duration-200;
+    border: var(--pa-input-border-w) solid #d1d5db;
+    border-radius: var(--pa-input-radius);
+    --input-ring-color: #d1d5db;
+
+    &:hover, &.hover--demo {
+      @apply border-[#9ca3af] bg-black/1;
+    }
+  }
+
+  input.text-field {
+    @apply flex-1 bg-transparent px-3 h-[45px] min-w-0 text-black outline-none;
+    font: var(--pa-fw-p) var(--pa-fs-p) var(--pa-font-family) !important;
+    border-radius: inherit;
+
+    &:-webkit-autofill {
+      -webkit-box-shadow: 0 0 0 30px white inset !important;
+    }
+
+    & + .btn {
+      @apply flex h-auto self-stretch flex-1 text-black border-s-solid;
+      @apply m-e-[-1px] my-[-1px] rounded-s-0 outline-none;
+      border-inline-start-width: var(--pa-input-border-w);
+      border-color: var(--input-ring-color);
       border-radius: var(--pa-input-radius);
-      border: var(--pa-input-border-w) solid #d1d5db;
-      --input-ring-color: #d1d5db;
-      transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
 
-      &:hover,
-      &.hover--demo {
-        border-color: #9ca3af;
-        background-color: rgba(0, 0, 0, 0.01);
-      }
+      &:hover { @apply bg-black/4; }
+      &:active { @apply bg-black/8; }
     }
+  }
 
-    input.text-field {
-      @apply text-black;
-      display: flex;
-      flex: 1 1 auto;
-      background: transparent;
-      font-family: var(--pa-font-family) !important;
-      font-size: var(--pa-fs-p);
-      font-weight: var(--pa-fw-p);
-      line-height: 1.2;
-      padding: 0 12px;
-      min-height: 45px;
-      min-width: 0px;
-      transition: all 0.3s;
-      border-radius: inherit;
+  &--label {
+    @apply absolute start-3 px-1 font-500 text-[14px] text-[#5f6368] bg-white;
+    top: -12px;
+    font-family: var(--pa-font-family);
+  }
 
-      &:focus::-webkit-input-placeholder,
-      &.focus--demo::-webkit-input-placeholder {
-        color: transparent;
-      }
+  &-details {
+    @apply mt-1 ps-1 text-[12px] text-start;
+    font-family: var(--pa-font-family);
+  }
 
-      &:focus,
-      &.focus--demo {
-        outline: none;
-      }
-
-      &:-internal-autofill-selected,
-      &:-webkit-autofill::first-line,
-      &:-webkit-autofill,
-      &:-webkit-autofill:hover,
-      &:-webkit-autofill.hover--demo,
-      &:-webkit-autofill:focus,
-      &:-webkit-autofill.focus--demo,
-      &:-webkit-autofill:active {
-        font-family: var(--pa-font-family) !important;
-        -webkit-box-shadow: 0 0 0 30px white inset !important;
-      }
-
-      & + .btn {
-        @apply flex h-auto self-stretch flex-1 transition-colors duration-200;
-        border-radius: var(--pa-input-radius);
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
-        color: black;
-        border-inline-start: var(--pa-input-border-w) solid var(--input-ring-color);
-        margin-block: calc(var(--pa-input-border-w) * -1);
-        margin-inline-end: calc(var(--pa-input-border-w) * -1);
-
-        &:hover,
-        &.hover--demo {
-          background-color: rgba(0, 0, 0, 0.04);
-        }
-
-        &:active,
-        &:focus,
-        &.focus--demo {
-          @apply ring-0 bg-black/8;
-          outline: none;
-        }
-      }
+  &--error {
+    @apply text-[rgb(var(--pa-color-error))] !important;
+    .input--wrap { 
+      @apply border-[rgb(var(--pa-color-error))] ring-1 ring-[rgb(var(--pa-color-error))];
+      --input-ring-color: rgb(var(--pa-color-error));
     }
+    .input--label { @apply text-[rgb(var(--pa-color-error))] !important; }
+  }
 
-    &--label {
-      @apply absolute select-none pointer-events-none start-2 bg-white px-1;
-      font-family: var(--pa-font-family);
-      font-weight: 500;
-      font-size: 18px;
-      color: #5f6368;
-      top: calc(theme('fontSize.base') / 2.5);
-      transform-origin: top left;
-      transition: all .15s cubic-bezier(.4, 0, .2, 1), color 0s, opacity .15s cubic-bezier(.4, 0, .2, 1), background-color .15s cubic-bezier(.4, 0, .2, 1);
+  &--focused:not(.input--error), &.focus--demo:not(.input--error) {
+    .input--wrap { 
+      @apply border-[rgb(var(--pa-color-primary))] ring-1 ring-[rgb(var(--pa-color-primary))];
+      --input-ring-color: rgb(var(--pa-color-primary));
     }
+    .input--label { @apply text-[rgb(var(--pa-color-primary))] !important; }
+  }
 
-    &-details {
-      @apply mt-1 ps-0.5;
-      font-size: 12px;
-      font-family: var(--pa-font-family);
-      text-align: start;
-    }
-
-    &--error {
-      color: rgb(var(--pa-color-error)) !important;
-
-      .input--wrap {
-        border-color: rgb(var(--pa-color-error)) !important;
-        --input-ring-color: rgb(var(--pa-color-error)) !important;
-        box-shadow: 0 0 0 1px rgb(var(--pa-color-error)) !important;
-
-        &:hover,
-        &.hover--demo {
-          background-color: rgba(var(--pa-color-error), 0.02);
-        }
-      }
-
-      .input--label {
-        color: rgb(var(--pa-color-error)) !important;
-      }
-    }
-
-    &--focused:not(.input--error),
-    &.focus--demo:not(.input--error) {
-      .input--wrap {
-        border-color: rgb(var(--pa-color-primary));
-        --input-ring-color: rgb(var(--pa-color-primary));
-        box-shadow: 0 0 0 1px rgb(var(--pa-color-primary));
-        background-color: transparent;
-      }
-      .input--label {
-        color: rgb(var(--pa-color-primary)) !important;
-      }
-    }
-
-    &:has(input:is(:-webkit-autofill, :autofill)) .input--label {
-      transform: translateY(-22px) scale(.85);
-    }
-
-    &:has([placeholder]),
-    &--focused,
-    &.focus--demo,
-    &--error,
-    &--has-value {
-      .input--label {
-        transform: translateY(-22px) scale(.85);
-      }
-    }
-
-    input[readonly] {
-      @apply cursor-default;
-      &:hover + .btn {
-        background-color: transparent;
-      }
-    }
+  input[readonly] {
+    @apply cursor-default;
+    & + .btn { @apply pointer-events-none bg-transparent; }
   }
 }
