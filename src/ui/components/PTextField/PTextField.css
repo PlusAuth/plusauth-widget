@@ -165,7 +165,7 @@
       }
 
       & + .btn {
-        @apply flex h-auto self-stretch flex-1 text-black border-s-solid;
+        @apply flex h-auto self-stretch w-25 text-black border-s-solid;
         @apply rounded-s-0 outline-none;
         margin-inline-end: -1px;
         margin-top: -1px;
