@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { watchEffect } from 'vue';
+
 import './PAlert.css';
 import { setColorStyle } from '../../utils';
 

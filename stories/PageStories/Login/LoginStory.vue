@@ -16,7 +16,7 @@ const props = defineProps<{
   <WidgetWrapper
     :context="{
       client: {
-        logoUri: ''
+        logoUri: 'https://static.plusauth.com/images/logo.png'
       }
     } as any"
     :settings="{ modeOptions: { login: { fields }}}"

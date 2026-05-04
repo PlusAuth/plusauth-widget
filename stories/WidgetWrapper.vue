@@ -30,6 +30,5 @@ watch(() => props, () => {
   <div id="wrapper" />
 </template>
 
-<style scoped>
-
+<style>
 </style>
