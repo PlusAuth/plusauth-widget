@@ -28,15 +28,7 @@ export const ContentPrepend: Story = {
   argTypes: ArgTypes,
   args: {
     template: `<template id="pa-content-prepend">
-			<style>
-					#myId {
-						border: 1px solid black;
-						padding: 12px;
-						background: red;
-						color: white;
-					}
-			</style>
-      <a href="https://myuri" id="myId">My Uri</a>
+			<a id="myId">----My Uri----</a>
     </template>`
   },
 };
@@ -46,16 +38,7 @@ export const ContentAppend: Story = {
   argTypes: ArgTypes,
   args: {
     template: `<template id="pa-content-append">
-     	<style>
-					#myId {
-						border: 1px solid black;
-						margin-bottom: 24px;
-						padding: 12px;
-						background: red;
-						color: white;
-					}
-			</style>
-      <a href="https://myuri" id="myId">My Uri</a>
+     	<a id="myId">----My Uri----</a>
     </template>`
   },
 };
@@ -65,20 +48,32 @@ export const ContentFooter: Story = {
   argTypes: ArgTypes,
   args: {
     template: `<template id="pa-content-footer">
-     	<style>
-					#myId {
-						display: flex;
-						border: 1px solid black;
-						padding: 12px;
-						background: red;
-						color: white;
-					}
-			</style>
-      <a href="https://myuri" id="myId">My Uri</a>
+     	<a id="myId">----My Uri----</a>
     </template>`
   },
 };
 
+
+export const InfoAppend: Story = {
+  name: 'info-append',
+  argTypes: ArgTypes,
+  args: {
+    template: `<template id="pa-info-append">
+      <a id="myId">----My Uri----</a>
+    </template>`
+  },
+};
+
+export const FooterBody: Story = {
+  name: 'footer-body',
+  argTypes: ArgTypes,
+  args: {
+    template: `<template id="pa-footer-body">
+      <a id="myId">----My Uri 1----</a>
+      <a id="myId">----My Uri 2----</a>
+    </template>`
+  },
+};
 
 /**
  *

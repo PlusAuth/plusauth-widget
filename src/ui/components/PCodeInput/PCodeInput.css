@@ -6,6 +6,7 @@
             @apply border-0 ring-0 flex flex-row justify-between;
         }
 
+
         .input--label {
             @apply relative left-0;
             top: unset;
@@ -18,11 +19,13 @@
 
             &.input {
                 flex: unset;
+                font-size: 1.7rem;
+                font-weight: 700;
 
                 .input--wrap {
                     min-width: 24px;
-                    max-width: 40px;
-                    padding: 1px;
+                    max-width: 60px;
+                    padding: 4px;
                     border-radius: var(--pa-input-radius);
                     border-width: var(--pa-input-border-w);
                 }

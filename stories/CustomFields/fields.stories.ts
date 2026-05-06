@@ -19,6 +19,7 @@ export const TextField: Story = {
   },
   args: {
     type: 'text',
+    label: 'Username',
     visible: true,
   },
   argTypes: {

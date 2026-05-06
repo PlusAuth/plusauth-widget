@@ -6,7 +6,8 @@ const config: StorybookConfig = {
   addons: [
     '@storybook/addon-links',
     'storybook-addon-vue-mdx',
-    '@storybook/addon-docs'
+    '@storybook/addon-docs',
+    '@storybook/addon-vitest'
   ],
 
   core: {
