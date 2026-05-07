@@ -65,6 +65,10 @@ const preview: Preview = {
         if (b.type === 'docs') {
           return 1
         }
+        if (a.title === b.title) {
+          return 0; 
+        }
+
         return a.id === b.id ? 0 : a.id.localeCompare(b.id, undefined, { numeric: true });
       },
     },
