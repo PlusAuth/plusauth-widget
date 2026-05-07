@@ -43,7 +43,7 @@ if (contextFields && Array.isArray(contextFields)) {
     fields[fieldName] = {
       value: null,
       type: fieldType,
-      // label: t('fillMissing.fieldLabel', [t(`common.fields.${fieldName}`)]),
+      label: t('fillMissing.fieldLabel', [fieldName]),
       validator: function (_fields: any, value: any) {
         if (!value) {
           return t('fillMissing.fieldRequiredError', {

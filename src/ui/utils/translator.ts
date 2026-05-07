@@ -1,10 +1,11 @@
 import deepmerge from 'deepmerge';
+import DOMPurify from 'dompurify';
 import type { Ref } from 'vue';
 import { getCurrentInstance, ref } from 'vue';
-import DOMPurify from 'dompurify';
 
 import defaultDictionary from '../../i18n'
 import type { ILocaleSettings } from '../interfaces';
+
 import { escapeRegExp, isObject, keysToDotNotation, propertyAccessor } from '.';
 
 export const translatorKey = Symbol('t')
@@ -64,7 +65,7 @@ export class Translator {
       opts.fallback = p['error_description'] || p['error_details'] || p.message || p.name || params;
     }
 
-    const locale = opts.locale || this.locale;
+    const locale = opts.locale || vm.locale;
     let value = propertyAccessor(vm.dictionary[locale], key)
       || propertyAccessor(vm.dictionary[vm.defaultLocale], key);
 
