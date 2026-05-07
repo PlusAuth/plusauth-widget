@@ -1,0 +1,23 @@
+import { Meta, Primary, Controls, Story, ArgTypes, Canvas } from '@storybook/addon-docs/blocks';
+import * as LoginStories from './login.stories.ts';
+
+<Meta of={LoginStories} />
+
+# Login Page
+
+The Login page is the primary entry point for users. It supports password-based authentication, passwordless flows (Email/SMS), and social connections.
+
+
+
+## Basic Usage
+
+To initialize the widget with the login view:
+
+```javascript
+const auth = new PlusAuthWidget(document.body, {/* field configurations here*/}, window.PlusAuth)
+auth.view.mode = 'login'
+```
+
+<Canvas>
+    <Story of={LoginStories.Default} />
+</Canvas>

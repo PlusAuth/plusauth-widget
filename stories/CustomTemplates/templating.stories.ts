@@ -28,7 +28,7 @@ export const ContentPrepend: Story = {
   argTypes: ArgTypes,
   args: {
     template: `<template id="pa-content-prepend">
-			<a id="myId">----My Uri----</a>
+			<a id="myId">&#x2192My Uri</a>
     </template>`
   },
 };
@@ -38,7 +38,7 @@ export const ContentAppend: Story = {
   argTypes: ArgTypes,
   args: {
     template: `<template id="pa-content-append">
-     	<a id="myId">----My Uri----</a>
+     	<a id="myId">&#x2192My Uri</a>
     </template>`
   },
 };
@@ -48,7 +48,7 @@ export const ContentFooter: Story = {
   argTypes: ArgTypes,
   args: {
     template: `<template id="pa-content-footer">
-     	<a id="myId">----My Uri----</a>
+     	<a id="myId">&#x2192My Uri</a>
     </template>`
   },
 };
@@ -59,7 +59,7 @@ export const InfoAppend: Story = {
   argTypes: ArgTypes,
   args: {
     template: `<template id="pa-info-append">
-      <a id="myId">----My Uri----</a>
+      <a id="myId">&#x2192My Uri</a>
     </template>`
   },
 };
@@ -69,8 +69,8 @@ export const FooterBody: Story = {
   argTypes: ArgTypes,
   args: {
     template: `<template id="pa-footer-body">
-      <a id="myId">----My Uri 1----</a>
-      <a id="myId">----My Uri 2----</a>
+      <a id="myId">&#x2192My Uri 1</a>
+      <a id="myId">&#x2192My Uri 2</a>
     </template>`
   },
 };

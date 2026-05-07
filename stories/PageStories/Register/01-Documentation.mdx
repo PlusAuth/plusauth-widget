@@ -1,0 +1,21 @@
+import { Meta, Primary, Controls, Story, Canvas } from '@storybook/addon-docs/blocks';
+import * as RegisterStories from './register.stories.ts';
+
+<Meta of={RegisterStories} />
+
+# Registration Page
+
+The Registration page allows new users to create an account. Like the Login page, it is highly customizable via `modeOptions`.
+
+## Basic Usage
+
+To initialize the widget specifically for registration:
+
+```javascript
+const auth = new PlusAuthWidget(document.body, {/* field configurations here*/}, window.PlusAuth)
+auth.view.mode = 'signup'
+```
+
+<Canvas>
+    <Story of={RegisterStories.Default} />
+</Canvas>
