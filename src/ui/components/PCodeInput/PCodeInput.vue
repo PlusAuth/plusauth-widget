@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { inject, computed, ref, type Ref, onBeforeUpdate } from 'vue';
+import { inject, computed, ref, type Ref, onBeforeUpdate, watch } from 'vue';
 import { PTextField } from '..';
 import './PCodeInput.css';
 import { type Translator, translatorKey } from '../../utils/translator';
@@ -39,6 +39,23 @@ const innerModelValue = computed(() => {
   }
   return val;
 });
+
+const syncDigitsFromModel = (value?: string) => {
+  const normalized = (value || '').replace(/\D/g, '');
+  for (let i = 0; i < props.size; i++) {
+    digits[i].value = normalized[i] || null;
+  }
+};
+
+watch(
+  () => props.modelValue,
+  (value) => {
+    if (value !== innerModelValue.value) {
+      syncDigitsFromModel(value);
+    }
+  },
+  { immediate: true }
+);
 
 const onDigitInput = (index: number, val: any) => {
   if (val && !/^\d$/.test(val)) {
