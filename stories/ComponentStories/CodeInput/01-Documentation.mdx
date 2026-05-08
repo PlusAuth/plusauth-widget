@@ -1,0 +1,30 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import * as CodeInputStories from './code-input.stories.ts';
+
+<Meta of={CodeInputStories} />
+
+# CodeInput Component
+
+`PCodeInput` is a digit-based input used for OTP and verification code flows.
+
+## Basic Usage
+
+```vue
+<PCodeInput
+  v-model="code"
+  label="Verification Code"
+  :size="6"
+/>
+```
+
+<Canvas>
+  <Story of={CodeInputStories.Default} />
+</Canvas>
+
+<Canvas>
+  <Story of={CodeInputStories.FourDigitCode} />
+</Canvas>
+
+<Canvas>
+  <Story of={CodeInputStories.PreFilledCode} />
+</Canvas>

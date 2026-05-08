@@ -1,0 +1,31 @@
+import { Meta, Canvas, Story } from '@storybook/addon-docs/blocks';
+import * as VerifyEmailStories from './verify-email.stories.ts';
+
+<Meta of={VerifyEmailStories} />
+
+# Verify Email Page
+
+This page asks users to verify their email and supports pending, completed, and error states.
+
+## Basic Usage
+
+```javascript
+const auth = new PlusAuthWidget(document.body, {/* configurations here */}, window.PlusAuth)
+auth.view.mode = 'verify-email'
+```
+
+## Context Requirements
+
+Set `context.details.email` for the target email address and `context.prompt.mode` to drive pending versus completed state rendering.
+
+<Canvas>
+  <Story of={VerifyEmailStories.PendingVerification} />
+</Canvas>
+
+<Canvas>
+  <Story of={VerifyEmailStories.VerificationCompleted} />
+</Canvas>
+
+<Canvas>
+  <Story of={VerifyEmailStories.ErrorState} />
+</Canvas>

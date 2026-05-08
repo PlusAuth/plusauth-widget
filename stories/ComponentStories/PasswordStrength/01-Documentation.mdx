@@ -1,0 +1,12 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import * as PasswordStrengthStories from './password-strength.stories.ts';
+
+<Meta of={PasswordStrengthStories} />
+
+# PasswordStrength Component
+
+`PasswordStrength` shows password policy feedback based on current input state.
+
+<Canvas>
+  <Story of={PasswordStrengthStories.Default} />
+</Canvas>

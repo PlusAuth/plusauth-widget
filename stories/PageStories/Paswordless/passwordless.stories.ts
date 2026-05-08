@@ -1,10 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
+import MFAStory from '../MFA/MFAStory.vue';
 
-import MFAStory from './MFAStory.vue';
 
 const meta: Meta<typeof MFAStory> = {
   component: MFAStory,
-  title: 'Pages/MFA',
+  title: 'Pages/Passwordless',
   tags: ['!autodocs']
 };
 
@@ -16,18 +16,9 @@ const disabledControl = {
   }
 };
 
-export const MFAChallenge: Story = {
-  args: {
-    mode: 'mfa'
-  },
-  argTypes: {
-    prompt: disabledControl
-  }
-};
-
 export const EmailChallenge: Story = {
   args: {
-    mode: 'mfa-email',
+    mode: 'passwordless-email',
   },
   argTypes: {
     prompt: disabledControl
@@ -36,7 +27,7 @@ export const EmailChallenge: Story = {
 
 export const SMSChallenge: Story = {
   args: {
-    mode: 'mfa-sms',
+    mode: 'passwordless-sms',
   },
   argTypes: {
     prompt: disabledControl
@@ -45,7 +36,7 @@ export const SMSChallenge: Story = {
 
 export const OTPChallenge: Story = {
   args: {
-    mode: 'mfa-otp',
+    mode: 'passwordless-otp',
     prompt: 'Default'
   },
   argTypes: {
@@ -59,7 +50,7 @@ export const OTPChallenge: Story = {
 
 export const PushChallenge: Story = {
   args: {
-    mode: 'mfa-push',
+    mode: 'passwordless-push',
     prompt: 'Enroll'
   },
   argTypes: {
@@ -73,16 +64,7 @@ export const PushChallenge: Story = {
 
 export const SecurityDeviceChallenge: Story = {
   args: {
-    mode: 'mfa-webauthn',
-  },
-  argTypes: {
-    prompt: disabledControl
-  }
-};
-
-export const FingerVeinChallenge: Story = {
-  args: {
-    mode: 'mfa-fv',
+    mode: 'passwordless-webauthn',
   },
   argTypes: {
     prompt: disabledControl
@@ -91,6 +73,6 @@ export const FingerVeinChallenge: Story = {
 
 // export const EmailChallenge: Story = {
 //   args: {
-//     mode: 'mfa-email'
+//     mode: 'passwordless-email'
 //   }
 // };

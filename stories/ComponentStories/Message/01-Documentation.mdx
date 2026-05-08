@@ -1,0 +1,12 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import * as MessageStories from './message.stories.ts';
+
+<Meta of={MessageStories} />
+
+# Message Component
+
+`PMessage` renders field and form messages for validation and feedback.
+
+<Canvas>
+  <Story of={MessageStories.Default} />
+</Canvas>

@@ -1,0 +1,25 @@
+import { Meta, Canvas, Story } from '@storybook/addon-docs/blocks';
+import * as ConsentStories from './consent.stories.ts';
+
+<Meta of={ConsentStories} />
+
+# Consent Page
+
+The consent page asks users to approve requested scopes and claims for a client application.
+
+## Basic Usage
+
+```javascript
+const auth = new PlusAuthWidget(document.body, {/* configurations here */}, window.PlusAuth)
+auth.view.mode = 'consent'
+```
+
+## Context Requirements
+
+Provide `context.client.clientName` and `context.details.requested` with any of:
+
+`base`, `claims`, `resources`
+
+<Canvas>
+  <Story of={ConsentStories.Default} />
+</Canvas>

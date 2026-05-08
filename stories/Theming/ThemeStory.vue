@@ -11,7 +11,7 @@ const props = defineProps<IWidgetSettings['theme']>()
   <WidgetWrapper
     :context="{
       client: {
-        clientName: 'TestApp',
+        clientName: 'PlusAuth',
         tosUri: 'https://sometosuri.com',
         policyUri: 'https://somepolicyuri.com',
         logoUri: 'https://static.plusauth.com/images/logo.png',

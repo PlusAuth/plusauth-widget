@@ -10,13 +10,13 @@ const ArgTypes = {
     name: 'Enter your custom template:'
   },
   settings: {
-    control: false,
+    
     table: {
       disable: true
     }
   },
   context: {
-    control: false,
+    
     table: {
       disable: true
     }

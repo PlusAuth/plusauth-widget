@@ -4,93 +4,91 @@ import { FieldArgTypes } from '../helpers/fieldArgType';
 
 import CustomField from './CustomField.vue';
 
+const meta: Meta<typeof CustomField> = {
+  component: CustomField,
+  title: 'Custom Fields',
+  tags: ['!autodocs']
+};
+
+export default meta;
 type Story = StoryObj<typeof CustomField>;
 
+const disabledControl = {
+  table: {
+    disable: true
+  }
+};
 
-/**
- * You can provide custom fields for your view
- */
+const baseFieldArgTypes = {
+  ...FieldArgTypes
+};
+
 export const TextField: Story = {
   parameters: {
     controls: {
-      expanded: true,
-      exclude: ['length']
+      expanded: true
     }
   },
   args: {
     type: 'text',
     label: 'Username',
-    visible: true,
+    visible: true
   },
   argTypes: {
-    ...FieldArgTypes,
+    ...baseFieldArgTypes,
     type: {
-      control: false,
+      ...disabledControl,
       table: {
         type: { summary: '"text"' }
       }
     },
+    length: disabledControl
   }
 };
 
-/**
- * You can provide custom fields for your view
- */
 export const Code: Story = {
   parameters: {
     controls: {
-      expanded: true,
+      expanded: true
     }
   },
   args: {
     type: 'code',
     label: 'Enter Code',
-    visible: true,
+    visible: true
   },
   argTypes: {
-    ...FieldArgTypes,
+    ...baseFieldArgTypes,
     type: {
-      control: false,
+      ...disabledControl,
       table: {
         type: { summary: '"code"' }
       }
     },
+    format: disabledControl
   }
 };
-/**
- * You can provide custom fields for your view
- */
+
 export const CheckBox: Story = {
   parameters: {
     controls: {
-      expanded: true,
+      expanded: true
     }
   },
   args: {
     type: 'checkbox',
     label: 'My custom checkbox',
-    visible: true,
+    visible: true
   },
   argTypes: {
-    ...FieldArgTypes,
+    ...baseFieldArgTypes,
     type: {
-      control: false,
+      ...disabledControl,
       table: {
         type: { summary: '"checkbox"' }
       }
     },
+    length: disabledControl,
+    format: disabledControl
   }
 };
-
-
-/**
- *
- */
-const meta: Meta<typeof CustomField> = {
-  component: CustomField,
-  title: 'Custom Fields',
-  tags: ['!autodocs']
-}
-
-
-export default meta

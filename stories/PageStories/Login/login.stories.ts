@@ -10,10 +10,18 @@ const meta: Meta<typeof LoginStory> = {
 
 export default meta;
 type Story = StoryObj<typeof LoginStory>;
+const disabledControl = {
+  table: {
+    disable: true
+  }
+};
 
 export const Default: Story = {
   args: {
     fields: {}
+  },
+  argTypes: {
+    context: disabledControl
   }
 };
 
@@ -32,6 +40,9 @@ export const CustomFields: Story = {
         placeholder: 'Username here'
       }
     }
+  },
+  argTypes: {
+    context: disabledControl
   }
 };
 
@@ -59,5 +70,8 @@ export const SocialConnections: Story = {
         ]
       }
     }
+  },
+  argTypes: {
+    fields: disabledControl
   }
 };

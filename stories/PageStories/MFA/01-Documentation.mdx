@@ -1,61 +1,60 @@
-import { Meta, Primary, Controls, Story, ArgTypes, Canvas } from '@storybook/addon-docs/blocks';
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
 import * as MFAStories from './mfa.stories.ts';
 
 <Meta of={MFAStories} />
 
 # MFA Pages
 
-PlusAuth Widget supports multiple MFA views by default:
-```ts
-[
-    "sms", //SMS verification
-    "email", //Email verification
-    "otp", //OTP verification
-    "push", //Push Notification
-    "sc", //Smart Card Verification
-    "webauthn", //Security key or device
-    "fv" //FingerVein
-]
-```
+Supported MFA modes in this Storybook section:
 
+`mfa`, `mfa-email`, `mfa-sms`, `mfa-otp`, `mfa-push`, `mfa-webauthn`, `mfa-fv`
 
-When the widget mode is plain `'mfa'` as such: 
+When mode is `mfa`, the widget renders the challenge selector.
 
 ```javascript
 const auth = new PlusAuthWidget(document.body, {/* configurations here */}, window.PlusAuth)
 auth.view.mode = 'mfa'
 ```
 
-The widget will land on the MFA Challenge page. This page will direct the user to the selected view. 
+## Prompt-Based Views
 
-If you wish the user to directly land on a specific MFA view, you need to set the mode to the specific view like this: 
-
-```javascript
-const auth = new PlusAuthWidget(document.body, {/* configurations here */}, window.PlusAuth)
-auth.view.mode = 'mfa-sms'
-```
-
-Views like [OTP](?path=/story/pages-mfa--otp-challenge) and [Push](?path=/story/pages-mfa--push-challenge) have prompts for certain uses. 
-The mechanism to render these prompts is linked with `context.details`:
+`mfa-otp` and `mfa-push` can render different prompts based on `context.details`:
 
 ```javascript
-
 context: {
-    //...
-    details: {
-        /**
-         * For QR Setup
-        */
-        dataUrl: '<< QR Code URL >>',
-
-        /**
-         * For Manual Setup
-        */
-        dataUrl: '<< QR Code URL >>',
-        secret: '<< Secret String >>'
-    }
-    //...
+  details: {
+    dataUrl: '<< QR Code URL >>',
+    secret: '<< Secret >>',
+    push_code: '61',
+    devices: [{ vendor: 'Apple', model: 'iPhone 15' }]
+  }
 }
 ```
 
-If nothing is provided under `context.details`, the view will be rendered in standard mode.
+<Canvas>
+  <Story of={MFAStories.MFAChallenge} />
+</Canvas>
+
+<Canvas>
+  <Story of={MFAStories.EmailChallenge} />
+</Canvas>
+
+<Canvas>
+  <Story of={MFAStories.SMSChallenge} />
+</Canvas>
+
+<Canvas>
+  <Story of={MFAStories.OTPChallenge} />
+</Canvas>
+
+<Canvas>
+  <Story of={MFAStories.PushChallenge} />
+</Canvas>
+
+<Canvas>
+  <Story of={MFAStories.SecurityDeviceChallenge} />
+</Canvas>
+
+<Canvas>
+  <Story of={MFAStories.FingerVeinChallenge} />
+</Canvas>

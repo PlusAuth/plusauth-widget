@@ -1,0 +1,29 @@
+import { Meta, Canvas, Story } from '@storybook/addon-docs/blocks';
+import * as PasswordRecoveryStories from './password-recovery.stories.ts';
+
+<Meta of={PasswordRecoveryStories} />
+
+# Forgot Password
+
+The Forgot Password page allows users to request a password reset link or code by providing their identifier (email or phone number).
+
+## Basic Usage
+
+To initialize the widget in forgot password mode:
+
+```javascript
+const auth = new PlusAuthWidget(document.body, {/* field configurations here*/}, window.PlusAuth)
+auth.view.mode = 'password-recovery'
+```
+
+## Optional Configuration
+
+Use `modeOptions.recovery.fields` to inject additional verification fields in recovery flow.
+
+<Canvas>
+  <Story of={PasswordRecoveryStories.Default} />
+</Canvas>
+
+<Canvas>
+  <Story of={PasswordRecoveryStories.CustomFields} />
+</Canvas>

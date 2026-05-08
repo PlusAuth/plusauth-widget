@@ -1,55 +1,75 @@
-import {Meta, Primary, Controls, Story, ArgTypes} from '@storybook/addon-docs/blocks';
-import * as FieldStories from './fields.stories';
+import { Meta, Story, Canvas, ArgTypes } from '@storybook/addon-docs/blocks';
+import * as FieldStories from './fields.stories.ts';
 
 <Meta of={FieldStories} />
 
+# Custom Fields
 
-## Custom Fields
-You can provide custom fields or override default ones with using `modeOptions.[pageIdentifier].fields`
-setting where `[pageIdentifier]` is the page which you would like to modify the fields.
+Use `modeOptions.[pageIdentifier].fields` to add, remove, reorder, or override fields for a specific page.
 
-Each key in `fields` will be included in generated request's body as it is.
+## Basic Usage
 
-To remove a default field provide its name with a [falsy](https://developer.mozilla.org/en-US/docs/Glossary/Falsy) value.
-For example `email` field is a default value for Login page. We can remove it like this:
+```javascript
+new PlusAuthWidget('#widget', {
+  modeOptions: {
+    login: {
+      fields: {
+        'custom-text-field': {
+          type: 'text',
+          label: 'Username'
+        }
+      }
+    }
+  }
+})
+```
 
-```js
+To remove a default field, set it to a falsy value:
+
+```javascript
 {
   modeOptions: {
     login: {
       fields: {
-        email: undefined // or null, false, 0 etc.
+        email: undefined
       }
     }
   }
 }
 ```
 
-## Available Fields
-To use a custom field pass the `type` parameter for the field properties.
+## Field Types
 
-* `type: 'checkbox'` for Checkbox
-* `type: 'code'` for Code
-* `type: 'text'` for Text Field
+Supported field types in these demos:
+
+`text`, `code`, `checkbox`
+
+<Canvas>
+  <Story of={FieldStories.TextField} />
+</Canvas>
+
+<Canvas>
+  <Story of={FieldStories.Code} />
+</Canvas>
+
+<Canvas>
+  <Story of={FieldStories.CheckBox} />
+</Canvas>
 
 ## Action Helpers
-You can execute your own defined functions for error handling and responses.
 
-To execute a function before or after the action successfully completed, define them with `preAction` or `postAction` property.
-Example:
-```js
+`preAction` and `postAction` can run before and after a page action.
+
+```javascript
 new PlusAuthWidget('#widget', {
   modeOptions: {
-    'resetPassword': {
-      preAction(values, fields, formRef){
-        // Executed just before http request is sent
-        if(values.password.includes('something')){
-          // will be handled by responseErrorHandler
+    resetPassword: {
+      preAction(values) {
+        if (values.password.includes('something')) {
           throw { error: 'my_custom_error' }
         }
       },
-      postAction(){
-        // Executed when action completed successfully
+      postAction() {
         window.location.replace('https://myapplication.url/after-reset-password')
       }
     }
@@ -57,16 +77,14 @@ new PlusAuthWidget('#widget', {
 })
 ```
 
-Another common use case is handling form errors. For such cases you can define a function as `responseErrorHandler` and take action accordingly.
+Use `responseErrorHandler` for custom error handling:
 
-For example:
-
-```js
+```javascript
 new PlusAuthWidget('#widget', {
   modeOptions: {
-    'resetPassword': {
-      responseErrorHandler(error, formRef, fields){
-        if(error && error.error === 'my_custom_error' ){
+    resetPassword: {
+      responseErrorHandler(error, formRef) {
+        if (error && error.error === 'my_custom_error') {
           formRef.toggleAlert('My custom text')
         }
       }

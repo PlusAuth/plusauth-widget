@@ -1,0 +1,26 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import * as CheckBoxStories from './check-box.stories.ts';
+
+<Meta of={CheckBoxStories} />
+
+# CheckBox Component
+
+`PCheckBox` is the base checkbox input used in customizable widget forms.
+
+## Basic Usage
+
+```vue
+<PCheckBox
+  v-model="accepted"
+  name="accept_terms"
+  label="I accept the terms"
+/>
+```
+
+<Canvas>
+  <Story of={CheckBoxStories.Unchecked} />
+</Canvas>
+
+<Canvas>
+  <Story of={CheckBoxStories.Checked} />
+</Canvas>

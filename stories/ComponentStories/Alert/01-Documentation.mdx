@@ -1,0 +1,16 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import * as AlertStories from './alert.stories.ts';
+
+<Meta of={AlertStories} />
+
+# Alert Component
+
+`PAlert` is rendered through `GenericForm` when form-level errors are toggled.
+
+## Usage In Widget
+
+This demo triggers alert by submitting the form.
+
+<Canvas>
+  <Story of={AlertStories.TriggerOnSubmit} />
+</Canvas>

@@ -1,0 +1,26 @@
+import { Meta, Canvas, Story } from '@storybook/addon-docs/blocks';
+import * as AccountLinkingStories from './account-linking.stories.ts';
+
+<Meta of={AccountLinkingStories} />
+
+# Account Linking Page
+
+This page is shown when an incoming identity can be linked to an existing account.
+
+## Basic Usage
+
+```javascript
+const auth = new PlusAuthWidget(document.body, {/* configurations here */}, window.PlusAuth)
+auth.view.mode = 'account-linking'
+```
+
+## Context Requirements
+
+Provide `context.details.merge_context`, `context.details.merge_with`, and `context.details.user`.
+
+Set `merge_context.type` to `password` for password verification mode or a social type with `merge_context.url` for provider continuation.
+
+<Canvas>
+  <Story of={AccountLinkingStories.PasswordVerification} />
+</Canvas>
+
