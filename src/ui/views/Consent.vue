@@ -14,7 +14,7 @@ defineOptions({
 });
 
 const http = useHttp();
-const { t, te } = useLocale();
+const i18n = useLocale();
 const context = useContext();
 
 const requested = (context.details.requested ?? {}) as Requested;
@@ -44,7 +44,7 @@ const resolveClientLogo = resolveLogo;
             v-for="scope in requested.base"
             :key="scope"
           >
-            {{ te(`consent.base_scopes.${scope}`) ? t(`consent.base_scopes.${scope}`) : scope }}
+            {{ i18n.te(`consent.base_scopes.${scope}`) ? i18n.t(`consent.base_scopes.${scope}`) : scope }}
           </li>
         </ul>
       </li>
@@ -62,7 +62,7 @@ const resolveClientLogo = resolveLogo;
             v-for="claim in requested.claims"
             :key="claim"
           >
-            {{ te(`consent.claims.${claim}`) ? t(`consent.claims.${claim}`) : claim }}
+            {{ i18n.te(`consent.claims.${claim}`) ? i18n.t(`consent.claims.${claim}`) : claim }}
           </li>
         </ul>
       </li>
@@ -74,8 +74,8 @@ const resolveClientLogo = resolveLogo;
           class="group"
         >
           <span class="group-label">{{
-            te(`consent.resources.${indicator}`)
-              ? t(`consent.resources.${indicator}`)
+            i18n.te(`consent.resources.${indicator}`)
+              ? i18n.t(`consent.resources.${indicator}`)
               : indicator
           }}</span>
           <ul>
@@ -83,7 +83,7 @@ const resolveClientLogo = resolveLogo;
               v-for="scope in scopes"
               :key="`${indicator}:${scope}`"
             >
-              {{ te(`consent.scopes.${scope}`) ? t(`consent.scopes.${scope}`) : scope }}
+              {{ i18n.te(`consent.scopes.${scope}`) ? i18n.t(`consent.scopes.${scope}`) : scope }}
             </li>
           </ul>
         </li>
