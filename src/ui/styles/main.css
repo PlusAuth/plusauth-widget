@@ -7,11 +7,15 @@
   box-sizing: border-box;
   font-family: var(--pa-font-family);
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
+  min-height: 100dvh;
+  max-height: 100vh;
+  max-height: 100dvh;
   display: flex;
   flex-direction: column;
   margin: 0;
   padding: 0;
+  overflow-y: auto;
   -webkit-text-size-adjust: 100%;
   font-feature-settings: normal;
   font-variation-settings: normal;
@@ -65,15 +69,15 @@
   }
 
   h1 {
-    font-size: var(--pa-fs-h1);
-    padding-top: 16px;
+    font-size: clamp(18px, 5vw, var(--pa-fs-h1));
+    padding-top: clamp(6px, 2.2dvh, 16px);
     font-weight: var(--pa-fw-h1);
     text-align: var(--pa-align-h1);
   }
 
   h2 {
-    font-size: var(--pa-fs-h2);
-    padding-top: 14px;
+    font-size: clamp(12px, 3.6vw, var(--pa-fs-h2));
+    padding-top: clamp(4px, 1.8dvh, 14px);
     font-weight: var(--pa-fw-h2);
     text-align: var(--pa-align-h2);
   }
@@ -185,6 +189,7 @@
     justify-content: center;
     align-items: var(--pa-widget-align);
     min-height: 100vh;
+    min-height: 100dvh;
     overflow-y: auto;
   }
 
@@ -192,6 +197,7 @@
     display: flex;
     flex-direction: column;
     max-width: 100%;
+    min-height: 0;
     position: relative;
     z-index: 2;
     flex-grow: 1;
@@ -200,10 +206,11 @@
       display: flex;
       flex-direction: column;
       margin: auto 0;
-      width: 600px;
+      width: min(600px, 100%);
       flex-grow: 0;
       justify-content: center;
-      min-height: calc(var(--pa-widget-state, 0) * 100vh);
+      min-height: calc(var(--pa-widget-state, 0) * 100dvh);
+      max-height: 100%;
     }
 
     &-footer {
@@ -220,22 +227,26 @@
       @apply relative pt-6 px-6 pb-8 bg-white flex flex-col;
       box-flex: 1;
       flex-grow: 1;
-      overflow: hidden;
+      justify-content: safe center;
+      min-height: 0;
+      overflow-y: auto;
+      overflow-x: hidden;
+      padding: clamp(16px, 4dvh, 32px) clamp(16px, 5vw, 32px) clamp(20px, 5dvh, 32px);
       border-radius: calc((1 - var(--pa-widget-state, 0)) * var(--pa-main-radius));
       border: calc((1 - var(--pa-widget-state, 0)) * var(--pa-main-border-w)) solid var(--pa-main-border-c);
-      height: 100%;
+      max-height: 100%;
 
       @media (min-width: 450px) {
         @apply px-8 py-8;
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        padding: clamp(18px, 4dvh, 32px) clamp(20px, 4.5vw, 32px);
       }
 
       @media (min-width: 601px) {
         overflow-y: auto;
         flex-grow: var(--pa-widget-state, 0);
-        height: auto;
+        max-height: 100%;
       }
     }
 
@@ -264,8 +275,36 @@
     }
   }
 
+  @media (max-height: 700px) and (min-width: 601px) {
+    &-content-main {
+      @apply pt-4 pb-5;
+    }
+
+    &-info-section {
+      @apply pb-3;
+    }
+
+    h1 {
+      padding-top: 8px;
+    }
+
+    .logo-container {
+      min-height: 48px;
+      margin: 4px 0 8px;
+
+      .logo {
+        max-height: 72px;
+      }
+    }
+
+    &-social-icons {
+      @apply py-2;
+    }
+  }
+
   &-info-section {
-    @apply text-center pb-4;
+    @apply text-center;
+    padding-bottom: clamp(8px, 2.5dvh, 16px);
   }
 
   &-helpers-section {
@@ -282,7 +321,9 @@
   }
 
   &-social-icons {
-    @apply flex justify-center py-4 flex-wrap gap-2;
+    @apply flex justify-center flex-wrap gap-2;
+    padding-top: clamp(8px, 2.4dvh, 16px);
+    padding-bottom: clamp(8px, 2.4dvh, 16px);
   }
 
   &-social-button.btn {
@@ -389,13 +430,29 @@
   .logo-container {
     display: flex;
     justify-content: var(--pa-logo-align);
-    margin: 12px 0;
-    min-height: 72px;
+    margin: clamp(4px, 1.8dvh, 12px) 0;
+    min-height: clamp(44px, 11dvh, 72px);
 
     .logo {
       object-fit: contain;
-      max-width: 80%;
-      max-height: 120px;
+      max-width: min(72%, 320px);
+      max-height: clamp(56px, 14dvh, 104px);
+    }
+  }
+
+  @media (max-width: 600px) {
+    &-content-main {
+      padding: clamp(14px, 4dvh, 24px) clamp(16px, 5vw, 24px) clamp(18px, 4.5dvh, 28px);
+    }
+
+    .logo-container {
+      margin-top: clamp(2px, 1dvh, 8px);
+      min-height: clamp(40px, 10dvh, 56px);
+
+      .logo {
+        max-width: min(68%, 280px);
+        max-height: clamp(48px, 12dvh, 80px);
+      }
     }
   }
 

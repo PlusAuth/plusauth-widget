@@ -1,11 +1,14 @@
 <script setup lang="ts">
-import { computed, inject, ref } from 'vue';
+import { computed, inject, onMounted, ref } from 'vue';
 import { makeFocusProps, useFocus } from '../../composables/focus';
 import { makeValidationProps, useValidation } from '../../composables/validation';
+import { resolveCssVariableVariant } from '../../utils';
 import type { Translator } from '../../utils/translator';
 import { translatorKey } from '../../utils/translator';
 import type { ITranslatePath } from '../../interfaces';
 import PMessage from '../PMessage/PMessage.vue';
+
+const inputVariants = ['outlined', 'filled', 'underlined', 'solo', 'plain', 'regular'] as const
 
 const props = defineProps({
   name: String,
@@ -27,7 +30,11 @@ const emit = defineEmits<{
   (e: 'update:modelValue', val: any): void;
 }>();
 
+const rootRef = ref<HTMLElement>();
 const inputRef = ref<HTMLInputElement>();
+const inputVariant = ref<typeof inputVariants[number]>(
+  resolveCssVariableVariant('--pa-input-variant', inputVariants)
+);
 const i18n = inject(translatorKey) as Translator;
 
 const { focus, focusClasses, isFocused, blur } = useFocus(props as any, 'pa__input');
@@ -56,8 +63,13 @@ const onFocus = () => {
   if (!isFocused.value) focus();
 };
 
+onMounted(() => {
+  inputVariant.value = resolveCssVariableVariant('--pa-input-variant', inputVariants, rootRef.value)
+})
+
 const classes = computed(() => ({
   'pa__input--has-value': !!props.modelValue,
+  [`pa__input--variant-${inputVariant.value}`]: true,
   [props.color ? `text-${props.color}` : 'text-primary']: true,
   ...validationClasses.value,
   ...focusClasses.value,
@@ -90,6 +102,7 @@ defineExpose({
 
 <template>
   <div
+    ref="rootRef"
     class="pa__input pa__input-tf--wrap"
     :class="classes"
   >

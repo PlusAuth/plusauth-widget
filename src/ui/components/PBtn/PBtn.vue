@@ -1,5 +1,6 @@
 <template>
   <component
+    ref="btnRef"
     :is="$attrs.href ? 'a' : 'button'"
     :class="classes"
     :style="styles"
@@ -20,10 +21,16 @@
   </component>
 </template>
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
-import { setColorStyle } from '../../utils';
+import { resolveCssVariableVariant } from '../../utils';
 import PSpinner from '../PSpinner/PSpinner.vue';
+
+const buttonVariants = ['flat', 'elevated', 'tonal', 'outlined', 'text', 'plain'] as const
+const btnRef = ref<HTMLElement>();
+const buttonVariant = ref<typeof buttonVariants[number]>(
+  resolveCssVariableVariant('--pa-button-variant', buttonVariants)
+);
 
 const props = defineProps<{
   block?: boolean,
@@ -40,10 +47,20 @@ const classes = computed(() => ({
   'pa__btn--block': props.block,
   'pa__btn--disabled': props.disabled,
   'pa__btn--flat': props.flat,
+  [`pa__btn--variant-${buttonVariant.value}`]: true,
 }))
+
+onMounted(() => {
+  buttonVariant.value = resolveCssVariableVariant('--pa-button-variant', buttonVariants, btnRef.value)
+})
+
+const resolveColor = (color: string) => color.startsWith('#') ? color : `rgb(var(--pa-color-${color}))`
 const styles = computed(() => ({
-  ...setColorStyle(props),
-  '--pa-ring-color': `rgb(var(--pa-color-${props.color || 'primary'}) / 0.3)`
+  '--pa-btn-color': resolveColor(props.color || 'primary'),
+  '--pa-btn-text-color': props.textColor ? resolveColor(props.textColor) : undefined,
+  '--pa-ring-color': props.color?.startsWith('#')
+    ? `${props.color}4d`
+    : `rgb(var(--pa-color-${props.color || 'primary'}) / 0.3)`
 }))
 </script>
 <style src="./PBtn.css"></style>

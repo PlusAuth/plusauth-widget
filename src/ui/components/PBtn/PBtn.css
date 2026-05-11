@@ -4,14 +4,16 @@
         @apply relative inline-flex justify-center items-center
         cursor-pointer
         tracking-wider
-        bg-primary text-white
         text-sm font-medium uppercase select-none whitespace-nowrap decoration-0
         px-4 h-10
         hover:opacity-80
         focus:ring-2 ring-primary/30 focus:outline-none;
 
+        background-color: var(--pa-btn-color, rgb(var(--pa-color-primary)));
         border-radius: var(--pa-input-radius);
-        transition-property: box-shadow, transform, opacity;
+        color: var(--pa-btn-text-color, #fff);
+        transition-property: background-color, border-color, box-shadow, color, opacity, transform;
+        transition-duration: 150ms;
 
         &:hover,
         &.hover--demo {
@@ -34,8 +36,53 @@
         }
 
         &--flat {
-            @apply bg-transparent text-primary;
+            background-color: transparent;
             color: #5f6368;
+        }
+
+        &--variant-flat {
+            background-color: var(--pa-btn-color, rgb(var(--pa-color-primary)));
+            color: var(--pa-btn-text-color, #fff);
+            box-shadow: none;
+        }
+
+        &--variant-elevated {
+            background-color: var(--pa-btn-color, rgb(var(--pa-color-primary)));
+            color: var(--pa-btn-text-color, #fff);
+            box-shadow: 0 3px 6px rgb(0 0 0 / 0.16), 0 3px 6px rgb(0 0 0 / 0.23);
+
+            &:hover,
+            &.hover--demo {
+                box-shadow: 0 5px 10px rgb(0 0 0 / 0.18), 0 4px 6px rgb(0 0 0 / 0.22);
+            }
+        }
+
+        &--variant-tonal {
+            background-color: color-mix(in srgb, var(--pa-btn-color, rgb(var(--pa-color-primary))) 13%, transparent);
+            color: var(--pa-btn-color, rgb(var(--pa-color-primary)));
+        }
+
+        &--variant-outlined {
+            background-color: transparent;
+            border: 1px solid color-mix(in srgb, var(--pa-btn-color, rgb(var(--pa-color-primary))) 70%, transparent);
+            color: var(--pa-btn-text-color, var(--pa-btn-color, rgb(var(--pa-color-primary))));
+        }
+
+        &--variant-text,
+        &--variant-plain {
+            background-color: transparent;
+            color: var(--pa-btn-text-color, var(--pa-btn-color, rgb(var(--pa-color-primary))));
+        }
+
+        &--variant-plain {
+            opacity: 0.72;
+
+            &:hover,
+            &.hover--demo,
+            &:focus,
+            &.focus--demo {
+                opacity: 1;
+            }
         }
     }
 

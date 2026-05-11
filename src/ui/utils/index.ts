@@ -173,6 +173,33 @@ export function setColorStyle(props: { color?: string, textColor?: string } ){
   }
 }
 
+export function resolveCssVariableVariant<T extends readonly string[]>(
+  name: string,
+  variants: T,
+  element?: Element
+): T[number] {
+  if (typeof window === 'undefined' || !variants.length) {
+    return variants[0]
+  }
+
+  let value = window
+    .getComputedStyle(element || document.documentElement)
+    .getPropertyValue(name)
+    .trim()
+
+  if (!value && element) {
+    value = window
+      .getComputedStyle(document.documentElement)
+      .getPropertyValue(name)
+      .trim()
+  }
+  const index = Number(value)
+
+  return Number.isInteger(index) && index >= 0 && index < variants.length
+    ? variants[index]
+    : variants[0]
+}
+
 export function secondsToTime(e: number){
   const m = Math.floor(e % 3600 / 60).toString().padStart(2,'0'),
         s = Math.floor(e % 60).toString().padStart(2,'0');
