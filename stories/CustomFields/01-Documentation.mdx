@@ -7,6 +7,10 @@ import * as FieldStories from './fields.stories.ts';
 
 Use `modeOptions.[pageIdentifier].fields` to add, remove, reorder, or override fields for a specific page.
 
+Common page keys:
+
+`login`, `signup`, `recovery`, `resetPassword`, `fillMissing`, `verifyEmail`, `passwordChallenge`, `emailMfa`, `smsMfa`, `otpMfa`, `pushMfa`, `webauthnMfa`, `fvMfa`, `passwordlessEmail`, `passwordlessSms`, `passwordlessOtp`, `passwordlessPush`, `passwordlessWebauthn`, `accountLinking`
+
 ## Basic Usage
 
 ```javascript
@@ -91,6 +95,64 @@ new PlusAuthWidget('#widget', {
     }
   }
 })
+```
+
+## Advanced Field Options
+
+`required`: defaults to `true`. Set `required: false` to make a field optional.
+
+`visible`: set `false` or `'hidden'` to hide a field while still keeping value behavior.
+
+`ignored`: when `true`, skips validation and omits the field from submitted payload.
+
+`order`: controls rendering order.
+
+`slots`: allows injecting component content into input slots.
+
+```javascript
+{
+  modeOptions: {
+    login: {
+      fields: {
+        username: {
+          type: 'text',
+          label: 'Username',
+          required: false,
+          order: 2,
+          slots: {
+            append: {
+              element: 'PSpinner',
+              props: {
+                color: 'primary',
+                indeterminate: true
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+## Custom Validation
+
+Use `validator` for sync or async validation. Return `true` for pass or return a string error key/message.
+
+```javascript
+{
+  fields: {
+    password: {
+      type: 'password',
+      validator(fields, value) {
+        if (!value || value.length < 8) {
+          return 'Password must be at least 8 characters'
+        }
+        return true
+      }
+    }
+  }
+}
 ```
 
 ## Field Properties

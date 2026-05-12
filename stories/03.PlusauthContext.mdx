@@ -1,24 +1,43 @@
 # PlusAuth Context
 
-PlusAuth views provides a context object to be used in views. You can access
-it from global `PlusAuth` object or `window.PlusAuth`.
+PlusAuth views provide a context object used by widget flows. You can access it from global `PlusAuth` object or `window.PlusAuth`.
 
-Here is the type definition of context object.
+Here is the context shape used by the widget:
 
 ```typescript
 type PlusAuthContext = {
   details: Record<string, any>,
-  params: Record<string, any>,
-  prompt: {
+  params: any,
+  prompt?: {
     name: string,
     mode?: string
   },
+  connection?: {
+    name: string,
+    type: string,
+    require_password?: boolean
+  },
+  error?: {
+    error: string,
+    error_description: string
+  },
   client: {
     logoUri?: string,
+    policyUri?: string,
+    tosUri?: string,
     clientName?: string,
     jwksUri: string,
     applicationType: 'native' | 'web' | 'server-to-server' | 'single-page-application' | 'financial',
-    social: {
+    passwordless: {
+      name: string,
+      provider: string,
+      branding: {
+        show_in_login?: boolean,
+        logo_url?: string,
+        display_name?: string
+      }
+    }[],
+    social: string[] | {
       name: string,
       provider: string,
       branding: {
@@ -43,6 +62,22 @@ type PlusAuthContext = {
     register_enabled?: boolean,
     welcome_emails_enabled?: boolean,
     tenant_login_url?: string
+  }
+}
+```
+
+## Minimum Practical Context
+
+For most Storybook/demo usage, this minimal context is enough:
+
+```javascript
+{
+  client: {
+    clientName: 'PlusAuth',
+    logoUri: 'https://static.plusauth.com/images/logo.png'
   },
+  settings: {},
+  details: {},
+  params: {}
 }
 ```

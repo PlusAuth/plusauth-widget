@@ -34,11 +34,33 @@ pnpm add @plusauth/plusauth-widget
 
 # Usage
 
-After that all we need to initialize the widget like following:
+## Constructor
+
+`PlusAuthWidget` constructor signature:
+
+```ts
+new PlusAuthWidget(
+  container?: Element | string,
+  settings?: Partial<IWidgetSettings>,
+  context: Partial<IPlusAuthContext>
+)
+```
+
+`container` can be a selector string (for example `'#widget'`) or an element reference.
+
+`settings` controls mode, fields, theme, locale, and behavior.
+
+`context` is the PlusAuth runtime payload (`window.PlusAuth` in hosted pages).
+
+## Basic Initialization
+
+Initialize with explicit target, settings, and context:
 
 ```html
 <script >
-  new PlusAuthWidget() // will be rendered at document.body
+  new PlusAuthWidget('#widget', {
+    mode: 'login'
+  }, window.PlusAuth)
 </script>
 ```
 
@@ -47,5 +69,87 @@ or
 ```js
 import PlusAuthWidget from '@plusauth/plusauth-widget'
 
-new PlusAuthWidget() // will be rendered at document.body
+new PlusAuthWidget('#widget', {
+  mode: 'login'
+}, window.PlusAuth)
+```
+
+If you don't have context yet in development, pass an empty object:
+
+```javascript
+new PlusAuthWidget('#widget', { mode: 'login' }, {})
+```
+
+## Mode Selection
+
+Set an initial mode in constructor settings:
+
+```javascript
+const widget = new PlusAuthWidget('#widget', {
+  mode: 'login'
+}, window.PlusAuth)
+```
+
+Or switch mode at runtime:
+
+```javascript
+widget.view.mode = 'mfa-sms'
+```
+
+If `mode` is omitted, widget also resolves view from current URL path conventions.
+
+## Mode Options Mapping
+
+For field/action customization, `modeOptions` keys may differ from the mode string.
+
+| `mode` value | `modeOptions` key |
+| --- | --- |
+| `login` | `login` |
+| `register` | `signup` |
+| `password-recovery` | `recovery` |
+| `reset-password` | `resetPassword` |
+| `fill-missing` | `fillMissing` |
+| `verify-email` | `verifyEmail` |
+| `password-challenge` | `passwordChallenge` |
+| `mfa-email` | `emailMfa` |
+| `mfa-sms` | `smsMfa` |
+| `mfa-otp` | `otpMfa` |
+| `mfa-push` | `pushMfa` |
+| `mfa-webauthn` | `webauthnMfa` |
+| `mfa-fv` | `fvMfa` |
+| `passwordless-email` | `passwordlessEmail` |
+| `passwordless-sms` | `passwordlessSms` |
+| `passwordless-otp` | `passwordlessOtp` |
+| `passwordless-push` | `passwordlessPush` |
+| `passwordless-webauthn` | `passwordlessWebauthn` |
+| `account-linking` | `accountLinking` |
+
+## Runtime Helpers
+
+`widget.view`: reactive settings reference (for runtime mode/settings updates).
+
+`widget.i18n`: locale helper for runtime translation and locale switching.
+
+`widget.http`: fetch wrapper used by internal flows.
+
+```javascript
+const widget = new PlusAuthWidget('#widget', {}, window.PlusAuth)
+
+widget.i18n.locale = 'en'
+widget.view.mode = 'login'
+```
+
+## Global Behavior Settings
+
+You can configure social button appearance and footer behavior globally:
+
+```javascript
+new PlusAuthWidget('#widget', {
+  socialLogin: {
+    buttonVariant: 'circle' // or 'block'
+  },
+  footer: {
+    enabled: true
+  }
+}, window.PlusAuth)
 ```
