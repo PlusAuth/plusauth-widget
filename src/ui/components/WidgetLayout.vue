@@ -67,10 +67,27 @@ const logoSource = resolveLogo(typeof props.logo === 'string' ? props.logo : con
       </div>
       <slot />
       <div
-        v-if="$slots['content-actions']"
+        v-if="$slots['content-actions'] || templates['content-actions-prepend'] || templates['content-actions-append']"
         class="pa__widget-content-actions"
       >
-        <slot name="content-actions" />
+        <div
+          v-if="templates['content-actions-prepend']"
+          class="pa__widget-content-actions-template pa__widget-content-actions-template-prepend"
+        >
+          <WidgetTemplate name="content-actions-prepend" />
+        </div>
+        <div
+          v-if="$slots['content-actions']"
+          class="pa__widget-content-actions-main"
+        >
+          <slot name="content-actions" />
+        </div>
+        <div
+          v-if="templates['content-actions-append']"
+          class="pa__widget-content-actions-template pa__widget-content-actions-template-append"
+        >
+          <WidgetTemplate name="content-actions-append" />
+        </div>
       </div>
       <slot name="content-append" />
       <WidgetTemplate name="content-append" />

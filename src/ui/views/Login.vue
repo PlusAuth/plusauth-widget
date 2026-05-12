@@ -4,6 +4,7 @@ import { ref, computed } from 'vue';
 import GenericForm from '../components/GenericForm.vue';
 import SocialConnectionButton from '../components/SocialConnectionButton.vue';
 import WidgetLayout from '../components/WidgetLayout.vue';
+import WidgetTemplate from '../components/WidgetTemplate.tsx';
 import { useContext, useHttp } from '../composables';
 import type { AdditionalFields } from '../interfaces';
 import { resolveLogo } from '../utils';
@@ -25,6 +26,9 @@ const isPasswordless = computed(() => {
     'enterprise',
     'plusauth'
   ].includes(connection.type);
+});
+const hasSocialConnections = computed(() => {
+  return !!(context.client && context.client.social && context.client.social.length);
 });
 
 const identifierField = connection.type === 'sms' ? 'phone_number' : 'email';
@@ -103,13 +107,12 @@ const resolveClientLogo = resolveLogo;
     <template #content-append>
       <div class="pa__widget-helpers-section">
         <template
-          v-if="context.client
-            && context.client.social
-            && context.client.social.length"
+          v-if="hasSocialConnections"
         >
           <div class="pa__social-seperator">
             <span v-t="'login.socialLoginHelper'"></span>
           </div>
+          <WidgetTemplate name="social-prepend" />
           <div class="pa__widget-social-icons">
             <SocialConnectionButton
               v-for="connectionItem in context.client.social"
@@ -118,6 +121,7 @@ const resolveClientLogo = resolveLogo;
               :connection="connectionItem"
             />
           </div>
+          <WidgetTemplate name="social-append" />
         </template>
         <div
           v-if="context.settings.register_enabled"

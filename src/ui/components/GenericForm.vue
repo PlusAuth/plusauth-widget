@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, reactive, ref } from 'vue';
+import { computed, inject, reactive, ref } from 'vue';
 
 import type { FieldDefinition, ITranslatePath } from '../interfaces';
 
@@ -10,6 +10,7 @@ import PCodeInput from './PCodeInput/PCodeInput.vue';
 import PForm from './PForm.vue';
 import PMessage from './PMessage/PMessage.vue';
 import PTextField from './PTextField/PTextField.vue';
+import WidgetTemplate from './WidgetTemplate.tsx';
 
 defineOptions({
   name: 'GenericForm'
@@ -35,6 +36,7 @@ const sortedFields = computed(() => {
   return Object.keys(props.fields)
     .sort((a, b) => (props.fields[a]?.order || 0) - (props.fields[b]?.order || 0));
 });
+const templates = inject<Record<string, any>>('templates') || {}
 
 const toggleAlert = (message?: ITranslatePath, options?: Partial<PAlertProps>): void => {
   alert.value = false;
@@ -62,6 +64,10 @@ defineExpose({
     :disabled="disabled"
     @submit="submit"
   >
+    <WidgetTemplate
+      v-if="templates['form-prepend']"
+      name="form-prepend"
+    />
     <template
       v-for="field in sortedFields"
       :key="field"
@@ -150,6 +156,10 @@ defineExpose({
         </p-text-field>
       </template>
     </template>
+    <WidgetTemplate
+      v-if="templates['form-append']"
+      name="form-append"
+    />
     <slot />
     <p-alert
       v-model="alert"

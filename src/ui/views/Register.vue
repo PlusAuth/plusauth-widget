@@ -3,6 +3,7 @@ import { PasswordStrength } from '../components';
 import GenericForm from '../components/GenericForm.vue';
 import SocialConnectionButton from '../components/SocialConnectionButton.vue';
 import WidgetLayout from '../components/WidgetLayout.vue';
+import WidgetTemplate from '../components/WidgetTemplate.tsx';
 import { useContext, useHttp, useLocale } from '../composables';
 import type { AdditionalFields, FieldDefinition } from '../interfaces';
 import { resolveLogo } from '../utils';
@@ -18,6 +19,7 @@ const context = useContext();
 const { t } = useLocale();
 
 const connection = (context.connection || {}) as any;
+const hasSocialConnections = !!(context.client && context.client.social && context.client.social.length);
 const identifierField = connection.type === 'sms' ? 'phone_number' : 'email';
 
 const defaultFields: AdditionalFields = {
@@ -127,13 +129,12 @@ const resolveClientLogo = resolveLogo;
     <template #content-append>
       <div class="pa__widget-helpers-section">
         <template
-          v-if="context.client
-            && context.client.social
-            && context.client.social.length"
+          v-if="hasSocialConnections"
         >
           <div class="pa__social-seperator">
             <span v-t="'register.socialLoginHelper'"></span>
           </div>
+          <WidgetTemplate name="social-prepend" />
           <div class="pa__widget-social-icons">
             <SocialConnectionButton
               v-for="connectionItem in context.client.social"
@@ -142,6 +143,7 @@ const resolveClientLogo = resolveLogo;
               :connection="connectionItem"
             />
           </div>
+          <WidgetTemplate name="social-append" />
         </template>
         <span
           v-t="'register.haveAccount'"
