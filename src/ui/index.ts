@@ -29,12 +29,30 @@ export function createWidget(
   installComponents(widget)
 
   const targetElement = typeof container === 'string' ? document.querySelector(container)! : container
-  const templates = {} as Record<string, Node>
-  targetElement.querySelectorAll('template, pa-template').forEach(temp => {
-    if (temp.id && temp.id.startsWith('pa-')) {
-      templates[temp.id.replace(/^pa-/, '')] = temp.cloneNode(true)
-    }
-  })
+  const templates = {} as Record<string, Element>
+  const templateSelector = 'template[id^="pa-"], pa-template[id^="pa-"]'
+
+  const registerTemplate = (temp: Element) => {
+    const key = temp.id.replace(/^pa-/, '')
+    if (!key || templates[key]) return
+    templates[key] = temp.cloneNode(true) as Element
+  }
+
+  targetElement.querySelectorAll(templateSelector).forEach(registerTemplate)
+
+  const parentElement = targetElement.parentElement
+  if (parentElement) {
+    Array.from(parentElement.children).forEach((child) => {
+      if (child === targetElement) return
+      if (child.matches(templateSelector)) {
+        registerTemplate(child)
+      }
+      child.querySelectorAll(templateSelector).forEach(registerTemplate)
+    })
+  }
+
+  document.querySelectorAll(templateSelector).forEach(registerTemplate)
+
   widget.provide('templates', templates)
   
   widget.mount(targetElement);
