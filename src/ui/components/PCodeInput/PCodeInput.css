@@ -4,6 +4,12 @@
 
         & > .input--wrap {
             @apply border-0 ring-0 flex flex-row justify-between;
+
+            &:hover,
+            &.hover--demo {
+                background-color: transparent;
+                border-color: transparent;
+            }
         }
 
 

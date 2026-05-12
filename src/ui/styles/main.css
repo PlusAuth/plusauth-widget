@@ -252,12 +252,27 @@
 
     &-actions {
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+      align-items: stretch;
+      width: 100%;
+      gap: 8px;
       margin-top: 12px;
 
       &:empty {
         display: none;
       }
+    }
+
+    &-actions-main {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    &-actions-template {
+      text-align: center;
+      font-size: 14px;
+      line-height: 1.4;
     }
 
     &-footer {
