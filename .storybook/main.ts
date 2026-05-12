@@ -1,13 +1,12 @@
 import type { StorybookConfig } from '@storybook/vue3-vite';
 
 const config: StorybookConfig = {
-  stories: ['../stories/**/*.@(md|mdx)', '../**/*.stories.@(js|jsx|mjs|ts|tsx)'],
+  stories: ['../stories/**/*.@(md|mdx)', '../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
   staticDirs: [{ from: '../stories/public', to: '/' }],
   addons: [
     '@storybook/addon-links',
     'storybook-addon-vue-mdx',
-    '@storybook/addon-docs',
-    '@storybook/addon-vitest'
+    '@storybook/addon-docs'
   ],
 
   core: {
@@ -33,6 +32,12 @@ const config: StorybookConfig = {
     config.plugins = config.plugins?.filter((p: any) => {
       return !['vite-plugin-checker'].includes(p.name);
     })
+    config.resolve = config.resolve || {}
+    config.resolve.dedupe = [
+      ...config.resolve.dedupe || [],
+      'react',
+      'react-dom',
+    ]
     config.esbuild = {
       ...config.esbuild,
       jsx: 'automatic',
