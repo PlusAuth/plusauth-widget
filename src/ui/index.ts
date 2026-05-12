@@ -39,7 +39,7 @@ export function createWidget(
   
   widget.mount(targetElement);
 
-  window.addEventListener('message', (event) => {
+  const onDemoStateMessage = (event) => {
     if (event.data.type === 'SET_DEMO_STATES') {
       const { hover, focus } = event.data.payload;
       const all = targetElement.querySelectorAll('*');
@@ -48,7 +48,15 @@ export function createWidget(
         el.classList.toggle('pa__focus--demo', !!focus);
       });
     }
-  });
+  };
+
+  window.addEventListener('message', onDemoStateMessage);
+
+  const originalUnmount = widget.unmount.bind(widget);
+  widget.unmount = (...args) => {
+    window.removeEventListener('message', onDemoStateMessage);
+    return originalUnmount(...args);
+  };
 
   watch(translator.localeRef, (locale) => {
     if (locale !== translator.locale) {

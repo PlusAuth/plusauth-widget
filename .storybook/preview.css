@@ -1,21 +1,23 @@
 :root, #storybook-root {
   --pa-fs-p: 16px;
-  --pa-fs-h1: 18px;
+  --pa-fs-h1: 20px;
   --pa-fs-h2: 18px;
   --pa-fw-p: 400;
   --pa-fw-h1: 400;
   --pa-fw-h2: 400;
-  --pa-align-p: center;
+  --pa-align-p: start;
   --pa-align-h1: center;
   --pa-align-h2: center;
-  --pa-input-radius: 16px;
+  --pa-input-radius: 0px;
   --pa-input-border-w: 1px;
-  --pa-main-radius: 36px;
+  --pa-main-radius: 0px;
   --pa-main-border-w: 1px;
   --pa-main-border-c: #e2e8f0;
   --pa-main-bg: white;
   --pa-widget-align: center;
   --pa-widget-state: 0;
+  --pa-input-variant: 0;
+  --pa-button-variant: 0;
   --pa-logo-align: center;
 }
 

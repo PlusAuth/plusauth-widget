@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue';
+import { onBeforeUnmount, onMounted, ref, watch } from 'vue';
 
 import PlusAuthWidget from '../src';
 import type { IPlusAuthContext, IWidgetSettings } from '../src/ui/interfaces';
@@ -11,23 +11,32 @@ const props = defineProps<{
   context?: Partial<IPlusAuthContext>
 }>()
 const config = ref(useConfig(props.settings, props.context))
-const key = ref()
 const widget = ref<PlusAuthWidget>()
+const wrapperId = `wrapper-${Math.random().toString(36).slice(2, 11)}`
 
-onMounted(() => {
-  widget.value = new PlusAuthWidget('#wrapper', config.value.settings, config.value.context as any)
-})
-watch(() => props, () => {
-  config.value = useConfig(props.settings, props.context)
-  // @ts-expect-error
+const unmountWidget = () => {
+  // @ts-expect-error stories need access to the mounted vue app instance.
   widget.value?._view.unmount()
-  widget.value = new PlusAuthWidget('#wrapper', config.value.settings, config.value.context as any)
-},{ deep: true })
+  widget.value = undefined
+}
+
+const mountWidget = () => {
+  unmountWidget()
+  widget.value = new PlusAuthWidget(`#${wrapperId}`, config.value.settings, config.value.context as any)
+}
+
+onMounted(mountWidget)
+onBeforeUnmount(unmountWidget)
+
+watch(() => [props.settings, props.context], () => {
+  config.value = useConfig(props.settings, props.context)
+  mountWidget()
+},{ deep: true, flush: 'post' })
 
 </script>
 
 <template>
-  <div id="wrapper" />
+  <div :id="wrapperId" />
 </template>
 
 <style>

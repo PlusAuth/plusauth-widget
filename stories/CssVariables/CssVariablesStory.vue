@@ -25,11 +25,6 @@ const settings: Partial<IWidgetSettings> = {
           order: 2,
           type: 'code',
           label: 'OTP'
-        },
-        accept: {
-          order: 3,
-          type: 'checkbox',
-          label: 'I accept terms and conditions'
         }
       }
     }
@@ -98,5 +93,9 @@ watch(() => props.cssVariables, mountWidget, { deep: true, flush: 'post' });
 .css-variables-story,
 .css-variables-story__wrapper {
   height: 100%;
+}
+
+.css-variables-story {
+  min-height: 900px;
 }
 </style>

@@ -1,5 +1,5 @@
-import { computed } from 'vue';
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
+import { computed } from 'vue';
 
 import CssVariablesStory from './CssVariablesStory.vue';
 
@@ -74,13 +74,13 @@ const cssVariableDefinitions: CssVariableDefinition[] = [
   {
     arg: 'paMainBg',
     variable: '--pa-main-bg',
-    defaultValue: "url('https://c4.wallpaperflare.com/wallpaper/822/923/603/firewatch-mountains-forest-video-games-wallpaper-preview.jpg') center/cover no-repeat",
+    defaultValue: 'white',
     control: { control: 'text' }
   },
-  { arg: 'paWidgetAlign', variable: '--pa-widget-align', defaultValue: 'start', control: boxAlignControl },
-  { arg: 'paWidgetState', variable: '--pa-widget-state', defaultValue: 1, control: { control: 'select', options: [0, 1] } },
-  { arg: 'paInputVariant', variable: '--pa-input-variant', defaultValue: 5, control: inputVariantControl },
-  { arg: 'paButtonVariant', variable: '--pa-button-variant', defaultValue: 2, control: buttonVariantControl },
+  { arg: 'paWidgetAlign', variable: '--pa-widget-align', defaultValue: 'center', control: boxAlignControl },
+  { arg: 'paWidgetState', variable: '--pa-widget-state', defaultValue: 0, control: { control: 'select', options: [0, 1] } },
+  { arg: 'paInputVariant', variable: '--pa-input-variant', defaultValue: 0, control: inputVariantControl },
+  { arg: 'paButtonVariant', variable: '--pa-button-variant', defaultValue: 0, control: buttonVariantControl },
   { arg: 'paLogoAlign', variable: '--pa-logo-align', defaultValue: 'center', control: boxAlignControl },
 ];
 
@@ -121,6 +121,13 @@ export default meta;
 export const Default: Story = {
   args: cssVariableDefaults,
   argTypes,
+  parameters: {
+    docs: {
+      story: {
+        height: '980px'
+      }
+    }
+  },
   render: (args) => ({
     components: { CssVariablesStory },
     setup() {

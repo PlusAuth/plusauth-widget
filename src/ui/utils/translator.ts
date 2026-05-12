@@ -101,6 +101,10 @@ export class Translator {
       ? this
       : getCurrentInstance()?.appContext?.config?.globalProperties.$i18n;
 
+    if (!vm) {
+      return false;
+    }
+
     const loc = locale || vm.locale
     return !!(
       propertyAccessor(vm.dictionary[loc], key) ||

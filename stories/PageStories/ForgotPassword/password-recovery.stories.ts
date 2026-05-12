@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/vue3-vite';
+
 import PasswordRecoveryStory from './PasswordRecoveryStory.vue';
 
 const meta: Meta<typeof PasswordRecoveryStory> = {

@@ -7,6 +7,10 @@ const preview: Preview = {
   tags: ['autodocs'],
   parameters: {
     docs: {
+      story: {
+        inline: false,
+        height: '760px'
+      },
       canvas: {
       },
       page: () =>
