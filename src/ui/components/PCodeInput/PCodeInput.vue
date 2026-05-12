@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { inject, computed, ref, type Ref, onBeforeUpdate, watch } from 'vue';
+
 import { PTextField } from '..';
 import './PCodeInput.css';
 import { type Translator, translatorKey } from '../../utils/translator';
@@ -35,7 +36,7 @@ const digits = (() => {
 const innerModelValue = computed(() => {
   let val = '';
   for (let i = 0; i < props.size; i++) {
-    val += (digits[i].value !== null && digits[i].value !== undefined) ? digits[i].value : '';
+    val += digits[i].value !== null && digits[i].value !== undefined ? digits[i].value : '';
   }
   return val;
 });

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
+
 import './PSpinner.css';
 import { convertToUnit } from '../../utils';
 
@@ -41,7 +42,7 @@ const viewBoxSize = computed(() => {
 });
 
 const strokeWidth = computed(() => {
-  return (Number(props.width) / +props.size) * viewBoxSize.value * 2;
+  return Number(props.width) / +props.size * viewBoxSize.value * 2;
 });
 
 const styles = computed(() => ({
@@ -61,7 +62,7 @@ const normalizedValue = computed(() => {
 
 const classes = computed(() => ({
   'pa__progress-circular': true,
-  ...(props.color ? { [`text-${props.color}`]: true } : {}),
+  ...props.color ? { [`text-${props.color}`]: true } : {},
   'pa__progress-circular--indeterminate': props.indeterminate,
   'pa__progress-circular--button': props.button,
 }));

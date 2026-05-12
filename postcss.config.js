@@ -1,8 +1,8 @@
+import unocss from '@unocss/postcss';
 import autoprefixer from 'autoprefixer';
 import postcss_import from 'postcss-import';
 import postcss_nested from 'postcss-nested';
 import postcss_replace from 'postcss-replace';
-import unocss from '@unocss/postcss';
 
 import helper from './helper/postcss-prefixer.js';
 

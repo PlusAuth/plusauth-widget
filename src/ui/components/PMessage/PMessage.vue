@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { withDirectives } from 'vue';
+
 import { i18n as vI18n } from '../../directives/i18n';
 import type { ITranslatePath } from '../../interfaces';
 import './PMessage.css';

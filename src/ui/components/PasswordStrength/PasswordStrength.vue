@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { inject, camelize } from 'vue';
+
 import { setColorStyle } from '../../utils';
 import type { Translator } from '../../utils/translator';
 import { translatorKey } from '../../utils/translator';

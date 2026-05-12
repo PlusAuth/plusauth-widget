@@ -1,9 +1,10 @@
 <script setup lang="ts">
 import { computed } from 'vue'
+
 import { useFocus } from '../../composables/focus'
 import { makeValidationProps, useValidation } from '../../composables/validation'
-import { getUid } from '../../utils/current_instance'
 import type { ITranslatePath } from '../../interfaces'
+import { getUid } from '../../utils/current_instance'
 import PMessage from '../PMessage/PMessage.vue'
 
 const props = defineProps({
@@ -53,8 +54,8 @@ const onInput = (event: Event) => {
 
 const messages = computed((): string[] | ITranslatePath[] => {
   if (
-    (props.errorMessages && (props.errorMessages as any[]).length) ||
-    (!isPristine.value && errorMessages.value.length)
+    props.errorMessages && (props.errorMessages as any[]).length ||
+    !isPristine.value && errorMessages.value.length
   ) {
     return (errorMessages.value as string[] | ITranslatePath[]) || []
   } else if (props.hint && (!!props.persistentHint || isFocused.value)) {

@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { computed, inject, onMounted, ref } from 'vue';
+
 import { makeFocusProps, useFocus } from '../../composables/focus';
 import { makeValidationProps, useValidation } from '../../composables/validation';
+import type { ITranslatePath } from '../../interfaces';
 import { resolveCssVariableVariant } from '../../utils';
 import type { Translator } from '../../utils/translator';
 import { translatorKey } from '../../utils/translator';
-import type { ITranslatePath } from '../../interfaces';
 import PMessage from '../PMessage/PMessage.vue';
 
 const inputVariants = ['outlined', 'filled', 'underlined', 'solo', 'plain', 'regular'] as const
