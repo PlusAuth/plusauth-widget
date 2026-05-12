@@ -6,7 +6,7 @@ import * as FieldStories from './templating.stories.ts';
 
 ## Custom Templates
 
-You can provide custom templates to inject into widget. Define templates inside the mount element.
+You can provide custom templates to inject into widget.
 
 Supported template element forms:
 
@@ -14,6 +14,14 @@ Supported template element forms:
 - `<pa-template id="pa-...">`
 
 Template `id` must be prefixed with `pa-`.
+
+Template lookup order during widget initialization:
+
+1. Inside the widget mount container (`#widget`)
+2. Siblings (and their descendants) under the same parent as mount container
+3. Global document fallback
+
+If the same template id exists in multiple places, the nearest source in this order is used.
 
 Available templates are as following:
 ```
@@ -37,6 +45,10 @@ For example:
     <a href="#">My Uri</a>
   </template>
 </div>
+
+<template id="pa-footer-body">
+  <a href="#">Global Footer Link</a>
+</template>
 
 <script type="application/javascript">
   new PlusAuthWidget('#widget', { mode: 'login' }, window.PlusAuth)
