@@ -81,3 +81,57 @@ For most Storybook/demo usage, this minimal context is enough:
   params: {}
 }
 ```
+
+## Behavioral Context Values
+
+Some context values change widget behavior directly:
+
+| Path | Effect |
+| --- | --- |
+| `params.ui_locales` | Selects the first matching locale from the space-separated locale list. |
+| `params.login_hint` | Prefills the login identifier field. |
+| `settings.password_policy` | Drives password validation and password-strength feedback on registration/reset flows. |
+| `settings.register_enabled` | Shows or hides registration links where supported. |
+| `settings.forgot_password_enabled` | Shows or hides forgot-password links where supported. |
+| `settings.tenant_login_url` | Used by verify-email completion redirect when auto sign-in is enabled. |
+| `prompt.mode` | Changes stateful rendering in flows like verify-email and some challenge pages. |
+| `connection.type` / `connection.require_password` | Changes which default fields appear in login, register, and passwordless flows. |
+
+## Social Provider Shape
+
+`client.social` and `client.passwordless` can contain either strings or provider objects.
+
+```javascript
+{
+  client: {
+    social: [
+      'google',
+      {
+        name: 'github',
+        provider: 'github',
+        branding: {
+          display_name: 'GitHub',
+          logo_url: 'https://example.com/github.svg',
+          show_in_login: true
+        }
+      }
+    ]
+  }
+}
+```
+
+## Common `details` Values By Mode
+
+These are the most common `context.details` values expected by page flows:
+
+| Mode | Common `context.details` fields |
+| --- | --- |
+| `consent` | `requested.base`, `requested.claims`, `requested.resources` |
+| `account-linking` | `merge_context`, `merge_with`, `user` |
+| `verify-email` | `email`, `email_verified` |
+| `fill-missing` | `fields` |
+| `mfa-otp` / `passwordless-otp` | `dataUrl`, `secret` |
+| `mfa-push` / `passwordless-push` | `push_code`, `devices` |
+| `mfa-webauthn` / `passwordless-webauthn` | authenticator challenge payload from server |
+
+Page-specific Storybook docs go into each mode in more detail, but this table is the quickest integration reference.

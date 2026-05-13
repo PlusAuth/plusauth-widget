@@ -25,6 +25,36 @@ new PlusAuthWidget(document.body, {
 })
 ```
 
+## Locale Labels And Selector Options
+
+If you provide multiple locales, you can also define labels and locale-code aliases for the footer locale selector:
+
+```javascript
+new PlusAuthWidget(document.body, {
+  locale: {
+    defaultLocale: 'en',
+    dictionary: {
+      en: { /* ... */ },
+      tr: { /* ... */ }
+    },
+    locales: {
+      en: { label: 'English', codes: ['en', 'en-US'] },
+      tr: { label: 'Türkçe', codes: ['tr', 'tr-TR'] }
+    }
+  }
+})
+```
+
+When `context.params.ui_locales` is present, the widget selects the first matching locale from that space-separated preference list.
+
+```javascript
+window.PlusAuth = {
+  params: {
+    ui_locales: 'tr-TR en-US'
+  }
+}
+```
+
 ## Usage
 All components support localization; For example you can provide `label` or `errors` as a key in your dictionary,
 and it will be displayed as localized value. If you need to use it somewhere else you can access the translator
@@ -114,4 +144,3 @@ console.log( widget.i18n.t('myCustomValue', [ "Example" ]) ) // This is the valu
 console.log( widget.i18n.t('namedValue', { value: "Example" }) ) // This is the value: Example
 console.log( widget.i18n.t('multiple', ['First', 'Second']) )  // The list is as like this: First, Second
 ```
-

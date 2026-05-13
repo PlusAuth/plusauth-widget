@@ -107,6 +107,8 @@ new PlusAuthWidget('#widget', {
 
 `order`: controls rendering order.
 
+`attrs`: passes HTML/input props through to the rendered widget field.
+
 `slots`: allows injecting component content into input slots.
 
 ```javascript
@@ -134,6 +136,39 @@ new PlusAuthWidget('#widget', {
   }
 }
 ```
+
+## Input Attributes
+
+Use `attrs` for practical field-level behavior such as autocomplete, disabling a field, or hiding helper messages.
+
+```javascript
+{
+  modeOptions: {
+    login: {
+      fields: {
+        email: {
+          type: 'text',
+          label: 'Email',
+          attrs: {
+            autocomplete: 'username',
+            hideMessages: true,
+            disabled: false
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+Common useful values:
+
+- `autocomplete`
+- `disabled`
+- `readonly`
+- `inputmode`
+- `pattern`
+- `hideMessages`
 
 ## Custom Validation
 

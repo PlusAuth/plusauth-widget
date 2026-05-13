@@ -80,6 +80,38 @@ If you don't have context yet in development, pass an empty object:
 new PlusAuthWidget('#widget', { mode: 'login' }, {})
 ```
 
+## API Base URL
+
+Set `apiUrl` when widget requests should be sent to a specific origin instead of the current page origin.
+
+```javascript
+new PlusAuthWidget('#widget', {
+  mode: 'login',
+  apiUrl: 'https://tenant.example.com'
+}, window.PlusAuth)
+```
+
+Internal form submissions use this base URL together with the current page path.
+
+## Runtime API
+
+The widget instance exposes a few helpers that are useful after initialization:
+
+- `widget.view`: reactive settings object. You can switch `mode` at runtime and update runtime-facing settings.
+- `widget.i18n`: translation helper. Use `widget.i18n.t(...)` for lookups and `widget.i18n.locale = 'tr'` to switch locale.
+- `widget.http`: fetch wrapper used by internal flows. It uses `apiUrl` if provided.
+
+```javascript
+const widget = new PlusAuthWidget('#widget', {
+  mode: 'login',
+  apiUrl: 'https://tenant.example.com'
+}, window.PlusAuth)
+
+widget.view.mode = 'mfa-otp'
+widget.i18n.locale = 'en'
+widget.http.post('/custom-endpoint', { body: { hello: 'world' } })
+```
+
 ## Mode Selection
 
 Set an initial mode in constructor settings:
@@ -102,42 +134,25 @@ If `mode` is omitted, widget also resolves view from current URL path convention
 
 For field/action customization, `modeOptions` keys may differ from the mode string.
 
-| `mode` value | `modeOptions` key |
-| --- | --- |
-| `login` | `login` |
-| `register` | `signup` |
-| `password-recovery` | `recovery` |
-| `reset-password` | `resetPassword` |
-| `fill-missing` | `fillMissing` |
-| `verify-email` | `verifyEmail` |
-| `password-challenge` | `passwordChallenge` |
-| `mfa-email` | `emailMfa` |
-| `mfa-sms` | `smsMfa` |
-| `mfa-otp` | `otpMfa` |
-| `mfa-push` | `pushMfa` |
-| `mfa-webauthn` | `webauthnMfa` |
-| `mfa-fv` | `fvMfa` |
-| `passwordless-email` | `passwordlessEmail` |
-| `passwordless-sms` | `passwordlessSms` |
-| `passwordless-otp` | `passwordlessOtp` |
-| `passwordless-push` | `passwordlessPush` |
-| `passwordless-webauthn` | `passwordlessWebauthn` |
-| `account-linking` | `accountLinking` |
-
-## Runtime Helpers
-
-`widget.view`: reactive settings reference (for runtime mode/settings updates).
-
-`widget.i18n`: locale helper for runtime translation and locale switching.
-
-`widget.http`: fetch wrapper used by internal flows.
-
-```javascript
-const widget = new PlusAuthWidget('#widget', {}, window.PlusAuth)
-
-widget.i18n.locale = 'en'
-widget.view.mode = 'login'
-```
+- `login` -> `login`
+- `register` -> `signup`
+- `password-recovery` -> `recovery`
+- `reset-password` -> `resetPassword`
+- `fill-missing` -> `fillMissing`
+- `verify-email` -> `verifyEmail`
+- `password-challenge` -> `passwordChallenge`
+- `mfa-email` -> `emailMfa`
+- `mfa-sms` -> `smsMfa`
+- `mfa-otp` -> `otpMfa`
+- `mfa-push` -> `pushMfa`
+- `mfa-webauthn` -> `webauthnMfa`
+- `mfa-fv` -> `fvMfa`
+- `passwordless-email` -> `passwordlessEmail`
+- `passwordless-sms` -> `passwordlessSms`
+- `passwordless-otp` -> `passwordlessOtp`
+- `passwordless-push` -> `passwordlessPush`
+- `passwordless-webauthn` -> `passwordlessWebauthn`
+- `account-linking` -> `accountLinking`
 
 ## Global Behavior Settings
 
@@ -149,7 +164,10 @@ new PlusAuthWidget('#widget', {
     buttonVariant: 'circle' // or 'block'
   },
   footer: {
-    enabled: true
+    enabled: false
   }
 }, window.PlusAuth)
 ```
+
+- `socialLogin.buttonVariant`: renders social buttons as `block` or `circle`
+- `footer.enabled`: hides or shows the footer locale/legal links area
