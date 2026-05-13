@@ -1,12 +1,13 @@
 <script setup lang="ts">
-import { inject } from 'vue';
+import { computed, inject } from 'vue';
 
 import { useContext } from '../composables';
 
 import type { ITranslatePath } from '../interfaces';
+import type { IWidgetSettings } from '../interfaces';
 import { resolveLogo } from '../utils';
 
-import { getInitials, getUserInitials } from '../utils/user.ts';
+import { getInitials } from '../utils/user.ts';
 
 import Avatar from './Avatar.vue';
 import PFooter from './Footer.vue';
@@ -21,10 +22,12 @@ const props = withDefaults( defineProps<{
   logo: true
 })
 const context = useContext()
+const settings = inject('settings') as Partial<IWidgetSettings> || {}
 
 const templates = inject<Record<string, any>>('templates') || {}
 
 const logoSource = resolveLogo(typeof props.logo === 'string' ? props.logo : context.client)
+const footerEnabled = computed(() => settings.footer?.enabled !== false)
 </script>
 
 <template>
@@ -99,7 +102,10 @@ const logoSource = resolveLogo(typeof props.logo === 'string' ? props.logo : con
         <WidgetTemplate name="content-footer" />
       </div>
     </div>
-    <PFooter class="pa__widget-footer" />
+    <PFooter
+      v-if="footerEnabled"
+      class="pa__widget-footer"
+    />
   </div>
 </template>
 
