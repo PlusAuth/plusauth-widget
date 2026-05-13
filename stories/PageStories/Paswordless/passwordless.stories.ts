@@ -12,6 +12,7 @@ const meta: Meta<typeof MFAStory> = {
 export default meta;
 type Story = StoryObj<typeof MFAStory>;
 const disabledControl = {
+  control: false,
   table: {
     disable: true
   }
@@ -22,6 +23,7 @@ export const EmailChallenge: Story = {
     mode: 'passwordless-email',
   },
   argTypes: {
+    mode: disabledControl,
     prompt: disabledControl
   }
 };
@@ -31,6 +33,7 @@ export const SMSChallenge: Story = {
     mode: 'passwordless-sms',
   },
   argTypes: {
+    mode: disabledControl,
     prompt: disabledControl
   }
 };
@@ -41,6 +44,7 @@ export const OTPChallenge: Story = {
     prompt: 'Default'
   },
   argTypes: {
+    mode: disabledControl,
     prompt: {
       control: 'select',
       options: ['Default', 'QR Setup', 'Manual Setup'],
@@ -55,6 +59,7 @@ export const PushChallenge: Story = {
     prompt: 'Enroll'
   },
   argTypes: {
+    mode: disabledControl,
     prompt: {
       control: 'select',
       options: ['Enroll', 'Select Code', 'Manual', 'Approve On Device'],
@@ -68,6 +73,7 @@ export const SecurityDeviceChallenge: Story = {
     mode: 'passwordless-webauthn',
   },
   argTypes: {
+    mode: disabledControl,
     prompt: disabledControl
   }
 };

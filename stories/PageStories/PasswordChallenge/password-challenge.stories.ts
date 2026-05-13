@@ -34,6 +34,7 @@ export const WithUsernameIdentifier: Story = {
     }
   },
   argTypes: {
+    context: disabledControl,
     fields: disabledControl
   }
 };

@@ -10,11 +10,6 @@ const meta: Meta<typeof AccountLinkingStory> = {
 
 export default meta;
 type Story = StoryObj<typeof AccountLinkingStory>;
-const disabledControl = {
-  table: {
-    disable: true
-  }
-};
 
 export const PasswordVerification: Story = {
 };

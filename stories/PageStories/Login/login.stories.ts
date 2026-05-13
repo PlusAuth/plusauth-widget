@@ -135,6 +135,7 @@ export const SocialConnections: Story = {
     }
   },
   argTypes: {
+    context: disabledControl,
     fields: disabledControl
   }
 };

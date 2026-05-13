@@ -18,11 +18,20 @@ const meta: Meta<typeof CheckBoxStory> = {
 
 export default meta;
 type Story = StoryObj<typeof CheckBoxStory>;
+const disabledControl = {
+  control: false,
+  table: {
+    disable: true
+  }
+};
 
 export const Unchecked: Story = {};
 
 export const Checked: Story = {
   args: {
     modelValue: true
+  },
+  argTypes: {
+    modelValue: disabledControl
   }
 };

@@ -38,6 +38,9 @@ export const VerificationCompleted: Story = {
         auto_sign_in: false
       }
     }
+  },
+  argTypes: {
+    context: disabledControl
   }
 };
 
@@ -49,5 +52,8 @@ export const ErrorState: Story = {
         error_description: 'Email is not verified'
       }
     }
+  },
+  argTypes: {
+    context: disabledControl
   }
 };

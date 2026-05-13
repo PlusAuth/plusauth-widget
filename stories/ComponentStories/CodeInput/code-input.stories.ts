@@ -51,6 +51,9 @@ Default.play = async ({ canvasElement }) => {
 export const FourDigitCode: Story = {
   args: {
     size: 4
+  },
+  argTypes: {
+    size: disabledControl
   }
 };
 FourDigitCode.play = async ({ canvasElement }) => {
@@ -65,6 +68,7 @@ export const PreFilledCode: Story = {
     modelValue: '123456'
   },
   argTypes: {
+    modelValue: disabledControl,
     size: disabledControl
   }
 };

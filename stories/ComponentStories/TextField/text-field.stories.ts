@@ -29,6 +29,12 @@ const meta: Meta<typeof TextFieldStory> = {
 
 export default meta;
 type Story = StoryObj<typeof TextFieldStory>;
+const disabledControl = {
+  control: false,
+  table: {
+    disable: true
+  }
+};
 
 function getInput(canvasElement: HTMLElement, name: string): HTMLInputElement {
   const input = canvasElement.querySelector(`input[name="${name}"]`);
@@ -54,6 +60,9 @@ export const Disabled: Story = {
   args: {
     disabled: true,
     modelValue: 'plusauth-user'
+  },
+  argTypes: {
+    disabled: disabledControl
   }
 };
 Disabled.play = async ({ canvasElement }) => {
@@ -68,6 +77,9 @@ export const PasswordType: Story = {
     label: 'Password',
     placeholder: 'Enter password',
     type: 'password'
+  },
+  argTypes: {
+    type: disabledControl
   }
 };
 PasswordType.play = async ({ canvasElement }) => {

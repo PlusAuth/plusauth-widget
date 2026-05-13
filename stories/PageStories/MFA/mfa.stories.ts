@@ -11,6 +11,7 @@ const meta: Meta<typeof MFAStory> = {
 export default meta;
 type Story = StoryObj<typeof MFAStory>;
 const disabledControl = {
+  control: false,
   table: {
     disable: true
   }
@@ -21,6 +22,7 @@ export const MFAChallenge: Story = {
     mode: 'mfa'
   },
   argTypes: {
+    mode: disabledControl,
     prompt: disabledControl
   }
 };
@@ -30,6 +32,7 @@ export const EmailChallenge: Story = {
     mode: 'mfa-email',
   },
   argTypes: {
+    mode: disabledControl,
     prompt: disabledControl
   }
 };
@@ -39,6 +42,7 @@ export const SMSChallenge: Story = {
     mode: 'mfa-sms',
   },
   argTypes: {
+    mode: disabledControl,
     prompt: disabledControl
   }
 };
@@ -49,6 +53,7 @@ export const OTPChallenge: Story = {
     prompt: 'Default'
   },
   argTypes: {
+    mode: disabledControl,
     prompt: {
       control: 'select',
       options: ['Default', 'QR Setup', 'Manual Setup'],
@@ -63,6 +68,7 @@ export const PushChallenge: Story = {
     prompt: 'Enroll'
   },
   argTypes: {
+    mode: disabledControl,
     prompt: {
       control: 'select',
       options: ['Enroll', 'Select Code', 'Manual', 'Approve On Device'],
@@ -76,6 +82,7 @@ export const SecurityDeviceChallenge: Story = {
     mode: 'mfa-webauthn',
   },
   argTypes: {
+    mode: disabledControl,
     prompt: disabledControl
   }
 };
@@ -85,6 +92,7 @@ export const FingerVeinChallenge: Story = {
     mode: 'mfa-fv',
   },
   argTypes: {
+    mode: disabledControl,
     prompt: disabledControl
   }
 };

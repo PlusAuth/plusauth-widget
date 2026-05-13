@@ -39,5 +39,8 @@ export const WithCustomFields: Story = {
         ]
       }
     }
+  },
+  argTypes: {
+    context: disabledControl
   }
 };
