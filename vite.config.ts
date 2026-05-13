@@ -1,4 +1,3 @@
-/// <reference types="vitest/config" />
 import { resolve } from 'path'
 
 import vue from '@vitejs/plugin-vue'
@@ -41,8 +40,4 @@ export default defineConfig(({ command }) => ({
   resolve: {
     dedupe: ['vue'],
   },
-  test: {
-    environment: 'jsdom',
-    globals: true
-  }
 }))

@@ -6,7 +6,8 @@ const config: StorybookConfig = {
   addons: [
     '@storybook/addon-links',
     'storybook-addon-vue-mdx',
-    '@storybook/addon-docs'
+    '@storybook/addon-docs',
+    '@storybook/addon-vitest'
   ],
 
   core: {
@@ -25,6 +26,7 @@ const config: StorybookConfig = {
  ${head}
       `;
     }
+    return head
   },
   async viteFinal(config) {
     config.publicDir = false
@@ -34,7 +36,7 @@ const config: StorybookConfig = {
     })
     config.resolve = config.resolve || {}
     config.resolve.dedupe = [
-      ...config.resolve.dedupe || [],
+      ...(config.resolve.dedupe || []),
       'react',
       'react-dom',
     ]

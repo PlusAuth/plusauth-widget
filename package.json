@@ -17,7 +17,9 @@
     "dist"
   ],
   "scripts": {
-    "test": "vitest --config vite.config.ts",
+    "test": "vitest --config vitest.config.ts --project unit",
+    "test:unit": "vitest --config vitest.config.ts --project unit",
+    "test:storybook": "vitest --config vitest.config.ts --project storybook",
     "type-check": "vue-tsc --noEmit",
     "type-check:watch": "npm run type-check -- --watch",
     "dev": "cross-env NODE_ENV=development vite",
@@ -42,6 +44,7 @@
     "@release-it/conventional-changelog": "^10.0.6",
     "@storybook/addon-docs": "10.3.6",
     "@storybook/addon-links": "10.3.6",
+    "@storybook/addon-vitest": "^10.3.6",
     "@storybook/builder-vite": "10.3.6",
     "@storybook/vue3-vite": "10.3.6",
     "@stylistic/eslint-plugin": "^5.10.0",
@@ -90,7 +93,10 @@
     "vite-plugin-lib-inject-css": "^2.2.2",
     "vitest": "4.1.5",
     "vue-eslint-parser": "^10.4.0",
-    "vue-tsc": "^3.2.6"
+    "vue-tsc": "^3.2.6",
+    "playwright": "^1.60.0",
+    "@vitest/browser-playwright": "4.1.5",
+    "@vitest/coverage-v8": "4.1.5"
   },
   "lint-staged": {
     "*.js|*.vue|*.ts": "eslint --ext .js,.ts,.tsx,.vue --fix"
