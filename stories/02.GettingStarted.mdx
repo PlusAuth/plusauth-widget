@@ -171,3 +171,21 @@ new PlusAuthWidget('#widget', {
 
 - `socialLogin.buttonVariant`: renders social buttons as `block` or `circle`
 - `footer.enabled`: hides or shows the footer locale/legal links area
+
+## Development And Testing
+
+Useful local commands:
+
+```shell
+npm run storybook
+npm run build-storybook
+npm test -- --run
+npm run test:storybook -- --run
+npm run type-check
+```
+
+- `npm test -- --run`: runs unit tests for component specs under `tests/components`
+- `npm run test:storybook -- --run`: runs Storybook interaction tests
+- `npm run type-check`: validates the Vue and TypeScript surface used by the widget library
+
+For customization work, Storybook interaction tests are usually the best first check because they exercise the rendered widget behavior rather than only static snapshots.

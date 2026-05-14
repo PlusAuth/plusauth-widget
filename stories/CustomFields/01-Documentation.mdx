@@ -60,6 +60,17 @@ Supported field types in these demos:
   <Story of={FieldStories.CheckBox} />
 </Canvas>
 
+## Expected Value Shapes
+
+Field values should match the rendered control type:
+
+- `text` and `password` fields: string
+- `code` fields: string
+- `checkbox` fields: boolean
+- hidden/static helper fields: primitive or serializable value that your backend expects
+
+`code` fields are rendered through `PCodeInput`, so the stored `value` should be treated as a single code string rather than an array of digits.
+
 ## Action Helpers
 
 `preAction` and `postAction` can run before and after a page action.

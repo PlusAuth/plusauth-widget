@@ -28,3 +28,12 @@ import * as CodeInputStories from './code-input.stories.ts';
 <Canvas>
   <Story of={CodeInputStories.PreFilledCode} />
 </Canvas>
+
+## Behavior Notes
+
+- `modelValue` is a single string value such as `"123456"`
+- only numeric characters are accepted
+- focus advances automatically as digits are entered
+- `size` defines the rendered digit count when the component is created
+
+If you need to switch between different code lengths at runtime, recreate the component or rerender the surrounding widget with the new `size` instead of mutating the existing instance in place.
