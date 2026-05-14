@@ -6,7 +6,6 @@ import WidgetLayout from '../../components/WidgetLayout.vue';
 import { useContext, useHttp } from '../../composables';
 import type { AdditionalFields } from '../../interfaces';
 import { useGenericForm } from '../../utils/form_generics';
-import { shortenEmail } from '../../utils/helpers.ts';
 import { getUserIdentifierField } from '../../utils/user.ts';
 
 defineOptions({
@@ -38,7 +37,7 @@ const { form, loading, submit, validate, fields } = useGenericForm(
 <template>
   <WidgetLayout
     logo="images/icons/email_question.svg"
-    :title="{ path: 'mfa.email.title', args: { email: shortenEmail(context.details.email) } }"
+    :title="{ path: 'mfa.email.title', args: { email: context.details.email } }"
   >
     <GenericForm
       ref="form"

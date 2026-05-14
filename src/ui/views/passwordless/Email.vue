@@ -6,7 +6,6 @@ import WidgetLayout from '../../components/WidgetLayout.vue';
 import { useContext, useHttp } from '../../composables';
 import type { AdditionalFields } from '../../interfaces';
 import { useGenericForm } from '../../utils/form_generics';
-import { shortenEmail } from '../../utils/helpers.ts';
 import { getUserIdentifierField } from '../../utils/user.ts';
 
 defineOptions({
@@ -50,7 +49,7 @@ const { form, loading, submit, validate, fields } = useGenericForm(
   <WidgetLayout
     :logo="isMagicLink ? 'images/icons/plane.svg' : 'images/icons/email_question.svg'"
     :title="isMagicLink ? 'passwordless.email.magicLinkTitle' : {
-      path: 'passwordless.email.title', args: { email: shortenEmail(context.details.email) }
+      path: 'passwordless.email.title', args: { email: context.details.email }
     } "
     :subtitle="isMagicLink ? {
       path: 'passwordless.email.checkText', args: { email: context.details.email}
