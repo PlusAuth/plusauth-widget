@@ -308,7 +308,7 @@
       margin: 4px 0 8px;
 
       .logo {
-        max-height: 72px;
+        max-height: 80px;
       }
     }
 
@@ -462,10 +462,10 @@
 
     .logo-container {
       margin-top: clamp(2px, 1dvh, 8px);
-      min-height: clamp(40px, 10dvh, 56px);
+      min-height: clamp(40px, 12dvh, 76px);
 
       .logo {
-        max-width: min(68%, 280px);
+        max-width: min(72%, 400px);
         max-height: clamp(48px, 12dvh, 80px);
       }
     }
