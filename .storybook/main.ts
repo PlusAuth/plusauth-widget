@@ -36,7 +36,7 @@ const config: StorybookConfig = {
     })
     config.resolve = config.resolve || {}
     config.resolve.dedupe = [
-      ...(config.resolve.dedupe || []),
+      ...config.resolve.dedupe || [],
       'react',
       'react-dom',
     ]
