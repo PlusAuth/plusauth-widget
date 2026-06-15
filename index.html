@@ -101,37 +101,7 @@
     <a href="signin/challenge/webauthn"> WebAuthN </a>
     <a href="signin/challenge/mfa/push"> mfa </a>
 </div>
-
-<div class="mode-selector-container">
-    <label>
-        <input type="checkbox" id="dev-hover-toggle"> Hover
-    </label>
-    <label>
-        <input type="checkbox" id="dev-focus-toggle"> Focus
-    </label>
-</div>
-
-<div id="pa__app"></div>
-
-<script type="module">
-    const hoverToggle = document.getElementById('dev-hover-toggle');
-    const focusToggle = document.getElementById('dev-focus-toggle');
-
-    function broadcastState() {
-        const payload = {
-            hover: hoverToggle.checked,
-            focus: focusToggle.checked
-        };
-        
-        window.postMessage({
-            type: 'SET_DEMO_STATES',
-            payload: payload
-        }, window.location.origin);
-    }
-
-    hoverToggle.addEventListener('change', broadcastState);
-    focusToggle.addEventListener('change', broadcastState);
-</script>
+<div id="pa__app"/>
 <script src="/dev.ts" type="module"></script>
 </body>
 </html>
