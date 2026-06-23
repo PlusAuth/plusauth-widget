@@ -1,0 +1,27 @@
+import { Meta, Canvas, Story } from '@storybook/addon-docs/blocks';
+import * as FillMissingStories from './fill-missing.stories.ts';
+
+<Meta of={FillMissingStories} />
+
+# Fill Missing Information Page
+
+This page renders dynamic form fields that are requested by the server before continuing.
+
+## Basic Usage
+
+```javascript
+const auth = new PlusAuthWidget(document.body, {/* configurations here */}, window.PlusAuth)
+auth.view.mode = 'fill-missing'
+```
+
+## Context Requirements
+
+Provide `context.details.fields` as an array of strings or `{ name, type }` objects.
+
+<Canvas>
+  <Story of={FillMissingStories.Default} />
+</Canvas>
+
+<Canvas>
+  <Story of={FillMissingStories.WithCustomFields} />
+</Canvas>

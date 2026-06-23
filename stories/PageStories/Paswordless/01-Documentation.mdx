@@ -1,0 +1,52 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import * as PasswordlessStories from './passwordless.stories.ts';
+
+<Meta of={PasswordlessStories} />
+
+# Passwordless Pages
+
+Supported passwordless modes in this Storybook section:
+
+`passwordless-email`, `passwordless-sms`, `passwordless-otp`, `passwordless-push`, `passwordless-webauthn`
+
+To initialize a specific passwordless view:
+
+```javascript
+const auth = new PlusAuthWidget(document.body, {/* configurations here */}, window.PlusAuth)
+auth.view.mode = 'passwordless-sms'
+```
+
+## Prompt-Based Views
+
+`passwordless-otp` and `passwordless-push` can render alternate prompts using `context.details`:
+
+```javascript
+context: {
+  details: {
+    dataUrl: '<< QR Code URL >>',
+    secret: '<< Secret >>',
+    push_code: '61',
+    devices: [{ vendor: 'Apple', model: 'iPhone 15' }]
+  }
+}
+```
+
+<Canvas>
+  <Story of={PasswordlessStories.EmailChallenge} />
+</Canvas>
+
+<Canvas>
+  <Story of={PasswordlessStories.SMSChallenge} />
+</Canvas>
+
+<Canvas>
+  <Story of={PasswordlessStories.OTPChallenge} />
+</Canvas>
+
+<Canvas>
+  <Story of={PasswordlessStories.PushChallenge} />
+</Canvas>
+
+<Canvas>
+  <Story of={PasswordlessStories.SecurityDeviceChallenge} />
+</Canvas>

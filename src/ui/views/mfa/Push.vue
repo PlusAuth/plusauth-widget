@@ -1,8 +1,102 @@
+<script setup lang="ts">
+import { computed, nextTick, ref, watch } from 'vue';
+
+import AuthPlusInfo from '../../components/AuthPlusInfo.vue';
+import { AuthPlusLogo } from '../../components/AuthPlusLogo.ts';
+import GenericForm from '../../components/GenericForm.vue';
+import PSpinner from '../../components/PSpinner/PSpinner.vue';
+import ResendAction from '../../components/ResendAction.vue';
+import WidgetLayout from '../../components/WidgetLayout.vue';
+import { useContext, useHttp } from '../../composables';
+import type { AdditionalFields } from '../../interfaces';
+import { useGenericForm } from '../../utils/form_generics';
+import { getUserIdentifierField } from '../../utils/user.ts';
+
+defineOptions({
+  name: 'Push'
+});
+
+const http = useHttp();
+const context = useContext();
+
+const urlParams = new URLSearchParams(window.location.search);
+const manualMode = computed(() => urlParams.get('useQuery') === 'true');
+
+const isRegistration = ref(!!context.details.dataUrl);
+const code = ref<string | null>(null);
+const error = ref<string | null>(null);
+
+const defaultFields = computed<AdditionalFields>(() => ({
+  user_placeholder: getUserIdentifierField(context),
+  ...manualMode.value ? {
+    code: {
+      type: 'number',
+      label: 'mfa.push.otpLabel',
+      value: null,
+    }
+  } : {}
+}));
+
+const { form, loading, submit, fields, validate, formErrorHandler } = useGenericForm(
+  'pushMfa',
+  defaultFields,
+  async (values) => {
+    await http.post({ body: values });
+  }
+);
+
+async function pollPushValidation(resolve: (value: any) => void, reject: (reason?: any) => void) {
+  try {
+    resolve(await http.post({
+      body: {}
+    }));
+  } catch (e: any) {
+    if (e.error === 'authorization_pending') {
+      setTimeout(() => pollPushValidation(resolve, reject), 3000);
+    } else if (e.error === 'invalid_code') {
+      form.value?.toggleAlert({
+        path: `errors.${e.error}`,
+        args: e
+      });
+      loading.value = false;
+    } else {
+      reject(e);
+    }
+  }
+}
+
+const switchToCode = () => {
+  urlParams.set('useQuery', 'true');
+  window.location.search = urlParams.toString();
+};
+
+const reload = () => {
+  window.location.reload();
+};
+
+watch([isRegistration, manualMode], async ([newValue, manual]) => {
+  await nextTick(async () => {
+    if (!newValue && !manual) {
+      loading.value = true;
+      try {
+        await new Promise((resolve, reject) => {
+          pollPushValidation(resolve, reject);
+        });
+      } catch (e) {
+        formErrorHandler(e);
+      } finally {
+        loading.value = false;
+      }
+    }
+  });
+}, { immediate: true, flush: 'post' });
+</script>
+
 <template>
   <WidgetLayout
     :logo="false"
     :title="isRegistration ? 'mfa.push.enrollTitle'
-      : manualMode ? 'mfa.otp.title' : 'mfa.push.title'"
+      : manualMode ? 'mfa.push.otpTitle' : 'mfa.push.title'"
     :subtitle="{
       path: isRegistration ? 'mfa.push.enrollDescription'
         : manualMode ? ''
@@ -13,9 +107,7 @@
       ]
     }"
   >
-    <template
-      v-if="isRegistration"
-    >
+    <template v-if="isRegistration">
       <AuthPlusInfo />
       <img
         id="mainLogo"
@@ -62,7 +154,7 @@
         :loading="loading"
         @click="(...args) => manualMode ? submit(...args) : reload()"
       >
-        <span v-t="manualMode ? 'common.submit': 'common.continue'" />
+        <span v-t="manualMode ? 'mfa.push.submitAction': 'mfa.push.continueAction'" />
       </p-btn>
     </template>
     <template
@@ -73,7 +165,7 @@
         v-if="context.details.challenges.length > 1"
       >
         <a
-          v-t="'mfa.tryAnotherWay'"
+          v-t="'mfa.push.tryAnotherWay'"
           href="signin/challenge"
         />
       </p>
@@ -86,127 +178,11 @@
             @click="switchToCode"
           />
         </p>
-        <ResendAction type="common.notification" />
+        <ResendAction type="mfa.push.notificationType" />
       </template>
     </template>
   </WidgetLayout>
 </template>
 
-<script lang="ts">
-import { computed, defineComponent, nextTick, ref, watch } from 'vue';
-
-import AuthPlusInfo from '../../components/AuthPlusInfo.vue';
-import { AuthPlusLogo } from '../../components/AuthPlusLogo.ts';
-import GenericForm from '../../components/GenericForm.vue';
-import PSpinner from '../../components/PSpinner/PSpinner';
-import ResendAction from '../../components/ResendAction.vue';
-import WidgetLayout from '../../components/WidgetLayout.vue';
-import { useContext, useHttp } from '../../composables';
-import type { AdditionalFields } from '../../interfaces';
-import { useGenericForm } from '../../utils/form_generics';
-import { getUserIdentifierField } from '../../utils/user.ts';
-
-export default defineComponent({
-  name: 'Push',
-  components: { AuthPlusInfo, ResendAction, WidgetLayout, PSpinner, GenericForm },
-  setup() {
-
-    const http = useHttp()
-    const context = useContext()
-
-    const urlParams = new URLSearchParams(window.location.search)
-    const manualMode = computed(() => urlParams.get('useQuery') === 'true')
-
-    const isRegistration = ref(!!context.details.dataUrl)
-
-    const code = ref<string>(null as any)
-    const error = ref<string>(null as any)
-
-    const defaultFields = computed<AdditionalFields>(() => ({
-      user_placeholder: getUserIdentifierField(context),
-      ...manualMode.value ? {
-        code: {
-          type: 'number',
-          label: 'common.enterOtp',
-          value: null,
-        }
-      } : undefined
-    }))
-
-    const { form, loading, submit, fields, validate, formErrorHandler } = useGenericForm(
-      'pushMfa',
-      defaultFields,
-      async (values) => {
-        await http.post({ body: values })
-      }
-    )
-
-    async function pollPushValidation(resolve, reject) {
-      try {
-        resolve(await http.post({
-          body: {}
-        }))
-      } catch (e) {
-        if (e.error === 'authorization_pending') {
-          setTimeout(() => pollPushValidation(resolve, reject), 3000)
-        } else if(e.error === 'invalid_code') {
-          form.value.toggleAlert({
-            path: `errors.${e.error}`,
-            args: e
-          })
-          loading.value = false;
-        } else {
-          reject(e)
-        }
-      }
-    }
-
-    watch([isRegistration, manualMode], async ([newValue, manual]) => {
-      // eslint-disable-next-line vue/valid-next-tick
-      await nextTick(async () => {
-        if (!newValue && !manual) {
-          loading.value = true;
-          try {
-            await new Promise((resolve, reject) => {
-              pollPushValidation(resolve, reject)
-            })
-          } catch (e) {
-            formErrorHandler(e)
-          } finally {
-            loading.value = false
-          }
-        }
-      })
-
-    }, { immediate: true, flush: 'post' })
-    return {
-      fields,
-      validate,
-      isRegistration,
-      manualMode,
-      code,
-      context,
-      error,
-      form,
-      loading,
-      submit,
-      switchToCode(){
-        urlParams.set('useQuery', 'true')
-        window.location.search = urlParams.toString();
-      },
-      reload(){
-        window.location.reload()
-      }
-    }
-  },
-  methods: {
-    AuthPlusLogo() {
-      return AuthPlusLogo
-    }
-  }
-})
-</script>
-
 <style scoped>
-
 </style>

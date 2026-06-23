@@ -162,7 +162,7 @@ export function isPhone(value: string): boolean {
 
 const isHexColor = (str: string) => str.startsWith('#')
 const resolveColor = (color: string) => {
-  return isHexColor(color) ? color :`rgb(var(--pa-color-${color}-DEFAULT))`
+  return isHexColor(color) ? color :`rgb(var(--pa-color-${color}))`
 }
 export function setColorStyle(props: { color?: string, textColor?: string } ){
   return {
@@ -171,6 +171,33 @@ export function setColorStyle(props: { color?: string, textColor?: string } ){
     } : {},
     ...props.textColor ? { color: resolveColor(props.textColor) } : {},
   }
+}
+
+export function resolveCssVariableVariant<T extends readonly string[]>(
+  name: string,
+  variants: T,
+  element?: Element
+): T[number] {
+  if (typeof window === 'undefined' || !variants.length) {
+    return variants[0]
+  }
+
+  let value = window
+    .getComputedStyle(element || document.documentElement)
+    .getPropertyValue(name)
+    .trim()
+
+  if (!value && element) {
+    value = window
+      .getComputedStyle(document.documentElement)
+      .getPropertyValue(name)
+      .trim()
+  }
+  const index = Number(value)
+
+  return Number.isInteger(index) && index >= 0 && index < variants.length
+    ? variants[index]
+    : variants[0]
 }
 
 export function secondsToTime(e: number){

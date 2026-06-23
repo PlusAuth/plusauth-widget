@@ -1,0 +1,27 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import * as RegisterStories from './register.stories.ts';
+
+<Meta of={RegisterStories} />
+
+# Registration Page
+
+The Registration page is used for account creation with the default signup fields.
+
+## Basic Usage
+
+```javascript
+const auth = new PlusAuthWidget(document.body, {/* field configurations here*/}, window.PlusAuth)
+auth.view.mode = 'register'
+```
+
+## Optional Configuration
+
+Use `modeOptions.signup.fields` to add custom registration fields or reorder existing ones.
+
+<Canvas>
+  <Story of={RegisterStories.Default} />
+</Canvas>
+
+<Canvas>
+  <Story of={RegisterStories.CustomSignUpFields} />
+</Canvas>

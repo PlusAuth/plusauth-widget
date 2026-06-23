@@ -1,3 +1,130 @@
+<script setup lang="ts">
+import { onMounted, reactive, ref } from 'vue';
+
+import GenericForm from '../../components/GenericForm.vue';
+import Hand from '../../components/Hand.vue';
+import PSpinner from '../../components/PSpinner/PSpinner.vue';
+import WidgetLayout from '../../components/WidgetLayout.vue';
+import { useContext, useHttp } from '../../composables';
+import { useGenericForm } from '../../utils/form_generics';
+import { H1FingerVeinService } from '../../utils/fv_helper';
+import { getUserIdentifierField } from '../../utils/user.ts';
+
+defineOptions({
+  name: 'FingerVein'
+});
+
+const http = useHttp();
+const context = useContext();
+
+const loadingMsg = ref<string | null>(null);
+const deviceOk = ref<boolean>(false);
+const selectedFinger = ref<number>(1);
+const error = ref<string | null>(null);
+const templates = reactive<Record<number, string>>({});
+
+const enrolledFingers = reactive({
+  left: [] as number[],
+  right: [] as number[],
+});
+
+const fv = new H1FingerVeinService();
+
+const { form, loading, fields, validate } = useGenericForm(
+  'fvMfa',
+  {
+    user_placeholder: getUserIdentifierField(context),
+  }
+);
+
+loading.value = true;
+
+onMounted(async () => {
+  try {
+    loadingMsg.value = 'mfa.fv.checkingDevice';
+    await fv.ping();
+    const status = await fv.deviceStatus();
+    if (status.ReturnCode !== '0') {
+      throw `0x${status.ReturnCode}`;
+    }
+    deviceOk.value = true;
+  } catch (e: any) {
+    deviceOk.value = false;
+    form.value?.toggleAlert({
+      path: `errors.fv.${e.error || e.retCode || e}`,
+      args: e
+    });
+  } finally {
+    loading.value = false;
+  }
+});
+
+async function onFingerSelect(ind: number, hand: 'left' | 'right') {
+  loadingMsg.value = 'mfa.fv.enrollmentInProgress';
+  loading.value = true;
+  let h1Index = ind;
+  if (hand === 'right') {
+    h1Index += 3;
+  }
+  try {
+    const resp = await fv.enroll(h1Index);
+    enrolledFingers[hand].push(ind);
+    templates[h1Index] = resp.template;
+    form.value?.toggleAlert('mfa.fv.fingerEnrolledSuccess', {
+      dismissible: false,
+      timeout: 3000,
+      type: 'success'
+    });
+  } catch (e: any) {
+    form.value?.toggleAlert(`errors.fv.${e.error || e.retCode || e}`, {
+      dismissible: false
+    });
+  } finally {
+    loadingMsg.value = null;
+    loading.value = false;
+  }
+}
+
+async function submit() {
+  loading.value = true;
+  loadingMsg.value = null;
+  try {
+    if (!context.details.fv_template || context.details.fv_template.length === 0) {
+      if (!templates || Object.keys(templates).length === 0) {
+        form.value?.toggleAlert('mfa.fv.enrollRequiredError', {
+          dismissible: false
+        });
+      } else {
+        loadingMsg.value = 'mfa.fv.saving';
+        await http.post({
+          body: { templates }
+        });
+      }
+    } else {
+      loadingMsg.value = 'mfa.fv.verifyInProgress';
+      const resp = await fv.verify(1, context.details.fv_template);
+
+      await http.post({
+        body: { response: resp }
+      });
+    }
+  } catch (e: any) {
+    if (e.retCode) {
+      form.value?.toggleAlert(`errors.fv.${e.retCode}`, {
+        dismissible: false
+      });
+    } else if (e.error) {
+      form.value?.toggleAlert(`errors.${e.error}`, {
+        dismissible: false
+      });
+    }
+    throw e;
+  } finally {
+    loading.value = false;
+  }
+}
+</script>
+
 <template>
   <WidgetLayout
     :logo="false"
@@ -54,7 +181,7 @@
         :loading="loading"
         @click="submit"
       >
-        <span v-t="context.details.fv_template?.length > 0 ? 'common.verify' : 'common.submit'" />
+        <span v-t="context.details.fv_template?.length > 0 ? 'mfa.fv.verifyAction' : 'mfa.fv.submitAction'" />
       </p-btn>
     </template>
     <template
@@ -63,155 +190,13 @@
     >
       <p>
         <a
-          v-t="'mfa.tryAnotherWay'"
+          v-t="'mfa.fv.tryAnotherWay'"
           href="signin/challenge"
         />
       </p>
     </template>
   </WidgetLayout>
 </template>
-
-<script lang="ts">
-import { defineComponent, onMounted, reactive, ref } from 'vue';
-
-import GenericForm from '../../components/GenericForm.vue';
-import Hand from '../../components/Hand.vue';
-import PSpinner from '../../components/PSpinner/PSpinner';
-import WidgetLayout from '../../components/WidgetLayout.vue';
-import { useContext, useHttp, useLocale } from '../../composables';
-import { useGenericForm } from '../../utils/form_generics';
-import { H1FingerVeinService } from '../../utils/fv_helper';
-import { getUserIdentifierField } from '../../utils/user.ts';
-
-export default defineComponent({
-  name: 'FingerVein',
-  components: { WidgetLayout, PSpinner, Hand, GenericForm },
-  setup() {
-
-    const http = useHttp()
-    const context = useContext()
-    const i18n = useLocale()
-
-    const loadingMsg = ref<string | null>(null as any)
-    const deviceOk = ref<boolean>(false)
-    const selectedFinger = ref<number>(1 as any)
-    const error = ref<string>(null as any)
-    const templates = reactive({})
-
-    const enrolledFingers = reactive({
-      left: [] as number[],
-      right: [] as number[],
-    })
-    const fv = new H1FingerVeinService()
-
-    const { form, loading, fields, validate } = useGenericForm(
-      'fvMfa',
-      {
-        user_placeholder: getUserIdentifierField(context),
-      }
-    )
-
-    loading.value = true
-    onMounted(async () => {
-      try {
-        loadingMsg.value = 'mfa.fv.checkingDevice'
-        await fv.ping()
-        const status = await fv.deviceStatus()
-        if (status.ReturnCode !== '0') {
-          throw `0x${status.ReturnCode}`
-        }
-        deviceOk.value = true;
-      } catch (e) {
-        deviceOk.value = false;
-        form.value.toggleAlert({
-          path: `errors.fv.${e.error || e.retCode || e}`,
-          args: e
-        })
-      } finally {
-        loading.value = false
-      }
-    })
-    return {
-      fields,
-      validate,
-      loadingMsg,
-      selectedFinger,
-      deviceOk,
-      context,
-      error,
-      templates,
-      enrolledFingers,
-      form,
-      loading,
-      async onFingerSelect(ind: number, hand: 'left' | 'right') {
-        loadingMsg.value = 'mfa.fv.enrollmentInProgress'
-        loading.value = true
-        let h1Index = ind
-        if (hand === 'right') {
-          h1Index += 3
-        }
-        try {
-          const resp = await fv.enroll(h1Index)
-          enrolledFingers[hand].push(ind)
-          templates[h1Index] = resp.template
-          form.value.toggleAlert('Finger Enrolled', {
-            dismissible: false,
-            timeout: 3000,
-            type: 'success'
-          })
-        } catch (e) {
-          form.value.toggleAlert(`errors.fv.${e.error || e.retCode || e}`, {
-            dismissible: false
-          })
-        } finally {
-          loadingMsg.value = null
-          loading.value = false
-        }
-
-      },
-
-      async submit() {
-        loading.value = true
-        loadingMsg.value = null
-        try {
-          if (!context.details.fv_template || context.details.fv_template.length === 0) {
-            if (!templates || Object.keys(templates).length === 0) {
-              form.value.toggleAlert('errors.fv.enrollRequired', {
-                dismissible: false
-              })
-            } else {
-              loadingMsg.value = 'mfa.fv.saving'
-              await http.post({
-                body: { templates }
-              })
-            }
-          } else {
-            loadingMsg.value = 'mfa.fv.verifyInProgress'
-            const resp = await fv.verify(1, context.details.fv_template)
-
-            await http.post({
-              body: { response: resp }
-            })
-          }
-        } catch (e) {
-          if (e.retCode) {
-            form.value.toggleAlert(`errors.fv.${e.retCode}`, {
-              dismissible: false
-            })
-          } else if (e.error) {
-            form.value.toggleAlert(`errors.${e.error}`, {
-              dismissible: false
-            })
-          }
-          throw e
-        } finally {
-          loading.value = false
-        }
-      }
-    }
-  }
-})
-</script>
 
 <style lang="postcss">
 .hands_container {

@@ -24,7 +24,7 @@ const formattedTimer = computed(() => {
 <template>
   <div class="pa__resend-action">
     <span
-      v-t="['common.resendText', { type }]"
+      v-t="['common.resendText', { type: i18n.t(type) }]"
     />
     <span
       v-if="countdown > 0"

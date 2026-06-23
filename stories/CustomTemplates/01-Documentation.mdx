@@ -1,4 +1,4 @@
-import {Meta, Primary, Controls, Story, ArgTypes} from '@storybook/addon-docs/blocks';
+import { Meta } from '@storybook/addon-docs/blocks';
 import * as FieldStories from './templating.stories.ts';
 
 <Meta of={FieldStories} />
@@ -6,18 +6,47 @@ import * as FieldStories from './templating.stories.ts';
 
 ## Custom Templates
 
-You can provide custom templates to inject into widget. To do so, define your template inside to be mounted element.
+You can provide custom templates to inject into widget.
 
-Template element type must be `template` name must be defined as `id` and must be prefixed with `pa-`.
+Supported template element forms:
+
+- `<template id="pa-...">`
+- `<pa-template id="pa-...">`
+
+Template `id` must be prefixed with `pa-`.
+
+Template lookup order during widget initialization:
+
+1. Inside the widget mount container (`#widget`)
+2. Siblings (and their descendants) under the same parent as mount container
+3. Global document fallback
+
+If the same template id exists in multiple places, the nearest source in this order is used.
 
 Available templates are as following:
 ```
 pa-info-append
 pa-content-prepend
 pa-content-append
+pa-form-prepend
+pa-form-append
+pa-content-actions-prepend
+pa-content-actions-append
+pa-social-prepend
+pa-social-append
 pa-content-footer
 pa-footer-body
 ```
+
+Placement summary:
+
+- `pa-content-prepend`, `pa-content-append`: before or after the main page body inside the widget content area.
+- `pa-info-append`: after title/subtitle/info text near the top of the page.
+- `pa-form-prepend`, `pa-form-append`: around dynamic form fields.
+- `pa-content-actions-prepend`, `pa-content-actions-append`: around action buttons.
+- `pa-social-prepend`, `pa-social-append`: around social providers list (login/register pages when social connections are available).
+- `pa-content-footer`: inside the page body footer area, above the global footer.
+- `pa-footer-body`: inside the global footer next to locale/legal links.
 
 For example:
 ```html
@@ -28,9 +57,16 @@ For example:
   <template id="pa-content-footer">
     My Footer
   </template>
+  <template id="pa-footer-body">
+    <a href="#">My Uri</a>
+  </template>
 </div>
 
+<template id="pa-footer-body">
+  <a href="#">Global Footer Link</a>
+</template>
+
 <script type="application/javascript">
-  new PlusAuthWidget('#widget')
+  new PlusAuthWidget('#widget', { mode: 'login' }, window.PlusAuth)
 </script>
 ```

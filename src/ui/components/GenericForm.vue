@@ -1,3 +1,62 @@
+<script setup lang="ts">
+import { computed, inject, reactive, ref } from 'vue';
+
+import type { FieldDefinition, ITranslatePath } from '../interfaces';
+
+import type { PAlertProps } from './PAlert/PAlert.vue';
+import PBtn from './PBtn/PBtn.vue';
+import PCheckBox from './PCheckBox/PCheckBox.vue';
+import PCodeInput from './PCodeInput/PCodeInput.vue';
+import PForm from './PForm.vue';
+import PMessage from './PMessage/PMessage.vue';
+import PTextField from './PTextField/PTextField.vue';
+import WidgetTemplate from './WidgetTemplate.tsx';
+
+defineOptions({
+  name: 'GenericForm'
+});
+
+const props = withDefaults(defineProps<{
+  disabled?: boolean;
+  submit: (...args: any[]) => any;
+  validate?: (...args: any[]) => any;
+  fields?: Record<string, FieldDefinition>;
+}>(), {
+  disabled: false,
+  validate: () => false,
+  fields: () => ({})
+});
+
+const formRef = ref<InstanceType<typeof PForm> | null>(null);
+const alert = ref<boolean>(false);
+const alertMsg = ref<ITranslatePath | null>(null);
+const alertOptions = reactive<Record<string, any>>({});
+
+const sortedFields = computed(() => {
+  return Object.keys(props.fields)
+    .sort((a, b) => (props.fields[a]?.order || 0) - (props.fields[b]?.order || 0));
+});
+const templates = inject<Record<string, any>>('templates') || {}
+
+const toggleAlert = (message?: ITranslatePath, options?: Partial<PAlertProps>): void => {
+  alert.value = false;
+  if (!message) {
+    alertMsg.value = null;
+    return;
+  }
+  alertMsg.value = message;
+  alertOptions.value = options;
+  setTimeout(() => {
+    alert.value = true;
+  });
+};
+
+defineExpose({
+  toggleAlert,
+  formRef
+});
+</script>
+
 <template>
   <p-form
     ref="formRef"
@@ -5,8 +64,12 @@
     :disabled="disabled"
     @submit="submit"
   >
+    <WidgetTemplate
+      v-if="templates['form-prepend']"
+      name="form-prepend"
+    />
     <template
-      v-for="(field) in sortedFields"
+      v-for="field in sortedFields"
       :key="field"
     >
       <template v-if="fields[field].visible !== 'hidden' && fields[field].visible !== false">
@@ -82,17 +145,21 @@
             <slot :name="field" />
           </template>
           <template
-            v-if="$slots[field+'.message']"
+            v-if="$slots[field + '.message']"
             #message="message"
           >
             <slot
-              :name="field+'.message'"
+              :name="field + '.message'"
               v-bind="message"
             />
           </template>
         </p-text-field>
       </template>
     </template>
+    <WidgetTemplate
+      v-if="templates['form-append']"
+      name="form-append"
+    />
     <slot />
     <p-alert
       v-model="alert"
@@ -113,78 +180,5 @@
   </p-form>
 </template>
 
-<script lang="ts">
-import { computed, defineComponent, reactive, ref } from 'vue';
-
-import type { FieldDefinition, ITranslatePath } from '../interfaces';
-
-
-import type { PAlertProps } from './PAlert/PAlert';
-import PBtn from './PBtn/PBtn.vue';
-import PCheckBox from './PCheckBox/PCheckBox.vue';
-import PCodeInput from './PCodeInput/PCodeInput';
-import PForm from './PForm.vue';
-import PMessage from './PMessage/PMessage.ts';
-import PTextField from './PTextField/PTextField.vue';
-
-export default defineComponent( {
-  name: 'GenericForm',
-  components: { PCheckBox, PCodeInput, PForm, PTextField, PMessage, PBtn },
-  props: {
-    disabled: {
-      type: Boolean
-    },
-    submit: {
-      type: Function as () => any,
-      required: true,
-      default: () => false
-    },
-    validate: {
-      type: Function as () => any,
-      default: () => false
-    },
-    fields: {
-      type: Object as () => Record<string, FieldDefinition>,
-      default: () => ({})
-    }
-  },
-  setup(props){
-    const formRef = ref<any>(null)
-    const alert = ref<boolean>(false)
-    const alertMsg = ref<ITranslatePath | null>(null)
-    const alertOptions = reactive<Record<string, any>>({})
-    const sortedFields = computed(()=> {
-      return Object.keys(props.fields)
-        .sort((a, b) => (props.fields[a]?.order || 0) - (props.fields[b]?.order || 0))
-    } )
-
-    return {
-      formRef,
-      alert,
-      alertMsg,
-      alertOptions,
-      sortedFields,
-      /**
-       * @param message Message to display in alert. Pass null or undefined to hide alert.
-       * @param options PAlert properties
-       */
-      toggleAlert(message?: ITranslatePath, options?: Partial<PAlertProps>): void {
-        alert.value = false
-        if(!message){
-          alertMsg.value = null
-          return
-        }
-        alertMsg.value = message
-        alertOptions.value = options
-        setTimeout(() => {
-          alert.value = true
-        })
-      }
-    }
-  }
-})
-</script>
-
 <style scoped>
-
 </style>

@@ -1,13 +1,13 @@
 import { h, ref, onBeforeUnmount, inject, computed } from 'vue';
 import './styles/main.css'
 
+import 'virtual:uno.css';
 import PFooter from './components/Footer.vue';
 import type { IWidgetSettings } from './interfaces';
 import { resolveView } from './utils/router';
 import type { Theme } from './utils/theme';
 import type { Translator } from './utils/translator';
 import { translatorKey } from './utils/translator';
-
 export function App(theme: Theme, settings: Partial<IWidgetSettings>): any {
   return {
     provide: {

@@ -1,24 +1,27 @@
-import { Title, Subtitle, Description, Primary, Controls, Stories } from '@storybook/addon-docs/blocks';
+import { Title, Subtitle, Description, Primary, Controls } from '@storybook/addon-docs/blocks';
 import type { Preview } from '@storybook/vue3-vite';
 import './preview.css'
+import { createElement, Fragment } from 'react';
 
-import React from 'react';
+const docsBlocks = [Title, Subtitle, Description, Primary, Controls];
+
+const renderDocsPage = () => createElement(
+  Fragment,
+  null,
+  ...docsBlocks.map((Block, index) => createElement(Block, { key: index })),
+);
 
 const preview: Preview = {
   tags: ['autodocs'],
   parameters: {
     docs: {
+      story: {
+        inline: false,
+        height: '760px'
+      },
       canvas: {
       },
-      page: () =>
-        <>
-          <Title />
-          <Subtitle />
-          <Description />
-          <Primary />
-          <Controls />
-        </>
-      ,
+      page: renderDocsPage,
     },
     viewport: {
       viewports: {
@@ -66,6 +69,10 @@ const preview: Preview = {
         if (b.type === 'docs') {
           return 1
         }
+        if (a.title === b.title) {
+          return 0; 
+        }
+
         return a.id === b.id ? 0 : a.id.localeCompare(b.id, undefined, { numeric: true });
       },
     },

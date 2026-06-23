@@ -1,55 +1,90 @@
-import {Meta, Primary, Controls, Story, ArgTypes} from '@storybook/addon-docs/blocks';
-import * as FieldStories from './fields.stories';
+import { Meta, Story, Canvas, ArgTypes } from '@storybook/addon-docs/blocks';
+import * as FieldStories from './fields.stories.ts';
 
 <Meta of={FieldStories} />
 
+# Custom Fields
 
-## Custom Fields
-You can provide custom fields or override default ones with using `modeOptions.[pageIdentifier].fields`
-setting where `[pageIdentifier]` is the page which you would like to modify the fields.
+Use `modeOptions.[pageIdentifier].fields` to add, remove, reorder, or override fields for a specific page.
 
-Each key in `fields` will be included in generated request's body as it is.
+Common page keys:
 
-To remove a default field provide its name with a [falsy](https://developer.mozilla.org/en-US/docs/Glossary/Falsy) value.
-For example `email` field is a default value for Login page. We can remove it like this:
+`login`, `signup`, `recovery`, `resetPassword`, `fillMissing`, `verifyEmail`, `passwordChallenge`, `emailMfa`, `smsMfa`, `otpMfa`, `pushMfa`, `webauthnMfa`, `fvMfa`, `passwordlessEmail`, `passwordlessSms`, `passwordlessOtp`, `passwordlessPush`, `passwordlessWebauthn`, `accountLinking`
 
-```js
+## Basic Usage
+
+```javascript
+new PlusAuthWidget('#widget', {
+  modeOptions: {
+    login: {
+      fields: {
+        'custom-text-field': {
+          type: 'text',
+          label: 'Username'
+        }
+      }
+    }
+  }
+})
+```
+
+To remove a default field, set it to a falsy value:
+
+```javascript
 {
   modeOptions: {
     login: {
       fields: {
-        email: undefined // or null, false, 0 etc.
+        email: undefined
       }
     }
   }
 }
 ```
 
-## Available Fields
-To use a custom field pass the `type` parameter for the field properties.
+## Field Types
 
-CheckBox with `type: 'checkbox'`
-Code with `type: 'code'`
-Every other property or `type: 'text'` renders a TextField
+Supported field types in these demos:
+
+`text`, `code`, `checkbox`
+
+<Canvas>
+  <Story of={FieldStories.TextField} />
+</Canvas>
+
+<Canvas>
+  <Story of={FieldStories.Code} />
+</Canvas>
+
+<Canvas>
+  <Story of={FieldStories.CheckBox} />
+</Canvas>
+
+## Expected Value Shapes
+
+Field values should match the rendered control type:
+
+- `text` and `password` fields: string
+- `code` fields: string
+- `checkbox` fields: boolean
+- hidden/static helper fields: primitive or serializable value that your backend expects
+
+`code` fields are rendered through `PCodeInput`, so the stored `value` should be treated as a single code string rather than an array of digits.
 
 ## Action Helpers
-You can execute your own defined functions for error handling and responses.
 
-To execute a function before or after the action successfully completed, define them with `preAction` or `postAction` property.
-Example:
-```js
+`preAction` and `postAction` can run before and after a page action.
+
+```javascript
 new PlusAuthWidget('#widget', {
   modeOptions: {
-    'resetPassword': {
-      preAction(values, fields, formRef){
-        // Executed just before http request is sent
-        if(values.password.includes('something')){
-          // will be handled by responseErrorHandler
+    resetPassword: {
+      preAction(values) {
+        if (values.password.includes('something')) {
           throw { error: 'my_custom_error' }
         }
       },
-      postAction(){
-        // Executed when action completed successfully
+      postAction() {
         window.location.replace('https://myapplication.url/after-reset-password')
       }
     }
@@ -57,22 +92,113 @@ new PlusAuthWidget('#widget', {
 })
 ```
 
-Another common use case is handling form errors. For such cases you can define a function as `responseErrorHandler` and take action accordingly.
+Use `responseErrorHandler` for custom error handling:
 
-For example:
-
-```js
+```javascript
 new PlusAuthWidget('#widget', {
   modeOptions: {
-    'resetPassword': {
-      responseErrorHandler(error, formRef, fields){
-        if(error && error.error === 'my_custom_error' ){
+    resetPassword: {
+      responseErrorHandler(error, formRef) {
+        if (error && error.error === 'my_custom_error') {
           formRef.toggleAlert('My custom text')
         }
       }
     }
   }
 })
+```
+
+## Advanced Field Options
+
+`required`: defaults to `true`. Set `required: false` to make a field optional.
+
+`visible`: set `false` or `'hidden'` to hide a field while still keeping value behavior.
+
+`ignored`: when `true`, skips validation and omits the field from submitted payload.
+
+`order`: controls rendering order.
+
+`attrs`: passes HTML/input props through to the rendered widget field.
+
+`slots`: allows injecting component content into input slots.
+
+```javascript
+{
+  modeOptions: {
+    login: {
+      fields: {
+        username: {
+          type: 'text',
+          label: 'Username',
+          required: false,
+          order: 2,
+          slots: {
+            append: {
+              element: 'PSpinner',
+              props: {
+                color: 'primary',
+                indeterminate: true
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+## Input Attributes
+
+Use `attrs` for practical field-level behavior such as autocomplete, disabling a field, or hiding helper messages.
+
+```javascript
+{
+  modeOptions: {
+    login: {
+      fields: {
+        email: {
+          type: 'text',
+          label: 'Email',
+          attrs: {
+            autocomplete: 'username',
+            hideMessages: true,
+            disabled: false
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+Common useful values:
+
+- `autocomplete`
+- `disabled`
+- `readonly`
+- `inputmode`
+- `pattern`
+- `hideMessages`
+
+## Custom Validation
+
+Use `validator` for sync or async validation. Return `true` for pass or return a string error key/message.
+
+```javascript
+{
+  fields: {
+    password: {
+      type: 'password',
+      validator(fields, value) {
+        if (!value || value.length < 8) {
+          return 'Password must be at least 8 characters'
+        }
+        return true
+      }
+    }
+  }
+}
 ```
 
 ## Field Properties

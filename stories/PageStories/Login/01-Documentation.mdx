@@ -1,0 +1,33 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import * as LoginStories from './login.stories.ts';
+
+<Meta of={LoginStories} />
+
+# Login Page
+
+The Login page is the main sign-in entry. It supports identifier/password login and optional social connection buttons.
+
+## Basic Usage
+
+```javascript
+const auth = new PlusAuthWidget(document.body, {/* field configurations here*/}, window.PlusAuth)
+auth.view.mode = 'login'
+```
+
+## Optional Configuration
+
+Use `modeOptions.login.fields` to add, reorder, hide, or replace form fields.
+
+Use `context.client.social` to show social provider buttons.
+
+<Canvas>
+  <Story of={LoginStories.Default} />
+</Canvas>
+
+<Canvas>
+  <Story of={LoginStories.CustomFields} />
+</Canvas>
+
+<Canvas>
+  <Story of={LoginStories.SocialConnections} />
+</Canvas>

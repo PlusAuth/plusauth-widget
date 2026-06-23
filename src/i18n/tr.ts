@@ -1,16 +1,16 @@
 export default {
   $locale: 'Türkçe',
   common: {
-    user: 'Kullanıcı',
     allow: 'İzin Ver',
-    code: 'Kod',
+    code: 'kod',
     continue: 'Devam Et',
     days: 'gün',
-    downloadAuthPlus: 'Market uygulamanızdan {0}\'ı indirebilirsiniz.',
+    downloadAuthPlus: '{0} uygulamasını uygulama mağazanızdan indirebilirsiniz',
     edit: 'Düzenle',
-    email: 'E-posta',
-    enterOtp: 'Kodunuzu girin',
+    email: 'e-posta',
+    enterOtp: '@:common.code giriniz',
     field: 'Alan',
+    user: 'Kullanıcı',
     fields: {
       code: 'Kod',
       email: 'E-posta',
@@ -18,34 +18,37 @@ export default {
       password: 'Şifre',
       phone_number: 'Telefon numarası',
       rePassword: 'Şifre onayı',
-      username: 'Kullanıcı adı'
+      username: 'Kullanıcı Adı'
     },
     hide: 'Gizle',
     hours: 'saat',
     minutes: 'dakika',
-    notification: 'Bildirim',
+    notification: 'bildirim',
     reject: 'Reddet',
     resend: 'Tekrar Gönder',
-    resendText: '{type} almadınız mı?',
-    resendAfter: 'Tekrar gönder: {time}',
+    resendText: '{type} ulaşmadı mı?',
+    resendAfter: 'Tekrar gönderim süresi: {time}',
     seconds: 'saniye',
     show: 'Göster',
     submit: 'Gönder',
     verify: 'Doğrula',
     years: 'yıl',
-    usePassword: 'Şifre kullanarak gir'
+    usePassword: 'Bunun yerine şifrenizi kullanın'
   },
   verifyEmail: {
-    checkText: '<strong>{email}</strong> adresine bir e-posta gönderdik, lütfen e-posta adresinizi doğrulamak için içindeki bağlantıya tıklayın.',
-    title: 'E-postanızı Kontrol Edin'
+    title: '@:common.email Adresinizi Kontrol Edin',
+    checkText: '<strong>{email}</strong> adresine bir e-posta gönderdik, lütfen @:common.email adresinizi doğrulamak için ilgili bağlantıya tıklayın.',
+    successTitle: 'E-posta adresiniz başarıyla doğrulandı.',
+    redirectingText: ' {time} saniye içinde uygulamaya yönlendiriliyorsunuz.',
+    emailType: '@:common.email'
   },
   consent: {
-    allow: 'İzin Ver',
-    reject: 'Reddet',
-    title: '{clientName}, aşağıdakiler için onayınızı istiyor',
+    allow: '@:common.allow',
+    reject: '@:common.reject',
+    title: '{clientName} aşağıdakiler için izninizi istiyor',
     groups: {
-      base: 'Temel Bilgiler',
-      claims: 'İstekler'
+      base: 'Temel Özellikler',
+      claims: 'Talepler/Haklar'
     }
   },
   errors: {
@@ -57,73 +60,89 @@ export default {
       '0x3001001': 'Cihaz başlatılamadı',
       '0x3001002': 'Geçersiz lisans',
       '0x3001003': 'Geçersiz parametreler',
-      '0x3001004': 'Şablon sayısı sıfırdan fazla olmalıdır',
+      '0x3001004': 'Şablon sayısı sıfırdan büyük olmalıdır',
       '0x3001005': 'Şifreleme hatası',
       '0x3001006': 'Dahili hata',
-      '0x3000006': 'Parmak yerleştirme doğru değil',
+      '0x3000006': 'Parmak yerleşimi doğru değil',
       '0x300000e': 'Parmak eşleşmedi',
       '0x2000011': 'Cihaz bağlantısı kesildi',
       '0x02000011': 'Cihaz bağlantısı kesildi',
       '0x02000021': 'Cihaz bağlantısı kesildi',
-      '0x03000001': 'Tarayıcı cihazı bulunamadı',
+      '0x03000001': 'Tarayıcı cihaz bulunamadı',
       '0x03000002': 'Geçersiz BIR formatı',
       '0x03000003': 'Base64 kodlama başarısız',
       '0x03000004': 'Geçersiz BIR çıkış parametresi',
-      '0x03000005': 'Doğrulama yakalama eşleşecek kadar yakın değil',
-      '0x03000006': 'Parmak yakalama tutarlılık kontrolü başarısız oldu',
-      '0x03000007': 'Çok fazla tekrar denendi',
-      '0x03000008': 'Geçersiz parametre',
+      '0x03000005': 'Doğrulama çekimi eşleşme için yeterince yakın değildi',
+      '0x03000006': 'Parmak yakalama tutarlılık kontrolü başarısız',
+      '0x03000007': 'Çok fazla deneme yapıldı',
+      '0x03000008': 'Tarayıcı hatası: geçersiz parametre',
       '0x03000009': 'Genel tarayıcı hatası',
-      '0x0300000A': 'Eşleşme başarısız',
-      '0x0300000B': 'Doğrulama için şablon yok',
-      '0x0300000C': 'Cihaz algılanmadı',
+      '0x0300000A': 'Tarayıcı hatası: eşleşme başarısız',
+      '0x0300000B': 'Doğrulanacak şablon bulunamadı',
+      '0x0300000C': 'Cihaz tespit edilemedi',
       '0x0300000D': 'Dahili yeterli bellek ayrılamadı',
-      '0x0300000E': 'Parmak doğrulama eşleşmedi',
-      '0x0300000F': 'Parmak tanımlamada eşleşme bulunamadı',
-      '0x03000010': 'Parmak tanımlamada birden fazla eşleşme'
+      '0x0300000E': 'Parmak doğrulaması eşleşmiyor',
+      '0x0300000F': 'Parmak tanımlama: eşleşme bulunamadı',
+      '0x03000010': 'Parmak tanımlama: birden fazla eşleşme bulundu',
     },
     webauthn: {
-      not_supported: 'Tarayıcınız WebAuthN API’sini desteklemiyor gibi görünüyor. Tarayıcınızı güncellemeyi deneyin veya desteklenen bir tarayıcı kullanın.',
+      not_supported: "Tarayıcınız WebAuthN API'sini desteklemiyor gibi görünüyor. Tarayıcınızı güncellemeyi veya desteklenen bir tarayıcı kullanmayı deneyin.",
       operation_failed: 'İşlem hata ile başarısız oldu:'
     },
-    already_exists: 'Kullanıcı zaten mevcut',
-    code_already_used: 'Kod zaten kullanılmış',
-    code_expired: 'Kodun süresi doldu',
-    email_not_verified: 'E-posta doğrulanmadı. Lütfen e-posta adresinize gönderilen bağlantıya tıklayarak e-postanızı doğrulayın.',
+    already_exists: '@:common.user zaten mevcut',
+    code_already_used: '@:common.code zaten kullanılmış',
+    code_expired: '@:common.code süresi dolmuş',
+    email_not_verified: '@:common.email doğrulanmadı. Lütfen @:common.email hesabınıza gönderilen bağlantıya tıklayarak @:common.email adresinizi doğrulayın.',
     invalid_entity: 'Geçersiz {field}',
-    field_required: '{field} gerekli.',
-    incorrect_code: 'Doğrulama kodu geçersiz',
-    invalid_code: 'Kod geçersiz',
-    invalid_credentials: 'Geçersiz giriş bilgileri. Lütfen tekrar deneyin.',
-    invalid_password: 'Geçersiz şifre sağlandı.',
+    field_required: '{field} gereklidir.',
+    incorrect_code: 'Doğrulama @:common.code geçersiz',
+    invalid_code: '@:common.code geçersiz',
+    invalid_credentials: 'Geçersiz @:login.signIn bilgileri. Lütfen tekrar deneyin.',
+    invalid_password: 'Geçersiz @:common.fields.password girildi.',
     passwords_not_match: 'Şifreler eşleşmiyor',
-    user_not_found: 'Kullanıcı bulunamadı',
-    weak_password: 'Şifre çok zayıf',
-    too_many_requests: 'Çok hızlı deniyorsunuz. Lütfen {retry} sonra tekrar deneyin.',
-    account_blocked: 'Hesabınız engellendi. Daha fazla talimat için e-postanızı kontrol edin veya bir yönetici ile iletişime geçin.',
-    old_password: 'Daha önce kullandığınız bir şifreyi kullanıyor olabilirsiniz. Güvenliğiniz için, geçmişte kullanmadığınız yeni bir şifre seçin.'
+    user_not_found: '@:common.user bulunamadı',
+    weak_password: '@:common.fields.password çok zayıf',
+    too_many_requests: 'Çok hızlı deniyorsunuz. {retry} sonra tekrar deneyin.',
+    account_blocked: 'Hesabınız bloke edildi. Lütfen daha fazla talimat için @:common.email adresinizi kontrol edin veya bir yönetici ile iletişime geçin.',
+    old_password: 'Daha önce kullandığınız bir @:common.fields.password kullanmaya çalışıyorsunuz. Güvenliğiniz için lütfen geçmişte kullanmadığınız yeni bir @:common.fields.password seçin.'
   },
   fillMissing: {
     title: 'Eksik bilgileri doldurun',
-    subtitle: 'Uygulamaya devam etmek için gerekli ek bilgileri doldurun.'
+    subtitle: 'İşleme devam etmek için lütfen gereken ek bilgileri doldurun.',
+    fieldLabel: 'common.fields.{0}',
+    fieldRequiredError: '@:errors.field_required',
+    submitAction: '@:common.submit'
   },
   forgotPassword: {
-    emailSent: '<strong>{email}</strong> adresine bir hesap varsa, şifrenizi sıfırlamanız için bir bağlantı içeren bir e-posta alacaksınız.',
-    subtitle: 'Şifre sıfırlama talebinde bulunmak için e-posta adresinizi girin',
-    title: 'Şifrenizi sıfırlayın'
+    title: '@:common.fields.password sıfırlama',
+    subtitle: '@:common.fields.password sıfırlama talebinde bulunmak için lütfen @:common.email adresinizi girin',
+    emailSent: 'Eğer <strong>{email}</strong> adresiyle ilişkili bir hesap varsa, @:common.fields.password sıfırlama bağlantısı içeren bir @:common.email alacaksınız.',
+    emailLabel: '@:common.fields.email',
+    submitAction: '@:common.submit',
+    userNotFoundError: '@:errors.user_not_found'
   },
   login: {
-    forgotPassword: 'Şifrenizi mi unuttunuz',
-    noAccount: 'Hesabınız yok mu?',
     title: 'Giriş Yap',
     signIn: 'Giriş Yap',
     signInWith: '{0} ile giriş yap',
     socialLoginHelper: 'veya',
-    signUp: 'Kayıt Ol'
+    noAccount: 'Hesabınız yok mu?',
+    signUp: 'Kayıt Ol',
+    forgotPassword: 'Şifremi Unuttum',
+    emailLabel: '@:common.fields.email',
+    phoneLabel: '@:common.fields.phone_number',
+    passwordLabel: '@:common.fields.password',
+    userNotFoundError: '@:errors.user_not_found',
+    invalidPasswordError: '@:errors.invalid_password'
   },
   accountLinking: {
-    title: 'Hesabı Bağla',
-    description: 'Görünüşe göre e-posta adresinizle zaten bir hesap ilişkilendirilmiş. Devam etmek için mülkiyeti doğrulayın.'
+    title: 'Hesap Bağlama',
+    description: '@:common.email adresinizle zaten ilişkili bir hesap olduğu görünüyor. Devam etmek için lütfen sahipliğinizi doğrulayın.',
+    passwordLabel: '@:common.fields.password',
+    continueAction: '@:common.continue',
+    submitAction: '@:common.submit',
+    userNotFoundError: '@:errors.user_not_found',
+    invalidPasswordError: '@:errors.invalid_password'
   },
   passwordless: {
     challenge: {
@@ -131,102 +150,166 @@ export default {
     },
     useAnotherMethod: 'Başka bir yöntemle giriş yap',
     email: {
-      choice: 'E-posta ile devam et',
-      magicLinkTitle: 'E-postanızı Kontrol Edin',
-      title: 'Gönderilen doğrulama kodunu girin: <strong>{email}</strong>',
-      checkText: '<strong>{email}</strong> adresine bir e-posta gönderdik, içindeki bağlantıya tıklayarak giriş yapabilirsiniz. Giriş yapmaya çalıştığınız cihaz/tarayıcıda bağlantıyı açtığınızdan emin olun.'
+      title: '<strong>{email}</strong> adresine gönderilen yetkilendirme @:common.code giriniz',
+      magicLinkTitle: '@:common.email adresinizi kontrol edin',
+      checkText: '<strong>{email}</strong> adresine bir @:common.email gönderdik, giriş yapmak için lütfen ilgili bağlantıya tıklayın. Bağlantıyı giriş yapmaya çalıştığınız cihazda/tarayıcıda açtığınızdan emin olun.',
+      codeLabel: '@:common.fields.code',
+      submitAction: '@:common.submit',
+      useAnotherMethod: 'Başka bir yöntemle giriş yap',
+      invalidCodeError: '@:errors.invalid_code',
+      emailType: '@:common.email'
     },
     otp: {
-      registerTitle: 'Kimlik Doğrulayıcıyı Kaydet',
-      registerSubtitle: 'Tercih ettiğiniz kimlik doğrulama uygulamasını açın ve aşağıdaki QR Kodunu tarayın. Kodu taramakta sorun yaşıyorsanız, görüntünün altındaki kodu manuel olarak girebilirsiniz.',
-      title: 'Doğrulama kodunu girin'
+      title: 'Yetkilendirme @:common.code giriniz',
+      registerTitle: 'Doğrulayıcınızı Kaydedin',
+      registerSubtitle: 'Tercih ettiğiniz doğrulayıcı uygulamayı açın ve aşağıdaki QR kodu taratın. Eğer @:common.code taratırken sorun yaşıyorsanız, görselin altındaki @:common.code manuel olarak girebilirsiniz.',
+      otpLabel: '@:common.enterOtp',
+      submitAction: '@:common.submit',
+      useAnotherMethod: '@:passwordless.email.useAnotherMethod'
     },
     sms: {
-      choice: 'SMS ile devam et',
-      title: 'Gönderilen doğrulama kodunu girin: <strong>{phone_number}</strong>'
+      title: '<strong>{phone_number}</strong> numarasına gönderilen yetkilendirme @:common.code giriniz',
+      otpLabel: '@:common.enterOtp',
+      submitAction: '@:common.submit',
+      useAnotherMethod: '@:passwordless.email.useAnotherMethod',
+      codeType: '@:common.code'
     },
     push: {
-      choice: 'Uygulama Onayı ile devam et',
+      enrollTitle: 'Cihazınızı kaydedin',
+      enrollDescription: 'Aşağıdaki QR @:common.code {0} uygulamanızla taratın',
+      title: 'Cihazınızı kontrol edin',
       selectCode: 'Cihazınızdan aşağıdaki numarayı seçin',
-      title: 'Cihazınızı Kontrol Edin',
-      description: 'Erişim izni vermek için cihazınızdaki bildirime tıklayın',
-      enrollTitle: 'Cihazınızı Kaydedin',
-      enrollDescription: '{0} uygulamanızla aşağıdaki QR Kodunu tarayın',
-      tryCodeAction: 'Kodu manuel olarak girmeyi deneyin'
+      description: 'Erişime izin vermek için cihazınızdaki @:common.notification tıklayın',
+      otpTitle: '@:mfa.otp.title',
+      otpLabel: '@:common.enterOtp',
+      waitingApproval: '@:mfa.challenge.waitingApproval',
+      submitAction: '@:common.submit',
+      continueAction: '@:common.continue',
+      useAnotherMethod: '@:passwordless.email.useAnotherMethod',
+      tryCodeAction: '@:common.code manuel olarak girmeyi deneyin',
+      notificationType: '@:common.notification',
+      invalidCodeError: '@:errors.invalid_code'
     },
     webauthn: {
-      choice: 'Geçiş Anahtarı (Passkey) ile devam et',
-      title: 'Devam et tuşuna basarak güvenlik cihazınızı kullanın',
-      verifying: 'Kimlik bilgileriniz doğrulanıyor...'
+      title: 'Geçiş anahtarınızı (passkey) kullanmak için @:common.continue tıklayın',
+      verifying: 'Kimlik bilgileriniz doğrulanıyor...',
+      continueAction: '@:common.continue',
+      useAnotherMethod: '@:passwordless.email.useAnotherMethod',
+      notSupportedError: '@:errors.webauthn.not_supported',
+      operationFailedError: '@:errors.webauthn.operation_failed'
     },
     pw: {
-      choice: 'Şifre ile devam et'
+      choice: '@:common.fields.password ile devam et'
     }
   },
   mfa: {
     challenge: {
-      email: 'E-posta',
-      fv: 'Parmak Damarı',
+      email: '@:common.email',
+      fv: 'Parmak Damar İzi',
       webauthn: 'Güvenlik Anahtarı veya Cihaz',
       sc: 'Akıllı Kart/E-İmza',
-      otp: 'Kimlik Doğrulama Uygulaması',
+      otp: 'Doğrulama Uygulaması',
       sms: 'SMS',
       title: 'Aşağıdaki yöntemlerden birini seçin',
       waitingApproval: 'Cihazınızda onay bekleniyor…'
     },
     email: {
-      title: 'Gönderilen doğrulama kodunu girin: <strong>{email}</strong>'
+      title: '<strong>{email}</strong> adresine gönderilen yetkilendirme @:common.code giriniz',
+      otpLabel: '@:common.enterOtp',
+      submitAction: '@:common.submit',
+      tryAnotherWay: '@:mfa.tryAnotherWay',
+      emailType: '@:common.email'
     },
     fv: {
-      enrollmentInProgress: 'Kayıt devam ediyor',
-      verifyInProgress: 'Doğrulama devam ediyor',
-      saving: 'Kayıtlar kaydediliyor',
       checkingDevice: 'Cihaz bağlantısı kontrol ediliyor',
-      checkDevice: 'Cihazınızın bağlı olduğundan ve gerekli yazılımın yüklü olduğundan emin olun. Cihaz hazır olduğunda bu sayfayı yenileyin.',
+      enrollmentInProgress: 'Kayıt işlemi devam ediyor',
+      saving: 'Kayıtlar kaydediliyor',
+      verifyInProgress: '@:common.verify işlemi devam ediyor',
       enroll: 'Kaydetmek için bir parmak seçin. Birden fazla parmak kaydedebilirsiniz.',
-      verify: 'Parmağınızı taramaya hazır olduğunuzda <strong>DOĞRULA</strong> butonuna tıklayın.',
+      checkDevice: 'Cihazınızın bağlı olduğundan ve gerekli yazılımın yüklü olduğundan emin olun. Cihaz hazır olduğunda bu sayfayı yenileyin.',
+      verify: 'Parmağınızı taramaya hazır olduğunuzda <strong>@:common.verify</strong> butonuna tıklayın.',
+      fingerEnrolledSuccess: 'Parmak Kaydedildi',
+      enrollRequiredError: '@:errors.fv.enrollRequired',
+      submitAction: '@:common.submit',
+      verifyAction: '@:common.verify',
+      tryAnotherWay: '@:mfa.tryAnotherWay'
     },
     otp: {
-      title: 'Doğrulama kodunu girin',
-      registerTitle: 'Kimlik Doğrulayıcıyı Kaydet',
-      registerSubtitle: 'Tercih ettiğiniz kimlik doğrulama uygulamasını açın ve aşağıdaki QR Kodunu tarayın. Kodu taramakta sorun yaşıyorsanız, görüntünün altındaki kodu manuel olarak girebilirsiniz.'
+      title: 'Yetkilendirme @:common.code giriniz',
+      registerTitle: 'Doğrulayıcınızı Kaydedin',
+      registerSubtitle: 'Tercih ettiğiniz doğrulayıcı uygulamayı açın ve aşağıdaki QR kodu taratın. @:common.code taratırken sorun yaşıyorsanız, görselin altındaki @:common.code manuel olarak girebilirsiniz.',
+      otpLabel: '@:common.enterOtp',
+      submitAction: '@:common.submit',
+      tryAnotherWay: '@:mfa.tryAnotherWay'
     },
     push: {
+      enrollTitle: 'Cihazınızı kaydedin',
+      enrollDescription: 'Aşağıdaki QR @:common.code {0} uygulamanızla taratın',
+      title: 'Cihazınızı kontrol edin',
       selectCode: 'Cihazınızdan aşağıdaki numarayı seçin',
-      title: 'Cihazınızı Kontrol Edin',
-      description: 'Erişim izni vermek için cihazınızdaki bildirime tıklayın',
-      enrollTitle: 'Cihazınızı Kaydedin',
-      enrollDescription: '{0} uygulamanızla aşağıdaki QR Kodunu tarayın',
-      tryCodeText: 'Bildirim almadınız mı?',
-      tryCodeAction: 'Kodu manuel olarak girmeyi deneyin'
+      description: 'Erişime izin vermek için cihazınızdaki @:common.notification tıklayın',
+      otpTitle: '@:mfa.otp.title',
+      otpLabel: '@:common.enterOtp',
+      submitAction: '@:common.submit',
+      continueAction: '@:common.continue',
+      tryAnotherWay: '@:mfa.tryAnotherWay',
+      tryCodeAction: '@:common.code manuel olarak girmeyi deneyin',
+      notificationType: '@:common.notification'
     },
     sms: {
-      title: 'Gönderilen doğrulama kodunu girin: <strong>{phone_number}</strong>'
+      title: '<strong>{phone_number}</strong> numarasına gönderilen yetkilendirme @:common.code giriniz',
+      codeLabel: '@:common.fields.code',
+      submitAction: '@:common.submit',
+      tryAnotherWay: '@:mfa.tryAnotherWay'
     },
     webauthn: {
-      title: 'Devam et tuşuna basarak güvenlik cihazınızı kullanın',
-      verifying: 'Kimlik bilgileriniz doğrulanıyor...'
+      title: 'Geçiş anahtarınızı kullanmak için @:common.continue tıklayın',
+      verifying: 'Kimlik bilgileriniz doğrulanıyor...',
+      submitAction: '@:common.submit',
+      tryAnotherWay: '@:mfa.tryAnotherWay',
+      notSupportedError: '@:errors.webauthn.not_supported',
+      operationFailedError: '@:errors.webauthn.operation_failed'
     },
-    tryAnotherWay: 'Başka bir yöntem dene'
+    tryAnotherWay: 'Başka bir yol dene'
   },
   passwordPolicy: {
-    customChars: '{0} karakterlerinden en az bir tane',
+    customChars: 'En az bir adet {0}',
     customRegexp: '',
     lowerCase: 'En az {0} küçük harf',
-    max: 'En fazla {0} karakter',
-    min: 'En az {0} karakter',
-    number: 'En az {0} sayı',
+    max: 'Maksimum {0} karakter',
+    min: 'Minimum {0} karakter',
+    number: 'En az {0} rakam',
     upperCase: 'En az {0} büyük harf'
+  },
+  passwordChallenge: {
+    title: '@:login.title',
+    passwordLabel: '@:common.fields.password',
+    continueAction: '@:common.continue',
+    forgotPassword: '@:login.forgotPassword',
+    userNotFoundError: '@:errors.user_not_found',
+    invalidPasswordError: '@:errors.invalid_password'
   },
   register: {
     haveAccount: 'Hesabınız var mı?',
-    title: 'Kaydol',
-    signIn: 'Giriş Yap',
-    signUp: 'Kayıt Ol',
-    signUpWith: '{0} ile Kaydol'
+    title: 'Kayıt Ol',
+    signIn: '@:login.signIn',
+    signUp: '@:login.signUp',
+    signUpWith: '{0} ile Kayıt Ol',
+    socialLoginHelper: '@:login.socialLoginHelper',
+    emailLabel: '@:common.fields.email',
+    phoneLabel: '@:common.fields.phone_number',
+    passwordLabel: '@:common.fields.password',
+    rePasswordLabel: '@:common.fields.rePassword',
+    passwordMismatchError: '@:errors.passwords_not_match',
+    alreadyExistsError: '@:errors.already_exists',
+    forgotPassword: '@:login.forgotPassword'
   },
   resetPassword: {
-    successfullyReset: 'Şifreniz başarıyla sıfırlandı.',
-    title: 'Şifre Sıfırla'
-  }
+    title: '@:common.fields.password Sıfırla',
+    successfullyReset: '@:common.fields.password başarıyla sıfırlandı.',
+    newPasswordLabel: '@:common.fields.newPassword',
+    rePasswordLabel: '@:common.fields.rePassword',
+    passwordMismatchError: '@:errors.passwords_not_match',
+    submitAction: '@:common.submit'
+  },
 }

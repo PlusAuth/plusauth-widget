@@ -1,0 +1,12 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import * as SocialConnectionButtonStories from './social-connection-button.stories.ts';
+
+<Meta of={SocialConnectionButtonStories} />
+
+# SocialConnectionButton Component
+
+`SocialConnectionButton` is configured through `context.client.social` and rendered in login/register flows.
+
+<Canvas>
+  <Story of={SocialConnectionButtonStories.LoginProviders} />
+</Canvas>

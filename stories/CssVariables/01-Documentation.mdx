@@ -1,0 +1,87 @@
+import { Meta, Story, Canvas, Controls } from '@storybook/addon-docs/blocks';
+import * as CssVariablesStories from './css-variables.stories.ts';
+
+<Meta of={CssVariablesStories} />
+
+# CSS Variables
+
+These CSS variables can be declared on `:root` or on a containing element around the widget.
+
+```css
+:root {
+  --pa-fs-p: 16px;
+  --pa-fs-h1: 20px;
+  --pa-fs-h2: 18px;
+  --pa-fw-p: 400;
+  --pa-fw-h1: 400;
+  --pa-fw-h2: 400;
+  --pa-align-p: start;
+  --pa-align-h1: center;
+  --pa-align-h2: center;
+  --pa-input-radius: 0px;
+  --pa-input-border-w: 1px;
+  --pa-main-radius: 0px;
+  --pa-main-border-w: 1px;
+  --pa-main-border-c: #e2e8f0;
+  --pa-main-bg: white;
+  --pa-widget-align: center;
+  --pa-widget-state: 0;
+  --pa-input-variant: 0;
+  --pa-button-variant: 0;
+  --pa-logo-align: center;
+}
+```
+
+## Typography
+
+`--pa-fs-p`, `--pa-fs-h1`, and `--pa-fs-h2` set the font sizes for paragraph text, main headings, and secondary headings.
+
+`--pa-fw-p`, `--pa-fw-h1`, and `--pa-fw-h2` set the font weights for paragraph text, main headings, and secondary headings.
+
+`--pa-align-p`, `--pa-align-h1`, and `--pa-align-h2` set text alignment for paragraph text, main headings, and secondary headings.
+
+## Inputs
+
+`--pa-input-radius` controls input corner radius.
+
+`--pa-input-border-w` controls input border width.
+
+`--pa-input-variant` selects the text field variant by index:
+
+```ts
+['outlined', 'filled', 'underlined', 'solo', 'plain', 'regular']
+```
+
+In the example above, `--pa-input-variant: 5` renders the `regular` variant.
+
+## Buttons
+
+`--pa-button-variant` selects the button variant by index:
+
+```ts
+['flat', 'elevated', 'tonal', 'outlined', 'text', 'plain']
+```
+
+In the example above, `--pa-button-variant: 2` renders the `tonal` variant.
+
+## Main Widget
+
+`--pa-main-radius` controls the main widget panel corner radius.
+
+`--pa-main-border-w` controls the main widget panel border width.
+
+`--pa-main-border-c` controls the main widget panel border color.
+
+`--pa-main-bg` controls the widget background and accepts any valid CSS background value.
+
+`--pa-widget-align` controls the horizontal alignment of the widget content.
+
+`--pa-widget-state` controls the widget layout state. `0` renders the card-like panel state, and `1` renders the stretched state.
+
+`--pa-logo-align` controls the logo alignment inside the widget header.
+
+<Canvas>
+  <Story of={CssVariablesStories.Default} />
+</Canvas>
+
+<Controls of={CssVariablesStories.Default} />

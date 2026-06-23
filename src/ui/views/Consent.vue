@@ -1,3 +1,28 @@
+<script setup lang="ts">
+import WidgetLayout from '../components/WidgetLayout.vue';
+import { useContext, useHttp, useLocale } from '../composables';
+import { resolveLogo } from '../utils';
+
+type Requested = {
+  base?: string[];
+  claims?: string[];
+  resources?: Record<string, string[]>;
+};
+
+defineOptions({
+  name: 'Consent'
+});
+
+const http = useHttp();
+const i18n = useLocale();
+const context = useContext();
+
+const requested = (context.details.requested ?? {}) as Requested;
+
+const resolve = (response: boolean) => http.post({ body: { accepted: response } });
+const resolveClientLogo = resolveLogo;
+</script>
+
 <template>
   <WidgetLayout
     :title="{
@@ -19,7 +44,7 @@
             v-for="scope in requested.base"
             :key="scope"
           >
-            {{ te(`consent.base_scopes.${scope}`) ? t(`consent.base_scopes.${scope}`) : scope }}
+            {{ i18n.te(`consent.base_scopes.${scope}`) ? i18n.t(`consent.base_scopes.${scope}`) : scope }}
           </li>
         </ul>
       </li>
@@ -37,7 +62,7 @@
             v-for="claim in requested.claims"
             :key="claim"
           >
-            {{ te(`consent.claims.${claim}`) ? t(`consent.claims.${claim}`) : claim }}
+            {{ i18n.te(`consent.claims.${claim}`) ? i18n.t(`consent.claims.${claim}`) : claim }}
           </li>
         </ul>
       </li>
@@ -49,8 +74,8 @@
           class="group"
         >
           <span class="group-label">{{
-            te(`consent.resources.${indicator}`)
-              ? t(`consent.resources.${indicator}`)
+            i18n.te(`consent.resources.${indicator}`)
+              ? i18n.t(`consent.resources.${indicator}`)
               : indicator
           }}</span>
           <ul>
@@ -58,7 +83,7 @@
               v-for="scope in scopes"
               :key="`${indicator}:${scope}`"
             >
-              {{ te(`consent.scopes.${scope}`) ? t(`consent.scopes.${scope}`) : scope }}
+              {{ i18n.te(`consent.scopes.${scope}`) ? i18n.t(`consent.scopes.${scope}`) : scope }}
             </li>
           </ul>
         </li>
@@ -70,7 +95,7 @@
         color="success"
         @click="resolve(true)"
       >
-        <span v-t="'common.allow'" />
+        <span v-t="'consent.allow'" />
       </p-btn>
       <div style="padding: 4px" />
       <p-btn
@@ -78,46 +103,11 @@
         color="error"
         @click="resolve(false)"
       >
-        <span v-t="'common.reject'" />
+        <span v-t="'consent.reject'" />
       </p-btn>
     </template>
   </WidgetLayout>
 </template>
-
-<script lang="ts">
-import { defineComponent } from 'vue'
-
-import WidgetLayout from '../components/WidgetLayout.vue'
-import { useContext, useHttp, useLocale } from '../composables'
-import { resolveLogo } from '../utils'
-
-type Requested = {
-  base?: string[]
-  claims?: string[]
-  resources?: Record<string, string[]>
-}
-
-export default defineComponent({
-  name: 'Consent',
-  components: { WidgetLayout },
-  setup() {
-    const http = useHttp()
-    const { t, te } =useLocale()
-    const context = useContext()
-
-    const requested = (context.details.requested ?? {}) as Requested
-
-    return {
-      t,
-      te,
-      context,
-      requested,
-      resolve: (response: boolean) => http.post({ body: { accepted: response } }),
-      resolveClientLogo: resolveLogo,
-    }
-  },
-})
-</script>
 
 <style scoped>
 .groups {

@@ -9,7 +9,8 @@ const defaultContext =  {
 
   },
   client: {
-    logoUri: false
+    clientName: 'PlusAuth',
+    logoUri: 'https://static.plusauth.com/images/logo.png'
   },
   settings: {
 

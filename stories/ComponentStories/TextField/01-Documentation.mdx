@@ -1,0 +1,31 @@
+import { Meta, Story, Canvas } from '@storybook/addon-docs/blocks';
+import * as TextFieldStories from './text-field.stories.ts';
+
+<Meta of={TextFieldStories} />
+
+# TextField Component
+
+`PTextField` is the base input component used by widget forms.
+
+## Basic Usage
+
+```vue
+<PTextField
+  v-model="value"
+  label="Username"
+  placeholder="Enter your username"
+  type="text"
+/>
+```
+
+<Canvas>
+  <Story of={TextFieldStories.Default} />
+</Canvas>
+
+<Canvas>
+  <Story of={TextFieldStories.Disabled} />
+</Canvas>
+
+<Canvas>
+  <Story of={TextFieldStories.PasswordType} />
+</Canvas>

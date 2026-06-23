@@ -1,0 +1,27 @@
+import { Meta, Canvas, Story } from '@storybook/addon-docs/blocks';
+import * as ResetPasswordStories from './reset-password.stories.ts';
+
+<Meta of={ResetPasswordStories} />
+
+# Reset Password Page
+
+This page allows users to set a new password after receiving a reset link.
+
+## Basic Usage
+
+```javascript
+const auth = new PlusAuthWidget(document.body, {/* configurations here */}, window.PlusAuth)
+auth.view.mode = 'reset-password'
+```
+
+## Optional Configuration
+
+Use `modeOptions.resetPassword.fields` for additional inputs required by a custom reset policy.
+
+<Canvas>
+  <Story of={ResetPasswordStories.Default} />
+</Canvas>
+
+<Canvas>
+  <Story of={ResetPasswordStories.CustomFields} />
+</Canvas>

@@ -1,0 +1,27 @@
+import { Meta, Canvas, Story } from '@storybook/addon-docs/blocks';
+import * as PasswordChallengeStories from './password-challenge.stories.ts';
+
+<Meta of={PasswordChallengeStories} />
+
+# Password Challenge Page
+
+This page is shown when the user identity is known and only password verification is needed.
+
+## Basic Usage
+
+```javascript
+const auth = new PlusAuthWidget(document.body, {/* configurations here */}, window.PlusAuth)
+auth.view.mode = 'password-challenge'
+```
+
+## Context Requirements
+
+Provide one identifier in `context.details`, such as `email`, `username`, or `phone_number`.
+
+<Canvas>
+  <Story of={PasswordChallengeStories.Default} />
+</Canvas>
+
+<Canvas>
+  <Story of={PasswordChallengeStories.WithUsernameIdentifier} />
+</Canvas>

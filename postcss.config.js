@@ -1,9 +1,8 @@
+import unocss from '@unocss/postcss';
 import autoprefixer from 'autoprefixer';
 import postcss_import from 'postcss-import';
-
+import postcss_nested from 'postcss-nested';
 import postcss_replace from 'postcss-replace';
-import tailwindcss0 from 'tailwindcss';
-import tailwindcss from 'tailwindcss/nesting/index.js';
 
 import helper from './helper/postcss-prefixer.js';
 
@@ -11,6 +10,10 @@ import helper from './helper/postcss-prefixer.js';
 export default () => ({
   minimize: process.env.NODE_ENV === 'production',
   plugins: [
+    postcss_import(),
+    postcss_nested(),
+    unocss(),
+    autoprefixer(),
     helper({
       prefix: 'pa__',
       ignore: [/sb-?/],
@@ -18,12 +21,8 @@ export default () => ({
         /\.storybook/, 'index\.html'
       ]
     }),
-    postcss_import(),
-    tailwindcss,
-    tailwindcss0(),
-    autoprefixer(),
     postcss_replace({
-      pattern: /(--tw-)/g,
+      pattern: /(--un-)/g,
       data: {
         'replaceAll': '--pa-', // Prefixing
       }

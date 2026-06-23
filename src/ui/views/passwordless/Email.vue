@@ -1,3 +1,50 @@
+<script setup lang="ts">
+
+import GenericForm from '../../components/GenericForm.vue';
+import ResendAction from '../../components/ResendAction.vue';
+import WidgetLayout from '../../components/WidgetLayout.vue';
+import { useContext, useHttp } from '../../composables';
+import type { AdditionalFields } from '../../interfaces';
+import { useGenericForm } from '../../utils/form_generics';
+import { getUserIdentifierField } from '../../utils/user.ts';
+
+defineOptions({
+  name: 'Email'
+});
+
+const http = useHttp();
+const context = useContext();
+
+const isMagicLink = context.prompt?.mode === 'check_email';
+
+const defaultFields: AdditionalFields = {
+  user_placeholder: getUserIdentifierField(context),
+  code: {
+    type: 'text',
+    label: 'passwordless.email.codeLabel'
+  }
+};
+
+const { form, loading, submit, validate, fields } = useGenericForm(
+  'passwordlessEmail',
+  defaultFields,
+  async (values, finalFields) => {
+    try {
+      await http.post({ body: values });
+    } catch (e: any) {
+      if (e.error === 'invalid_code' && finalFields.code) {
+        finalFields.code.errors = {
+          path: 'passwordless.email.invalidCodeError',
+          args: e
+        };
+      } else {
+        throw e;
+      }
+    }
+  }
+);
+</script>
+
 <template>
   <WidgetLayout
     :logo="isMagicLink ? 'images/icons/plane.svg' : 'images/icons/email_question.svg'"
@@ -26,80 +73,21 @@
         :loading="loading"
         @click="submit"
       >
-        <span v-t="'common.submit'" />
+        <span v-t="'passwordless.email.submitAction'" />
       </p-btn>
     </template>
 
     <template #content-footer>
       <p>
         <a
-          v-t="'passwordless.useAnotherMethod'"
+          v-t="'passwordless.email.useAnotherMethod'"
           href="signin/passwordless"
         />
       </p>
-      <ResendAction type="common.email" />
+      <ResendAction type="passwordless.email.emailType" />
     </template>
   </WidgetLayout>
 </template>
 
-<script lang="ts">
-import {  defineComponent } from 'vue';
-
-import GenericForm from '../../components/GenericForm.vue';
-import ResendAction from '../../components/ResendAction.vue';
-import WidgetLayout from '../../components/WidgetLayout.vue';
-import { useContext, useHttp, useLocale } from '../../composables';
-import type { AdditionalFields } from '../../interfaces';
-import { useGenericForm } from '../../utils/form_generics';
-import { getUserIdentifierField } from '../../utils/user.ts';
-
-export default defineComponent({
-  name: 'Email',
-  components: { ResendAction, WidgetLayout, GenericForm },
-  setup(){
-    const http = useHttp()
-    const context = useContext()
-    const i18n = useLocale()
-
-    const isMagicLink = context.prompt?.mode === 'check_email'
-    const defaultFields: AdditionalFields = {
-      user_placeholder: getUserIdentifierField(context),
-      code: {
-        type: 'text',
-        label: 'common.fields.code'
-      }
-    }
-    const { form, loading, submit, validate, fields } = useGenericForm(
-      'passwordlessEmail',
-      defaultFields,
-      async (values, finalFields) => {
-        try{
-          await http.post({ body: values })
-        }catch (e) {
-          if(e.error === 'invalid_code' && finalFields.code){
-            finalFields.code.errors = {
-              path: `errors.${e.error}`,
-              args: e
-            };
-          }else {
-            throw e
-          }
-        }
-      }
-    )
-    return {
-      isMagicLink,
-      loading,
-      fields,
-      form,
-      context,
-      validate,
-      submit
-    }
-  }
-})
-</script>
-
 <style scoped>
-
 </style>

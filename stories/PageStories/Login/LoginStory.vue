@@ -1,24 +1,32 @@
 <script setup lang="ts">
 import type { AdditionalFields } from '../../../src/ui/interfaces';
-
 import WidgetWrapper from '../../WidgetWrapper.vue';
 
 const props = defineProps<{
-  /**
-   * See [Custom Fields](/?path=/docs/custom-fields--01-documentation)
-   */
-  fields: AdditionalFields
+  fields?: AdditionalFields;
+  context?: any;
 }>()
-
 </script>
 
 <template>
   <WidgetWrapper
     :context="{
       client: {
-        logoUri: ''
-      }
+        logoUri: 'https://static.plusauth.com/images/logo.png',
+        ...props.context?.client
+      },
+      settings: {
+        register_enabled: true,
+        forgot_password_enabled: true
+      },
+      ...props.context
     } as any"
-    :settings="{ modeOptions: { login: { fields }}}"
+    :settings="{ 
+      modeOptions: { 
+        login: { 
+          fields: props.fields 
+        } 
+      } 
+    }"
   />
 </template>

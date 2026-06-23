@@ -1,13 +1,76 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+
+import Avatar from '../components/Avatar.vue';
+import GenericForm from '../components/GenericForm.vue';
+import MergeIcon from '../components/MergeIcon.vue';
+import WidgetLayout from '../components/WidgetLayout.vue';
+import { useContext, useHttp, useLocale } from '../composables';
+import type { AdditionalFields } from '../interfaces';
+import { resolveLogo } from '../utils';
+import { useGenericForm } from '../utils/form_generics';
+import { getUserInitials } from '../utils/user.ts';
+
+defineOptions({
+  name: 'AccountLinking'
+});
+
+const http = useHttp();
+const context = useContext();
+const i18n = useLocale();
+
+const mergeContext = context.details.merge_context || {};
+const passwordVisible = ref(false);
+
+const defaultFields: AdditionalFields = mergeContext.type === 'password' ? {
+  password: {
+    order: 1,
+    type: 'password',
+    label: 'accountLinking.passwordLabel',
+  },
+} : {};
+
+const { form, loading, submit, validate, fields } = useGenericForm(
+  'accountLinking',
+  defaultFields,
+  async (values, finalFields) => {
+    form.value?.toggleAlert(null);
+    try {
+      await http.post({ body: values });
+    } catch (e: any) {
+      switch (e.error) {
+        case 'user_not_found':
+          if (finalFields.email) finalFields.email.errors = 'accountLinking.userNotFoundError';
+          else if (finalFields.username) finalFields.username.errors = 'accountLinking.userNotFoundError';
+          break;
+        case 'email_not_verified':
+          window.location.assign('account/verifyEmail');
+          break;
+        case 'invalid_password':
+          if (finalFields.password) {
+            finalFields.password.errors = 'accountLinking.invalidPasswordError';
+          }
+          break;
+        default:
+          throw e;
+      }
+    }
+  }
+);
+
+const resolveClientLogo = resolveLogo;
+</script>
+
 <template>
   <WidgetLayout title="accountLinking.title">
     <template #info>
       <div class="pa__account-merge-list">
-        <UserAvatar
+        <Avatar
           :initials="getUserInitials(context.details.merge_with)"
           :picture="context.details.merge_with.picture"
         />
         <MergeIcon />
-        <UserAvatar
+        <Avatar
           :initials="getUserInitials(context.details.user)"
           :picture="context.details.user.picture"
         />
@@ -31,7 +94,7 @@
         :href="context.details.merge_context.url"
         @click="submit"
       >
-        <span v-t="context.details.merge_context.url ? 'common.continue' : 'common.submit'" />
+        <span v-t="context.details.merge_context.url ? 'accountLinking.continueAction' : 'accountLinking.submitAction'" />
       </p-btn>
     </template>
     <template #content-append>
@@ -39,81 +102,6 @@
     </template>
   </WidgetLayout>
 </template>
-
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
-
-import Avatar from '../components/Avatar.vue';
-import GenericForm from '../components/GenericForm.vue';
-import MergeIcon from '../components/MergeIcon.vue';
-import WidgetLayout from '../components/WidgetLayout.vue';
-import { useContext, useHttp, useLocale } from '../composables';
-import type { AdditionalFields } from '../interfaces';
-import { resolveLogo } from '../utils';
-import { useGenericForm } from '../utils/form_generics';
-import { getUserInitials } from '../utils/user.ts';
-
-export default defineComponent({
-  name: 'AccountLinking',
-  components: { MergeIcon, UserAvatar: Avatar, WidgetLayout, GenericForm },
-  setup() {
-    const http = useHttp()
-    const context = useContext()
-    const mergeContext = context.details.merge_context || {}
-    const passwordVisible = ref(false)
-    const i18n = useLocale()
-    const defaultFields: AdditionalFields = mergeContext.type === 'password' ? {
-      password: {
-        order: 1,
-        type: 'password',
-        label: 'common.fields.password',
-      },
-    } : {}
-
-    const { form, loading, submit, validate, fields } = useGenericForm(
-      'accountLinking',
-      defaultFields,
-      async (values, finalFields) => {
-        form.value.toggleAlert(null)
-        try {
-          await http.post({ body: values })
-        } catch (e) {
-          switch (e.error) {
-            case 'user_not_found':
-              finalFields.email ? finalFields.email.errors = `errors.${e.error}` :
-                finalFields.username ? finalFields.username.errors = `errors.${e.error}` : null;
-              break;
-            case 'email_not_verified':
-              window.location.assign('account/verifyEmail')
-              break;
-            case 'invalid_password':
-              if (finalFields.password) {
-                finalFields.password.errors = `errors.${e.error}`;
-              }
-              break;
-            default:
-              throw e
-          }
-        }
-      }
-    )
-
-    return {
-      i18n,
-      fields,
-      context,
-      form,
-      loading,
-      passwordVisible,
-      validate,
-      submit,
-      resolveClientLogo: resolveLogo
-    }
-
-  },
-  methods: { getUserInitials }
-})
-</script>
 
 <style>
 .account-merge-list {

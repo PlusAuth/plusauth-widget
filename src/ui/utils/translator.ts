@@ -1,21 +1,19 @@
 import deepmerge from 'deepmerge';
+import DOMPurify from 'dompurify';
 import type { Ref } from 'vue';
-import { getCurrentInstance } from 'vue';
-import { ref } from 'vue';
+import { getCurrentInstance, ref } from 'vue';
 
 import defaultDictionary from '../../i18n'
-
 import type { ILocaleSettings } from '../interfaces';
 
 import { escapeRegExp, isObject, keysToDotNotation, propertyAccessor } from '.';
 
 export const translatorKey = Symbol('t')
 
-
 export class Translator {
   private defaultLocale: string;
   private dictionary: any;
-  private selectedLocale: Ref
+  private selectedLocale: Ref<string | undefined>
   locales: Record<string, { label: string, codes: string[], value: string }>
 
   constructor(options: Partial<ILocaleSettings> = {}) {
@@ -24,7 +22,9 @@ export class Translator {
     this.selectedLocale = ref<string | undefined>(options.selectedLocale || this.defaultLocale)
     this.locales = Object.keys(this.dictionary).reduce((finalLocales, dictKey) => {
       const userOpt = options.locales?.[dictKey]
-      finalLocales[dictKey] = userOpt && typeof userOpt === 'object' ? userOpt : { label: this.dictionary[dictKey]?.$locale || dictKey, codes: [dictKey] }
+      finalLocales[dictKey] = userOpt && typeof userOpt === 'object' 
+        ? userOpt 
+        : { label: this.dictionary[dictKey]?.$locale || dictKey, codes: [dictKey] }
       finalLocales[dictKey].value = dictKey
       return finalLocales
     }, {})
@@ -43,7 +43,7 @@ export class Translator {
   }
 
   get locale(): string {
-    return this.selectedLocale.value
+    return this.selectedLocale.value as string
   }
 
   t(
@@ -51,46 +51,59 @@ export class Translator {
     params?: Record<string, string | boolean | number> | (string | number | boolean)[],
     opts: {
       fallback?: string,
-      locale?: string
+      locale?: string,
+      sanitize?: boolean
     } = {}
   ) {
-    const vm = this instanceof Translator
-      ? this
-      : getCurrentInstance()?.appContext?.config?.globalProperties.$i18n;
+    const globalI18n = getCurrentInstance()?.appContext?.config?.globalProperties.$i18n;
+    const vm = this instanceof Translator ? this : globalI18n;
 
+    if (!vm) return key;
+    
     if (!opts.fallback && (params instanceof Error || typeof params === 'string')) {
-      opts.fallback = params['error_description']
-        || params['error_details']
-        || params.message
-        || params.name
-        || params
+      const p = params as any;
+      opts.fallback = p['error_description'] || p['error_details'] || p.message || p.name || params;
     }
-    const locale = opts.locale || this.locale
-    const value = propertyAccessor(vm.dictionary[locale], key)
+
+    const locale = opts.locale || vm.locale;
+    let value = propertyAccessor(vm.dictionary[locale], key)
       || propertyAccessor(vm.dictionary[vm.defaultLocale], key);
-    if (value) {
-      return vm._interpolate(
-        value,
-        params,
-        locale
-      )
-    } else if (opts.fallback) {
-      return vm._interpolate(
-        propertyAccessor(vm.dictionary[locale], opts.fallback)
-        || propertyAccessor(vm.dictionary[vm.defaultLocale], opts.fallback)
-        || opts.fallback,
-        params,
-        locale
-      )
-    } else {
-      return key
+
+    if (typeof value === 'string') {
+      const linkRegex = /@:([\w.]+)/g;
+      while (linkRegex.test(value)) {
+        value = value.replace(linkRegex, (match, linkPath) => {
+          return vm.t(linkPath, undefined, { locale, sanitize: false });
+        });
+      }
     }
+
+    let result = key;
+
+    if (value) {
+      result = vm._interpolate(value, params, locale);
+    } else if (opts.fallback) {
+      let fallbackValue = propertyAccessor(vm.dictionary[locale], opts.fallback)
+        || propertyAccessor(vm.dictionary[vm.defaultLocale], opts.fallback)
+        || opts.fallback;
+      
+      result = vm._interpolate(fallbackValue, params, locale);
+    }
+
+    return DOMPurify.sanitize(result, {
+      ALLOWED_TAGS: ['b', 'i', 'em', 'strong'],
+      ALLOWED_ATTR: []
+    });
   }
 
   te(key: string, locale?: string): boolean {
     const vm = this instanceof Translator
       ? this
       : getCurrentInstance()?.appContext?.config?.globalProperties.$i18n;
+
+    if (!vm) {
+      return false;
+    }
 
     const loc = locale || vm.locale
     return !!(
@@ -100,20 +113,18 @@ export class Translator {
   }
 
   _interpolate(str: string, args: any, locale: string) {
-    if (!str || !args) {
-      return str
-    }
+    if (!str || !args) return str;
+    
     if (isObject(args)) {
       const normalizedArg = keysToDotNotation(args)
       Object.keys(normalizedArg).forEach(key => {
         const searchRegexp = new RegExp(`\\{\\s*${escapeRegExp(key)}\\s*\\}`, 'gm')
         const v = normalizedArg[key]
-        str = str.replace(searchRegexp,
-          v === null ||
-          v === undefined ? '' : propertyAccessor(this.dictionary[locale], v)
-            || propertyAccessor(this.dictionary[this.defaultLocale], v)
-            || v
-        )
+        const replacement = v === null || v === undefined 
+          ? '' 
+          : propertyAccessor(this.dictionary[locale], v) || propertyAccessor(this.dictionary[this.defaultLocale], v) || v;
+        
+        str = str.replace(searchRegexp, String(replacement));
       })
     }
     return str

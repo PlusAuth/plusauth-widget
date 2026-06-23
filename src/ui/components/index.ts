@@ -1,16 +1,16 @@
 import type { App } from 'vue';
 
-import PAlert from './PAlert/PAlert';
-import PasswordStrength from './PasswordStrength/PasswordStrength';
+import PAlert from './PAlert/PAlert.vue';
+import PasswordStrength from './PasswordStrength/PasswordStrength.vue';
 import PButton from './PBtn/PBtn.vue';
 import PCheckBox from './PCheckBox/PCheckBox.vue';
-import PCodeInput from './PCodeInput/PCodeInput';
+import PCodeInput from './PCodeInput/PCodeInput.vue';
 import PForm from './PForm.vue';
-import PMessage from './PMessage/PMessage';
+import PMessage from './PMessage/PMessage.vue';
 import PSelect from './PSelect/PSelect.vue';
-import PSpinner from './PSpinner/PSpinner';
+import PSpinner from './PSpinner/PSpinner.vue';
 import PTextField from './PTextField/PTextField.vue';
-import PTimer from './PTimer/PTimer';
+import PTimer from './PTimer/PTimer.vue';
 
 export {
   PAlert,

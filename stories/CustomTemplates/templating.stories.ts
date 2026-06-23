@@ -10,13 +10,13 @@ const ArgTypes = {
     name: 'Enter your custom template:'
   },
   settings: {
-    control: false,
+    
     table: {
       disable: true
     }
   },
   context: {
-    control: false,
+    
     table: {
       disable: true
     }
@@ -28,15 +28,7 @@ export const ContentPrepend: Story = {
   argTypes: ArgTypes,
   args: {
     template: `<template id="pa-content-prepend">
-			<style>
-					#myId {
-						border: 1px solid black;
-						padding: 12px;
-						background: red;
-						color: white;
-					}
-			</style>
-      <a href="https://myuri" id="myId">My Uri</a>
+			<a id="myId">-> My Uri</a>
     </template>`
   },
 };
@@ -46,16 +38,7 @@ export const ContentAppend: Story = {
   argTypes: ArgTypes,
   args: {
     template: `<template id="pa-content-append">
-     	<style>
-					#myId {
-						border: 1px solid black;
-						margin-bottom: 24px;
-						padding: 12px;
-						background: red;
-						color: white;
-					}
-			</style>
-      <a href="https://myuri" id="myId">My Uri</a>
+     	<a id="myId">-> My Uri</a>
     </template>`
   },
 };
@@ -65,20 +48,108 @@ export const ContentFooter: Story = {
   argTypes: ArgTypes,
   args: {
     template: `<template id="pa-content-footer">
-     	<style>
-					#myId {
-						display: flex;
-						border: 1px solid black;
-						padding: 12px;
-						background: red;
-						color: white;
-					}
-			</style>
-      <a href="https://myuri" id="myId">My Uri</a>
+     	<a id="myId">-> My Uri</a>
     </template>`
   },
 };
 
+export const ContentActionsPrepend: Story = {
+  name: 'content-actions-prepend',
+  argTypes: ArgTypes,
+  args: {
+    template: `<template id="pa-content-actions-prepend">
+      <a id="myId">-> Before action</a>
+    </template>`
+  },
+};
+
+export const ContentActionsAppend: Story = {
+  name: 'content-actions-append',
+  argTypes: ArgTypes,
+  args: {
+    template: `<template id="pa-content-actions-append">
+      <a id="myId">-> After action</a>
+    </template>`
+  },
+};
+
+export const FormPrepend: Story = {
+  name: 'form-prepend',
+  argTypes: ArgTypes,
+  args: {
+    template: `<template id="pa-form-prepend">
+      <a id="myId">-> Before form fields</a>
+    </template>`
+  },
+};
+
+export const FormAppend: Story = {
+  name: 'form-append',
+  argTypes: ArgTypes,
+  args: {
+    template: `<template id="pa-form-append">
+      <a id="myId">-> After form fields</a>
+    </template>`
+  },
+};
+
+export const SocialPrepend: Story = {
+  name: 'social-prepend',
+  argTypes: ArgTypes,
+  args: {
+    template: `<template id="pa-social-prepend">
+      <a id="myId">-> Before social list</a>
+    </template>`,
+    context: {
+      client: {
+        social: [
+          { name: 'google-connection', provider: 'google' },
+          { name: 'facebook-connection', provider: 'facebook' },
+        ]
+      }
+    }
+  },
+};
+
+export const SocialAppend: Story = {
+  name: 'social-append',
+  argTypes: ArgTypes,
+  args: {
+    template: `<template id="pa-social-append">
+      <a id="myId">-> After social list</a>
+    </template>`,
+    context: {
+      client: {
+        social: [
+          { name: 'google-connection', provider: 'google' },
+          { name: 'facebook-connection', provider: 'facebook' },
+        ]
+      }
+    }
+  },
+};
+
+
+export const InfoAppend: Story = {
+  name: 'info-append',
+  argTypes: ArgTypes,
+  args: {
+    template: `<template id="pa-info-append">
+      <a id="myId">-> My Uri</a>
+    </template>`
+  },
+};
+
+export const FooterBody: Story = {
+  name: 'footer-body',
+  argTypes: ArgTypes,
+  args: {
+    template: `<template id="pa-footer-body">
+      <a id="myId">-> My Uri 1</a>
+      <a id="myId">-> My Uri 2</a>
+    </template>`
+  },
+};
 
 /**
  *

@@ -1,13 +1,118 @@
+<script setup lang="ts">
+import { computed, inject, onMounted, ref } from 'vue';
+
+import { makeFocusProps, useFocus } from '../../composables/focus';
+import { makeValidationProps, useValidation } from '../../composables/validation';
+import type { ITranslatePath } from '../../interfaces';
+import { resolveCssVariableVariant } from '../../utils';
+import type { Translator } from '../../utils/translator';
+import { translatorKey } from '../../utils/translator';
+import PMessage from '../PMessage/PMessage.vue';
+
+const inputVariants = ['outlined', 'filled', 'underlined', 'solo', 'plain', 'regular'] as const
+
+const props = defineProps({
+  name: String,
+  type: String,
+  placeholder: String,
+  color: String,
+  label: String,
+  modelValue: { type: null, default: null },
+  hideMessages: Boolean,
+  loading: Boolean,
+  ...makeValidationProps(),
+  ...makeFocusProps()
+});
+
+const emit = defineEmits<{
+  (e: 'click:control', event: MouseEvent): void;
+  (e: 'mousedown:control', event: MouseEvent): void;
+  (e: 'update:focused', focused: boolean): void;
+  (e: 'update:modelValue', val: any): void;
+}>();
+
+const rootRef = ref<HTMLElement>();
+const inputRef = ref<HTMLInputElement>();
+const inputVariant = ref<typeof inputVariants[number]>(
+  resolveCssVariableVariant('--pa-input-variant', inputVariants)
+);
+const i18n = inject(translatorKey) as Translator;
+
+const { focus, focusClasses, isFocused, blur } = useFocus(props as any, 'pa__input');
+const {
+  validationClasses,
+  errorMessages,
+  validate,
+  isValid,
+  isValidating,
+  resetValidation,
+  reset,
+  isPristine,
+  isReadonly,
+  isDisabled,
+  isDirty
+} = useValidation(props as any, 'pa__input');
+
+const onInput = (event: Event) => {
+  emit('update:modelValue', (event.currentTarget as HTMLInputElement)?.value);
+};
+
+const onFocus = () => {
+  if (inputRef.value !== document.activeElement) {
+    inputRef.value?.focus();
+  }
+  if (!isFocused.value) focus();
+};
+
+onMounted(() => {
+  inputVariant.value = resolveCssVariableVariant('--pa-input-variant', inputVariants, rootRef.value)
+})
+
+const classes = computed(() => ({
+  'pa__input--has-value': !!props.modelValue,
+  [`pa__input--variant-${inputVariant.value}`]: true,
+  [props.color ? `text-${props.color}` : 'text-primary']: true,
+  ...validationClasses.value,
+  ...focusClasses.value,
+}));
+
+const messages = computed((): string[] | ITranslatePath[] => {
+  if (isValid.value === false) {
+    return (errorMessages.value as string[] | ITranslatePath[]) || [];
+  } else if (props.hint && (props.persistentHint || isFocused.value)) {
+    return [props.hint] as string[];
+  } else {
+    return (props.messages as string[] | ITranslatePath[]) || [];
+  }
+});
+
+defineExpose({
+  focus: onFocus,
+  blur,
+  validate,
+  isValid,
+  isValidating,
+  resetValidation,
+  reset,
+  isPristine,
+  isReadonly,
+  isDisabled,
+  isDirty
+});
+</script>
+
 <template>
   <div
-    class="pa__input"
+    ref="rootRef"
+    class="pa__input pa__input-tf--wrap"
     :class="classes"
   >
-    <div class="pa__input--wrap">
+    <div class="pa__input--wrap ">
       <label
         v-if="label"
         class="pa__input--label"
-      > {{ i18n.t(label) }}
+      > 
+        {{ i18n.t(label) }}
       </label>
       <input
         ref="inputRef"
@@ -44,115 +149,4 @@
   </div>
 </template>
 
-<script lang="ts">
-import { computed, defineComponent, inject, ref } from 'vue';
-
-import { makeFocusProps, useFocus } from '../../composables/focus';
-import { makeValidationProps, useValidation } from '../../composables/validation';
-import type { Translator } from '../../utils/translator';
-import { translatorKey } from '../../utils/translator';
-
-export default defineComponent({
-  props: {
-    name: String,
-    type: String,
-    placeholder: String,
-    color: String,
-    label: String,
-    modelValue: null,
-    hideMessages: Boolean,
-    loading: Boolean,
-    ...makeValidationProps(),
-    ...makeFocusProps()
-  },
-  emits: {
-    /* eslint-disable @typescript-eslint/no-unused-vars */
-    'click:control': (e: MouseEvent) => true,
-    'mousedown:control': (e: MouseEvent) => true,
-    'update:focused': (focused: boolean) => true,
-    'update:modelValue': (val: string) => true,
-    /* eslint-enable @typescript-eslint/no-unused-vars */
-  },
-  setup(props, { emit, expose }) {
-    const inputRef = ref<HTMLInputElement>()
-    const i18n = inject(translatorKey) as Translator
-
-    const { focus, focusClasses, isFocused, blur } = useFocus(props, 'pa__input')
-    const {
-      validationClasses,
-      errorMessages,
-      validate,
-      isValid,
-      isValidating,
-      resetValidation,
-      reset,
-      isPristine,
-      isReadonly,
-      isDisabled,
-      isDirty
-    } = useValidation(props, 'pa__input')
-
-    const onInput = (event: Event) => {
-      emit('update:modelValue', (event.currentTarget as HTMLInputElement)?.value)
-    };
-
-    function onFocus() {
-      if (inputRef.value !== document.activeElement) {
-        inputRef.value?.focus()
-      }
-
-      if (!isFocused.value) focus()
-    }
-
-    const classes = computed(() => {
-      return {
-        'pa__input--has-value': props.modelValue,
-        [props.color ? `text-${props.color}` : 'text-primary']: true,
-        ...validationClasses.value,
-        ...focusClasses.value,
-      }
-    })
-    expose({
-      focus: onFocus,
-      blur,
-      validate,
-      isValid,
-      isValidating,
-      resetValidation,
-      reset,
-      isPristine,
-      isReadonly,
-      isDisabled,
-      isDirty
-    })
-
-    const messages = computed(() => {
-      if(
-        isValid.value === false
-      ){
-        return errorMessages.value || []
-      } else if (props.hint && (props.persistentHint || props.focused)) {
-        return props.hint || []
-      } else {
-        return props.messages || []
-      }
-    })
-    return {
-      focus,
-      onFocus,
-      blur,
-      onInput,
-      i18n,
-      inputRef,
-      isFocused,
-      isDirty,
-      isPristine,
-      messages,
-      classes
-    }
-  }
-})
-</script>
-
-<style src="./PTextField.css" lang="postcss">
-</style>
+<style src="./PTextField.css" lang="postcss"></style>
