@@ -1,0 +1,91 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`PTextField > should apply block 1`] = `
+"<div class="pa__input pa__input-tf--wrap pa__input--variant-outlined text-primary" block="true">
+  <div class="pa__input--wrap">
+    <!--v-if--><input class="pa__text-field" block="true">
+  </div>
+  <div class="pa__input-details">
+    <div class="pa__messages">
+      <transition-stub name="pa__message-transition" appear="false" persisted="false" css="true">
+        <div></div>
+      </transition-stub>
+    </div>
+  </div>
+</div>"
+`;
+
+exports[`PTextField > should apply color 1`] = `
+"<div class="pa__input pa__input-tf--wrap pa__input--variant-outlined text-#ff0000">
+  <div class="pa__input--wrap">
+    <!--v-if--><input class="pa__text-field">
+  </div>
+  <div class="pa__input-details">
+    <div class="pa__messages">
+      <transition-stub name="pa__message-transition" appear="false" persisted="false" css="true">
+        <div></div>
+      </transition-stub>
+    </div>
+  </div>
+</div>"
+`;
+
+exports[`PTextField > should apply disabled 1`] = `
+"<div class="pa__input pa__input-tf--wrap pa__input--variant-outlined text-primary pa__input--disabled">
+  <div class="pa__input--wrap">
+    <!--v-if--><input class="pa__text-field" disabled="">
+  </div>
+  <div class="pa__input-details">
+    <div class="pa__messages">
+      <transition-stub name="pa__message-transition" appear="false" persisted="false" css="true">
+        <div></div>
+      </transition-stub>
+    </div>
+  </div>
+</div>"
+`;
+
+exports[`PTextField > should apply flat 1`] = `
+"<div class="pa__input pa__input-tf--wrap pa__input--variant-outlined text-primary" flat="true">
+  <div class="pa__input--wrap">
+    <!--v-if--><input class="pa__text-field" flat="true">
+  </div>
+  <div class="pa__input-details">
+    <div class="pa__messages">
+      <transition-stub name="pa__message-transition" appear="false" persisted="false" css="true">
+        <div></div>
+      </transition-stub>
+    </div>
+  </div>
+</div>"
+`;
+
+exports[`PTextField > should apply loading 1`] = `
+"<div class="pa__input pa__input-tf--wrap pa__input--variant-outlined text-primary">
+  <div class="pa__input--wrap">
+    <!--v-if--><input class="pa__text-field" disabled="">
+  </div>
+  <div class="pa__input-details">
+    <div class="pa__messages">
+      <transition-stub name="pa__message-transition" appear="false" persisted="false" css="true">
+        <div></div>
+      </transition-stub>
+    </div>
+  </div>
+</div>"
+`;
+
+exports[`PTextField > should render correctly 1`] = `
+"<div class="pa__input pa__input-tf--wrap pa__input--variant-outlined text-primary">
+  <div class="pa__input--wrap">
+    <!--v-if--><input class="pa__text-field">
+  </div>
+  <div class="pa__input-details">
+    <div class="pa__messages">
+      <transition-stub name="pa__message-transition" appear="false" persisted="false" css="true">
+        <div></div>
+      </transition-stub>
+    </div>
+  </div>
+</div>"
+`;

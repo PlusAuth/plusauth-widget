@@ -40,8 +40,8 @@ const config: StorybookConfig = {
       'react',
       'react-dom',
     ]
-    config.esbuild = {
-      ...config.esbuild,
+    config.oxc = {
+      ...config.oxc,
       jsx: 'automatic',
       jsxImportSource: 'react',
     } as any

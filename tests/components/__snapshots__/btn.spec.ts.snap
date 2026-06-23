@@ -1,0 +1,44 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`PBtn > should apply block 1`] = `
+"<button class="pa__btn pa__btn--block pa__btn--variant-flat" style="--pa-btn-color: rgb(var(--pa-color-primary)); --pa-ring-color: rgb(var(--pa-color-primary) / 0.3);" type="button">
+  <!--v-if-->
+</button>"
+`;
+
+exports[`PBtn > should apply color 1`] = `
+"<button class="pa__btn pa__btn--variant-flat" style="--pa-btn-color: #ff0000; --pa-ring-color: #ff00004d;" type="button">
+  <!--v-if-->
+</button>"
+`;
+
+exports[`PBtn > should apply disabled 1`] = `
+"<button class="pa__btn pa__btn--disabled pa__btn--variant-flat" style="--pa-btn-color: rgb(var(--pa-color-primary)); --pa-ring-color: rgb(var(--pa-color-primary) / 0.3);" type="button">
+  <!--v-if-->
+</button>"
+`;
+
+exports[`PBtn > should apply flat 1`] = `
+"<button class="pa__btn pa__btn--flat pa__btn--variant-flat" style="--pa-btn-color: rgb(var(--pa-color-primary)); --pa-ring-color: rgb(var(--pa-color-primary) / 0.3);" type="button">
+  <!--v-if-->
+</button>"
+`;
+
+exports[`PBtn > should apply loading 1`] = `
+"<button class="pa__btn pa__btn--loading pa__btn--variant-flat" style="--pa-btn-color: rgb(var(--pa-color-primary)); --pa-ring-color: rgb(var(--pa-color-primary) / 0.3);" type="button">
+  <div class="pa__btn__loader">
+    <div role="progressbar" aria-valuemin="0" aria-valuemax="100" class="pa__progress-circular pa__progress-circular--indeterminate" style="height: 24px; width: 24px;"><svg style="transform: rotate(0deg);" xmlns="http://www.w3.org/2000/svg" viewBox="21.81818181818182 21.81818181818182 43.63636363636364 43.63636363636364">
+        <!--v-if-->
+        <circle class="pa__progress-circular__overlay" fill="transparent" cx="43.63636363636364" cy="43.63636363636364" r="20" stroke-width="3.6363636363636367" stroke-dasharray="125.664" stroke-dashoffset="125.664"></circle>
+      </svg>
+      <div class="pa__progress-circular__info"></div>
+    </div>
+  </div>
+</button>"
+`;
+
+exports[`PBtn > should render correctly 1`] = `
+"<button class="pa__btn pa__btn--variant-flat" style="--pa-btn-color: rgb(var(--pa-color-primary)); --pa-ring-color: rgb(var(--pa-color-primary) / 0.3);" type="button">
+  <!--v-if-->
+</button>"
+`;

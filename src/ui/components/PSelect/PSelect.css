@@ -6,7 +6,6 @@
 
             &-arrow {
                 position: absolute;
-                top: 38%;
                 right: 10px;
                 transition: transform .2s linear;
                 fill: #767676;
@@ -37,7 +36,7 @@
                         @apply bg-gray-300/60;
                         box-shadow: inset 0px 0px 2px 0px gray;
                     }
-                    
+
                     &--selected {
                         @apply bg-primary/50;
                     }
