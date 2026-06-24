@@ -42,8 +42,6 @@ const config: StorybookConfig = {
     ]
     config.oxc = {
       ...config.oxc,
-      jsx: 'automatic',
-      jsxImportSource: 'react',
     } as any
     return config
   },
