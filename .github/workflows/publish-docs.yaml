@@ -12,26 +12,27 @@ permissions:
   pages: write
   id-token: write
 
-# List of jobs
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    # Job steps
     steps:
-      # Manual Checkout
       - uses: actions/checkout@v4
-
-      # Set up Node
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '24.x'
-      - uses: pnpm/action-setup@v4
-      #👇 Add Storybook build and deploy to GitHub Pages as a step in the workflow
-      - uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
+      - uses: oven-sh/setup-bun@v2
+      - name: 'build'
+        shell: bash
         env:
-          BASE_PATH: /plusauth-widget/
+          STORYBOOK_BASE_PATH: /plusauth-widget/
+        run: |
+          echo "::group::Build"
+          bun i
+          bun run build-storybook
+          echo "::endgroup::"
+      - name: 'upload'
+        uses: actions/upload-pages-artifact@7b1f4a764d45c48632c6b24a0339c27f5614fb0b
         with:
-          install_command: pnpm install # default: npm ci
-          build_command: pnpm run build-storybook # default: npm run build-storybook
-          path: storybook-static # default: dist/storybook
-          checkout: false # default: true
+          path: storybook-static
+      - id: deploy
+        name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e
+        with:
+          token: ${{ github.token }}

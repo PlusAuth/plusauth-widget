@@ -15,14 +15,14 @@ const config: StorybookConfig = {
   },
   previewHead: (head, { configType }) => {
     if (configType === 'PRODUCTION') {
-      return head?.replace('<base target="_parent" />', `<base href="${process.env.BASE_PATH || '/'}">`)
+      return head?.replace('<base target="_parent" />', `<base href="${process.env.STORYBOOK_BASE_PATH || '/'}">`)
     }
     return head
   },
   managerHead: (head, { configType }) => {
     if (configType === 'PRODUCTION') {
       return `
-<base href="${process.env.BASE_PATH || '/'}">
+<base href="${process.env.STORYBOOK_BASE_PATH || '/'}">
  ${head}
       `;
     }
