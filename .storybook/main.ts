@@ -1,12 +1,23 @@
 import type { StorybookConfig } from '@storybook/vue3-vite';
 
+import remarkGfm from 'remark-gfm';
+
 const config: StorybookConfig = {
   stories: ['../stories/**/*.@(md|mdx)', '../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
   staticDirs: [{ from: '../stories/public', to: '/' }],
   addons: [
     '@storybook/addon-links',
     'storybook-addon-vue-mdx',
-    '@storybook/addon-docs',
+    {
+      name: '@storybook/addon-docs',
+      options: {
+        mdxPluginOptions: {
+          mdxCompileOptions: {
+            remarkPlugins: [remarkGfm],
+          },
+        },
+      },
+    },
     '@storybook/addon-vitest'
   ],
 
