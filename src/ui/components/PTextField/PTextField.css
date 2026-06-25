@@ -1,15 +1,18 @@
 .widget {
   .input {
-    @apply flex flex-col w-full relative mt-6;
-    margin-top: clamp(16px, 3.5dvh, 24px);
+    @apply flex flex-col w-full relative;
+    margin-top: clamp(16px, 3.5vh, 24px);
 
     &--wrap {
-      @apply flex w-full border-solid transition-all duration-200;
+      @apply flex w-full border-solid;
       align-items: center;
       min-height: 45px;
       position: relative;
       border: var(--pa-input-border-w) solid #d1d5db;
       border-radius: var(--pa-input-radius);
+      transition-property: all;
+      transition-timing-function: var(--pa-ease, var(--default-transition-timingFunction));
+      transition-duration: .2s;
       --input-ring-color: #d1d5db;
 
       &:hover,
@@ -459,7 +462,7 @@
 
   @media (max-width: 600px) {
     .input {
-      margin-top: clamp(14px, 3dvh, 20px);
+      margin-top: clamp(14px, 3vh, 20px);
     }
   }
 }

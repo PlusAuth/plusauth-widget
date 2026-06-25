@@ -11,6 +11,11 @@
             border-radius: 0;
         }
 
+        &.alert--text {
+            background-color: transparent !important;
+            color: inherit;
+        }
+
         &-dismiss-icon {
             margin-left: auto;
             margin-right: -12px;
@@ -30,13 +35,6 @@
         &-content {
             display: flex;
             align-items: center;
-        }
-    }
-
-    .alert {
-        &.alert--text {
-            background-color: transparent !important;
-            color: inherit;
         }
     }
 

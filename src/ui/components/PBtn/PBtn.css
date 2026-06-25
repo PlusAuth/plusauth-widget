@@ -33,11 +33,9 @@
         &--block {
             @apply w-full;
             color: #5f6368;
-        }
-
-        &--flat {
-            background-color: transparent;
-            color: #5f6368;
+            display: flex;
+            flex: 1 0 auto;
+            min-width: 100% !important;
         }
 
         &--variant-flat {
@@ -86,6 +84,10 @@
         }
     }
 
+    .btn--flat:not(.btn--variant-flat):not(.btn--variant-elevated):not(.btn--variant-tonal):not(.btn--variant-outlined):not(.btn--variant-text):not(.btn--variant-plain) {
+        color: #5f6368;
+    }
+
     .btn__loader {
         align-items: center;
         display: flex;
@@ -97,12 +99,6 @@
         top: 0;
         width: 100%;
         border-radius: var(--pa-input-radius);
-    }
-
-    .btn--block {
-        display: flex;
-        flex: 1 0 auto;
-        min-width: 100% !important;
     }
 
     .btn--disabled {

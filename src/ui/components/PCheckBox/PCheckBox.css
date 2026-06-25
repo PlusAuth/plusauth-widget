@@ -40,7 +40,6 @@
                 &:active {
                     outline: none !important;
                     box-shadow: none !important;
-                    @apply ring-0 ring-offset-0;
                 }
             }
 
