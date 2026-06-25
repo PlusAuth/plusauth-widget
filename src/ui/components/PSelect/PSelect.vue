@@ -1,12 +1,5 @@
 <script setup lang="ts">
 import {
-  computePosition,
-  flip,
-  offset,
-  shift,
-  autoUpdate
-} from '@floating-ui/dom';
-import {
   nextTick,
   inject,
   watch,
@@ -46,6 +39,8 @@ const containerRef = ref<HTMLElement | null>(null);
 const popoverRef = ref<HTMLElement | null>(null);
 
 const cleanupAutoUpdate = ref<(() => void) | null>(null);
+const pointerDownInside = ref(false);
+const opensUp = ref(false);
 
 const i18n = inject(translatorKey) as Translator;
 const internalValue = useProxiedModel(props as any, 'modelValue');
@@ -55,26 +50,15 @@ const state = reactive({ open: false });
 
 const { blur, focus, focusClasses, isFocused } = useFocus(props as any, 'pa__input');
 
-async function updatePosition() {
+function updatePosition() {
   if (!containerRef.value || !popoverRef.value) return;
 
-  const { x, y } = await computePosition(
-    containerRef.value,
-    popoverRef.value,
-    {
-      strategy: 'fixed',
-      middleware: [
-        offset(0),
-        flip(),
-        shift({ padding: 0 })
-      ]
-    }
-  );
+  const rect = containerRef.value.getBoundingClientRect();
+  const menuHeight = popoverRef.value.offsetHeight;
+  const spaceBelow = window.innerHeight - rect.bottom;
+  const spaceAbove = rect.top;
 
-  Object.assign(popoverRef.value.style, {
-    left: `${x}px`,
-    top: `${y}px`
-  });
+  opensUp.value = spaceBelow < menuHeight && spaceAbove > spaceBelow;
 }
 
 onMounted(() => {
@@ -92,13 +76,14 @@ watch(() => state.open, async (isOpen) => {
 
   if (isOpen) {
     await nextTick();
-    await updatePosition();
+    updatePosition();
 
-    cleanupAutoUpdate.value = autoUpdate(
-      containerRef.value!,
-      popoverRef.value!,
-      updatePosition
-    );
+    window.addEventListener('resize', updatePosition);
+    window.addEventListener('scroll', updatePosition, true);
+    cleanupAutoUpdate.value = () => {
+      window.removeEventListener('resize', updatePosition);
+      window.removeEventListener('scroll', updatePosition, true);
+    };
 
     nextTick(() => {
       activate(
@@ -137,14 +122,32 @@ function onClick(e: Event) {
   emit('click', e);
 }
 
+function onPointerDown() {
+  pointerDownInside.value = true;
+  requestAnimationFrame(() => {
+    pointerDownInside.value = false;
+  });
+}
+
 function onBlur(e: FocusEvent) {
   e.preventDefault();
   e.stopPropagation();
 
-  if (!inputRef.value?.contains(e.relatedTarget as Element)) {
+  const relatedTarget = e.relatedTarget as Element | null;
+
+  if (
+    pointerDownInside.value ||
+    (relatedTarget && inputRef.value?.contains(relatedTarget))
+  ) {
+    return;
+  }
+
+  requestAnimationFrame(() => {
+    if (inputRef.value?.contains(document.activeElement)) return;
+
     state.open = false;
     if (isFocused.value) blur();
-  }
+  });
 }
 
 function getItemText(item: any) {
@@ -206,6 +209,7 @@ function onKeyDown(e: KeyboardEvent) {
 const classes = computed(() => ({
   'pa__input-has-value': !!internalValue.value,
   'pa__input-select-is-open': state.open,
+  'pa__input-select--open-up': opensUp.value,
   'pa__input-dense': props.dense,
   'pa__input-flat': props.flat,
   ...focusClasses.value
@@ -219,6 +223,7 @@ const classes = computed(() => ({
     :class="classes"
     tabindex="0"
     @keydown="onKeyDown"
+    @pointerdown.capture="onPointerDown"
     @click="onClick"
     @blur="onBlur"
   >
