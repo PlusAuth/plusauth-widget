@@ -140,8 +140,7 @@
     border-width: var(--pa-input-border-w);
   }
 
-  :-moz-focusring,
-  .focus--demo {
+  :-moz-focusring {
     outline: auto;
   }
 
@@ -349,7 +348,8 @@
       @apply outline-none ring-2 ring-primary/20 border-primary/50;
     }
 
-    &.widget-social-button-circle {
+    &.pa__widget-social-button-circle,
+    &.pa__widget-social-button-square {
       width: 44px !important;
       height: 44px !important;
       min-width: 44px !important;
@@ -366,11 +366,11 @@
       outline: 0 !important;
       transition: none !important;
 
-      .btn__content {
+      .pa__btn__content {
         display: none;
       }
 
-      .widget-social-icon {
+      .pa__widget-social-icon {
         width: 44px;
         height: 44px;
         flex-shrink: 0;
@@ -390,17 +390,26 @@
       }
     }
 
-    &.widget-social-button-circle {
+    &.pa__widget-social-button-circle {
       border: 0 !important;
       border-radius: 9999px !important;
       overflow: hidden;
     }
 
+    &.pa__widget-social-button-square {
+      border: 0 !important;
+      border-radius: 0 !important;
+      overflow: hidden;
+    }
 
-    &.widget-social-button-circle:hover,
-    &.widget-social-button-circle.focus--demo,
-    &.widget-social-button-circle:focus,
-    &.widget-social-button-circle:focus-visible {
+    &.pa__widget-social-button-circle:hover,
+    &.pa__widget-social-button-circle.focus--demo,
+    &.pa__widget-social-button-circle:focus,
+    &.pa__widget-social-button-circle:focus-visible,
+    &.pa__widget-social-button-square:hover,
+    &.pa__widget-social-button-square.focus--demo,
+    &.pa__widget-social-button-square:focus,
+    &.pa__widget-social-button-square:focus-visible {
       box-shadow: none !important;
       border: 0 !important;
     }
