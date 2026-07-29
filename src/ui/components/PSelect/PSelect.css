@@ -95,8 +95,8 @@
                 &:-webkit-autofill:hover,
                 &:-webkit-autofill:focus,
                 &:-webkit-autofill:active {
-                    font-family: var(--pa-font-family) !important;
-                    -webkit-box-shadow: 0 0 0 30px white inset !important;
+                    font-family: var(--pa-font-family);
+                    -webkit-box-shadow: 0 0 0 30px white inset;
                 }
             }
         }
@@ -106,13 +106,13 @@
         .input {
             &-select {
                 &-item {
-                    font-size: 12px !important;
-                    min-height: 16px !important;
+                    font-size: 12px;
+                    min-height: 16px;
                     padding: 0px 8px;
                 }
 
                 &-value {
-                    font-size: 12px !important;
+                    font-size: 12px;
                     min-height: 24px;
                     padding-left: 8px;
                 }

@@ -16,12 +16,11 @@
         transition-duration: 150ms;
 
         &:hover,
-        &.hover--demo {
+        &.btn--hovered {
             opacity: 0.8;
         }
 
-        &:focus,
-        &.focus--demo {
+        &:focus {
             --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
             --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);
             box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
@@ -35,7 +34,7 @@
             color: #5f6368;
             display: flex;
             flex: 1 0 auto;
-            min-width: 100% !important;
+            min-width: 100%;
         }
 
         &--variant-flat {
@@ -50,7 +49,7 @@
             box-shadow: 0 3px 6px rgb(0 0 0 / 0.16), 0 3px 6px rgb(0 0 0 / 0.23);
 
             &:hover,
-            &.hover--demo {
+            &.btn--hovered {
                 box-shadow: 0 5px 10px rgb(0 0 0 / 0.18), 0 4px 6px rgb(0 0 0 / 0.22);
             }
         }
@@ -76,9 +75,8 @@
             opacity: 0.72;
 
             &:hover,
-            &.hover--demo,
-            &:focus,
-            &.focus--demo {
+            &.btn--hovered,
+            &:focus {
                 opacity: 1;
             }
         }

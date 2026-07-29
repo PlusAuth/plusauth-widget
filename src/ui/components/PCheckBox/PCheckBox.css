@@ -7,7 +7,6 @@
                 @apply ring-0 border-0 items-center outline-none;
                 
                 &:focus,
-                .focus--demo,
                 &:focus-within {
                     @apply ring-0 outline-none;
                 }
@@ -38,8 +37,8 @@
                 &:focus,
                 &:focus-visible,
                 &:active {
-                    outline: none !important;
-                    box-shadow: none !important;
+                    outline: none;
+                    box-shadow: none;
                 }
             }
 
@@ -75,7 +74,6 @@
             }
 
             &--error,
-            &.error--demo,
             &--dirty {
                 input[type=checkbox]:before {
                     border-color: currentColor;
