@@ -75,6 +75,7 @@
             }
 
             &--error,
+            &.error--demo,
             &--dirty {
                 input[type=checkbox]:before {
                     border-color: currentColor;
