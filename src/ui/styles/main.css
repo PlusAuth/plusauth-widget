@@ -297,7 +297,7 @@
       }
     }
 
-    &-social-icons {
+    .widget-social-icons {
       @apply py-2;
     }
   }
@@ -321,13 +321,13 @@
     }
   }
 
-  &-social-icons {
+  .widget-social-icons {
     @apply flex justify-center flex-wrap gap-2;
     padding-top: clamp(8px, 2.4vh, 16px);
     padding-bottom: clamp(8px, 2.4vh, 16px);
   }
 
-  &-social-button.btn {
+  .widget-social-button.btn {
     @apply capitalize justify-start gap-3 bg-white text-gray-800 border border-gray-300 whitespace-normal;
     box-shadow: 0 1px 2px rgb(15 23 42 / 0.06);
     word-break: auto-phrase;
@@ -349,7 +349,7 @@
     }
 
     &.pa__widget-social-button-circle,
-    &.pa__widget-social-button-square {
+    &.widget-social-button-circle {
       width: 44px !important;
       height: 44px !important;
       min-width: 44px !important;
@@ -360,62 +360,34 @@
       justify-content: center;
       padding: 0;
       gap: 0;
-      background: transparent !important;
-      box-shadow: none !important;
-      border: 0 !important;
-      outline: 0 !important;
-      transition: none !important;
 
       .pa__btn__content {
         display: none;
       }
 
-      .pa__widget-social-icon {
+      .pa__widget-social-icon,
+      .widget-social-icon {
         width: 44px;
         height: 44px;
         flex-shrink: 0;
         background-size: contain;
       }
-
-      &:hover,
-      &.hover--demo,
-      &:focus,
-      &.focus--demo,
-      &:focus-visible {
-        background: transparent !important;
-        box-shadow: none !important;
-        border: 0 !important;
-        outline: 0 !important;
-        opacity: 1;
-      }
     }
 
-    &.pa__widget-social-button-circle {
-      border: 0 !important;
+    &.pa__widget-social-button-circle,
+    &.widget-social-button-circle {
       border-radius: 9999px !important;
       overflow: hidden;
-    }
 
-    &.pa__widget-social-button-square {
-      border: 0 !important;
-      border-radius: 0 !important;
-      overflow: hidden;
-    }
-
-    &.pa__widget-social-button-circle:hover,
-    &.pa__widget-social-button-circle.focus--demo,
-    &.pa__widget-social-button-circle:focus,
-    &.pa__widget-social-button-circle:focus-visible,
-    &.pa__widget-social-button-square:hover,
-    &.pa__widget-social-button-square.focus--demo,
-    &.pa__widget-social-button-square:focus,
-    &.pa__widget-social-button-square:focus-visible {
-      box-shadow: none !important;
-      border: 0 !important;
+      .pa__widget-social-icon,
+      .widget-social-icon {
+        border-radius: 9999px !important;
+        overflow: hidden;
+      }
     }
   }
 
-  &-social-icon {
+  .widget-social-icon {
     @apply w-8 h-8 flex-shrink-0;
     background-repeat: no-repeat;
     background-position: center center;
