@@ -38,13 +38,12 @@
     transition-duration: .2s;
 
     &:hover,
-    &.hover--demo {
+    &.hovered {
       filter: brightness(1.1);
       text-decoration: underline;
     }
 
-    &:focus,
-    &.focus--demo {
+    &:focus {
       outline: 2px solid rgba(var(--pa-color-primary), 0.5);
       outline-offset: 2px;
       border-radius: 2px;
@@ -337,23 +336,22 @@
     transition-duration: .2s;
   
     &:hover,
-    &.hover--demo {
+    &.btn--hovered {
       @apply bg-gray-50 border-gray-400;
       box-shadow: 0 3px 8px rgb(15 23 42 / 0.1);
       opacity: 1;
     }
   
-    &:focus,
-    &.focus--demo {
+    &:focus {
       @apply outline-none ring-2 ring-primary/20 border-primary/50;
     }
 
     &.pa__widget-social-button-circle,
     &.widget-social-button-circle {
-      width: 44px !important;
-      height: 44px !important;
-      min-width: 44px !important;
-      min-height: 44px !important;
+      width: 44px;
+      height: 44px;
+      min-width: 44px;
+      min-height: 44px;
       max-width: 44px;
       max-height: 44px;
       flex: 0 0 44px;
@@ -376,12 +374,12 @@
 
     &.pa__widget-social-button-circle,
     &.widget-social-button-circle {
-      border-radius: 9999px !important;
+      border-radius: 9999px;
       overflow: hidden;
 
       .pa__widget-social-icon,
       .widget-social-icon {
-        border-radius: 9999px !important;
+        border-radius: 9999px;
         overflow: hidden;
       }
     }
@@ -412,8 +410,8 @@
 
     .input {
       &--wrap {
-        border: none !important;
-        border-width: 0px !important;
+        border: none;
+        border-width: 0px;
         border-radius: var(--pa-input-radius);
       }
     }
@@ -422,21 +420,20 @@
       @apply flex gap-4 p-0 px-2 list-none my-0;
 
       a {
-        color: #757575 !important;
+        color: #757575;
         display: inline-block;
         transition: all .2s;
         padding-inline: 4px;
         padding-block: 2px;
 
         &:hover,
-        &.hover--demo {
-          color: #202124 !important;
+        &.hovered {
+          color: #202124;
           background-color: rgba(0, 0, 0, 0.05);
           border-radius: 4px;
         }
 
-        &:focus,
-        &.focus--demo {
+        &:focus {
           outline: none;
           background-color: rgba(0, 0, 0, 0.08);
           border-radius: 4px;
@@ -499,7 +496,7 @@
     transition-duration: .3s;
 
     &:hover,
-    &.hover--demo {
+    &.hovered {
       transform: scale(1.02);
     }
   }
@@ -520,7 +517,7 @@
       transition-duration: .2s;
 
       &:hover,
-      &.hover--demo {
+      &.btn--hovered {
         filter: brightness(0.9);
       }
     }
@@ -542,13 +539,12 @@
     transition-duration: .2s;
 
     &:hover,
-    &.hover--demo {
+    &.btn--hovered {
       background-color: #f8f9fa;
       border-color: #d1d5db;
     }
 
-    &:focus,
-    &.focus--demo {
+    &:focus {
       outline: none;
       border-color: rgb(var(--pa-color-primary));
       box-shadow: 0 0 0 1px rgb(var(--pa-color-primary));

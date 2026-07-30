@@ -16,7 +16,7 @@
       --input-ring-color: #d1d5db;
 
       &:hover,
-      &.hover--demo {
+      &.input--hovered {
         border-color: #9ca3af;
         background-color: rgba(0, 0, 0, 0.01);
       }
@@ -25,11 +25,11 @@
     input.text-field {
       @apply flex-1 bg-transparent px-3 min-w-0 text-black outline-none;
       height: 45px;
-      font: var(--pa-fw-p) var(--pa-fs-p) var(--pa-font-family) !important;
+      font: var(--pa-fw-p) var(--pa-fs-p) var(--pa-font-family);
       border-radius: inherit;
 
       &:-webkit-autofill {
-        -webkit-box-shadow: 0 0 0 30px white inset !important;
+        -webkit-box-shadow: 0 0 0 30px white inset;
       }
 
       & + .btn {
@@ -48,11 +48,10 @@
         opacity: 1;
 
         &:hover,
-        &.hover--demo {
+        &.input--hovered {
           background-color: rgba(0, 0, 0, 0.04);
         }
-        &:focus,
-        &.focus--demo {
+        &:focus {
           background-color: rgba(0, 0, 0, 0.06);
           box-shadow: inset 0 0 0 1px rgb(var(--pa-color-primary) / 0.35);
         }
@@ -70,12 +69,11 @@
         transform: translateY(-50%);
       }
 
-      &:has(.input--label):not(.input--focused):not(.focus--demo):not(.input--has-value) input.text-field::placeholder {
+      &:has(.input--label):not(.input--focused):not(.input--has-value) input.text-field::placeholder {
         opacity: 0;
       }
 
       &.input--focused,
-      &.focus--demo,
       &.input--has-value {
         .input--label {
           top: -12px;
@@ -91,7 +89,7 @@
         min-height: 54px;
 
         &:hover,
-        &.hover--demo {
+        &.input--hovered {
           background-color: #e5e7eb;
         }
       }
@@ -107,12 +105,11 @@
         height: 54px;
       }
 
-      &:has(.input--label):not(.input--focused):not(.focus--demo):not(.input--has-value) input.text-field::placeholder {
+      &:has(.input--label):not(.input--focused):not(.input--has-value) input.text-field::placeholder {
         opacity: 0;
       }
 
       &.input--focused,
-      &.focus--demo,
       &.input--has-value {
         .input--label {
           top: 5px;
@@ -146,7 +143,7 @@
         min-height: 46px;
 
         &:hover,
-        &.hover--demo {
+        &.input--hovered {
           background-color: transparent;
           border-bottom-color: #9ca3af;
         }
@@ -163,12 +160,11 @@
         @apply px-0;
       }
 
-      &:has(.input--label):not(.input--focused):not(.focus--demo):not(.input--has-value) input.text-field::placeholder {
+      &:has(.input--label):not(.input--focused):not(.input--has-value) input.text-field::placeholder {
         opacity: 0;
       }
 
       &.input--focused,
-      &.focus--demo,
       &.input--has-value {
         .input--label {
           top: -18px;
@@ -183,15 +179,13 @@
         border-radius: var(--pa-input-radius);
         color: rgb(var(--pa-color-primary));
 
-        &:focus,
-        &.focus--demo {
+        &:focus {
           box-shadow: none;
           outline: none;
         }
       }
 
-      &.input--focused:not(.input--error),
-      &.focus--demo:not(.input--error) {
+      &.input--focused:not(.input--error) {
         outline: none;
 
         .input--wrap {
@@ -210,10 +204,9 @@
         }
 
         .input--label {
-          color: rgb(var(--pa-color-primary)) !important;
+          color: rgb(var(--pa-color-primary));
         }
       }
-      &.error--demo,
       &.input--error {
         .input--wrap {
           border-bottom-color: rgb(var(--pa-color-error));
@@ -226,7 +219,7 @@
         }
 
         .input--label {
-          color: rgb(var(--pa-color-error)) !important;
+          color: rgb(var(--pa-color-error));
         }
       }
     }
@@ -239,7 +232,7 @@
         box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
 
         &:hover,
-        &.hover--demo {
+        &.input--hovered {
           background-color: #f9fafb;
           box-shadow: 0 4px 8px 0 rgb(0 0 0 / 0.12), 0 2px 4px -1px rgb(0 0 0 / 0.12);
         }
@@ -256,12 +249,11 @@
         height: 54px;
       }
 
-      &:has(.input--label):not(.input--focused):not(.focus--demo):not(.input--has-value) input.text-field::placeholder {
+      &:has(.input--label):not(.input--focused):not(.input--has-value) input.text-field::placeholder {
         opacity: 0;
       }
 
       &.input--focused,
-      &.focus--demo,
       &.input--has-value {
         .input--label {
           top: 5px;
@@ -283,8 +275,7 @@
         background-color: #f3f4f6;
       }
 
-      &.input--focused:not(.input--error),
-      &.focus--demo:not(.input--error) {
+      &.input--focused:not(.input--error) {
         .input--wrap {
           box-shadow: 0 0 0 1px rgb(var(--pa-color-primary)), 0 1px 3px 0 rgb(0 0 0 / 0.1);
         }
@@ -312,8 +303,7 @@
         color: rgb(var(--pa-color-primary));
       }
 
-      &.input--focused:not(.input--error),
-      &.focus--demo:not(.input--error) {
+      &.input--focused:not(.input--error) {
         .input--wrap {
           border-color: transparent;
           box-shadow: none;
@@ -332,7 +322,7 @@
         padding-top: 0;
 
         &:hover,
-        &.hover--demo {
+        &.input--hovered {
           background-color: #fff;
           border-color: #9ca3af;
         }
@@ -371,8 +361,7 @@
         border: 0;
       }
 
-      &.input--focused:not(.input--error),
-      &.focus--demo:not(.input--error) {
+      &.input--focused:not(.input--error) {
         .input--wrap {
           border-color: rgb(var(--pa-color-primary));
           box-shadow: 0 0 0 1px rgb(var(--pa-color-primary));
@@ -413,10 +402,7 @@
       font-size: 12px;
       font-family: var(--pa-font-family);
     }
-    &.error--demo,
     &--error {
-      color: rgb(var(--pa-color-error)) !important;
-
       .input--wrap {
         border-color: rgb(var(--pa-color-error));
         box-shadow: 0 0 0 1px rgb(var(--pa-color-error));
@@ -424,12 +410,15 @@
       }
 
       .input--label {
-        color: rgb(var(--pa-color-error)) !important;
+        color: rgb(var(--pa-color-error));
+      }
+
+      .input-details {
+        color: rgb(var(--pa-color-error));
       }
     }
 
-    &--focused:not(.input--error):not(.input--variant-underlined),
-    &.focus--demo:not(.input--error):not(.input--variant-underlined) {
+    &--focused:not(.input--error):not(.input--variant-underlined) {
       .input--wrap {
         border-color: rgb(var(--pa-color-primary));
         box-shadow: 0 0 0 1px rgb(var(--pa-color-primary));
@@ -437,7 +426,7 @@
       }
 
       .input--label {
-        color: rgb(var(--pa-color-primary)) !important;
+        color: rgb(var(--pa-color-primary));
       }
     }
 
@@ -449,8 +438,6 @@
       }
     }
 
-    &--variant-underlined.focus--demo,
-    &--variant-underlined .focus--demo,
     &--variant-underlined input.text-field:focus,
     &--variant-underlined input.text-field:focus-visible,
     &--variant-underlined .input--wrap:focus,
