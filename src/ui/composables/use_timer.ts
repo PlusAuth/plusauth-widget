@@ -1,38 +1,43 @@
 import { onMounted, onUnmounted, ref } from 'vue';
 
-export const useTimer = ( startFrom: number, startOnMount = true ) => {
-  const countdown = ref(startFrom as number)
-  let timeout: any = null
+export const useTimer = (startFrom: number, startOnMount = true) => {
+  const countdown = ref(startFrom as number);
+  let timeout: any = null;
 
-  function start(overrideStart?: number){
-    countdown.value = overrideStart || startFrom
-    if(timeout){
-      clearInterval(timeout)
+  function start(overrideStart?: number) {
+    countdown.value = overrideStart ?? startFrom;
+    if (timeout) {
+      clearInterval(timeout);
     }
-    timeout = setInterval(()=>{
-      countdown.value--
-      if(countdown.value < 1){
-        clearInterval(timeout)
+    if (countdown.value <= 0) {
+      return;
+    }
+    timeout = setInterval(() => {
+      if (countdown.value <= 1) {
+        countdown.value = 0;
+        clearInterval(timeout);
+      } else {
+        countdown.value--;
       }
-    }, 1000)
+    }, 1000);
   }
 
   onMounted(() => {
-    if(startOnMount){
-      start()
+    if (startOnMount) {
+      start();
     }
-  })
-  function stop(){
-    clearInterval(timeout)
+  });
+  function stop() {
+    clearInterval(timeout);
   }
 
   onUnmounted(() => {
-    clearInterval(timeout)
-  })
+    clearInterval(timeout);
+  });
 
   return {
     countdown,
     start,
-    stop
-  }
-}
+    stop,
+  };
+};
