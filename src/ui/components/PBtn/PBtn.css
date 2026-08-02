@@ -12,12 +12,13 @@
         background-color: var(--pa-btn-color, rgb(var(--pa-color-primary)));
         border-radius: var(--pa-input-radius);
         color: var(--pa-btn-text-color, #fff);
-        transition-property: background-color, border-color, box-shadow, color, opacity, transform;
-        transition-duration: 150ms;
+        transition: none;
 
         &:hover,
         &.btn--hovered {
             opacity: 0.8;
+            transition-property: background-color, border-color, box-shadow, color, opacity, transform;
+            transition-duration: 150ms;
         }
 
         &:focus {

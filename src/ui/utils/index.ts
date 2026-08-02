@@ -182,12 +182,18 @@ export function resolveCssVariableVariant<T extends readonly string[]>(
     return variants[0]
   }
 
+  const target = element
+    || document.querySelector('.pa__widget')
+    || document.querySelector('.widget')
+    || document.body
+    || document.documentElement;
+
   let value = window
-    .getComputedStyle(element || document.documentElement)
+    .getComputedStyle(target)
     .getPropertyValue(name)
     .trim()
 
-  if (!value && element) {
+  if (!value && target !== document.documentElement) {
     value = window
       .getComputedStyle(document.documentElement)
       .getPropertyValue(name)
