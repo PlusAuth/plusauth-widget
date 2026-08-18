@@ -36,8 +36,8 @@
                     bg-white;
                     text-decoration: none;
                     font-family: var(--pa-font-family);
-                    font-size: var(--pa-fs-p);
-                    font-weight: var(--pa-fw-p);
+                    font-size: 16px;
+                    font-weight: 400;
 
                     &:focus:not(&--selected){
                         @apply bg-gray-300/60;
@@ -78,8 +78,8 @@
                 min-height: 42px;
                 transition: all 0.3s;
                 font-family: var(--pa-font-family);
-                font-size: var(--pa-fs-p);
-                font-weight: var(--pa-fw-p);
+                font-size: 16px;
+                font-weight: 400;
 
                 &:focus::-webkit-input-placeholder {
                     color: transparent;

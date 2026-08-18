@@ -25,7 +25,7 @@
     input.text-field {
       @apply flex-1 bg-transparent px-3 min-w-0 text-black outline-none;
       height: 45px;
-      font: var(--pa-fw-p) var(--pa-fs-p) var(--pa-font-family);
+      font: 400 16px var(--pa-font-family);
       border-radius: inherit;
 
       &:-webkit-autofill {
