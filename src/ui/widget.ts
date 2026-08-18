@@ -1,11 +1,11 @@
-import { h, ref, onBeforeUnmount, inject, computed } from "vue";
-import "./styles/main.css";
+import { h, ref, onBeforeUnmount, inject, computed } from 'vue';
+import './styles/main.css';
 
-import type { IWidgetSettings } from "./interfaces";
-import { resolveView } from "./utils/router";
-import type { Theme } from "./utils/theme";
-import type { Translator } from "./utils/translator";
-import { translatorKey } from "./utils/translator";
+import type { IWidgetSettings } from './interfaces';
+import { resolveView } from './utils/router';
+import type { Theme } from './utils/theme';
+import type { Translator } from './utils/translator';
+import { translatorKey } from './utils/translator';
 export function App(theme: Theme, settings: Partial<IWidgetSettings>): any {
   return {
     provide: {
@@ -17,12 +17,12 @@ export function App(theme: Theme, settings: Partial<IWidgetSettings>): any {
       function onResize() {
         isMobile.value = window.innerWidth < 600;
       }
-      window.addEventListener("resize", onResize, { passive: true });
+      window.addEventListener('resize', onResize, { passive: true });
       onResize();
 
       onBeforeUnmount(() => {
-        if (typeof window !== "undefined") {
-          window.removeEventListener("resize", onResize);
+        if (typeof window !== 'undefined') {
+          window.removeEventListener('resize', onResize);
         }
       });
 
@@ -34,9 +34,9 @@ export function App(theme: Theme, settings: Partial<IWidgetSettings>): any {
     },
     render() {
       return h(
-        "div",
+        'div',
         {
-          class: "pa__widget",
+          class: 'pa__widget',
           key: this.locale,
         },
         this.resolvedView && h(this.resolvedView)
