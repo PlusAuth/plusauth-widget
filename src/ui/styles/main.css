@@ -215,8 +215,8 @@
       display: flex;
       flex-direction: column;
       margin: auto 0;
-      width: min(500px, 100%);
-      flex-grow: 0;
+      width: min(calc(500px + (var(--pa-widget-state, 0) * 60px)), 100%);
+      flex-grow: var(--pa-widget-state, 0);
       justify-content: safe center;
       min-height: calc(var(--pa-widget-state, 0) * 100vh);
     }
