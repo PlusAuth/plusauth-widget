@@ -245,13 +245,17 @@ const classes = computed(() => ({
       </div>
       <svg
         class="pa__input-select-arrow"
-        width="10"
-        height="5"
-        viewBox="0 0 10 5"
-        fill-rule="evenodd"
+        width="12"
+        height="12"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
       >
         <title>Open drop down</title>
-        <path d="M10 0L5 5 0 0z" />
+        <polyline points="6 9 12 15 18 9" />
       </svg>
       <div
         ref="popoverRef"
@@ -267,7 +271,21 @@ const classes = computed(() => ({
           @click="onItemClick($event, item)"
           @keydown.enter="onItemClick($event, item)"
         >
-          {{ getItemText(item) }}
+          <span class="pa__input-select-item-text">{{ getItemText(item) }}</span>
+          <svg
+            v-if="getItemValue(item) === internalValue"
+            class="pa__input-select-item-check"
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <polyline points="20 6 9 17 4 12" />
+          </svg>
         </div>
       </div>
     </div>
