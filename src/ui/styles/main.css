@@ -548,14 +548,6 @@
     object-position: center;
     max-width: 220px;
     max-height: 220px;
-    transition-property: transform;
-    transition-timing-function: var(--pa-ease, var(--default-transition-timingFunction));
-    transition-duration: .3s;
-
-    &:hover,
-    &.hovered {
-      transform: scale(1.02);
-    }
   }
 
   .challenge-timer {
