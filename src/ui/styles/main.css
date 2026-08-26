@@ -350,6 +350,11 @@
     font-size: var(--pa-fs-p);
     font-weight: var(--pa-fw-p);
     text-align: var(--pa-align-p);
+    color: #202124;
+
+    span {
+      color: #202124;
+    }
 
     a {
       padding-left: 4px;
@@ -368,6 +373,7 @@
 
   .widget-social-button.btn {
     @apply capitalize justify-start gap-3 bg-white text-gray-800 border border-gray-300 whitespace-normal;
+    color: #1f2937 !important;
     box-shadow: 0 1px 2px rgb(15 23 42 / 0.06);
     overflow-wrap: anywhere;
     min-height: min-content;
