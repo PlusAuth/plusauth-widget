@@ -50,7 +50,23 @@ export class Theme {
     this.styleEl.type = 'text/css'
     this.styleEl.id = 'plusauth-theme-stylesheet'
 
-    document.head.appendChild(this.styleEl)
+    const customEl = document.querySelector('[view-editor-custom-css]');
+    if (customEl && customEl.parentNode) {
+      customEl.parentNode.insertBefore(this.styleEl, customEl);
+      const widgetStyles = document.querySelectorAll('style[data-vite-dev-id], style#plusauth-widget-style');
+      widgetStyles.forEach((style) => {
+        customEl.parentNode!.insertBefore(style, customEl);
+      });
+
+      const observer = new MutationObserver(() => {
+        if (customEl.parentNode && customEl.nextSibling) {
+          customEl.parentNode.appendChild(customEl);
+        }
+      });
+      observer.observe(document.head, { childList: true });
+    } else {
+      document.head.appendChild(this.styleEl);
+    }
   }
 
   get currentTheme() {

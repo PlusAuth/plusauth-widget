@@ -4,7 +4,6 @@ import vue from '@vitejs/plugin-vue'
 import UnoCSS from 'unocss/vite'
 import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts';
-import { libInjectCss } from 'vite-plugin-lib-inject-css'
 
 import pkg from './package.json';
 
@@ -29,7 +28,43 @@ export default defineConfig(({ command }) => ({
   plugins: [
     UnoCSS(),
     vue({}),
-    libInjectCss(),
+    {
+      name: 'prepend-inject-css-plugin',
+      apply: 'build',
+      enforce: 'post',
+      generateBundle(options, bundle) {
+        let cssCode = '';
+        for (const [fileName, file] of Object.entries(bundle)) {
+          if (fileName.endsWith('.css') && file.type === 'asset' && typeof file.source === 'string') {
+            cssCode += file.source;
+          }
+        }
+        if (!cssCode) return;
+
+        const injectedJs = `typeof document !== "undefined" && (function(){
+          var styleId = "plusauth-widget-style";
+          var el = document.getElementById(styleId) || document.createElement("style");
+          el.id = styleId;
+          el.textContent = ${JSON.stringify(cssCode)};
+          if (!el.parentNode) {
+            var customEl = document.querySelector('[view-editor-custom-css]');
+            if (customEl && customEl.parentNode) {
+              customEl.parentNode.insertBefore(el, customEl);
+            } else if (document.head.firstChild) {
+              document.head.insertBefore(el, document.head.firstChild);
+            } else {
+              document.head.appendChild(el);
+            }
+          }
+        })();\n`;
+
+        for (const file of Object.values(bundle)) {
+          if (file.type === 'chunk' && file.isEntry) {
+            file.code = injectedJs + file.code;
+          }
+        }
+      }
+    },
     dts({ compilerOptions: { outDir: 'dist/types' } }),
   ],
   resolve: {
