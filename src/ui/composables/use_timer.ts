@@ -1,11 +1,11 @@
 import { onMounted, onUnmounted, ref } from 'vue';
 
 export const useTimer = (startFrom: number, startOnMount = true) => {
-  const countdown = ref(startFrom as number);
+  const countdown = ref(Number(startFrom));
   let timeout: any = null;
 
   function start(overrideStart?: number) {
-    countdown.value = overrideStart ?? startFrom;
+    countdown.value = Number(overrideStart ?? startFrom);
     if (timeout) {
       clearInterval(timeout);
     }

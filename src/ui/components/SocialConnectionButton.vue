@@ -7,8 +7,8 @@
       'pa__widget-social-button-circle': mode === 'circle'
     }"
     :href="'social?provider=' + (typeof connection === 'string' ? connection : connection.name )"
-    :aria-label="mode === 'block' ? socialLabel : socialLabel"
-    :title="mode === 'block' ? socialLabel : socialLabel"
+    :aria-label="providerLabel"
+    :title="providerLabel"
   >
     <span
       class="pa__widget-social-icon"
@@ -76,7 +76,6 @@ const providerLabel = computed(() => typeof props.connection === 'string'
   ? props.connection
   : props.connection.branding?.display_name || props.connection.provider)
 
-const socialLabel = computed(() => providerLabel.value)
 </script>
 
 <style scoped>
