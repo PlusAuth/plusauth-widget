@@ -381,7 +381,7 @@
       font-size: 14px;
       color: #5f6368;
       font-family: var(--pa-font-family);
-      line-height: 1;
+      line-height: 1.25;
       overflow: hidden;
       pointer-events: none;
       text-overflow: ellipsis;
