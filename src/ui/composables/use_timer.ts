@@ -1,11 +1,13 @@
 import { onMounted, onUnmounted, ref } from 'vue';
 
 export const useTimer = (startFrom: number, startOnMount = true) => {
-  const countdown = ref(Number(startFrom));
+  const parsedStart = Number(startFrom);
+  const countdown = ref(Number.isNaN(parsedStart) ? 0 : parsedStart);
   let timeout: any = null;
 
   function start(overrideStart?: number) {
-    countdown.value = Number(overrideStart ?? startFrom);
+    const parsed = Number(overrideStart ?? startFrom);
+    countdown.value = Number.isNaN(parsed) ? 0 : parsed;
     if (timeout) {
       clearInterval(timeout);
     }
