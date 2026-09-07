@@ -5,10 +5,11 @@ import * as CssVariablesStories from './css-variables.stories.ts';
 
 # CSS Variables
 
-These CSS variables can be declared on `:root` or on a containing element around the widget.
+These CSS variables can be declared on `:root` or on a containing element around the widget. If not specified, all variables will automatically fall back to their default values.
 
 ```css
 :root {
+  --pa-font-family: sans-serif;
   --pa-fs-p: 16px;
   --pa-fs-h1: 20px;
   --pa-fs-h2: 18px;
@@ -34,51 +35,50 @@ These CSS variables can be declared on `:root` or on a containing element around
 
 ## Typography
 
-`--pa-fs-p`, `--pa-fs-h1`, and `--pa-fs-h2` set the font sizes for paragraph text, main headings, and secondary headings.
-
-`--pa-fw-p`, `--pa-fw-h1`, and `--pa-fw-h2` set the font weights for paragraph text, main headings, and secondary headings.
-
-`--pa-align-p`, `--pa-align-h1`, and `--pa-align-h2` set text alignment for paragraph text, main headings, and secondary headings.
+- `--pa-font-family`: Sets the font family used across the widget. If not defined, the default value is `sans-serif`.
+- `--pa-fs-p`: Sets the font size for paragraph and body text. If not defined, the default value is `16px`.
+- `--pa-fs-h1`: Sets the maximum font size for main headings (`h1`). If not defined, the default value is `20px`.
+- `--pa-fs-h2`: Sets the maximum font size for secondary headings (`h2`). If not defined, the default value is `18px`.
+- `--pa-fw-p`: Sets the font weight for paragraph and body text. If not defined, the default value is `400`.
+- `--pa-fw-h1`: Sets the font weight for main headings and timer digits. If not defined, the default value is `400`.
+- `--pa-fw-h2`: Sets the font weight for secondary headings. If not defined, the default value is `400`.
+- `--pa-align-p`: Sets text alignment for paragraph text. If not defined, the default value is `start`.
+- `--pa-align-h1`: Sets text alignment for main headings. If not defined, the default value is `center`.
+- `--pa-align-h2`: Sets text alignment for secondary headings. If not defined, the default value is `center`.
 
 ## Inputs
 
-`--pa-input-radius` controls input corner radius.
-
-`--pa-input-border-w` controls input border width.
-
-`--pa-input-variant` selects the text field variant by index:
-
-```ts
-['outlined', 'filled', 'underlined', 'solo', 'plain', 'regular']
-```
-
-In the example above, `--pa-input-variant: 5` renders the `regular` variant.
+- `--pa-input-radius`: Controls the corner radius for inputs, text fields, selects, checkboxes, and alerts. If not defined, the default value is `0px`.
+- `--pa-input-border-w`: Controls the border width for inputs, text fields, selects, and checkboxes. If not defined, the default value is `1px`.
+- `--pa-input-variant`: Selects the text field visual variant by index. If not defined, the default value is `0` (`outlined`).
+  Available variants:
+  - `0`: `outlined` (default)
+  - `1`: `filled`
+  - `2`: `underlined`
+  - `3`: `solo`
+  - `4`: `plain`
+  - `5`: `regular`
 
 ## Buttons
 
-`--pa-button-variant` selects the button variant by index:
+- `--pa-button-variant`: Selects the button visual variant by index. If not defined, the default value is `0` (`flat`).
+  Available variants:
+  - `0`: `flat` (default)
+  - `1`: `elevated`
+  - `2`: `tonal`
+  - `3`: `outlined`
+  - `4`: `text`
+  - `5`: `plain`
 
-```ts
-['flat', 'elevated', 'tonal', 'outlined', 'text', 'plain']
-```
+## Main Widget Layout
 
-In the example above, `--pa-button-variant: 2` renders the `tonal` variant.
-
-## Main Widget
-
-`--pa-main-radius` controls the main widget panel corner radius.
-
-`--pa-main-border-w` controls the main widget panel border width.
-
-`--pa-main-border-c` controls the main widget panel border color.
-
-`--pa-main-bg` controls the widget background and accepts any valid CSS background value.
-
-`--pa-widget-align` controls the horizontal alignment of the widget content.
-
-`--pa-widget-state` controls the widget layout state. `0` renders the card-like panel state, and `1` renders the stretched state.
-
-`--pa-logo-align` controls the logo alignment inside the widget header.
+- `--pa-main-radius`: Controls the main widget panel corner radius. If not defined, the default value is `0px`.
+- `--pa-main-border-w`: Controls the main widget panel border width. If not defined, the default value is `1px`.
+- `--pa-main-border-c`: Controls the main widget panel border color. If not defined, the default value is `#e2e8f0`.
+- `--pa-main-bg`: Controls the root widget background. Accepts any valid CSS background value. If not defined, the default value is `white`.
+- `--pa-widget-align`: Controls the desktop horizontal alignment of the widget container (`min-width: 601px`). If not defined, the default value is `center`.
+- `--pa-widget-state`: Controls the widget layout state. `0` renders the centered card-like panel state, and `1` renders the stretched full-height state. If not defined, the default value is `0`.
+- `--pa-logo-align`: Controls the logo horizontal alignment inside the widget header. If not defined, the default value is `center`.
 
 <Canvas>
   <Story of={CssVariablesStories.Default} />

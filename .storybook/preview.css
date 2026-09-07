@@ -1,4 +1,5 @@
 :root, #storybook-root {
+  --pa-font-family: sans-serif;
   --pa-fs-p: 16px;
   --pa-fs-h1: 20px;
   --pa-fs-h2: 18px;
