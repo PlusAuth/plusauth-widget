@@ -9,8 +9,8 @@
         hover:opacity-80
         focus:ring-2 ring-primary/30 focus:outline-none;
 
-        background-color: var(--pa-btn-color, rgb(var(--pa-color-primary)));
-        border-radius: var(--pa-input-radius);
+        background-color: var(--pa-btn-color, rgb(var(--pa-color-primary, 227 112 6)));
+        border-radius: var(--pa-input-radius, 0px);
         color: var(--pa-btn-text-color, #fff);
         transition: none;
 
@@ -39,13 +39,13 @@
         }
 
         &--variant-flat {
-            background-color: var(--pa-btn-color, rgb(var(--pa-color-primary)));
+            background-color: var(--pa-btn-color, rgb(var(--pa-color-primary, 227 112 6)));
             color: var(--pa-btn-text-color, #fff);
             box-shadow: none;
         }
 
         &--variant-elevated {
-            background-color: var(--pa-btn-color, rgb(var(--pa-color-primary)));
+            background-color: var(--pa-btn-color, rgb(var(--pa-color-primary, 227 112 6)));
             color: var(--pa-btn-text-color, #fff);
             box-shadow: 0 3px 6px rgb(0 0 0 / 0.16), 0 3px 6px rgb(0 0 0 / 0.23);
 
@@ -56,20 +56,20 @@
         }
 
         &--variant-tonal {
-            background-color: color-mix(in srgb, var(--pa-btn-color, rgb(var(--pa-color-primary))) 13%, transparent);
-            color: var(--pa-btn-color, rgb(var(--pa-color-primary)));
+            background-color: color-mix(in srgb, var(--pa-btn-color, rgb(var(--pa-color-primary, 227 112 6))) 13%, transparent);
+            color: var(--pa-btn-color, rgb(var(--pa-color-primary, 227 112 6)));
         }
 
         &--variant-outlined {
             background-color: transparent;
-            border: 1px solid color-mix(in srgb, var(--pa-btn-color, rgb(var(--pa-color-primary))) 70%, transparent);
-            color: var(--pa-btn-text-color, var(--pa-btn-color, rgb(var(--pa-color-primary))));
+            border: 1px solid color-mix(in srgb, var(--pa-btn-color, rgb(var(--pa-color-primary, 227 112 6))) 70%, transparent);
+            color: var(--pa-btn-text-color, var(--pa-btn-color, rgb(var(--pa-color-primary, 227 112 6))));
         }
 
         &--variant-text,
         &--variant-plain {
             background-color: transparent;
-            color: var(--pa-btn-text-color, var(--pa-btn-color, rgb(var(--pa-color-primary))));
+            color: var(--pa-btn-text-color, var(--pa-btn-color, rgb(var(--pa-color-primary, 227 112 6))));
         }
 
         &--variant-plain {
@@ -97,7 +97,7 @@
         position: absolute;
         top: 0;
         width: 100%;
-        border-radius: var(--pa-input-radius);
+        border-radius: var(--pa-input-radius, 0px);
     }
 
     .btn--disabled {

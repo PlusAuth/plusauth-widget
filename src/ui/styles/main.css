@@ -10,7 +10,7 @@
   line-height: 1.5;
   tab-size: 4;
   box-sizing: border-box;
-  font-family: var(--pa-font-family);
+  font-family: var(--pa-font-family, sans-serif);
   width: 100%;
   min-height: 100vh;
   display: flex;
@@ -21,8 +21,8 @@
   font-feature-settings: normal;
   font-variation-settings: normal;
   -webkit-tap-highlight-color: transparent;
-  text-align: var(--pa-widget-align);
-  background: var(--pa-main-bg);
+  text-align: var(--pa-widget-align, center);
+  background: var(--pa-main-bg, white);
 
   *,
   ::before,
@@ -51,7 +51,7 @@
     }
 
     &:focus {
-      outline: 2px solid rgba(var(--pa-color-primary), 0.5);
+      outline: 2px solid rgba(var(--pa-color-primary, 227 112 6), 0.5);
       outline-offset: 2px;
       border-radius: 2px;
     }
@@ -65,7 +65,7 @@
   h6 {
     color: #202124;
     padding-bottom: 0;
-    font-family: var(--pa-font-family);
+    font-family: var(--pa-font-family, sans-serif);
     margin-bottom: 0;
     margin-top: 0;
     text-wrap: balance;
@@ -73,17 +73,17 @@
   }
 
   h1 {
-    font-size: clamp(18px, 5cqw, var(--pa-fs-h1));
+    font-size: clamp(18px, 5cqw, var(--pa-fs-h1, 20px));
     padding-top: clamp(6px, 2.2vh, 16px);
-    font-weight: var(--pa-fw-h1);
-    text-align: var(--pa-align-h1);
+    font-weight: var(--pa-fw-h1, 400);
+    text-align: var(--pa-align-h1, center);
   }
 
   h2 {
-    font-size: clamp(12px, 3.6cqw, var(--pa-fs-h2));
+    font-size: clamp(12px, 3.6cqw, var(--pa-fs-h2, 18px));
     padding-top: clamp(4px, 1.8vh, 14px);
-    font-weight: var(--pa-fw-h2);
-    text-align: var(--pa-align-h2);
+    font-weight: var(--pa-fw-h2, 400);
+    text-align: var(--pa-align-h2, center);
   }
 
   .social-seperator {
@@ -142,8 +142,8 @@
   input,
   textarea,
   select {
-    border-radius: var(--pa-input-radius);
-    border-width: var(--pa-input-border-w);
+    border-radius: var(--pa-input-radius, 0px);
+    border-width: var(--pa-input-border-w, 1px);
   }
 
   :-moz-focusring {
@@ -180,15 +180,15 @@
 
   p {
     margin: 0;
-    font-size: var(--pa-fs-p);
-    font-weight: var(--pa-fw-p);
-    text-align: var(--pa-align-p);
+    font-size: var(--pa-fs-p, 16px);
+    font-weight: var(--pa-fw-p, 400);
+    text-align: var(--pa-align-p, start);
   }
 
   @media (min-width: 601px) {
     @apply flex flex-col relative;
     justify-content: safe center;
-    align-items: var(--pa-widget-align);
+    align-items: var(--pa-widget-align, center);
     min-height: 100vh;
   }
 
@@ -209,7 +209,7 @@
     z-index: 2;
     flex-grow: 1;
     background: #fff;
-    border-radius: calc((1 - var(--pa-widget-state, 0)) * var(--pa-main-radius));
+    border-radius: calc((1 - var(--pa-widget-state, 0)) * var(--pa-main-radius, 0px));
 
     @media (min-width: 601px) {
       display: flex;
@@ -228,8 +228,8 @@
       height: 100%;
       width: 100%;
       justify-content: safe center;
-      border-radius: calc((1 - var(--pa-widget-state, 0)) * var(--pa-main-radius));
-      border: calc((1 - var(--pa-widget-state, 0)) * var(--pa-main-border-w)) solid var(--pa-main-border-c);
+      border-radius: calc((1 - var(--pa-widget-state, 0)) * var(--pa-main-radius, 0px));
+      border: calc((1 - var(--pa-widget-state, 0)) * var(--pa-main-border-w, 1px)) solid var(--pa-main-border-c, #e2e8f0);
 
       @media (max-width: 600px) {
         padding: clamp(16px, 4vh, 32px) clamp(16px, 5vw, 32px) clamp(20px, 5vh, 32px);
@@ -294,10 +294,10 @@
 
       &:not(:empty) {
         margin-top: 0;
-        border: calc((1 - var(--pa-widget-state, 0)) * var(--pa-main-border-w)) solid var(--pa-main-border-c);
+        border: calc((1 - var(--pa-widget-state, 0)) * var(--pa-main-border-w, 1px)) solid var(--pa-main-border-c, #e2e8f0);
         border-top-width: 0;
-        border-bottom-left-radius: calc((1 - var(--pa-widget-state, 0)) * var(--pa-main-radius));
-        border-bottom-right-radius: calc((1 - var(--pa-widget-state, 0)) * var(--pa-main-radius));
+        border-bottom-left-radius: calc((1 - var(--pa-widget-state, 0)) * var(--pa-main-radius, 0px));
+        border-bottom-right-radius: calc((1 - var(--pa-widget-state, 0)) * var(--pa-main-radius, 0px));
 
         @media (max-width: 600px) {
           margin-inline: 0;
@@ -347,9 +347,9 @@
 
   &-helpers-section {
     @apply pt-4;
-    font-size: var(--pa-fs-p);
-    font-weight: var(--pa-fw-p);
-    text-align: var(--pa-align-p);
+    font-size: var(--pa-fs-p, 16px);
+    font-weight: var(--pa-fw-p, 400);
+    text-align: var(--pa-align-p, start);
     color: #202124;
 
     span {
@@ -439,9 +439,9 @@
     justify-content: space-between;
     font-size: 12px;
     line-height: 1.4;
-    border: calc((1 - var(--pa-widget-state, 0)) * var(--pa-main-border-w)) solid var(--pa-main-border-c);
-    border-bottom-left-radius: calc((1 - var(--pa-widget-state, 0)) * var(--pa-main-radius));
-    border-bottom-right-radius: calc((1 - var(--pa-widget-state, 0)) * var(--pa-main-radius));
+    border: calc((1 - var(--pa-widget-state, 0)) * var(--pa-main-border-w, 1px)) solid var(--pa-main-border-c, #e2e8f0);
+    border-bottom-left-radius: calc((1 - var(--pa-widget-state, 0)) * var(--pa-main-radius, 0px));
+    border-bottom-right-radius: calc((1 - var(--pa-widget-state, 0)) * var(--pa-main-radius, 0px));
     border-top: none;
 
     @media (max-width: 600px) {
@@ -457,7 +457,7 @@
       &--wrap {
         border: none;
         border-width: 0px;
-        border-radius: var(--pa-input-radius);
+        border-radius: var(--pa-input-radius, 0px);
       }
     }
 
@@ -498,7 +498,7 @@
 
   .logo-container {
     display: flex;
-    justify-content: var(--pa-logo-align);
+    justify-content: var(--pa-logo-align, center);
     margin: clamp(4px, 1.8vh, 12px) 0;
     min-height: clamp(44px, 11vh, 72px);
 
@@ -566,7 +566,7 @@
     .signin-challenge {
       text-align: left;
       justify-content: start;
-      color: rgb(var(--pa-color-primary));
+      color: rgb(var(--pa-color-primary, 227 112 6));
       transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
       transition-timing-function: var(--pa-ease, var(--default-transition-timingFunction));
       transition-duration: .2s;
@@ -601,8 +601,8 @@
 
     &:focus {
       outline: none;
-      border-color: rgb(var(--pa-color-primary));
-      box-shadow: 0 0 0 1px rgb(var(--pa-color-primary));
+      border-color: rgb(var(--pa-color-primary, 227 112 6));
+      box-shadow: 0 0 0 1px rgb(var(--pa-color-primary, 227 112 6));
     }
   }
 
@@ -626,6 +626,6 @@
 
 .default-border {
   @apply border;
-  border-color: var(--pa-main-border-c);
-  border-radius: var(--pa-main-radius);
+  border-color: var(--pa-main-border-c, #e2e8f0);
+  border-radius: var(--pa-main-radius, 0px);
 }

@@ -16,8 +16,8 @@
         .input--label {
             @apply relative left-0;
             top: unset;
-            font-size: var(--pa-fs-p);
-            font-weight: var(--pa-fw-p);
+            font-size: var(--pa-fs-p, 16px);
+            font-weight: var(--pa-fw-p, 400);
         }
 
         &--digit-box {
@@ -32,8 +32,8 @@
                     min-width: 24px;
                     max-width: 60px;
                     padding: 4px;
-                    border-radius: var(--pa-input-radius);
-                    border-width: var(--pa-input-border-w);
+                    border-radius: var(--pa-input-radius, 0px);
+                    border-width: var(--pa-input-border-w, 1px);
                 }
 
                 &.input-focused {
@@ -48,7 +48,7 @@
                     min-width: 24px;
                     text-align: center;
                     padding: 0;
-                    font-family: var(--pa-font-family);
+                    font-family: var(--pa-font-family, sans-serif);
                 }
             }
         }

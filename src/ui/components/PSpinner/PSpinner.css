@@ -37,9 +37,9 @@
             align-items: center;
             display: flex;
             justify-content: center;
-            font-family: var(--pa-font-family);
-            font-size: var(--pa-fs-p);
-            font-weight: var(--pa-fw-p);
+            font-family: var(--pa-font-family, sans-serif);
+            font-size: var(--pa-fs-p, 16px);
+            font-weight: var(--pa-fw-p, 400);
         }
 
         &__underlay {

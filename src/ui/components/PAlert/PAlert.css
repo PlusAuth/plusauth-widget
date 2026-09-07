@@ -5,7 +5,7 @@
         padding: 6px 12px;
         position: relative;
         text-align: start;
-        border-radius: var(--pa-input-radius);
+        border-radius: var(--pa-input-radius, 0px);
 
         &--tile {
             border-radius: 0;

@@ -15,14 +15,14 @@
 
             .input--wrap {
                 @apply cursor-pointer outline-none;
-                border-radius: var(--pa-input-radius);
-                border-width: var(--pa-input-border-w);
+                border-radius: var(--pa-input-radius, 0px);
+                border-width: var(--pa-input-border-w, 1px);
                 transition: border-color 0.15s ease, box-shadow 0.15s ease;
             }
 
             .input-select-items {
                 @apply hidden absolute overflow-auto max-h-60 bg-white border border-gray-200/80 shadow-lg p-1;
-                border-radius: var(--pa-input-radius);
+                border-radius: var(--pa-input-radius, 0px);
                 left: 0;
                 right: 0;
                 top: calc(100% + 6px);
@@ -35,9 +35,9 @@
                     min-h-9 px-3 py-1.5
                     outline-none select-none cursor-pointer
                     bg-white text-gray-700;
-                    border-radius: calc(var(--pa-input-radius) - 2px);
+                    border-radius: calc(var(--pa-input-radius, 0px) - 2px);
                     text-decoration: none;
-                    font-family: var(--pa-font-family);
+                    font-family: var(--pa-font-family, sans-serif);
                     font-size: 14px;
                     font-weight: 400;
                     transition: background-color 0.15s ease, color 0.15s ease;
@@ -71,7 +71,7 @@
 
                 .input-select-arrow {
                     transform: translateY(-50%) rotate(180deg);
-                    color: rgb(var(--pa-color-primary));
+                    color: rgb(var(--pa-color-primary, 227 112 6));
                 }
             }
 
@@ -88,7 +88,7 @@
                 padding: 0 32px 0 12px;
                 min-height: 42px;
                 transition: all 0.2s ease;
-                font-family: var(--pa-font-family);
+                font-family: var(--pa-font-family, sans-serif);
                 font-size: 14px;
                 font-weight: 400;
 
@@ -106,7 +106,7 @@
                 &:-webkit-autofill:hover,
                 &:-webkit-autofill:focus,
                 &:-webkit-autofill:active {
-                    font-family: var(--pa-font-family);
+                    font-family: var(--pa-font-family, sans-serif);
                     -webkit-box-shadow: 0 0 0 30px white inset;
                 }
             }
