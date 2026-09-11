@@ -21,7 +21,7 @@
             }
 
             .input-select-items {
-                @apply hidden absolute overflow-auto max-h-60 bg-white border border-gray-200/80 shadow-lg p-1;
+                @apply hidden flex-col gap-1 absolute overflow-auto max-h-60 bg-white border border-gray-200/80 shadow-lg p-1;
                 border-radius: var(--pa-input-radius, 0px);
                 left: 0;
                 right: 0;
@@ -30,7 +30,7 @@
                 z-index: 10000;
 
                 .input-select-item {
-                    @apply relative flex items-center justify-between
+                    @apply relative flex items-center justify-center text-center
                     tracking-normal
                     min-h-9 px-3 py-1.5
                     outline-none select-none cursor-pointer
@@ -43,30 +43,25 @@
                     transition: background-color 0.15s ease, color 0.15s ease;
 
                     &-text {
-                        @apply truncate flex-1;
+                        @apply truncate flex-1 text-center;
                     }
 
-                    &-check {
-                        @apply ms-2 text-primary flex-shrink-0;
-                    }
-
-                    &:focus:not(&--selected) {
-                        @apply bg-gray-100/80 text-gray-900;
-                    }
-
-                    &--selected {
-                        @apply bg-primary/10 text-primary font-medium;
-                    }
-
+                    &:focus:not(.input-select-item--selected),
                     &:hover:not(.input-select-item--selected) {
-                        @apply bg-gray-100/70 text-gray-900;
+                        @apply bg-primary/10 text-gray-900;
+                    }
+
+                    &--selected,
+                    &--selected:hover,
+                    &--selected:focus {
+                        @apply bg-primary/25 text-gray-900 font-medium;
                     }
                 }
             }
 
             &-is-open {
                 .input-select-items {
-                    @apply block;
+                    @apply flex;
                 }
 
                 .input-select-arrow {
