@@ -47,12 +47,9 @@ export default defineConfig(({ command }) => ({
           el.id = styleId;
           el.textContent = ${JSON.stringify(cssCode)};
           if (!el.parentNode) {
-            var customEl = document.querySelector('[view-editor-custom-css]');
-            if (customEl && customEl.parentNode) {
-              customEl.parentNode.insertBefore(el, customEl);
-            } else if (document.head.firstChild) {
+            if (document.head && document.head.firstChild) {
               document.head.insertBefore(el, document.head.firstChild);
-            } else {
+            } else if (document.head) {
               document.head.appendChild(el);
             }
           }
