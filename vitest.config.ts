@@ -5,7 +5,7 @@ import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
 import { playwright } from '@vitest/browser-playwright';
 import { defineConfig, mergeConfig } from 'vitest/config';
 
-import viteConfig from './vite.config';
+import viteConfig from './vite.config.ts';
 
 const dirname = path.dirname(fileURLToPath(import.meta.url));
 const resolvedViteConfig =
@@ -35,10 +35,6 @@ export default mergeConfig(
               provider: playwright({}),
               headless: true,
               instances: [{ browser: 'chromium' }],
-              api: {
-                host: '127.0.0.1',
-                port: 63315,
-              },
             },
           },
         },
