@@ -1,85 +1,91 @@
 .widget {
     .input {
         &-select {
-            @apply relative outline-none
-            focus:ring-2 ring-primary/30 focus:outline-none;
+            @apply relative outline-none;
 
             &-arrow {
                 position: absolute;
                 top: 50%;
-                right: 10px;
+                right: 12px;
                 transform: translateY(-50%);
-                transition: transform .2s linear;
-                fill: #767676;
+                transition: transform .2s cubic-bezier(0.4, 0, 0.2, 1);
+                color: #6b7280;
                 pointer-events: none;
             }
 
             .input--wrap {
                 @apply cursor-pointer outline-none;
-                border-radius: var(--pa-input-radius);
-                border-width: var(--pa-input-border-w);
+                border-radius: var(--pa-input-radius, 0px);
+                border-width: var(--pa-input-border-w, 1px);
+                transition: border-color 0.15s ease, box-shadow 0.15s ease;
             }
 
             .input-select-items {
-                @apply hidden absolute overflow-auto max-h-64 ring-1 ring-gray-300 bg-white;
+                @apply hidden flex-col gap-1 absolute overflow-auto max-h-60 bg-white border border-gray-200/80 shadow-lg p-1;
+                border-radius: var(--pa-input-radius, 0px);
                 left: 0;
                 right: 0;
-                top: calc(100% + 4px);
+                top: calc(100% + 6px);
                 min-width: 100%;
                 z-index: 10000;
 
                 .input-select-item {
-                    @apply relative flex flex-1 items-center
+                    @apply relative flex items-center justify-center text-center
                     tracking-normal
-                    min-h-10 p-1
-                    outline-none whitespace-nowrap overflow-hidden text-ellipsis select-none cursor-pointer
-                    bg-white;
+                    min-h-9 px-3 py-1.5
+                    outline-none select-none cursor-pointer
+                    bg-white text-gray-700;
+                    border-radius: calc(var(--pa-input-radius, 0px) - 2px);
                     text-decoration: none;
-                    font-family: var(--pa-font-family);
-                    font-size: var(--pa-fs-p);
-                    font-weight: var(--pa-fw-p);
+                    font-family: var(--pa-font-family, sans-serif);
+                    font-size: 14px;
+                    font-weight: 400;
+                    transition: background-color 0.15s ease, color 0.15s ease;
 
-                    &:focus:not(&--selected){
-                        @apply bg-gray-300/60;
-                        box-shadow: inset 0px 0px 2px 0px gray;
+                    &-text {
+                        @apply truncate flex-1 text-center;
                     }
 
-                    &--selected {
-                        @apply bg-primary/50;
-                    }
-
+                    &:focus:not(.input-select-item--selected),
                     &:hover:not(.input-select-item--selected) {
-                        @apply bg-gray-200
+                        @apply bg-primary/10 text-gray-900;
+                    }
+
+                    &--selected,
+                    &--selected:hover,
+                    &--selected:focus {
+                        @apply bg-primary/25 text-gray-900 font-medium;
                     }
                 }
             }
 
             &-is-open {
                 .input-select-items {
-                    @apply block;
+                    @apply flex;
                 }
 
                 .input-select-arrow {
-                    transform: translateY(-50%) rotate(-180deg);
+                    transform: translateY(-50%) rotate(180deg);
+                    color: rgb(var(--pa-color-primary, 227 112 6));
                 }
             }
 
             &--open-up {
                 .input-select-items {
                     top: auto;
-                    bottom: calc(100% + 4px);
+                    bottom: calc(100% + 6px);
                 }
             }
 
             &-value {
-                @apply flex flex-1 bg-transparent text-gray-600 items-center select-none;
+                @apply flex flex-1 bg-transparent text-gray-700 items-center select-none;
                 line-height: 1.2;
-                padding: 0 24px 0 12px;
+                padding: 0 32px 0 12px;
                 min-height: 42px;
-                transition: all 0.3s;
-                font-family: var(--pa-font-family);
-                font-size: var(--pa-fs-p);
-                font-weight: var(--pa-fw-p);
+                transition: all 0.2s ease;
+                font-family: var(--pa-font-family, sans-serif);
+                font-size: 14px;
+                font-weight: 400;
 
                 &:focus::-webkit-input-placeholder {
                     color: transparent;
@@ -95,8 +101,8 @@
                 &:-webkit-autofill:hover,
                 &:-webkit-autofill:focus,
                 &:-webkit-autofill:active {
-                    font-family: var(--pa-font-family) !important;
-                    -webkit-box-shadow: 0 0 0 30px white inset !important;
+                    font-family: var(--pa-font-family, sans-serif);
+                    -webkit-box-shadow: 0 0 0 30px white inset;
                 }
             }
         }
@@ -105,16 +111,21 @@
     .input-select.input-dense {
         .input {
             &-select {
+                &-arrow {
+                    right: 8px;
+                }
+
                 &-item {
-                    font-size: 12px !important;
-                    min-height: 16px !important;
-                    padding: 0px 8px;
+                    font-size: 13px;
+                    min-height: 28px;
+                    padding: 4px 8px;
                 }
 
                 &-value {
-                    font-size: 12px !important;
-                    min-height: 24px;
+                    font-size: 13px;
+                    min-height: 32px;
                     padding-left: 8px;
+                    padding-right: 24px;
                 }
             }
         }

@@ -1,10 +1,16 @@
 @unocss;
 
 .widget {
+  &--no-transition,
+  &--no-transition * {
+    transition: none !important;
+    animation: none !important;
+  }
+  container-type: inline-size;
   line-height: 1.5;
   tab-size: 4;
   box-sizing: border-box;
-  font-family: var(--pa-font-family);
+  font-family: var(--pa-font-family, sans-serif);
   width: 100%;
   min-height: 100vh;
   display: flex;
@@ -15,7 +21,8 @@
   font-feature-settings: normal;
   font-variation-settings: normal;
   -webkit-tap-highlight-color: transparent;
-  text-align: var(--pa-widget-align);
+  text-align: var(--pa-widget-align, center);
+  background: var(--pa-main-bg, white);
 
   *,
   ::before,
@@ -38,14 +45,13 @@
     transition-duration: .2s;
 
     &:hover,
-    &.hover--demo {
+    &.hovered {
       filter: brightness(1.1);
       text-decoration: underline;
     }
 
-    &:focus,
-    &.focus--demo {
-      outline: 2px solid rgba(var(--pa-color-primary), 0.5);
+    &:focus {
+      outline: 2px solid rgba(var(--pa-color-primary, 227 112 6), 0.5);
       outline-offset: 2px;
       border-radius: 2px;
     }
@@ -59,25 +65,25 @@
   h6 {
     color: #202124;
     padding-bottom: 0;
-    font-family: var(--pa-font-family);
+    font-family: var(--pa-font-family, sans-serif);
     margin-bottom: 0;
     margin-top: 0;
     text-wrap: balance;
-    white-space: wrap;
+    white-space: normal;
   }
 
   h1 {
-    font-size: clamp(18px, 5vw, var(--pa-fs-h1));
+    font-size: clamp(18px, 5cqw, var(--pa-fs-h1, 20px));
     padding-top: clamp(6px, 2.2vh, 16px);
-    font-weight: var(--pa-fw-h1);
-    text-align: var(--pa-align-h1);
+    font-weight: var(--pa-fw-h1, 400);
+    text-align: var(--pa-align-h1, center);
   }
 
   h2 {
-    font-size: clamp(12px, 3.6vw, var(--pa-fs-h2));
+    font-size: clamp(12px, 3.6cqw, var(--pa-fs-h2, 18px));
     padding-top: clamp(4px, 1.8vh, 14px);
-    font-weight: var(--pa-fw-h2);
-    text-align: var(--pa-align-h2);
+    font-weight: var(--pa-fw-h2, 400);
+    text-align: var(--pa-align-h2, center);
   }
 
   .social-seperator {
@@ -136,12 +142,11 @@
   input,
   textarea,
   select {
-    border-radius: var(--pa-input-radius);
-    border-width: var(--pa-input-border-w);
+    border-radius: var(--pa-input-radius, 0px);
+    border-width: var(--pa-input-border-w, 1px);
   }
 
-  :-moz-focusring,
-  .focus--demo {
+  :-moz-focusring {
     outline: auto;
   }
 
@@ -175,34 +180,43 @@
 
   p {
     margin: 0;
-    font-size: var(--pa-fs-p);
-    font-weight: var(--pa-fw-p);
-    text-align: var(--pa-align-p);
+    font-size: var(--pa-fs-p, 16px);
+    font-weight: var(--pa-fw-p, 400);
+    text-align: var(--pa-align-p, start);
   }
 
   @media (min-width: 601px) {
     @apply flex flex-col relative;
-    background: var(--pa-main-bg);
-    padding: 0 calc((1 - var(--pa-widget-state, 0)) * 10%);
     justify-content: safe center;
-    align-items: var(--pa-widget-align);
+    align-items: var(--pa-widget-align, center);
     min-height: 100vh;
+  }
+
+  @supports (width: clamp(0px, calc(100% - 600px), 1px)) {
+    padding-inline: calc(
+      (1 - var(--pa-widget-state, 0)) *
+      clamp(0px, calc((100% - 600px) * 999), 10%)
+    );
   }
 
   &-content {
     display: flex;
     flex-direction: column;
     max-width: 100%;
+    width: 100%;
+    margin: 0 auto;
     position: relative;
     z-index: 2;
     flex-grow: 1;
+    background: #fff;
+    border-radius: calc((1 - var(--pa-widget-state, 0)) * var(--pa-main-radius, 0px));
 
     @media (min-width: 601px) {
       display: flex;
       flex-direction: column;
       margin: auto 0;
-      width: min(600px, 100%);
-      flex-grow: 0;
+      width: min(calc(500px + (var(--pa-widget-state, 0) * 60px)), 100%);
+      flex-grow: var(--pa-widget-state, 0);
       justify-content: safe center;
       min-height: calc(var(--pa-widget-state, 0) * 100vh);
     }
@@ -211,16 +225,28 @@
       @apply relative pt-6 px-6 pb-8 bg-white flex flex-col;
       box-flex: 1;
       flex-grow: 1;
+      height: 100%;
+      width: 100%;
       justify-content: safe center;
-      padding: clamp(16px, 4vh, 32px) clamp(16px, 5vw, 32px) clamp(20px, 5vh, 32px);
-      border-radius: calc((1 - var(--pa-widget-state, 0)) * var(--pa-main-radius));
-      border: calc((1 - var(--pa-widget-state, 0)) * var(--pa-main-border-w)) solid var(--pa-main-border-c);
+      border-radius: calc((1 - var(--pa-widget-state, 0)) * var(--pa-main-radius, 0px));
+      border: calc((1 - var(--pa-widget-state, 0)) * var(--pa-main-border-w, 1px)) solid var(--pa-main-border-c, #e2e8f0);
+
+      @media (max-width: 600px) {
+        padding: clamp(16px, 4vh, 32px) clamp(16px, 5vw, 32px) clamp(20px, 5vh, 32px);
+        border: none;
+        border-radius: 0;
+      }
+      @container (max-width: 600px) {
+        padding: clamp(16px, 4vh, 32px) clamp(16px, 5cqw, 32px) clamp(20px, 5vh, 32px);
+        border: none;
+        border-radius: 0;
+      }
 
       @media (min-width: 450px) {
         @apply px-8 py-8;
         display: flex;
         flex-direction: column;
-        padding: clamp(18px, 4vh, 32px) clamp(20px, 4.5vw, 32px);
+        padding: clamp(18px, 4vh, 32px) clamp(20px, 4.5cqw, 32px);
       }
 
       @media (min-width: 601px) {
@@ -268,10 +294,21 @@
 
       &:not(:empty) {
         margin-top: 0;
-        border: calc((1 - var(--pa-widget-state, 0)) * var(--pa-main-border-w)) solid var(--pa-main-border-c);
+        border: calc((1 - var(--pa-widget-state, 0)) * var(--pa-main-border-w, 1px)) solid var(--pa-main-border-c, #e2e8f0);
         border-top-width: 0;
-        border-bottom-left-radius: calc((1 - var(--pa-widget-state, 0)) * var(--pa-main-radius));
-        border-bottom-right-radius: calc((1 - var(--pa-widget-state, 0)) * var(--pa-main-radius));
+        border-bottom-left-radius: calc((1 - var(--pa-widget-state, 0)) * var(--pa-main-radius, 0px));
+        border-bottom-right-radius: calc((1 - var(--pa-widget-state, 0)) * var(--pa-main-radius, 0px));
+
+        @media (max-width: 600px) {
+          margin-inline: 0;
+          border: none;
+          border-radius: 0;
+        }
+        @container (max-width: 600px) {
+          margin-inline: 0;
+          border: none;
+          border-radius: 0;
+        }
       }
     }
   }
@@ -298,7 +335,7 @@
       }
     }
 
-    &-social-icons {
+    .widget-social-icons {
       @apply py-2;
     }
   }
@@ -309,8 +346,15 @@
   }
 
   &-helpers-section {
-    @apply text-center pt-4;
-    line-height: 24px;
+    @apply pt-4;
+    font-size: var(--pa-fs-p, 16px);
+    font-weight: var(--pa-fw-p, 400);
+    text-align: var(--pa-align-p, start);
+    color: #202124;
+
+    span {
+      color: #202124;
+    }
 
     a {
       padding-left: 4px;
@@ -321,46 +365,63 @@
     }
   }
 
-  &-social-icons {
+  .widget-social-icons {
     @apply flex justify-center flex-wrap gap-2;
     padding-top: clamp(8px, 2.4vh, 16px);
     padding-bottom: clamp(8px, 2.4vh, 16px);
   }
 
-  &-social-button.btn {
-    @apply capitalize justify-start gap-2 bg-transparent text-gray-800 border border-gray-300 whitespace-normal;
-    word-break: auto-phrase;
+  .widget-social-button.btn {
+    @apply capitalize justify-start gap-3 bg-white text-gray-800 border border-gray-300 whitespace-normal;
+    color: #1f2937 !important;
+    box-shadow: 0 1px 2px rgb(15 23 42 / 0.06);
+    overflow-wrap: anywhere;
     min-height: min-content;
     transition-property: all;
     transition-timing-function: var(--pa-ease, var(--default-transition-timingFunction));
     transition-duration: .2s;
-
+  
     &:hover,
-    &.hover--demo {
+    &.btn--hovered {
       @apply bg-gray-50 border-gray-400;
+      box-shadow: 0 3px 8px rgb(15 23 42 / 0.1);
       opacity: 1;
     }
-
-    &:focus,
-    &.focus--demo {
+  
+    &:focus {
       @apply outline-none ring-2 ring-primary/20 border-primary/50;
     }
 
-    &-circle {
-      @apply w-10 h-10 p-0 rounded-full overflow-hidden;
+    &.widget-social-button-circle {
+      width: 44px;
+      height: 44px;
+      min-width: 44px;
+      min-height: 44px;
+      max-width: 44px;
+      max-height: 44px;
+      flex: 0 0 44px;
+      justify-content: center;
+      padding: 0;
+      gap: 0;
+      border-radius: 9999px;
+      overflow: hidden;
 
-      .widget-social-icon {
-        @apply w-10 h-10;
+      .btn__content {
+        display: none;
       }
 
-      &:hover,
-      &.hover--demo {
-        filter: brightness(0.9);
+      .widget-social-icon {
+        width: 44px;
+        height: 44px;
+        flex-shrink: 0;
+        background-size: contain;
+        border-radius: 9999px;
+        overflow: hidden;
       }
     }
   }
 
-  &-social-icon {
+  .widget-social-icon {
     @apply w-8 h-8 flex-shrink-0;
     background-repeat: no-repeat;
     background-position: center center;
@@ -378,16 +439,25 @@
     justify-content: space-between;
     font-size: 12px;
     line-height: 1.4;
-    border: calc((1 - var(--pa-widget-state, 0)) * var(--pa-main-border-w)) solid var(--pa-main-border-c);
-    border-bottom-left-radius: calc((1 - var(--pa-widget-state, 0)) * var(--pa-main-radius));
-    border-bottom-right-radius: calc((1 - var(--pa-widget-state, 0)) * var(--pa-main-radius));
+    border: calc((1 - var(--pa-widget-state, 0)) * var(--pa-main-border-w, 1px)) solid var(--pa-main-border-c, #e2e8f0);
+    border-bottom-left-radius: calc((1 - var(--pa-widget-state, 0)) * var(--pa-main-radius, 0px));
+    border-bottom-right-radius: calc((1 - var(--pa-widget-state, 0)) * var(--pa-main-radius, 0px));
     border-top: none;
+
+    @media (max-width: 600px) {
+      border: none;
+      border-radius: 0;
+    }
+    @container (max-width: 600px) {
+      border: none;
+      border-radius: 0;
+    }
 
     .input {
       &--wrap {
-        border: none !important;
-        border-width: 0px !important;
-        border-radius: var(--pa-input-radius);
+        border: none;
+        border-width: 0px;
+        border-radius: var(--pa-input-radius, 0px);
       }
     }
 
@@ -395,20 +465,20 @@
       @apply flex gap-4 p-0 px-2 list-none my-0;
 
       a {
-        color: #757575 !important;
+        color: #757575;
         display: inline-block;
         transition: all .2s;
-        padding: 2px 4px;
+        padding-inline: 4px;
+        padding-block: 2px;
 
         &:hover,
-        &.hover--demo {
-          color: #202124 !important;
+        &.hovered {
+          color: #202124;
           background-color: rgba(0, 0, 0, 0.05);
           border-radius: 4px;
         }
 
-        &:focus,
-        &.focus--demo {
+        &:focus {
           outline: none;
           background-color: rgba(0, 0, 0, 0.08);
           border-radius: 4px;
@@ -422,18 +492,13 @@
     }
   }
 
-  &:has(&-footer:not(:empty)) &-main {
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-  }
-
   &:has(&-footer:not(:empty)) &-content-footer {
     border: none;
   }
 
   .logo-container {
     display: flex;
-    justify-content: var(--pa-logo-align);
+    justify-content: var(--pa-logo-align, center);
     margin: clamp(4px, 1.8vh, 12px) 0;
     min-height: clamp(44px, 11vh, 72px);
 
@@ -460,20 +525,35 @@
     }
   }
 
+  @container (max-width: 600px) {
+    &-content {
+      margin: 0 auto;
+      width: 100%;
+      flex-grow: 1;
+      min-height: 0;
+    }
+
+    &-content-main {
+      padding: clamp(14px, 4vh, 24px) clamp(16px, 5cqw, 24px) clamp(18px, 4.5vh, 28px);
+    }
+
+    .logo-container {
+      margin-top: clamp(2px, 1vh, 8px);
+      min-height: clamp(40px, 12vh, 76px);
+
+      .logo {
+        max-width: min(72%, 400px);
+        max-height: clamp(48px, 12vh, 80px);
+      }
+    }
+  }
+
   .qr-code {
     @apply mx-auto mb-4;
     border: 1px solid lightgray;
     object-position: center;
     max-width: 220px;
     max-height: 220px;
-    transition-property: transform, translate, scale, rotate;
-    transition-timing-function: var(--pa-ease, var(--default-transition-timingFunction));
-    transition-duration: .3s;
-
-    &:hover,
-    &.hover--demo {
-      transform: scale(1.02);
-    }
   }
 
   .challenge-timer {
@@ -486,13 +566,13 @@
     .signin-challenge {
       text-align: left;
       justify-content: start;
-      color: rgb(var(--pa-color-primary));
-      transition-property: color, background-color, border-color, -webkit-text-decoration-color, text-decoration-color, fill, stroke, --pa-gradient-from, --pa-gradient-via, --pa-gradient-to;
+      color: rgb(var(--pa-color-primary, 227 112 6));
+      transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
       transition-timing-function: var(--pa-ease, var(--default-transition-timingFunction));
       transition-duration: .2s;
 
       &:hover,
-      &.hover--demo {
+      &.btn--hovered {
         filter: brightness(0.9);
       }
     }
@@ -514,16 +594,15 @@
     transition-duration: .2s;
 
     &:hover,
-    &.hover--demo {
+    &.btn--hovered {
       background-color: #f8f9fa;
       border-color: #d1d5db;
     }
 
-    &:focus,
-    &.focus--demo {
+    &:focus {
       outline: none;
-      border-color: rgb(var(--pa-color-primary));
-      box-shadow: 0 0 0 1px rgb(var(--pa-color-primary));
+      border-color: rgb(var(--pa-color-primary, 227 112 6));
+      box-shadow: 0 0 0 1px rgb(var(--pa-color-primary, 227 112 6));
     }
   }
 
@@ -547,6 +626,6 @@
 
 .default-border {
   @apply border;
-  border-color: var(--pa-main-border-c);
-  border-radius: var(--pa-main-radius);
+  border-color: var(--pa-main-border-c, #e2e8f0);
+  border-radius: var(--pa-main-radius, 0px);
 }

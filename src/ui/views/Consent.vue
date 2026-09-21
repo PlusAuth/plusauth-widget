@@ -123,9 +123,9 @@ const resolveClientLogo = resolveLogo;
   display: block;
   font-weight: 600;
   opacity: 0.6;
-  font-size: 0.8em;
+  font-size: 0.8rem;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.05rem;
   margin-bottom: 4px;
 }
 </style>

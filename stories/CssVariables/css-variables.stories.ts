@@ -57,6 +57,7 @@ const buttonVariantControl = {
 };
 
 const cssVariableDefinitions: CssVariableDefinition[] = [
+  { arg: 'paFontFamily', variable: '--pa-font-family', defaultValue: 'sans-serif', control: { control: 'text' } },
   { arg: 'paFsP', variable: '--pa-fs-p', defaultValue: '16px', control: { control: 'text' } },
   { arg: 'paFsH1', variable: '--pa-fs-h1', defaultValue: '20px', control: { control: 'text' } },
   { arg: 'paFsH2', variable: '--pa-fs-h2', defaultValue: '18px', control: { control: 'text' } },

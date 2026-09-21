@@ -1,9 +1,14 @@
 <template>
   <p-btn
     class="pa__widget-social-button"
+    ref="btnRef"
     :block="mode === 'block'"
-    :class="{ 'pa__widget-social-button-circle': mode === 'circle' }"
+    :class="{
+      'pa__widget-social-button-circle': mode === 'circle'
+    }"
     :href="'social?provider=' + (typeof connection === 'string' ? connection : connection.name )"
+    :aria-label="providerLabel"
+    :title="providerLabel"
   >
     <span
       class="pa__widget-social-icon"
@@ -21,7 +26,7 @@
           args: [
             typeof connection === 'string'
               ? connection
-              : connection.branding?.display_name || connection.provider
+              : providerLabel
           ]
         }"
       />
@@ -30,9 +35,9 @@
 </template>
 
 <script setup lang="ts">
-import { inject } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 
-import type { IWidgetSettings } from '../interfaces';
+import { resolveCssVariableVariant } from '../utils';
 
 import PBtn from './PBtn/PBtn.vue';
 
@@ -49,9 +54,16 @@ const props = defineProps<{
     }
   }
 }>()
-const settings = inject('settings') as Partial<IWidgetSettings>
 
-const mode = settings.socialLogin?.buttonVariant || 'block'
+const btnRef = ref<any>();
+const iconVariants = ['block', 'circle'] as const;
+const mode = ref<typeof iconVariants[number]>(resolveCssVariableVariant('--pa-icon-variant', iconVariants));
+
+onMounted(() => {
+  const element = btnRef.value ? btnRef.value.$el || btnRef.value : undefined;
+  mode.value = resolveCssVariableVariant('--pa-icon-variant', iconVariants, element);
+});
+
 function iconUrl(provider: string){
   return `https://raw.githubusercontent.com/edent/SuperTinyIcons/master/images/svg/${provider}.svg`
 }
@@ -59,6 +71,11 @@ function iconUrl(provider: string){
 const iconLink = typeof props.connection === 'string'
   ? iconUrl(props.connection)
   : props.connection.branding?.logo_url || iconUrl(props.connection.provider)
+
+const providerLabel = computed(() => typeof props.connection === 'string'
+  ? props.connection
+  : props.connection.branding?.display_name || props.connection.provider)
+
 </script>
 
 <style scoped>

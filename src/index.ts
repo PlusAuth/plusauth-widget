@@ -16,17 +16,16 @@ export default class PlusAuthWidget {
     settings: Partial<IWidgetSettings> = {},
     context: Partial<IPlusAuthContext>
   ) {
+    this.http = createFetchWrapper(settings.apiUrl);
 
-    this.http = createFetchWrapper(settings.apiUrl)
+    const reactiveSettings = reactive(settings);
 
-    const reactiveSettings = reactive(settings)
-
-    this.i18n = new Translator(reactiveSettings.locale)
-    if(context.params?.ui_locales){
-      const userPreferredLocales = context.params?.ui_locales?.split(' ') || []
+    this.i18n = new Translator(reactiveSettings.locale);
+    if (context.params?.ui_locales) {
+      const userPreferredLocales = context.params?.ui_locales?.split(' ') || [];
       for (let contextLocale of userPreferredLocales) {
-        if(this.i18n.locales[contextLocale]){
-          this.i18n.locale = contextLocale
+        if (this.i18n.locales[contextLocale]) {
+          this.i18n.locale = contextLocale;
           break;
         }
       }
@@ -34,7 +33,7 @@ export default class PlusAuthWidget {
     this._view = createWidget(container || document.body, reactiveSettings as any, context, {
       i18n: this.i18n,
       http: this.http,
-    })
+    });
   }
   get view(): IWidgetSettings {
     // expose settings rather than vue app

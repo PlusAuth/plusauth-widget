@@ -50,7 +50,11 @@ export class Theme {
     this.styleEl.type = 'text/css'
     this.styleEl.id = 'plusauth-theme-stylesheet'
 
-    document.head.appendChild(this.styleEl)
+    if (document.head && document.head.firstChild) {
+      document.head.insertBefore(this.styleEl, document.head.firstChild);
+    } else if (document.head) {
+      document.head.appendChild(this.styleEl);
+    }
   }
 
   get currentTheme() {

@@ -1,8 +1,6 @@
 import { h, ref, onBeforeUnmount, inject, computed } from 'vue';
-import './styles/main.css'
+import './styles/main.css';
 
-import 'virtual:uno.css';
-import PFooter from './components/Footer.vue';
 import type { IWidgetSettings } from './interfaces';
 import { resolveView } from './utils/router';
 import type { Theme } from './utils/theme';
@@ -11,41 +9,38 @@ import { translatorKey } from './utils/translator';
 export function App(theme: Theme, settings: Partial<IWidgetSettings>): any {
   return {
     provide: {
-      theme
+      theme,
     },
-    setup(){
-      const isMobile = ref(false)
-      const i18n = inject(translatorKey) as Translator
+    setup() {
+      const isMobile = ref(false);
+      const i18n = inject(translatorKey) as Translator;
       function onResize() {
-        isMobile.value = window.innerWidth < 600
+        isMobile.value = window.innerWidth < 600;
       }
-      window.addEventListener('resize', onResize, { passive: true })
-      onResize()
+      window.addEventListener('resize', onResize, { passive: true });
+      onResize();
 
       onBeforeUnmount(() => {
         if (typeof window !== 'undefined') {
-          window.removeEventListener('resize', onResize)
+          window.removeEventListener('resize', onResize);
         }
-      })
+      });
 
       return {
-        resolvedView: computed(() => resolveView(settings.mode)) ,
+        resolvedView: computed(() => resolveView(settings.mode)),
         isMobile,
-        locale: i18n.localeRef
-      }
+        locale: i18n.localeRef,
+      };
     },
-    render(){
+    render() {
       return h(
         'div',
         {
           class: 'pa__widget',
-          key: this.locale
+          key: this.locale,
         },
-        this.resolvedView && h(
-          this.resolvedView
-        )
-      )
-    }
+        this.resolvedView && h(this.resolvedView)
+      );
+    },
   };
 }
-

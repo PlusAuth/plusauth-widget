@@ -159,9 +159,6 @@ export interface IWidgetSettings {
       fields: AdditionalFields
     ) => void
   }>>,
-  socialLogin?: {
-    buttonVariant?: 'circle' | 'block'
-  },
   footer?: {
     enabled?: boolean
   },

@@ -1,4 +1,5 @@
 :root, #storybook-root {
+  --pa-font-family: sans-serif;
   --pa-fs-p: 16px;
   --pa-fs-h1: 20px;
   --pa-fs-h2: 18px;
@@ -38,7 +39,7 @@ html, body, #storybook-root, #wrapper {
   .hide-controls-column > div > table  {
     & > thead > tr > th:last-child,
     & > tbody > tr:not(:first-child) > td:last-child {
-      display: none !important;
+      display: none;
     }
 
     & > thead > tr th:nth-child(1),

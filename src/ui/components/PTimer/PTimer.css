@@ -5,7 +5,7 @@
             width: 80px;
             height: 80px;
             border-radius: 50%;
-            border: var(--pa-main-border-w) solid;
+            border: var(--pa-main-border-w, 1px) solid;
             display: flex;
             margin: 16px auto;
         }
@@ -16,9 +16,9 @@
             margin: auto;
             padding-top: 0px;
             text-align: center;
-            font-size: 2em;
-            font-family: var(--pa-font-family);
-            font-weight: var(--pa-fw-h1);
+            font-size: 2rem;
+            font-family: var(--pa-font-family, sans-serif);
+            font-weight: var(--pa-fw-h1, 400);
         }
     }
 }

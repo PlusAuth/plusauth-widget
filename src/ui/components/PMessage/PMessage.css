@@ -11,8 +11,8 @@
             word-break: break-word;
             overflow-wrap: break-word;
             word-wrap: break-word;
-            font-family: var(--pa-font-family);
-            font-weight: var(--pa-fw-p);
+            font-family: var(--pa-font-family, sans-serif);
+            font-weight: var(--pa-fw-p, 400);
         }
     }
 
