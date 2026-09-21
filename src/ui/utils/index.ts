@@ -13,7 +13,7 @@ export function convertToUnit(str: string | number | null | undefined,
 
 export function propertyAccessor(obj: Record<string, any>,
                                  key: string | null,
-                                 array?: any[] | any): string | null | undefined {
+                                 _array?: any[] | any): string | null | undefined {
   try{
 
     if (!obj || !key) return undefined

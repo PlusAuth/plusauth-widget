@@ -17,8 +17,6 @@ defineOptions({
 const http = useHttp();
 const context = useContext();
 
-const passwordVisible = ref(false);
-
 const connection = (context.connection || {}) as any;
 const isPasswordless = computed(() => {
   return connection.type && ![
@@ -110,7 +108,7 @@ const resolveClientLogo = resolveLogo;
           v-if="hasSocialConnections"
         >
           <div class="pa__social-seperator">
-            <span v-t="'login.socialLoginHelper'"></span>
+            <span v-t="'login.socialLoginHelper'" />
           </div>
           <WidgetTemplate name="social-prepend" />
           <div class="pa__widget-social-icons">
