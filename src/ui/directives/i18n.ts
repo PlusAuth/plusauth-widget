@@ -1,4 +1,4 @@
-import type {  DirectiveBinding, ObjectDirective } from 'vue';
+import type { DirectiveBinding, ObjectDirective } from 'vue';
 
 import { isPlainObject } from '../utils';
 
@@ -16,7 +16,7 @@ function parseValue(value: any): any {
     locale = value.locale
     fallback = value.fallback
     args = value.args || value.params
-  }else if (Array.isArray(value)){
+  } else if (Array.isArray(value)) {
     path = value[0]
     args = value[1]
   } else {
@@ -33,8 +33,8 @@ function parseValue(value: any): any {
 
 function translate(el: any, binding: DirectiveBinding): void {
   const value: any = binding.value
-
-  if(!value){
+  const mods = binding.modifiers
+  if (!value) {
     return
   }
   const { path, locale, args, fallback } = parseValue(value)
@@ -49,8 +49,12 @@ function translate(el: any, binding: DirectiveBinding): void {
   }
 
   const $i18n = binding?.instance?.$.appContext.config.globalProperties.$i18n
-  el._vt = el.innerHTML = $i18n?.t(path, args, { locale, fallback })
-  el._locale = $i18n?.locale
+  const translated = $i18n?.t(path, args, { locale, fallback }) as string | undefined
+  el._vt = el.innerHTML = mods.uppercase ? translated?.toLocaleUpperCase(locale || $i18n.locale)
+    : mods.lowercase ? translated?.toLocaleLowerCase(locale || $i18n.locale)
+      : translated;
+
+  el._locale = locale || $i18n?.locale
 }
 
 export const i18n: ObjectDirective = {

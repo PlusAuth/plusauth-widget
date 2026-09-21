@@ -139,7 +139,7 @@ defineExpose({
                 fields[field].type = 'text' : fields[field].type = 'password'"
             >
               <span
-                v-t="fields[field].type === 'password' ? 'common.show' : 'common.hide'"
+                v-t.uppercase="fields[field].type === 'password' ? 'common.show' : 'common.hide'"
               />
             </p-btn>
             <slot :name="field" />
