@@ -30,7 +30,7 @@
                 z-index: 10000;
 
                 .input-select-item {
-                    @apply relative flex items-center justify-center text-center
+                    @apply relative flex items-center
                     tracking-normal
                     min-h-9 px-3 py-1.5
                     outline-none select-none cursor-pointer
@@ -43,7 +43,7 @@
                     transition: background-color 0.15s ease, color 0.15s ease;
 
                     &-text {
-                        @apply truncate flex-1 text-center;
+                        @apply truncate flex-1;
                     }
 
                     &:focus:not(.input-select-item--selected),

@@ -21,7 +21,6 @@
   font-feature-settings: normal;
   font-variation-settings: normal;
   -webkit-tap-highlight-color: transparent;
-  text-align: var(--pa-widget-align, center);
   background: var(--pa-main-bg, white);
 
   *,
@@ -380,7 +379,7 @@
     transition-property: all;
     transition-timing-function: var(--pa-ease, var(--default-transition-timingFunction));
     transition-duration: .2s;
-  
+
     &:hover,
     &.btn--hovered {
       @apply bg-gray-50 border-gray-400;
