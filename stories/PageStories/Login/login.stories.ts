@@ -143,6 +143,6 @@ SocialConnections.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
 
   await expect(canvas.getByText('or')).toBeInTheDocument();
-  await expect(canvas.getByRole('link', { name: 'Sign in with Google' })).toBeInTheDocument();
-  await expect(canvas.getByRole('link', { name: 'Sign in with GitHub' })).toBeInTheDocument();
+  await expect(canvas.getByRole('link', { name: 'Google' })).toBeInTheDocument();
+  await expect(canvas.getByRole('link', { name: 'GitHub' })).toBeInTheDocument();
 };
