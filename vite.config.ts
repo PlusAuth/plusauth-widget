@@ -1,6 +1,8 @@
 import { resolve } from 'path'
 
 import vue from '@vitejs/plugin-vue'
+import { transform } from 'esbuild';
+
 import UnoCSS from 'unocss/vite'
 import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts';
@@ -32,7 +34,7 @@ export default defineConfig(({ command }) => ({
       name: 'prepend-inject-css-plugin',
       apply: 'build',
       enforce: 'post',
-      generateBundle(options, bundle) {
+      async generateBundle(options, bundle) {
         let cssCode = '';
         for (const [fileName, file] of Object.entries(bundle)) {
           if (fileName.endsWith('.css') && file.type === 'asset' && typeof file.source === 'string') {
@@ -55,9 +57,13 @@ export default defineConfig(({ command }) => ({
           }
         })();\n`;
 
+        const { code } = await transform(injectedJs, {
+          minify: true,
+        });
+
         for (const file of Object.values(bundle)) {
           if (file.type === 'chunk' && file.isEntry) {
-            file.code = injectedJs + file.code;
+            file.code = code + file.code;
           }
         }
       }
