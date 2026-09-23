@@ -13,6 +13,8 @@ export default class PlusAuthWidget {
   public i18n: Translator;
   public http: FetchWrapper;
 
+  declare static locales: Record<string, any>
+
   constructor(
     container: Element | string,
     settings: Partial<IWidgetSettings> = {},
