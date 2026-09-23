@@ -1,11 +1,13 @@
 import type { App } from 'vue';
 import { reactive } from 'vue';
 
+import locales from './i18n'
 import { createWidget } from './ui';
 import type { IPlusAuthContext, IWidgetSettings } from './ui/interfaces';
 import type { FetchWrapper } from './ui/utils/fetch';
 import { createFetchWrapper } from './ui/utils/fetch';
 import { Translator } from './ui/utils/translator';
+
 export default class PlusAuthWidget {
   private _view: App<Element>;
   public i18n: Translator;
@@ -40,3 +42,5 @@ export default class PlusAuthWidget {
     return this._view.config.globalProperties.settings;
   }
 }
+
+PlusAuthWidget['locales'] = locales as Record<string, any>
