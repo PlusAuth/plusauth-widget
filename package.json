@@ -5,7 +5,7 @@
   "main": "dist/plusauth-widget.min.js",
   "module": "dist/plusauth-widget.esm.js",
   "browser": "dist/plusauth-widget.esm.js",
-  "types": "dist/types/index.d.ts",
+  "types": "dist/src/index.d.ts",
   "license": "MIT",
   "description": "Web widget for rendering PlusAuth views",
   "homepage": "https://github.com/PlusAuth/plusauth-widget#readme",
