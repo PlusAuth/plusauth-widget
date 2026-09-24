@@ -17,8 +17,7 @@ const wrapperRef = ref<HTMLElement>()
 const wrapperId = `wrapper-${Math.random().toString(36).slice(2, 11)}`
 
 const unmountWidget = () => {
-  // @ts-expect-error stories need access to the mounted vue app instance.
-  widget.value?._view.unmount()
+  widget.value?.app.unmount()
   widget.value = undefined
 }
 

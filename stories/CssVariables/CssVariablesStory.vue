@@ -19,6 +19,7 @@ const settings: Partial<IWidgetSettings> = {
       fields: {
         password: {
           order: 1,
+          type: 'password',
           errors: ['Password is required']
         },
         otpCode: {
@@ -54,8 +55,7 @@ const context: Partial<IPlusAuthContext> = {
 };
 
 const unmountWidget = () => {
-  // @ts-expect-error _view is the mounted Vue app; stories need it for clean remounts.
-  widget.value?._view.unmount();
+  widget.value?.app.unmount();
   widget.value = undefined;
 };
 

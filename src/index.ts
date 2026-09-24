@@ -9,7 +9,7 @@ import { createFetchWrapper } from './ui/utils/fetch';
 import { Translator } from './ui/utils/translator';
 
 export default class PlusAuthWidget {
-  private _view: App<Element>;
+  public app: App<Element>;
   public i18n: Translator;
   public http: FetchWrapper;
 
@@ -34,14 +34,14 @@ export default class PlusAuthWidget {
         }
       }
     }
-    this._view = createWidget(container || document.body, reactiveSettings as any, context, {
+    this.app = createWidget(container || document.body, reactiveSettings as any, context, {
       i18n: this.i18n,
       http: this.http,
     });
   }
   get view(): IWidgetSettings {
     // expose settings rather than vue app
-    return this._view.config.globalProperties.settings;
+    return this.app.config.globalProperties.settings;
   }
 }
 
