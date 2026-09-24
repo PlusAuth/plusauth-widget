@@ -7,10 +7,10 @@ export interface IClient {
   policyUri?: string;
   tosUri?: string;
   clientName?: string;
-  jwksUri: string;
-  applicationType: 'native' | 'web' | 'server-to-server' |
+  jwksUri?: string;
+  applicationType?: 'native' | 'web' | 'server-to-server' |
     'single-page-application' | 'financial';
-  passwordless:  {
+  passwordless?:  {
     name: string,
     provider: string,
     branding: {
@@ -22,7 +22,7 @@ export interface IClient {
   social: string[] | {
     name: string,
     provider: string,
-    branding: {
+    branding?: {
       show_in_login?: boolean
       logo_url?: string
       display_name?: string
